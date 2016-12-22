@@ -1,12 +1,12 @@
 # Project Name
 
-> Pithy project description
+> Opportunities - a career coach app.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Phil Barrow
+  - __Scrum Master__: Emmeline Lan
+  - __Development Team Members__: Casey Hungler, Joosang Lee, Phil Barrow, Emmeline Lan
 
 ## Table of Contents
 
@@ -25,10 +25,6 @@
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
@@ -37,9 +33,7 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
 ```
 
 ### Roadmap
