@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: Phil Barrow
+  - __Product Owner__: Phil Barow
   - __Scrum Master__: Emmeline Lan
-  - __Development Team Members__: Casey Hungler, Joosang Lee, Phil Barrow, Emmeline Lan
+  - __Development Team Members__: Casey Hungler, Joosang Lee, Phil Barow, Emmeline Lan
 
 ## Table of Contents
 
@@ -34,6 +34,7 @@ From within the root directory:
 
 ```sh
 npm install
+npm run start-webpack
 ```
 
 ### Roadmap
