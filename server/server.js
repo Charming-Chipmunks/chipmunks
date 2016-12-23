@@ -3,11 +3,6 @@ require('dotenv').config();
 
 var app = express();
 
-app.get('*', function(req, res) {
-  res.send('Hello World');
-});
-
-
 //DEVELOPMENT CONVENIENCES
 app.get('/staging', function(req, res) {
   res.redirect('http://jobz.mooo.com:3000');
@@ -28,4 +23,7 @@ app.get('/grandmasterp', function(req, res) {
   res.redirect('http://jobz.mooo.com:7000');
 });
 
+app.get('*', function(req, res) {
+  res.send('Hello World' + process.env.PORT);
+});
 app.listen(process.env.PORT || 3000);
