@@ -2,7 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {observer} from 'mobx-react';
-import Store from './Store';
+import {observable, computed, autorun} from 'mobx';
+import Store from './testStore';
 
 var Web = observer(class Web extends React.Component {
   constructor(props) {
