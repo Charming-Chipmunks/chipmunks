@@ -13,14 +13,14 @@ app.get('/casey', function(req, res) {
 app.get('/emm', function(req, res) {
   res.redirect('http://jobz.mooo.com:5000');
 });
-app.get('/j', function(req, res) {
-  res.redirect('http://jobz.mooo.com:6000');
-});
 app.get('/phil', function(req, res) {
   res.redirect('http://jobz.mooo.com:7000');
 });
 app.get('/grandmasterp', function(req, res) {
   res.redirect('http://jobz.mooo.com:7000');
+});
+app.get('/j', function(req, res) {
+  res.redirect('http://jobz.mooo.com:8000');
 });
 
 app.get('*', function(req, res) {
