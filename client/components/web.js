@@ -5,12 +5,15 @@ import {observer} from 'mobx-react';
 import {observable, computed, autorun} from 'mobx';
 import Store from './testStore';
 
-var Web = observer(class Web extends React.Component {
+
+
+var Web = @observer class Web extends React.Component {
   constructor(props) {
     super(props);
+    // var testStore = new Store();
     this.state = {
       test: 'Hello World',
-      test2: Store.currentUser
+      test2: Store.testval
     };
   }
 
@@ -20,6 +23,6 @@ var Web = observer(class Web extends React.Component {
     <div>TEST2{this.state.test2} </div>
     </div>;
   }
-});
+};
 
 ReactDOM.render(<Web />, document.getElementById('web'));
