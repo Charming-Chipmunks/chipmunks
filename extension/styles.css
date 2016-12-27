@@ -1,0 +1,10 @@
+.side-container {
+  width: 300px;
+  height: 600px;
+  right: 0;
+  top: 0;
+  background-color: #a0bbe8;
+  z-index: 200;
+  float: right;
+  padding: 10px;
+}
