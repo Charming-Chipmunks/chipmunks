@@ -16,4 +16,4 @@ class Ext extends React.Component {
   }
 }
 
-ReactDOM.render(<Ext />, document.getElementById('ext'))
+ReactDOM.render(<Ext />, document.getElementById('ext'));

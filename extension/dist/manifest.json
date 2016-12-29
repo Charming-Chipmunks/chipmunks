@@ -14,7 +14,7 @@
       "run_at" : "document_end",
       "matches": ["https://mail.google.com/*"],
       "css": ["styles.css"],
-      "js": ["content.js"]
+      "js": ["bundle.js"]
     }
   ]
 }

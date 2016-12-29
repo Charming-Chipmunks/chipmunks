@@ -4,6 +4,8 @@
 logs
 *.log
 
+**/*bundle.js
+
 .env
 
 # Runtime data
