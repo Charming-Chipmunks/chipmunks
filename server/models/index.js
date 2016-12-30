@@ -18,7 +18,7 @@ sequelize.sync(); //{force: true} removing the force helped
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== basename);
+    return (file.indexOf('.') !== 0) && (file !== 'index.js');
   })
   .forEach(function(file) {
     if (file.slice(-3) !== '.js') return;
@@ -36,10 +36,17 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 // seeding the database
+// PROBLEM HERE IS THAT I HAVE ALREADY BUILT THE DB,  SO WHEN I CHANGED COLUMS,  IT DIDNT LIKE IT
 
 for (var i = 0; i < 10; i++) {
   db['User'].create({
-    email: Faker.internet.email()
+    FirstName:  Faker.name.firstName(),
+    email:      Faker.internet.email(),
+    address:    Faker.address.streetAddress(),
+    city:       Faker.address.city(),
+    state:      Faker.address.state(),
+    zip:        99999 
+
   }).then(function(user){
     console.log(user.dataValues.email);
 
@@ -74,7 +81,8 @@ for (var i = 0; i < 10; i++) {
 
 // select some parameters based on what I send in:
 
-db['User'].find({id: 3}).then(function(user){
+db['User'].findAll().then(function(user){
+  console.log('in find');
   user.getParameters().then(function(parameter){
     var p1 = parameter[0];
     console.log(p1.userparameter.descriptor);

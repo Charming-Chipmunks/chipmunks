@@ -2,10 +2,10 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Location = sequelize.define('Location', {
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    zipCode: DataTypes.INTEGER,
-    radius: DataTypes.INTEGER
+    city:     DataTypes.STRING,
+    state:    DataTypes.STRING,
+    zipCode:  DataTypes.INTEGER,
+    radius:   DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
