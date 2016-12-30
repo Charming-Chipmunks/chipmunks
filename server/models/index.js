@@ -8,7 +8,7 @@ var basename  = path.basename(module.filename);
 var db        = {};
 var Faker     = require('faker');
 
-var sequelize = new Sequelize('nexus3', 'root', 'root',   {
+var sequelize = new Sequelize('nexus4', 'root', 'root',   {
     dialect: 'mysql',
     host: 'localhost'
   });
@@ -35,12 +35,35 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
+//  fake seed data for Jobs table
+// for (var i = 0; i < 40; i++) {
+//   db['Job'].create({
+//     jobTitle:   Faker.company.bs() + ' programmer',  //DataTypes.STRING,
+//     company:    Faker.company.companyName(),
+//     url:        Faker.internet.domainName(), 
+//     address:    Faker.address.streetAddress(),
+//     city:       Faker.address.city(),
+//     state:      Faker.address.state(),
+//     formatted_location: 'formstted location',
+//     snippet:    Faker.lorem.sentences(), // need to check on how long a String is
+//     source:     Faker.company.companyName(),
+//     jobkey:     'job key' + Math.random() * 1000,
+//     expires:    Faker.date.future(),
+//     latitude:   Math.random() * 10000,  // i think we need decimal for lat / long
+//     longitude:  Math.random() * 10000 
+//   }).then((job) =>{
+//     console.log(job.jobTitle + ' successfully made');
+//   }).catch((err) => {
+//     console.error(err);
+//   });
+// }
+
 // seeding the database
 // PROBLEM HERE IS THAT I HAVE ALREADY BUILT THE DB,  SO WHEN I CHANGED COLUMS,  IT DIDNT LIKE IT
 
 // for (var i = 0; i < 10; i++) {
 //   db['User'].create({
-//     FirstName:  Faker.name.firstName(),
+//     name:  Faker.name.firstName(),
 //     email:      Faker.internet.email(),
 //     address:    Faker.address.streetAddress(),
 //     city:       Faker.address.city(),
@@ -49,17 +72,6 @@ Object.keys(db).forEach(function(modelName) {
 
 //   }).then(function(user){
 //     console.log(user.dataValues.email);
-
-//     // initializing the database for User to Todo relationshi
-//     for (var i = 0; i < 3; i++){
-//     db['Todo'].create({
-//       title: Faker.lorem.words()
-//     }).then(function(todo){
-//       user.addTodos(todo);
-//     }).catch(function(err){
-//       console.error(err);
-//     });
-//     }
 
 //     // initializing Many to Many relationship;
 //     for (var j = 0; j < 2; j++){

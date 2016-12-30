@@ -32,7 +32,7 @@ router.get('/users/:userId', function(req, res) {
 });
 
 // 2) POST adds one user to the
-// not sure if we can post to an endoint which we dont know yet.
+// note:  use x-www-form-urlencoded when send req.body data
 router.post('/users/create', function(req, res) {
   
   console.log('req body: ', req.body.name);
@@ -71,6 +71,8 @@ router.get('/jobs/:userId', function(req, res) {
   });
 
 });
+
+
 
 // 4) POST - Adds a job to a users favorite list  
 router.post('/users/:userId/jobs/:jobId', function(req, res) {
