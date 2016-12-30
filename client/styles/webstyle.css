@@ -1,0 +1,11 @@
+.done{
+  color: green;
+}
+
+.overdue{
+  color: red;
+}
+
+.todo {
+  color: yellow;
+}

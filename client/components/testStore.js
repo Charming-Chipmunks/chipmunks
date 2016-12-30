@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 class testStore {
   @observable timer = 0;
-  @observable testval = 'testval';
+  @observable testval = 'testvaltest';
 
   constructor() {
     setInterval(() =>this.timer += 1, 1000);
@@ -12,6 +12,7 @@ class testStore {
     this.timer = 0;
   }
 }
-var tStore = new testStore();
-export default tStore;
+// var tStore = new testStore();
+const test = window.test = new testStore();
+export default test;
 
