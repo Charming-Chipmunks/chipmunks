@@ -31,9 +31,12 @@ router.get('/users/:userId', function(req, res) {
   });
 });
 
-// 2) adds one user to the
+// 2) POST adds one user to the
 // not sure if we can post to an endoint which we dont know yet.
 router.post('/users/create', function(req, res) {
+  
+  console.log('req body: ', req.body.name);
+
   models.User.create({
     name:     req.body.name,
     email:    req.body.email,
@@ -42,13 +45,14 @@ router.post('/users/create', function(req, res) {
     state:    req.body.state,
     zip:      req.body.zip 
   }).then((user) => {
-    res.staus(200);
+    res.status(200);
     res.send(user);
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
     res.json({ error: err });  // send JSON object with error 
   });
+
 });
 
 // 3) Gets a list of all jobs a user has favorited
@@ -58,9 +62,9 @@ router.get('/jobs/:userId', function(req, res) {
     where: {
       id: req.params.userId
     }
-  }).then((user) =>
+  }).then((user) => {
     res.json(user);
-  ).catch((err) => {
+  }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
     res.json({ error: err });  // send JSON object with error 
@@ -87,61 +91,90 @@ router.post('/users/:userId/jobs/:jobId', function(req, res) {
 
 });
 
-// get all todos
-router.get('/todos', function(req, res) {
-  models.Todo.findAll({}).then(function(todos) {
-    res.json(todos);
-  });
-});
+// 5) GET - gets all contacts for on user
+router.get('/contacts/:userId/', function(req, res) {
 
-// get single todo
-router.get('/todo/:id', function(req, res) {
-  models.Todo.find({
+  models.Contact.findAll({
     where: {
-      id: req.params.id
+      UserId: req.params.userId
     }
-  }).then(function(todo) {
-    res.json(todo);
-  });
+  }).then((contacts) => {
+    res.json(contacts);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error     
+  })
+
 });
 
-// add new todo
-router.post('/todos', function(req, res) {
-  models.Todo.create({
-    title: req.body.title,
-    UserId: req.body.user_id
-  }).then(function(todo) {
-    res.json(todo);
-  });
-});
 
-// update single todo
-router.put('/todo/:id', function(req, res) {
-  models.Todo.find({
+// 6) POST - adds a new contact for a user and a company
+
+router.post('/contacts/:userId/:jobId', function(req, res) {
+
+  models.Contact.findAll({
     where: {
-      id: req.params.id
+      UserId: req.params.userId
     }
-  }).then(function(todo) {
-    if(todo){
-      todo.updateAttributes({
-        title: req.body.title,
-        complete: req.body.complete
-      }).then(function(todo) {
-        res.send(todo);
-      });
-    }
-  });
+  }).then((contacts) => {
+    res.json(contacts);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error     
+  })
+
 });
 
-// delete a single todo
-router.delete('/todo/:id', function(req, res) {
-  models.Todo.destroy({
-    where: {
-      id: req.params.id
-    }
-  }).then(function(todo) {
-    res.json(todo);
-  });
-});
+// // get single todo
+// router.get('/todo/:id', function(req, res) {
+//   models.Todo.find({
+//     where: {
+//       id: req.params.id
+//     }
+//   }).then(function(todo) {
+//     res.json(todo);
+//   });
+// });
+
+// // add new todo
+// router.post('/todos', function(req, res) {
+//   models.Todo.create({
+//     title: req.body.title,
+//     UserId: req.body.user_id
+//   }).then(function(todo) {
+//     res.json(todo);
+//   });
+// });
+
+// // update single todo
+// router.put('/todo/:id', function(req, res) {
+//   models.Todo.find({
+//     where: {
+//       id: req.params.id
+//     }
+//   }).then(function(todo) {
+//     if(todo){
+//       todo.updateAttributes({
+//         title: req.body.title,
+//         complete: req.body.complete
+//       }).then(function(todo) {
+//         res.send(todo);
+//       });
+//     }
+//   });
+// });
+
+// // delete a single todo
+// router.delete('/todo/:id', function(req, res) {
+//   models.Todo.destroy({
+//     where: {
+//       id: req.params.id
+//     }
+//   }).then(function(todo) {
+//     res.json(todo);
+//   });
+// });
 
 module.exports = router;

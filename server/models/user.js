@@ -3,8 +3,7 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
-    firstname:  DataTypes.STRING,
-    lastname:   DataTypes.STRING,
+    name:       DataTypes.STRING,  // later I would like to change to firstame & last name
     email:      DataTypes.STRING,
     address:    DataTypes.STRING,
     city:       DataTypes.STRING,
