@@ -74,8 +74,11 @@ for (var i = 0; i < 10; i++) {
 
 // select some parameters based on what I send in:
 
-db['User'].getParameters({id: 5}).then(function(result){
-  console.log('result!: ', result);
+db['User'].find({id: 3}).then(function(user){
+  user.getParameters().then(function(parameter){
+    var p1 = parameter[0];
+    console.log(p1.userparameter.descriptor);
+  });
 });
 
 // Find all projects with a least one task where task.state === project.task

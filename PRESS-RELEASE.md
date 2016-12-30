@@ -18,27 +18,28 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
+  Callback
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-
+  Find the job you want,  quicker....
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-
+  Callback is the premier programmers job search tool.  The program guides you through every phase of your job search --  it locates jobs,  identifies industry events, reminds you of your upcoming tasks, schedueles events on your calendar, and provides advanced algorithmic statistics on your job search.
 ## Problem ##
   > Describe the problem your product solves.
-
+  This product will facilitate the job search and dramatically increase the effectiveness of your outreach through our statical analysis and comparison of your activities to other job seekerss
 ## Solution ##
   > Describe how your product elegantly solves the problem.
-
+  This product provides a cloud based solution that will identify potenital jobs, and walk the applicant through the process, providing remonders and tips on best practices. The user has three distinct ways to interact with their data,  a web page, a mobile app and a sidebar for google mail. Each unit provides the a distinct level of engagement for the client.
 ## Quote from You ##
   > A quote from a spokesperson in your company.
-
+  Job seekers have been searching for a way to effectively manage their job search for some time.  Until now,  they have had to piece meal their organizational efforts,  with the arrival of Callback,  our customers will now have one central repository for their job search.  Customers will find the job they want quicker
 ## How to Get Started ##
   > Describe how easy it is to get started.
-
+  Users can set up an account and enter in job preferences, locations and job level in ust two pages.  once that is started,  job opportunities will start rolling in.  Our customers can filter through their job options and hone in on the perfect job for them.
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-
+ "I couldnt believe how easy it was to get my job search going,  for a log time I was intimidated by the complexity of the job search process,  but this application made it so easy for me to start by answering a few simple questions and then telling it what i liked and what i didn't like."
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.

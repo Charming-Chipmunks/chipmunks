@@ -1,0 +1,28 @@
+//config.json
+
+// {
+//   "development": 
+  {
+    "username": "root",
+    "password": "root",
+    "database": "todos",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "mysql"
+  }
+//   ,
+//   "test": {
+//     "username": "update me",
+//     "password": "update me",
+//     "database": "update_me",
+//     "host": "update me",
+//     "dialect": "update me"
+//   },
+//   "production": {
+//     "username": "update me",
+//     "password": "update me",
+//     "database": "update me",
+//     "host": "update me",
+//     "dialect": "update me"
+//   }
+// }
