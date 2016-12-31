@@ -16,7 +16,7 @@ var models = require('../models/index');
 // });
 
 
-// 1) returns the basic info for one user based on their ID 
+// USER - get info for one user
 router.get('/users/:userId', function(req, res) {
   models.User.find({
     where: {
@@ -31,7 +31,7 @@ router.get('/users/:userId', function(req, res) {
   });
 });
 
-// 2) POST adds one user to the
+// 2) USER - POST adds one user to the
 // note:  use x-www-form-urlencoded when send req.body data
 router.post('/users/create', function(req, res) {
 
@@ -53,7 +53,7 @@ router.post('/users/create', function(req, res) {
 
 });
 
-// 3) Gets a list of all jobs a user has favorited
+// 3) USER - Gets a list of all jobs a user has favorited
 // the key of this query is the include: [models.Job]
 
 router.get('/jobs/:userId', function(req, res) {
@@ -75,7 +75,7 @@ router.get('/jobs/:userId', function(req, res) {
 
 
 
-// 4) POST - Adds a job to a users favorite list 
+// 4) USER - POST - Adds a job to a users favorite list 
 // this is working in postman 
 router.post('/users/:userId/jobs/:jobId', function(req, res) {
 
@@ -156,6 +156,47 @@ router.get('/location/:userId', function(req, res) {
   });
 
 });
+
+// PARAMETER - GET A LIST OF ALL PARAMETERS FOR A USER
+
+router.get('/parameter/:userId', function(req, res) {
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    },
+    include: [models.Parameter]
+  }).then((parameter) => {
+    res.json(parameter);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error 
+  });
+
+});
+
+// PARAMETER - ADD A USER TO USERPARAMER TABLE
+// Add a location to UserLocation join table
+// working in postman
+router.post('/users/:userId/parameter/:parameterId', function(req, res) {
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    }
+  }).then((user) => {
+    user.addParameters(req.params.parameterId);
+    res.json(user);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error     
+  });
+
+});
+
+
 
 // 5) GET - gets all contacts for on user
 router.get('/contacts/:userId/', function(req, res) {
