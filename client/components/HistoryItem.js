@@ -6,7 +6,6 @@ import { observer } from 'mobx-react';
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    var action = this.props.action;
     this.state = { status: false };
   }
 
@@ -22,7 +21,11 @@ import { observer } from 'mobx-react';
     }
   }
 
-  handleClick() {}
+  handleClick() {
+    if(this.props.action.action === email){
+
+    }
+  }
 
   render() {
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
@@ -34,6 +37,8 @@ import { observer } from 'mobx-react';
         </div>
         }
         {moment(time).from(moment())}
+        <br/>
+        <img src='https://puu.sh/t6VbF/f01ab2fd8e.png' />
         action {this.props.action.action}
         <br/>
         actionType {this.props.action.actionType};
