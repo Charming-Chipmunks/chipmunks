@@ -1,5 +1,5 @@
 .done{
-  color: green;
+
 }
 
 .overdue{
@@ -7,5 +7,5 @@
 }
 
 .todo {
-  color: yellow;
+  color: green;
 }

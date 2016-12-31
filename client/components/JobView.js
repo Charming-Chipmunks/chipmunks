@@ -17,18 +17,21 @@ import JobContacts from './JobContacts';
     return (
       <div className='jobview'>
         <div>
-          <p> {job.companyName} </p>
+          <p><a href={'http://maps.google.com/?q=' + job.companyName}> {job.companyName}</a>  </p>
           <p> {job.positionName} </p>
           <p> {job.details} </p>
         </div>
+        --------------------------------------------------------------------------------------------------
         <div className='historyList'>
         {historyList.map ((action, index) =>{
           action = mobx.toJS(action);
           return <HistoryItem action={action} key={index}/>;
         })}
         </div>
+        --------------------------------------------------------------------------------------------------
         <div className="contacts">
           <JobContacts contacts={contacts} />
+          --------------------------------------------------------------------------------------------------
         </div>
       </div>
     );
