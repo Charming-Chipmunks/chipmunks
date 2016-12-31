@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 require('dotenv').config();
 
 var app = express();
@@ -22,6 +23,8 @@ app.get('/grandmasterp', function(req, res) {
 app.get('/j', function(req, res) {
   res.redirect('http://jobz.mooo.com:8000');
 });
+
+app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 app.get('*', function(req, res) {
   res.send('Hello World' + process.env.PORT);
