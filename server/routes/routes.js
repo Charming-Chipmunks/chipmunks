@@ -58,10 +58,11 @@ router.post('/users/create', function(req, res) {
 // 3) Gets a list of all jobs a user has favorited
 router.get('/jobs/:userId', function(req, res) {
 
-  models.UserJobs.find({
+  models.User.find({
     where: {
       id: req.params.userId
-    }
+    },
+    include: [models.Job]
   }).then((user) => {
     res.json(user);
   }).catch((err) => {
@@ -74,7 +75,8 @@ router.get('/jobs/:userId', function(req, res) {
 
 
 
-// 4) POST - Adds a job to a users favorite list  
+// 4) POST - Adds a job to a users favorite list 
+// this is working in postman 
 router.post('/users/:userId/jobs/:jobId', function(req, res) {
 
   models.User.find({
@@ -92,6 +94,8 @@ router.post('/users/:userId/jobs/:jobId', function(req, res) {
   });
 
 });
+
+
 
 // 5) GET - gets all contacts for on user
 router.get('/contacts/:userId/', function(req, res) {
