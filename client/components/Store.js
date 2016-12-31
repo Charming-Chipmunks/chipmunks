@@ -45,9 +45,9 @@ class Store {
     }, {
       scheduledTime: '2016-12-26 16:30:30',
       completedTime: null,
-      action: 'email',
+      action: 'phone',
       actionType: 'recommendation',
-      actionDetails: 'Send a reply to OVERDUE'
+      actionDetails: 'Call a reply to OVERDUE'
     }]
   };
 }

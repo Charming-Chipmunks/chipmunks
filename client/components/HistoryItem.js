@@ -6,7 +6,10 @@ import { observer } from 'mobx-react';
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = { status: false };
+    this.state = {
+      status: false,
+      link: ''
+    };
   }
 
   componentWillMount() {
@@ -19,12 +22,15 @@ import { observer } from 'mobx-react';
     } else {
       this.state.status = 'overdue';
     }
+
+    if (this.props.action.action === 'email') {
+      this.state.link = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
+    } else if (this.props.action.action === 'phone') {
+      this.state.link = 'https://puu.sh/t6VwW/ab509518d2.png';
+    }
   }
 
   handleClick() {
-    if(this.props.action.action === email){
-
-    }
   }
 
   render() {
@@ -38,7 +44,7 @@ import { observer } from 'mobx-react';
         }
         {moment(time).from(moment())}
         <br/>
-        <img src='https://puu.sh/t6VbF/f01ab2fd8e.png' />
+        <img src={this.state.link}/>
         action {this.props.action.action}
         <br/>
         actionType {this.props.action.actionType};
