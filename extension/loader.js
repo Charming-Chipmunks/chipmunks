@@ -7,11 +7,11 @@ console.log('loading content script');
 
 //After six seconds, currentUser is updated with data
 //from a different file.
-setTimeout(function() {
-  console.log(Store.currentUser);
-  Store.updateUser('other other user');
-  console.log(Store.currentUser);
-}, 6000);
+// setTimeout(function() {
+//   console.log(Store.currentUser);
+//   Store.currentUser = 'Fi Fi Fo Fum';
+//   console.log(Store.currentUser);
+// }, 6000);
 
 var insertWhenReady = function() {
   var emails = document.getElementsByClassName('Tm')[0];
