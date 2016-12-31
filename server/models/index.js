@@ -8,7 +8,7 @@ var basename  = path.basename(module.filename);
 var db        = {};
 var Faker     = require('faker');
 
-var sequelize = new Sequelize('nexus4', 'root', 'root',   {
+var sequelize = new Sequelize('nexus5', 'root', 'root',   {
     dialect: 'mysql',
     host: 'localhost'
   });
@@ -35,61 +35,118 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
-//  fake seed data for Jobs table
-// for (var i = 0; i < 40; i++) {
-//   db['Job'].create({
-//     jobTitle:   Faker.company.bs() + ' programmer',  //DataTypes.STRING,
-//     company:    Faker.company.companyName(),
-//     url:        Faker.internet.domainName(), 
-//     address:    Faker.address.streetAddress(),
-//     city:       Faker.address.city(),
-//     state:      Faker.address.state(),
-//     formatted_location: 'formstted location',
-//     snippet:    Faker.lorem.sentences(), // need to check on how long a String is
-//     source:     Faker.company.companyName(),
-//     jobkey:     'job key' + Math.random() * 1000,
-//     expires:    Faker.date.future(),
-//     latitude:   Math.random() * 10000,  // i think we need decimal for lat / long
-//     longitude:  Math.random() * 10000 
-//   }).then((job) =>{
-//     console.log(job.jobTitle + ' successfully made');
-//   }).catch((err) => {
-//     console.error(err);
-//   });
-// }
+ //fake seed data for Jobs table
+for (var i = 0; i < 40; i++) {
+  db['Job'].create({
+    jobTitle:   Faker.company.bs() + ' programmer',  //DataTypes.STRING,
+    company:    Faker.company.companyName(),
+    url:        Faker.internet.domainName(), 
+    address:    Faker.address.streetAddress(),
+    city:       Faker.address.city(),
+    state:      Faker.address.state(),
+    formatted_location: 'formstted location',
+    snippet:    Faker.lorem.sentences(), // need to check on how long a String is
+    source:     Faker.company.companyName(),
+    jobkey:     'job key' + Math.random() * 1000,
+    expires:    Faker.date.future(),
+    latitude:   Math.random() * 10000,  // i think we need decimal for lat / long
+    longitude:  Math.random() * 10000 
+  }).then((job) =>{
+    console.log('Job Created :', job.jobTitle);
+  }).catch((err) => {
+    console.error(err);
+  });
+}
 
-// seeding the database
-// PROBLEM HERE IS THAT I HAVE ALREADY BUILT THE DB,  SO WHEN I CHANGED COLUMS,  IT DIDNT LIKE IT
 
-// for (var i = 0; i < 10; i++) {
-//   db['User'].create({
-//     name:  Faker.name.firstName(),
-//     email:      Faker.internet.email(),
-//     address:    Faker.address.streetAddress(),
-//     city:       Faker.address.city(),
-//     state:      Faker.address.state(),
-//     zip:        99999 
+// seeding Parameter Table
+var list = ['javascript', 'C++', 'php', 'HTML', 'jQuery', 'Rails', 'Ruby', 'React', 'Angular', 'MongoDB', 'SQL', 'Front End'];
 
-//   }).then(function(user){
-//     console.log(user.dataValues.email);
+for (var j = 0; j < list.length; j++ ){
+  db['Parameter'].create({
+    descriptor: list[j]
+  }).then(function(parameter){
+    console.log('Parameter Created : ', parameter.descriptor);
+  }).catch((err) => {
+    console.error(err);
+  });
+}
 
-//     // initializing Many to Many relationship;
-//     for (var j = 0; j < 2; j++){
-//       var list = ['javascript', 'C++', 'php', 'HTML', 'jQuery', 'Rails', 'Ruby', 'React', 'Angular'];
-//       var name = list[Math.floor(Math.random() * 9)];
-//       db['Parameter'].create({
-//         descriptor: name
-//       }).then(function(parameter){
-//         console.log('parameter descriptor: ', parameter.dataValues.descriptor);
-//         user.addParameters(parameter);
-//       }).catch((err) => {
-//         console.error(err);
-//       })
-//     }
-//   }).catch(function(err){
-//     console.error(err);
-//   });
-// }
+// seeding User Table
+for (var i = 0; i < 50; i++) {
+  db['User'].create({
+    firstname:  Faker.name.firstName(),
+    lastname:   Faker.name.lastName(),
+    email:      Faker.internet.email(),
+    address:    Faker.address.streetAddress(),
+    city:       Faker.address.city(),
+    state:      Faker.address.state(),
+    zip:        Math.random() * 10000 
+
+  }).then(function(user){
+    console.log('User Created : ', user.firstname);
+  }).catch((err) => {
+    console.error(err);
+  });
+}
+
+// seeding Location Table
+for (var i = 0; i < 5; i++) {
+  db['Location'].create({
+    city:     Faker.address.city(),
+    state:    Faker.address.state(),
+    zipCode:  Math.random() * 10000,
+    radius:   Math.random() * 50
+
+  }).then(function(location){
+    console.log('Location Created : ', location.city);
+  }).catch((err) => {
+    console.error(err);
+  });
+}
+
+// seeding Contacts Table
+for (var i = 0; i < 5; i++) {
+  db['Contact'].create({
+    firstname:    Faker.name.firstName(),
+    lastname:     Faker.name.lastName(),
+    email:        Faker.internet.email(),
+    mobilePhone:  Faker.phone.phoneNumber(),
+    workPhone:    Faker.phone.phoneNumber()
+
+  }).then(function(contact){
+    console.log('Contact Created : ', contact.firstname);
+  }).catch((err) => {
+    console.error(err);
+  });
+}
+
+// seeding Actions Table
+
+var actions = [
+  'submit resume', 
+  'look for contacts on linked in', 
+  'attend meetup event', 
+  'send thankyou email', 
+  'review daily jobs',
+  'coffee chat',
+  'prepare for interview',
+  'interview follow up'
+  ];
+
+for (var i = 0; i < 5; i++) {
+  db['Action'].create({
+    type:           actions[i], //Math.floor(Math.random() * 8 )],
+    description:    Faker.lorem.words(),
+    scheduledTime:  Faker.date.future(),
+    completedTime:   Faker.date.future()
+
+  }).then(function(action){
+    console.log('Action Created : ', action.type);
+  }).catch((err) => {
+    console.error(err);
+  });
+}  
 
 // // select some parameters based on what I send in:
 
@@ -101,13 +158,6 @@ Object.keys(db).forEach(function(modelName) {
 //   });
 // });
 
-// Find all projects with a least one task where task.state === project.task
-// Project.findAll({
-//     include: [{
-//         model: Task,
-//         where: { state: Sequelize.col('project.state') }
-//     }]
-// })
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

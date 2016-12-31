@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         // the belongsToMnay relationshis has to be defined in each file
         // and the name of the join table needs to be specified in the through object
         Parameter.belongsToMany(models.User, {through: 'UserParameter'});
+        Parameter.belongsToMany(models.Job, {through: 'JobParameter'});
       }
     }
   });

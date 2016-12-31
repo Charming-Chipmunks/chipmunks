@@ -6,8 +6,8 @@ module.exports = function(sequelize, DataTypes) {
   var Action = sequelize.define('Action', {
     type:           DataTypes.STRING,
     description:    DataTypes.STRING,
-    scheduledTime:  DataTypes.STRING,
-    completedTime:   DataTypes.STRING
+    scheduledTime:  DataTypes.DATE,
+    completedTime:  DataTypes.DATE
   }, {
     classMethods: {
       associate: function(models) {
