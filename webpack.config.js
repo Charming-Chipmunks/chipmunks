@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    client: './client/components/web.js',
+    client: './client/components/webIndex.js',
     extension: './extension/loader.js'
   },
   output: {

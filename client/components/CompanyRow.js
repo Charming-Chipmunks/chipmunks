@@ -8,7 +8,7 @@ import { Link } from 'react-router';
   }
   render() {
     return (<div>
-      <Link to={this.props.company.name}>
+      <Link to={'company'}>
       {this.props.company.name}
       </Link>
       </div>);
