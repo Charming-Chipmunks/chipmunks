@@ -1,15 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+import { Link } from 'react-router';
 
-
-class CompanyRow extends React.Component {
+@observer class CompanyRow extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (<div>
+      <Link to={this.props.company.name}>
       {this.props.company.name}
-      </div>
-    );
+      </Link>
+      </div>);
   }
 }
 export default CompanyRow;

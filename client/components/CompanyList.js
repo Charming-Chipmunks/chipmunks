@@ -15,7 +15,6 @@ import CompanyRow from './CompanyRow';
       <div>
     {list.map((company,index) => {
       company = mobx.toJS(company);
-      // console.log(Store.filterText.text.toLowerCase());
       if(company.name.toLowerCase().includes(Store.filterText.text.toLowerCase())){
       return <CompanyRow company={company} key={index} />
       }

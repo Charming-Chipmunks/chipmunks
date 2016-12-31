@@ -10,7 +10,7 @@ import Store from './Store';
 
   onSave(e) {
     e.preventDefault();
-    console.log(Store.params);
+    console.log(mobx.toJS(Store.params));
     //update or send new params to server
   };
 
@@ -20,8 +20,8 @@ import Store from './Store';
   };
 
   setS(e) {
-    console.log(e);
-      console.log(e.value);
+    console.log(e.target);
+      // console.log(e.value);
       //find where the value really is
     };
     //CURRENT ERRORS. CHANGE CITY -> CLICKING CHECKBOXES
@@ -70,7 +70,8 @@ import Store from './Store';
         />
         <br/>
         City <input type="text" ref='city' onChange={this.setC.bind(this)} value={Store.params.city} />
-        State <select ref='state' onChange={this.setS.bind(this)}>
+        State <select ref='state' onChange={this.setS.bind(this.value)}>
+            <option value="Choose State"  disabled>Choose State</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>
