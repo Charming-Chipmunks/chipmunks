@@ -34,8 +34,6 @@ router.get('/users/:userId', function(req, res) {
 // 2) POST adds one user to the
 // note:  use x-www-form-urlencoded when send req.body data
 router.post('/users/create', function(req, res) {
-  
-  console.log('req body: ', req.body.name);
 
   models.User.create({
     name:     req.body.name,
@@ -56,6 +54,8 @@ router.post('/users/create', function(req, res) {
 });
 
 // 3) Gets a list of all jobs a user has favorited
+// the key of this query is the include: [models.Job]
+
 router.get('/jobs/:userId', function(req, res) {
 
   models.User.find({
@@ -95,7 +95,67 @@ router.post('/users/:userId/jobs/:jobId', function(req, res) {
 
 });
 
+// LOCATION - ADD A USER TO USERLOCATION TABLE
+// Add a location to UserLocation join table
+// working in postman
+router.post('/users/:userId/location/:locationId', function(req, res) {
 
+  models.User.find({
+    where: {
+      id: req.params.userId
+    }
+  }).then((user) => {
+    user.addLocations(req.params.locationId);
+    res.json(user);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error     
+  });
+
+});
+
+// LOCATION - ADD A LOCATION TO THE LOACTION TABLE
+// working in postman
+router.post('/location/create', function(req, res) {
+
+  console.log(req.body.city);
+
+  models.Location.create({
+    city:     req.body.city,
+    state:    req.body.state,
+    zipCode:  req.body.zip,
+    radius:   req.body.radius
+  }).then((location) => {
+    res.status(200);
+    res.send(location);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error 
+  });
+
+});
+
+// LOCATION - GET ALL LOCATIONS FOR ONE USER
+// working in Postman
+
+router.get('/location/:userId', function(req, res) {
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    },
+    include: [models.Location]
+  }).then((location) => {
+    res.json(location);
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error 
+  });
+
+});
 
 // 5) GET - gets all contacts for on user
 router.get('/contacts/:userId/', function(req, res) {
