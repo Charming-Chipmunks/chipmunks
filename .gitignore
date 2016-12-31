@@ -4,6 +4,8 @@
 logs
 *.log
 
+**/*bundle.js
+
 .env
 
 # Runtime data
@@ -21,8 +23,8 @@ coverage
 .grunt
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
-build/
-client/dist/
+#build/
+#client/dist/
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
