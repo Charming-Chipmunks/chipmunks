@@ -1,0 +1,184 @@
+// outpout from the FullContact Company api
+// curl -H "X-FullContact-APIKey:2f7c4ffb3232880a" 'https://api.fullcontact.com/v2/company/lookup.json?domain=fullcontact.com'
+
+{
+  "status" : 200,
+  "requestId" : "dec1c9d4-b0be-40c1-a766-176e46548c0b",
+  "category" : [ {
+    "name" : "Other",
+    "code" : "OTHER"
+  } ],
+  "logo" : "https://d2ojpxxtu63wzl.cloudfront.net/static/1bacd7306731a30d2a9f024eeb1dcff1_94d77dcdedbfe40707ac4a75ca4f4d2978bffc20b2e33a3288ea9e4d47f5af6c",
+  "website" : "https://www.fullcontact.com",
+  "languageLocale" : "en",
+  "organization" : {
+    "name" : "FullContact Inc.",
+    "approxEmployees" : 150,
+    "founded" : "2010",
+    "overview" : "Solving the world's contact information problem!",
+    "contactInfo" : {
+      "emailAddresses" : [ {
+        "value" : "support@fullcontact.com",
+        "label" : "support"
+      }, {
+        "value" : "sales@fullcontact.com",
+        "label" : "sales"
+      }, {
+        "value" : "team@fullcontact.com",
+        "label" : "other"
+      }, {
+        "value" : "pleasereply@fullcontact.com",
+        "label" : "other"
+      } ],
+      "phoneNumbers" : [ {
+        "number" : "+1 (888) 330-6943",
+        "label" : "other"
+      } ],
+      "addresses" : [ {
+        "addressLine1" : "1755 Blake Street",
+        "addressLine2" : "Suite 450",
+        "locality" : "Denver",
+        "region" : {
+          "name" : "Colorado",
+          "code" : "CO"
+        },
+        "country" : {
+          "name" : "United States",
+          "code" : "US"
+        },
+        "postalCode" : "80202",
+        "label" : "work"
+      } ]
+    },
+    "links" : [ {
+      "url" : "https://www.fullcontact.com/blog",
+      "label" : "blog"
+    }, {
+      "url" : "https://www.youtube.com/watch?v=RnltbT0BKMo",
+      "label" : "youtube"
+    }, {
+      "url" : "https://www.fullcontact.com/comments/feed",
+      "label" : "rss"
+    }, {
+      "url" : "https://www.fullcontact.com/feed",
+      "label" : "rss"
+    }, {
+      "url" : "https://www.fullcontact.com/home/feed",
+      "label" : "rss"
+    }, {
+      "url" : "https://www.fullcontact.com/developer",
+      "label" : "other"
+    } ],
+    "images" : [ {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/5bee1d198db52e6428e3ca23fb6d41cb_462711e9474af8cdbf5dfd177785c3fc13cbe95d271b6ac30a5f4fcc0a2d1ca3",
+      "label" : "facebook"
+    }, {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/1c390465c39c998a59c8717034982dfc_ff8af9a9f14da29ee687053e65d2ed103b8ab6f95b1f4d0147b9077ea04a3d6c",
+      "label" : "facebook"
+    }, {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/ee07ac81180408fde663426d3b0afb3f_3a1154347631c037b9bd2b2f33d4cbc8511d58f5c11ad3cbbc319957d1a5149b",
+      "label" : "pinterest"
+    }, {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/91a060eb8afdbd9c89fe23ed3a658a84_c1315c9e876cb92fee969e95c92e5fc5930d1b8f5d563d34b5e6fc4c58d8fa7e",
+      "label" : "logo"
+    }, {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/4c1d5bdcea5612a206ba2573d5f459cf_b9ac649579685df0f8240be77db8ae57e20569a63521f9419c48cb98031bfe50",
+      "label" : "other"
+    }, {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/2ab4d453f220d5d33558a29b95d5ef28_b151428e2f8f7f87ca0b7f870eb1799c23598700baab75c45cfb8de2810cf30f",
+      "label" : "logo"
+    }, {
+      "url" : "https://d2ojpxxtu63wzl.cloudfront.net/static/33739df1ce824fd2d2669211ed682196_8d3b1c8ce64909d95c1274bf9ed70ef3ae98e71ef58337e87bb2d19780dafcad",
+      "label" : "other"
+    } ],
+    "keywords" : [ "Apple", "Apps", "Books", "CRM", "Colorado", "Contact Management", "Developer APIs", "Finance", "Gmail", "Google", "Management", "Public Relations", "SAAS", "Social Media", "Software", "Web Development" ]
+  },
+  "socialProfiles" : [ {
+    "typeId" : "facebook",
+    "typeName" : "Facebook",
+    "url" : "https://www.facebook.com/FullContactAPI"
+  }, {
+    "typeId" : "facebook",
+    "typeName" : "Facebook",
+    "url" : "https://www.facebook.com/fullcontact"
+  }, {
+    "bio" : "We help you to stay fully connected, master your contacts, and be awesome with people.",
+    "followers" : 7003,
+    "following" : 1958,
+    "typeId" : "twitter",
+    "typeName" : "Twitter",
+    "url" : "https://twitter.com/FullContact",
+    "username" : "FullContact",
+    "id" : "142954090"
+  }, {
+    "bio" : "FullContact's address book brings all of your contacts into one place and keeps them automatically up to date on the web, as well as on your iPhone and iPad. \n\nAdd photos to your contacts. Find them on social networks like Twitter, Facebook, LinkedIn and of course AngelList. It's the address book that busy professionals from any walk of life can appreciate, and best of all it's free. \n\nFor developers, the suite of FullContact APIs builds powerful, complete profiles of contacts that can be included in any application.",
+    "followers" : 285,
+    "typeId" : "angellist",
+    "typeName" : "AngelList",
+    "url" : "https://angel.co/fullcontact",
+    "username" : "fullcontact",
+    "id" : "1748"
+  }, {
+    "typeId" : "crunchbasecompany",
+    "typeName" : "CrunchBase",
+    "url" : "http://www.crunchbase.com/organization/fullcontact",
+    "username" : "fullcontact"
+  }, {
+    "bio" : "FullContact is the API that keeps contact information current. We build APIs that developers can integrate into their applications using any language.",
+    "followers" : 28,
+    "following" : 55,
+    "typeId" : "pinterest",
+    "typeName" : "Pinterest",
+    "url" : "http://www.pinterest.com/fullcontact/",
+    "username" : "fullcontact"
+  }, {
+    "bio" : "All your contacts in one place and automatically up-to-date.  Learn more about how we're solving the world's contact information problem at https://www.fullcontact.com.",
+    "followers" : 1061,
+    "typeId" : "google",
+    "typeName" : "GooglePlus",
+    "url" : "https://plus.google.com/107620035082673219790",
+    "id" : "107620035082673219790"
+  }, {
+    "typeId" : "klout",
+    "typeName" : "Klout",
+    "url" : "http://klout.com/FullContact",
+    "username" : "FullContact",
+    "id" : "32651102063581374"
+  }, {
+    "typeId" : "youtube",
+    "typeName" : "YouTube",
+    "url" : "https://youtube.com/user/FullContactAPI",
+    "username" : "FullContactAPI"
+  }, {
+    "typeId" : "youtube",
+    "typeName" : "YouTube",
+    "url" : "https://youtube.com/user/fullcontact",
+    "username" : "fullcontact"
+  }, {
+    "bio" : "FullContact is the most powerful fully-connected contact management platform for professionals and enterprises who need to master their contacts and be awesome with people. FullContact's cross-platform suite of Apps and APIs enhance contacts with insights, while keeping them organized, synchronized, up to date, and safe.",
+    "typeId" : "linkedincompany",
+    "typeName" : "LinkedIn",
+    "url" : "https://www.linkedin.com/company/fullcontact-inc-",
+    "username" : "fullcontact-inc-",
+    "id" : "2431118"
+  } ],
+  "traffic" : {
+    "topCountryRanking" : [ {
+      "rank" : 10306,
+      "locale" : "us"
+    }, {
+      "rank" : 7136,
+      "locale" : "gb"
+    }, {
+      "rank" : 28795,
+      "locale" : "in"
+    } ],
+    "ranking" : [ {
+      "rank" : 26972,
+      "locale" : "global"
+    }, {
+      "rank" : 10306,
+      "locale" : "us"
+    } ]
+  }
+}

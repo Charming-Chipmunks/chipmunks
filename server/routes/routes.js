@@ -23,7 +23,13 @@ router.get('/users/:userId', function(req, res) {
       id: req.params.userId
     }
   }).then(function(user){
+    // need to extend the error handling to the rest of the routed
+    if(!user){
+      res.status(404);
+      res.json({});
+    } else {
     res.json(user);
+    }
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
@@ -84,8 +90,7 @@ router.post('/users/:userId/jobs/:jobId', function(req, res) {
       id: req.params.userId
     }
   }).then((user) => {
-    user.addJobs(req.params.jobId); // not sure if it is better to just add the Job ID here or querry
-    // to locate the job and then query
+    user.addJobs(req.params.jobId);
     res.json(user);
   }).catch((err) => {
     console.error(err);        // log error to standard error
@@ -197,63 +202,45 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 });
 
 
+// below is on hold until I work out rest ofthe workflow
 
-// 5) GET - gets all contacts for on user
-router.get('/contacts/:userId/', function(req, res) {
+// // 5) GET - gets all contacts for on user
+// router.get('/contacts/:userId/', function(req, res) {
 
-  models.Contact.findAll({
-    where: {
-      UserId: req.params.userId
-    }
-  }).then((contacts) => {
-    res.json(contacts);
-  }).catch((err) => {
-    console.error(err);        // log error to standard error
-    res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
-  })
-
-});
-
-
-// 6) POST - adds a new contact for a user and a company
-
-router.post('/contacts/:userId/:jobId', function(req, res) {
-
-  models.Contact.findAll({
-    where: {
-      UserId: req.params.userId
-    }
-  }).then((contacts) => {
-    res.json(contacts);
-  }).catch((err) => {
-    console.error(err);        // log error to standard error
-    res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
-  })
-
-});
-
-// // get single todo
-// router.get('/todo/:id', function(req, res) {
-//   models.Todo.find({
+//   models.Contact.findAll({
 //     where: {
-//       id: req.params.id
+//       UserId: req.params.userId
 //     }
-//   }).then(function(todo) {
-//     res.json(todo);
-//   });
+//   }).then((contacts) => {
+//     res.json(contacts);
+//   }).catch((err) => {
+//     console.error(err);        // log error to standard error
+//     res.status(500);           // categorize as a Internat Server Error
+//     res.json({ error: err });  // send JSON object with error     
+//   })
+
 // });
 
-// // add new todo
-// router.post('/todos', function(req, res) {
-//   models.Todo.create({
-//     title: req.body.title,
-//     UserId: req.body.user_id
-//   }).then(function(todo) {
-//     res.json(todo);
-//   });
+
+// // 6) POST - adds a new contact for a user and a company
+
+// router.post('/contacts/:userId/:jobId', function(req, res) {
+
+//   models.Contact.findAll({
+//     where: {
+//       UserId: req.params.userId
+//     }
+//   }).then((contacts) => {
+//     res.json(contacts);
+//   }).catch((err) => {
+//     console.error(err);        // log error to standard error
+//     res.status(500);           // categorize as a Internat Server Error
+//     res.json({ error: err });  // send JSON object with error     
+//   })
+
 // });
+
+
 
 // // update single todo
 // router.put('/todo/:id', function(req, res) {
