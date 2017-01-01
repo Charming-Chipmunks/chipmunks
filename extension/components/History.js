@@ -58,14 +58,23 @@ var History = observer((props) => {
       </div>
       <div>History:</div><br />
       <div>
-        {history.filter(record => record.actionType === 'userInteraction' || (record.actionType === 'recommendation' && record.completedTime)).map((record, i) => (
-          <div key={i}>
-            <div>Completed at {record.completedTime}</div>
-            <div>{record.action}</div>
-            <div>{record.actionDetails}</div>
-            <hr />
-          </div>
-        ))}
+        {history.filter(record => record.actionType === 'userInteraction' || (record.actionType === 'recommendation' && record.completedTime)).map((record, i) => {
+          if (record.action === 'email') {
+            var taskIcon = emailIcon;
+          } else if (record.action === 'phone') {
+            var taskIcon = phoneIcon;
+          } 
+
+          return (
+            <div key={i}>
+              <img src={taskIcon} />
+              <div>Completed at {record.completedTime}</div>
+              <div>{record.action}</div>
+              <div>{record.actionDetails}</div>
+              <hr />
+            </div>
+          )
+        })}
       </div>
     </div>
   );

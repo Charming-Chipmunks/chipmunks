@@ -48,7 +48,7 @@ class Store {
         }, {
           scheduledTime: '2017-01-11 13:30:30',
           completedTime: null,
-          action: 'email',
+          action: 'phone',
           actionType: 'recommendation',
           actionDetails: 'Send a reply to TODO'
         }, {
