@@ -19,13 +19,6 @@ var History = observer((props) => {
     Store.job.history[i] = newTask;
   };
 
-  var unmarkCompleted = function(record) {
-    //TODO: update database
-    var i = history.indexOf(record);
-    var newTask = Object.create(record);
-    newTask.completedTime = null;
-    Store.job.history[i] = newTask;
-  };
   return (
     <div>
       <div>{Store.job.companyName}</div>
@@ -33,7 +26,7 @@ var History = observer((props) => {
       <hr />
       <div>Tasks:</div><br />
       <div>
-        {history.filter(record => record.actionType === 'recommendation').map((record, i) => {
+        {history.filter(record => record.actionType === 'recommendation' && !record.completedTime).map((record, i) => {
           if (record.completedTime) {
             var taskStatus = 'task-completed';
           } else {
@@ -58,8 +51,6 @@ var History = observer((props) => {
               <div>{record.action}</div>
               <div>{record.actionDetails}</div>
               {!record.completedTime && <button onClick={() => markCompleted(record)}>Mark as Done</button>}
-              {record.completedTime && <button onClick={() => unmarkCompleted(record)}>I didn't do this yet</button>}
-              
               <hr />
             </div>
           );
@@ -67,10 +58,9 @@ var History = observer((props) => {
       </div>
       <div>History:</div><br />
       <div>
-        {history.filter(record => record.actionType === 'userInteraction').map((record, i) => (
+        {history.filter(record => record.actionType === 'userInteraction' || (record.actionType === 'recommendation' && record.completedTime)).map((record, i) => (
           <div key={i}>
-            <div>{record.scheduledTime}</div>
-            <div>{record.completedTime}</div>
+            <div>Completed at {record.completedTime}</div>
             <div>{record.action}</div>
             <div>{record.actionDetails}</div>
             <hr />
