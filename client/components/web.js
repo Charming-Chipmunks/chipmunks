@@ -19,13 +19,16 @@ var Web = @observer class Web extends React.Component {
   render() {
     return (
         <div>
-          <SelectParams />
           <SearchBar />
           <CompanyList />
-          <JobView />
+          <div className='right'>
+          {this.props.children}
+          </div>
         </div>
     );
   }
 };
 
-ReactDOM.render(<Web />, document.getElementById('web'));
+export default Web
+
+// ReactDOM.render(<Web />, document.getElementById('web'));
