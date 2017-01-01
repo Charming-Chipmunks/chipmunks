@@ -11,6 +11,22 @@ var History = observer((props) => {
   var now = new Date();
   var emailIcon = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
   var phoneIcon = 'https://puu.sh/t6VwW/ab509518d2.png';
+
+  var markCompleted = function(record) {
+    //TODO: update database
+    var i = history.indexOf(record);
+    var newTask = Object.create(record);
+    newTask.completedTime = new Date().toISOString().slice(0, 19).replace(/T/, ' ');
+    Store.job.history[i] = newTask;
+  };
+
+  var unmarkCompleted = function(record) {
+    //TODO: update database
+    var i = history.indexOf(record);
+    var newTask = Object.create(record);
+    newTask.completedTime = null;
+    Store.job.history[i] = newTask;
+  };
   return (
     <div>
       <div>{Store.job.companyName}</div>
@@ -38,10 +54,13 @@ var History = observer((props) => {
           return (
             <div key={i} className={taskStatus}>
               <img src={taskIcon} />
-              <div>{record.scheduledTime}</div>
-              <div>{record.completedTime}</div>
+              {!record.completedTime && record.scheduledTime && <div>Do by {record.scheduledTime}</div>}
+              {record.completedTime && <div>Completed at {record.completedTime}</div>}
               <div>{record.action}</div>
               <div>{record.actionDetails}</div>
+              {!record.completedTime && <button onClick={() => markCompleted(record)}>Mark as Done</button>}
+              {record.completedTime && <button onClick={() => unmarkCompleted(record)}>I didn't do this yet</button>}
+              
               <hr />
             </div>
           );
@@ -62,7 +81,5 @@ var History = observer((props) => {
     </div>
   );
 });
-
-window.mobx = mobx;
 
 export default History;

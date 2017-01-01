@@ -29,7 +29,7 @@
 }
 
 .task-completed{
-
+  font-style: italic;
 }
 
 .task-overdue{
