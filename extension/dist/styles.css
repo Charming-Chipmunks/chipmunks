@@ -28,6 +28,19 @@
   position: absolute;
 }
 
+.nav-tab {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.nav-tab:hover, .nav-tab-active {
+  background-color: red;
+  color: white;
+}
+
 .task-completed{
   font-style: italic;
 }

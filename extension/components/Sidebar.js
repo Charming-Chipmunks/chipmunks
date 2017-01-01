@@ -14,8 +14,10 @@ var setTab = function(tab) {
 var Sidebar = observer((props) => {
   return (
     <div className='side-container'>
-      <h2 onClick={() => setTab('company')}>Company</h2>
-      <h2 onClick={() => setTab('history')}>History</h2>
+      <div>
+        <h3 className={"nav-tab " + (Store.currentTab === 'company' ? 'nav-tab-active' : '')} onClick={() => setTab('company')}>Company</h3>
+        <h3 className={"nav-tab " + (Store.currentTab === 'history' ? 'nav-tab-active' : '')} onClick={() => setTab('history')}>History</h3>
+      </div>
       {(Store.currentTab === 'company') && <Company />}
       {(Store.currentTab === 'history') && <History />}
     </div>
