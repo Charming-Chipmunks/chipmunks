@@ -11,8 +11,8 @@ var Sidebar = observer((props) => {
   return (
     <div className='side-container'>
       <p>Hello from React</p>
-      {Store.currentTab === 'company' && <Company />}
-      {Store.currentTab === 'history' && <History />}
+      {(Store.currentTab === 'company' || true) && <Company />}
+      {(Store.currentTab === 'history' || true) && <History />}
       <button>Click me</button>
       <p>{Store.currentUser} says hello</p>
     </div>

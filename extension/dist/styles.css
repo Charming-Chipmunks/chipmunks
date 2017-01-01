@@ -27,3 +27,15 @@
   top: 0;
   position: absolute;
 }
+
+.task-completed{
+
+}
+
+.task-overdue{
+  color: red;
+}
+
+.task-pending {
+  color: green;
+}
