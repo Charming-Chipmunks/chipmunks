@@ -8,7 +8,6 @@ console.log('loading company details');
 var Company = observer((props) => {
   return (
     <div>
-    <h2>Company</h2>
       <div>{Store.company.name}</div>
       <div>{Store.company.location}</div>
       <img src={Store.company.image} />
