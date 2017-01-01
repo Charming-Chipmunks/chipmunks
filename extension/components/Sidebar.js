@@ -18,17 +18,8 @@ var Sidebar = observer((props) => {
       <h2 onClick={() => setTab('history')}>History</h2>
       {(Store.currentTab === 'company') && <Company />}
       {(Store.currentTab === 'history') && <History />}
-      <button>Click me</button>
-      <p>{Store.currentUser} says hello</p>
     </div>
   );
 });
-
-//After 3 seconds, currentUser is updated to 'other user'
-// setTimeout(function() {
-//   console.log(Store.currentUser);
-//   Store.currentUser = 'lalala';
-//   console.log(Store.currentUser);
-// }, 3000);
 
 export default Sidebar;

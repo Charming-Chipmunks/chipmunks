@@ -5,7 +5,6 @@ import Store from './Store.js';
 import mobx from 'mobx';
 import {observer} from 'mobx-react';
 
-console.log('loading history');
 var History = observer((props) => {
   var history = Store.job.history.slice().map(record => mobx.toJS(record));
   var now = new Date();

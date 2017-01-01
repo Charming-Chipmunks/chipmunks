@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import Store from './Store.js';
 import {observer} from 'mobx-react';
 
-console.log('loading company details');
 var Company = observer((props) => {
   return (
     <div>
