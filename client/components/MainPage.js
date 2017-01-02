@@ -6,12 +6,23 @@ import HistoryItem from './HistoryItem';
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
+    var pending = 0;
+    this.actions = Store.actions.slice();
+  }
+  componentWillReceiveProps() {
+    this.pending = 0;
+    this.actions.map ((action, index) => {
+      action = mobx.toJS(action);
+      if (!action.completedTime) {
+        this.pending++;
+      }
+    });
   }
 
   render() {
-    var actions = Store.actions.slice();
     return (<div className='actionList'>
-      {actions.map ((action, index) =>{
+      You have {this.pending} pending actions
+      {this.actions.map ((action, index) => {
         action = mobx.toJS(action);
         return <HistoryItem action={action} key={index}/>;
       })}

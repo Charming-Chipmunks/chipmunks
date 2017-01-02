@@ -17,8 +17,6 @@ import { observer } from 'mobx-react';
     };
   }
 
-  componentWillMount() {
-  }
   componentWillReceiveProps() {
     var action = this.props.action;
     if (action.completedTime) {
@@ -28,7 +26,7 @@ import { observer } from 'mobx-react';
     } else {
       this.state.status = 'overdue';
     }
-    console.log(this.state.status);
+    // console.log(this.state.status);
   }
 
   handleClick() {}
@@ -50,9 +48,7 @@ import { observer } from 'mobx-react';
         <img src={this.link}/>
         {/*
         action {this.props.action.action}
-        <br/>
         actionType {this.props.action.actionType};
-        <br/>
       */}
         {this.props.action.actionDetails}
         <br/>

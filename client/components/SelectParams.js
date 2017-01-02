@@ -3,26 +3,26 @@ import { observer } from 'mobx-react';
 import mobx, { computed } from 'mobx';
 import Store from './Store';
 @observer class SelectParams extends React.Component {
-  //really should skip this.state and move everything to store.params
+  //
   constructor(props) {
     super(props);
-  };
+  }
 
   onSave(e) {
     e.preventDefault();
     console.log(mobx.toJS(Store.params));
     //update or send new params to server
-  };
+  }
 
   setC(e) {
     console.log(e.target.value);
     Store.params.city = e.target.value;
-  };
+  }
 
   setS(e) {
     Store.params.state = e.target.options[e.target.selectedIndex].text;
-  };
-
+  }
+  //May want to change these individual checkboxes to components
   render() {
     return (<form>
       <span> C++ </span>
@@ -30,67 +30,67 @@ import Store from './Store';
       checked={Store.params.c}
       name='c'
       ref='c'
-      onChange={()=>{Store.params.c = !Store.params.c}} //there must be a more DRY way of doing this
+      onChange={()=>{ Store.params.c = !Store.params.c; }} //there must be a more DRY way of doing this
         />
         <span> Python </span>
       <input type="checkbox"
       checked={Store.params.python}
       name='python'
       ref='python'
-      onChange={()=>{Store.params.python = !Store.params.python}}
+      onChange={()=>{ Store.params.python = !Store.params.python; }}
         /><span> Javascript </span>
       <input type="checkbox"
       checked={Store.params.javascript}
       name='javascript'
       ref='javascript'
-      onChange={()=>{Store.params.javascript = !Store.params.javascript}}
+      onChange={()=>{ Store.params.javascript = !Store.params.javascript; }}
         />
         <span> Node </span>
         <input type="checkbox"
       checked={Store.params.node}
       name='node'
       ref='node'
-      onChange={()=>{Store.params.node = !Store.params.node}}
+      onChange={()=>{ Store.params.node = !Store.params.node; }}
         />
         <span> React </span>
         <input type="checkbox"
       checked={Store.params.react}
       name='react'
       ref='react'
-      onChange={()=>{Store.params.react = !Store.params.react}}
+      onChange={()=>{ Store.params.react = !Store.params.react; }}
         />
         <span> Angular </span>
         <input type="checkbox"
       checked={Store.params.angular}
       name='angular'
       ref='angular'
-      onChange={()=>{Store.params.angular = !Store.params.angular}}
+      onChange={()=>{ Store.params.angular = !Store.params.angular; }}
         />
         <span> Front End </span>
         <input type="checkbox"
       checked={Store.params.front}
       name='front'
       ref='front'
-      onChange={()=>{Store.params.front = !Store.params.front}}
+      onChange={()=>{ Store.params.front = !Store.params.front; }}
         />
         <span> Back End </span>
         <input type="checkbox"
-      checked={Store.params.back}
+      checked={ Store.params.back}
       name='back'
       ref='back'
-      onChange={()=>{Store.params.back = !Store.params.back}}
+      onChange={()=>{ Store.params.back = !Store.params.back; }}
         />
         <span> Full Stack </span>
         <input type="checkbox"
       checked={Store.params.full}
       name='full'
       ref='full'
-      onChange={()=>{Store.params.full = !Store.params.full}}
+      onChange={()=>{ Store.params.full = !Store.params.full; }}
         />
         <br/>
         City <input type="text" ref='city' onChange={this.setC.bind(this)} value={Store.params.city} />
         State <select size='1' ref='state' onChange={this.setS.bind(this.value)}>
-            <option value="Choose State"  disabled>{Store.params.state}</option>
+            <option value="Choose State" disabled>{Store.params.state}</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>

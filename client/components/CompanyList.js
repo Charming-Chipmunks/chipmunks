@@ -13,14 +13,14 @@ import CompanyRow from './CompanyRow';
     var list = Store.companyList.slice();
     return (
       <div>
-    {list.map((company,index) => {
+    {list.map((company, index) => {
       company = mobx.toJS(company);
-      if(company.name.toLowerCase().includes(Store.filterText.text.toLowerCase())){
-      return <CompanyRow company={company} key={index} />
+      if (company.name.toLowerCase().includes(Store.filterText.text.toLowerCase())) {
+        return <CompanyRow company={company} key={index} />;
       }
     })}
     </div>
-    )
+    );
   }
 }
 

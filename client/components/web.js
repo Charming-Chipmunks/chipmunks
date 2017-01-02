@@ -12,14 +12,14 @@ import SelectParams from './SelectParams';
 import CompanyList from './CompanyList';
 
 
- @observer class Web extends React.Component {
+@observer class Web extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-        <div><Link to={'home'}>
+        <div className='leftBar'><Link to={'home'}>
           Home</Link>
           <br/>
           <Link to={'preferences'}>
@@ -32,8 +32,8 @@ import CompanyList from './CompanyList';
         </div>
     );
   }
-};
+}
 
-export default Web
+export default Web;
 
 // ReactDOM.render(<Web />, document.getElementById('web'));
