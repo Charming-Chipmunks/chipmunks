@@ -21,10 +21,10 @@ import Store from './Store';
 
   setS(e) {
     console.log(e.target);
-      // console.log(e.value);
-      //find where the value really is
-    };
-    //CURRENT ERRORS. CHANGE CITY -> CLICKING CHECKBOXES
+    // console.log(e.value);
+    //find where the value really is
+  };
+  //CURRENT ERRORS. CHANGE CITY -> CLICKING CHECKBOXES
   render() {
     return (<form>
       <span> C++ </span>
@@ -71,7 +71,7 @@ import Store from './Store';
         <br/>
         City <input type="text" ref='city' onChange={this.setC.bind(this)} value={Store.params.city} />
         State <select ref='state' onChange={this.setS.bind(this.value)}>
-            <option value="Choose State"  disabled>Choose State</option>
+            <option value="Choose State"  disabled>{Store.params.state}</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>

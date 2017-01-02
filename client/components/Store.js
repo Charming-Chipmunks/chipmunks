@@ -10,34 +10,33 @@ class Store {
     react: false,
     angular: true,
     city: 'San Francisco',
-    State: 'CA'
+    state: 'CA'
   };
-  @observable companyList = [{name:'Airbnb'}, {name:'SomeOtherCompany'}];
-  @observable filterText = {text: ''};
+  @observable companyList = [{ name: 'Airbnb' }, { name: 'SomeOtherCompany' }];
+  @observable filterText = { text: '' };
 
   @observable actions = [{
-      company:'Airbnb',
-      scheduledTime: '2016-12-25 11:30:30',
-      completedTime: '2016-12-25 11:30:30',
-      action: 'email',
-      actionType: 'userInteraction',
-      actionDetails: 'Email received from DONE',
-    }, {
-      company:'Airbnb',
-      scheduledTime: '2017-01-11 13:30:30',
-      completedTime: null,
-      action: 'email',
-      actionType: 'recommendation',
-      actionDetails: 'Send a reply to TODO'
-    }, {
-      company:'SomeOtherCompany',
-      scheduledTime: '2016-12-26 16:30:30',
-      completedTime: null,
-      action: 'phone',
-      actionType: 'recommendation',
-      actionDetails: 'Call a reply to OVERDUE'
-    }]
-  ;
+    company: 'Airbnb',
+    scheduledTime: '2016-12-25 11:30:30',
+    completedTime: '2016-12-25 11:30:30',
+    action: 'email',
+    actionType: 'userInteraction',
+    actionDetails: 'Email received from DONE',
+  }, {
+    company: 'Airbnb',
+    scheduledTime: '2017-01-11 13:30:30',
+    completedTime: null,
+    action: 'email',
+    actionType: 'recommendation',
+    actionDetails: 'Send a reply to TODO'
+  }, {
+    company: 'SomeOtherCompany',
+    scheduledTime: '2016-12-26 16:30:30',
+    completedTime: null,
+    action: 'phone',
+    actionType: 'recommendation',
+    actionDetails: 'Call a reply to OVERDUE'
+  }];
 
   @observable company = {
     name: 'Airbnb',

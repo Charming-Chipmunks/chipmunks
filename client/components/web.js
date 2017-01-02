@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
-import { observable, computed, autorun } from 'mobx';
+import { observable } from 'mobx';
 import { Link } from 'react-router';
 import mobx from 'mobx';
 import Store from './Store';
@@ -12,7 +12,7 @@ import SelectParams from './SelectParams';
 import CompanyList from './CompanyList';
 
 
-var Web = @observer class Web extends React.Component {
+ @observer class Web extends React.Component {
   constructor(props) {
     super(props);
   }

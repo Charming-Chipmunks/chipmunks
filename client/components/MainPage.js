@@ -8,7 +8,6 @@ class MainPage extends React.Component {
     super(props);
   }
 
-
   render() {
     var actions = Store.actions.slice();
     return (<div className='actionList'>
@@ -18,8 +17,6 @@ class MainPage extends React.Component {
       })}
         </div>);
   }
-
-
 }
 
 export default MainPage;

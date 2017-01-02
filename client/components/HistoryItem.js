@@ -6,15 +6,21 @@ import { observer } from 'mobx-react';
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+
+    if (this.props.action.action === 'email') {
+      this.link = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
+    } else if (this.props.action.action === 'phone') {
+      this.link = 'https://puu.sh/t6VwW/ab509518d2.png';
+    }
     this.state = {
-      status: false,
-      link: ''
+      status: ''
     };
   }
 
   componentWillMount() {
+  }
+  componentWillReceiveProps() {
     var action = this.props.action;
-
     if (action.completedTime) {
       this.state.status = 'done';
     } else if (moment(action.scheduledTime).isAfter(moment())) {
@@ -22,16 +28,10 @@ import { observer } from 'mobx-react';
     } else {
       this.state.status = 'overdue';
     }
-
-    if (this.props.action.action === 'email') {
-      this.state.link = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
-    } else if (this.props.action.action === 'phone') {
-      this.state.link = 'https://puu.sh/t6VwW/ab509518d2.png';
-    }
+    console.log(this.state.status);
   }
 
-  handleClick() {
-  }
+  handleClick() {}
 
   render() {
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
@@ -47,14 +47,14 @@ import { observer } from 'mobx-react';
         */}
         {moment(time).from(moment())}
         <br/>
-        <img src={this.state.link}/>
+        <img src={this.link}/>
         {/*
         action {this.props.action.action}
         <br/>
         actionType {this.props.action.actionType};
         <br/>
       */}
-        actionDetails {this.props.action.actionDetails}
+        {this.props.action.actionDetails}
         <br/>
         -------------------------
     </div>

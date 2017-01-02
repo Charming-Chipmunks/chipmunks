@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import {autorun} from 'mobx';
+import { autorun } from 'mobx';
 import Store from './Store';
 
 @observer class SearchBar extends React.Component {
@@ -10,7 +10,7 @@ import Store from './Store';
   }
 
   handleChange(e) {
-    Store.filterText = {text: e.target.value};
+    Store.filterText = { text: e.target.value };
   }
 
   render() {
