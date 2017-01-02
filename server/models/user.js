@@ -18,6 +18,8 @@ module.exports = function(sequelize, DataTypes) {
         User.belongsToMany(models.Parameter, {through: 'UserParameter'});
         User.belongsToMany(models.Job, {through: 'UserJob'});
         User.belongsToMany(models.Location, {through: 'UserLocation'});
+        User.hasMany(models.Action);
+        User.hasMany(models.Contact);
       }
     }
   });

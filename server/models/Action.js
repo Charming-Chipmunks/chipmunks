@@ -5,6 +5,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Action = sequelize.define('Action', {
     type:           DataTypes.STRING,
+    company:        DataTypes.STRING, 
     description:    DataTypes.STRING,
     scheduledTime:  DataTypes.DATE,
     completedTime:  DataTypes.DATE
@@ -12,8 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
       
-        Action.belongsTo(models.Job); // adds a jobid to Actions
-        Action.belongsTo(models.User); // adds a userid to Actions
+        //Action.belongsTo(models.Job); // adds a jobid to Actions
+       // Action.belongsTo(models.User); // adds a userid to Actions
 
       }
     }

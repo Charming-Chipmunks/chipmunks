@@ -20,6 +20,8 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Job.belongsToMany(models.User, {through: 'UserJob'});
         Job.belongsToMany(models.Parameter, {through: 'JobParameter'});
+        Job.hasMany(models.Action);
+        Job.hasMany(models.Contact);
       }
     }
   });

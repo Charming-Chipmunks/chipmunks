@@ -3,14 +3,14 @@ var request = require('request');
 var config = require('./config');
 
 var pid = config.indeedPublisher;
-var q = 'javascript html';
+var q = 'html';
 var l = 'San Francisco, Ca';
 
 q = encodeURIComponent(q);
 l = encodeURIComponent(l);
 
 var options = {
-    url: `http://api.indeed.com/ads/apisearch?publisher=${pid}&format=json&q=${q}&l=${l}&sort=&radius=&st=&jt=&start=&limit=&fromage=&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
+    url: `http://api.indeed.com/ads/apisearch?publisher=${pid}&format=json&q=${q}&l=${l}&sort=&radius=&st=&jt=&start=25&limit=1000&fromage=&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
 };
 
 function callback(error, response, body) {

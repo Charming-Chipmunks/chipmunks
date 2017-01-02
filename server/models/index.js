@@ -5,7 +5,7 @@ var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var config    = require('./config');
 var db        = {};
-var Faker     = require('faker');
+
 
 var sequelize = new Sequelize(config.name, config.username, config.password,   {
     dialect: config.dialect,
@@ -32,6 +32,7 @@ Object.keys(db).forEach(function(modelName) {
     console.log('added: ', modelName)
   }
 });
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
