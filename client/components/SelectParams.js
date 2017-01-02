@@ -20,11 +20,9 @@ import Store from './Store';
   };
 
   setS(e) {
-    console.log(e.target);
-    // console.log(e.value);
-    //find where the value really is
+    Store.params.state = e.target.options[e.target.selectedIndex].text;
   };
-  //CURRENT ERRORS. CHANGE CITY -> CLICKING CHECKBOXES
+
   render() {
     return (<form>
       <span> C++ </span>
