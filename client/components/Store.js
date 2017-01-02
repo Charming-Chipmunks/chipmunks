@@ -9,6 +9,9 @@ class Store {
     node: true,
     react: false,
     angular: true,
+    front: false,
+    back: true,
+    full: true,
     city: 'San Francisco',
     state: 'CA'
   };
