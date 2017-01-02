@@ -24,6 +24,7 @@ class Store {
         name: 'Airbnb',
         location: '888 Brannan St, San Francisco, CA 94103',
         description: 'Airbnb helps people find great rooms to stay in.',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL9k4sQZ4ymvxo9eUdLmJYdTOWlRmIPP0ZsDNVvmJ7Eh_cmi-Dlt5J6aM'
       },
       contacts: [
         {
@@ -47,7 +48,7 @@ class Store {
         }, {
           scheduledTime: '2017-01-11 13:30:30',
           completedTime: null,
-          action: 'email',
+          action: 'phone',
           actionType: 'recommendation',
           actionDetails: 'Send a reply to TODO'
         }, {

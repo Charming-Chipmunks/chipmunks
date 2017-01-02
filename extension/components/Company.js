@@ -6,7 +6,12 @@ import {observer} from 'mobx-react';
 
 var Company = observer((props) => {
   return (
-    <h2>Company</h2>
+    <div>
+      <div>{Store.company.name}</div>
+      <div>{Store.company.location}</div>
+      <img src={Store.company.image} />
+      <div>{Store.company.description}</div>
+    </div>
   );
 });
 

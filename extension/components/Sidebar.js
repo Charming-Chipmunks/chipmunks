@@ -7,23 +7,21 @@ import {observer} from 'mobx-react';
 import Company from './Company.js';
 import History from './History.js';
 
+var setTab = function(tab) {
+  Store.currentTab = tab;
+}
+
 var Sidebar = observer((props) => {
   return (
     <div className='side-container'>
-      <p>Hello from React</p>
-      {Store.currentTab === 'company' && <Company />}
-      {Store.currentTab === 'history' && <History />}
-      <button>Click me</button>
-      <p>{Store.currentUser} says hello</p>
+      <div>
+        <h3 className={"nav-tab " + (Store.currentTab === 'company' ? 'nav-tab-active' : '')} onClick={() => setTab('company')}>Company</h3>
+        <h3 className={"nav-tab " + (Store.currentTab === 'history' ? 'nav-tab-active' : '')} onClick={() => setTab('history')}>History</h3>
+      </div>
+      {(Store.currentTab === 'company') && <Company />}
+      {(Store.currentTab === 'history') && <History />}
     </div>
   );
 });
-
-//After 3 seconds, currentUser is updated to 'other user'
-// setTimeout(function() {
-//   console.log(Store.currentUser);
-//   Store.currentUser = 'lalala';
-//   console.log(Store.currentUser);
-// }, 3000);
 
 export default Sidebar;

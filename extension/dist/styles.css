@@ -7,7 +7,7 @@
   bottom: 0px;
   width: 360px;
   border-left: 2px solid rgb(233, 233, 233);
-  /*background-color: lightgray;*/
+  background-color: white;
 }
 
 #ext {
@@ -26,4 +26,29 @@
   margin: 10px;
   top: 0;
   position: absolute;
+}
+
+.nav-tab {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.nav-tab:hover, .nav-tab-active {
+  background-color: red;
+  color: white;
+}
+
+.task-completed{
+  font-style: italic;
+}
+
+.task-overdue{
+  color: red;
+}
+
+.task-pending {
+  color: green;
 }
