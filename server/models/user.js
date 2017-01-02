@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         // and the name of the join table needs to be specified in the through object
         User.belongsToMany(models.Parameter, {through: 'UserParameter'});
         User.belongsToMany(models.Job, {through: 'UserJob'});
-        User.belongsToMany(models.Location, {through: 'UserLocation'});
+        //User.belongsToMany(models.Location, {through: 'UserLocation'});
         User.hasMany(models.Action);
         User.hasMany(models.Contact);
       }

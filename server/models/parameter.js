@@ -3,7 +3,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Parameter = sequelize.define('Parameter', {
-    descriptor: DataTypes.STRING
+    descriptor:   DataTypes.STRING,
+    city:         DataTypes.STRING,
+    state:        DataTypes.STRING,
+    zip:          DataTypes.INTEGER,
+    radius:       DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
