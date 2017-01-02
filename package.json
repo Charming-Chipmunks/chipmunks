@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start-webpack": "webpack --config webpack.config.js --progress --watch",
-    "build": "webpack",
+    "build": "npm install && webpack",
     "start": "nodemon server/server.js 2>&1 | log/.predate.sh | tee -a log/server.log ",
     "start-blind": "nodemon server/server.js 2>&1 | log/.predate.sh >> log/server.log & ",
     "stop": "killall -9 node",
@@ -50,6 +50,7 @@
     "body-parser": "^1.15.2",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "grunt": "^1.0.1",
     "lodash": "^4.17.3",
     "mobx": "^2.7.0",
     "mobx-react": "^4.0.4",
