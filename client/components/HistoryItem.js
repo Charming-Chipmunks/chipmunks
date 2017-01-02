@@ -39,16 +39,21 @@ import { observer } from 'mobx-react';
       <div className = {this.state.status}>
         {'HistoryItem'}
         <br/>
-        { this.props.action.completedTime && <div>Time Completed {moment(time).from(moment()) }
-        </div>
+        {this.props.action.company &&
+          <div>{this.props.action.company}</div>
         }
+        { /*this.props.action.completedTime && <div>Time Completed {moment(time).from(moment()) }
+        </div>
+        */}
         {moment(time).from(moment())}
         <br/>
         <img src={this.state.link}/>
+        {/*
         action {this.props.action.action}
         <br/>
         actionType {this.props.action.actionType};
         <br/>
+      */}
         actionDetails {this.props.action.actionDetails}
         <br/>
         -------------------------
