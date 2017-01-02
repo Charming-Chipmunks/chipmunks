@@ -34,3 +34,7 @@ node_modules/
 phone/mode_modules/
 bower_components/
 
+# config files
+server/api/config.js
+server/models/config.js
+
