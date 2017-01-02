@@ -3,6 +3,7 @@
 # Logs
 logs
 *.log
+.DS_Store
 
 **/*bundle.js
 
