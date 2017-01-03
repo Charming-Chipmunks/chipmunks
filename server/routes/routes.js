@@ -3,6 +3,18 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
+// var initialize = require('../models/initialize');
+
+// important routes
+
+// User
+// /user/:id - GET - get one user and all info associated with that user
+// /user/:id - POST - adds one user to the database and all the associatd info
+
+
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
 // this is the initialize file
 var initialize = require('../models/initialize');
