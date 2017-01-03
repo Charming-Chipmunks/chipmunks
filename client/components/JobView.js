@@ -4,6 +4,7 @@ import mobx from 'mobx';
 import Store from './Store';
 import HistoryItem from './HistoryItem';
 import JobContacts from './JobContacts';
+import axios from 'axios';
 
 @observer class JobView extends Component {
   constructor(props) {
