@@ -10,17 +10,17 @@ import CompanyRow from './CompanyRow';
   }
 
   render() {
-    var list = Store.companyList.slice();
     return (
       <div>
-    {list.map((company,index) => {
+    {Store.jobList.map((company, index) => {
       company = mobx.toJS(company);
-      if(company.name.toLowerCase().includes(Store.filterText.text.toLowerCase())){
-      return <CompanyRow company={company} key={index} />
+
+      if (company.company.toLowerCase().includes(Store.filterText.text.toLowerCase())) {
+        return <CompanyRow company={company} key={index} />;
       }
     })}
     </div>
-    )
+    );
   }
 }
 

@@ -9,7 +9,19 @@ import JobContacts from './JobContacts';
   constructor(props) {
     super(props);
   }
+  componentWillMount() {
+    console.log(this.props.params.id);
+    axios.get('/actions/1')
+      .then(function(response) {
+        console.log('actions response.data', response.data);
+        Store.actions = response.data;
+        // Store.jobList = response.data.Jobs;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 
+  }
   render() {
     var historyList = Store.job.history.slice();
     var job = mobx.toJS(Store.job);

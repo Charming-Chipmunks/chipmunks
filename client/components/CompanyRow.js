@@ -6,10 +6,11 @@ import { Link } from 'react-router';
   constructor(props) {
     super(props);
   }
+
   render() {
     return (<div>
-      <Link to={'company'}>
-      {this.props.company.name}
+      <Link to={'companies/' + this.props.company.id}>
+      {this.props.company.company}
       </Link>
       </div>);
   }

@@ -3,7 +3,19 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
-//var initialize = require('../models/initialize');
+
+// var initialize = require('../models/initialize');
+
+// important routes
+
+// User
+// /user/:id - GET - get one user and all info associated with that user
+// /user/:id - POST - adds one user to the database and all the associatd info
+
+
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
 
 // USER - get info for one user
@@ -23,7 +35,7 @@ router.get('/users/:userId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
+    res.json({ error: err });  // send JSON object with error
   });
 });
 
@@ -37,14 +49,14 @@ router.post('/users/create', function(req, res) {
     address:  req.body.address,
     city:     req.body.city,
     state:    req.body.state,
-    zip:      req.body.zip 
+    zip:      req.body.zip
   }).then((user) => {
     res.status(200);
     res.send(user);
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error 
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -74,15 +86,15 @@ router.get('/jobs/:userId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error 
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
 
 
 
-// 4) USER - POST - Adds a job to a users favorite list 
-// this is working in postman 
+// 4) USER - POST - Adds a job to a users favorite list
+// this is working in postman
 router.post('/users/:userId/jobs/:jobId', function(req, res) {
 
   models.User.find({
@@ -95,7 +107,7 @@ router.post('/users/:userId/jobs/:jobId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -115,7 +127,7 @@ router.post('/users/:userId/location/:locationId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -137,7 +149,7 @@ router.get('/actions/:userId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
+    res.json({ error: err });  // send JSON object with error
   });
 });
 
@@ -158,7 +170,7 @@ router.post('/location/create', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error 
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -178,7 +190,7 @@ router.get('/location/:userId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error 
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -197,7 +209,7 @@ router.get('/parameter/:userId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error 
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -217,7 +229,7 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error     
+    res.json({ error: err });  // send JSON object with error
   });
 
 });
@@ -237,7 +249,7 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 //   }).catch((err) => {
 //     console.error(err);        // log error to standard error
 //     res.status(500);           // categorize as a Internat Server Error
-//     res.json({ error: err });  // send JSON object with error     
+//     res.json({ error: err });  // send JSON object with error
 //   })
 
 // });
@@ -256,7 +268,7 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 //   }).catch((err) => {
 //     console.error(err);        // log error to standard error
 //     res.status(500);           // categorize as a Internat Server Error
-//     res.json({ error: err });  // send JSON object with error     
+//     res.json({ error: err });  // send JSON object with error
 //   })
 
 // });
