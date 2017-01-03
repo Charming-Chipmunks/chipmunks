@@ -10,6 +10,7 @@ import JobView from './JobView';
 import SearchBar from './SearchBar';
 import SelectParams from './SelectParams';
 import CompanyList from './CompanyList';
+import axios from 'axios';
 
 
 @observer class Web extends React.Component {
@@ -17,9 +18,20 @@ import CompanyList from './CompanyList';
     super(props);
   }
 
+  componentWillMount() {
+    axios.get('/jobs/1')
+      .then(function(response) {
+        // console.log(response.data.Jobs);
+        Store.jobList = response.data.Jobs;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
-        <div className='leftBar'><Link to={'home'}>
+      <div className='leftBar'><Link to={'home'}>
           Home</Link>
           <br/>
           <Link to={'preferences'}>
