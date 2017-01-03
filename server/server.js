@@ -43,7 +43,6 @@ app.get('*', function(req, res) {
   res.send('Hello World' + process.env.PORT);
 });
 
-app.listen(3000, function () {
-  console.log('Listening on 127.0.0.1:3000');
-
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Listening on 127.0.0.1:', process.env.PORT || 3000);
 });

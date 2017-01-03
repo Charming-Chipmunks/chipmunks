@@ -3,7 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
-var initialize = require('../models/initialize');
+// var initialize = require('../models/initialize');
 
 // important routes
 
