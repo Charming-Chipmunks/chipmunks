@@ -4,7 +4,7 @@ var Faker     = require('faker');
 
 var db = require('./index');
   
-  var sources = ['Indeed.com', 'Dice.com', 'My Search']
+  var sources = ['Indeed.com', 'Dice.com', 'My Search'];
 
  //fake seed data for Jobs table
 for (let i = 0; i < 50; i ++ ) {
@@ -17,7 +17,7 @@ for (let i = 0; i < 50; i ++ ) {
     state:              Faker.address.state(),
     formatted_location: 'formstted location',
     snippet:            Faker.lorem.sentences(),
-    source:             sources[i%3],
+    source:             sources[i % 3],
     jobkey:             'job key' + Math.random() * 1000,
     expires:            Faker.date.future(),
     latitude:           Math.random() * 10000, 
@@ -42,9 +42,9 @@ for (let i = 0; i < 50; i ++ ) {
         type:           types[j],
         company:        job.company,
         description:    'Do we need a description',
-        scheduledTime:  date[i%2](),
-        completedTime:  nullDate[i%2]()
-      }).then(function(action){
+        scheduledTime:  date[i % 2](),
+        completedTime:  nullDate[i % 2]()
+      }).then(function(action) {
 
         // accociate an action with a user
         db['User'].find({
@@ -99,7 +99,7 @@ for (let i = 0; i < 50; i ++ ) {
 // seeding Parameter Table
 var list = ['javascript', 'C++', 'php', 'HTML', 'jQuery', 'Rails', 'Ruby', 'React', 'Angular', 'MongoDB', 'SQL', 'Front End'];
 
-for (var j = 0; j < list.length; j++ ){
+for (var j = 0; j < list.length; j++ ) {
   // create some job parameters
   db['Parameter'].create({
     descriptor:   list[j],
@@ -107,21 +107,20 @@ for (var j = 0; j < list.length; j++ ){
     state:        Faker.address.state(),
     zip:          Math.random() * 10000,
     radius:       Math.random() * 25
-  }).then(function(parameter){
+  }).then(function(parameter) {
   
-   db['Job'].findAll({
-    where: {
-      id: {
-        $between: [1,7]
+    db['Job'].findAll({
+      where: {
+        id: {
+          $between: [1, 7]
+        }
       }
-    }
-   }).then((jobs) => {
-    //associate job parameters with jobs
-    jobs.forEach((job, index) => {
-      parameter.addJobs(job);
+    }).then((jobs) => {
+      //associate job parameters with jobs
+      jobs.forEach((job, index) => {
+        parameter.addJobs(job);
+      });
     });
-   });
-
   }).catch((err) => {
     console.error(err);
   });
@@ -139,18 +138,18 @@ for (let i = 0; i < 50; i++) {
     state:      Faker.address.state(),
     zip:        Math.random() * 10000 
 
-  }).then(function(user){
+  }).then(function(user) {
   // associate users with jobs
     db['Job'].findAll({
       where: {
         id: {
-          $between: [6,10]
+          $between: [2, 20]
         } 
       }
     }).then((jobs) =>{
       jobs.forEach((job, index) => {
-        var status = ['new', 'unfavored','favored', 'rejected', 'expired'];
-        user.addJobs(job, {status: status[index%5]});
+        var status = ['new', 'unfavored', 'favored', 'rejected', 'expired'];
+        user.addJobs(job, {status: status[i % 5]});
       });
     });
 
@@ -171,17 +170,4 @@ for (let i = 0; i < 50; i++) {
   });
 }
 
-
-
-
-
-// // select some parameters based on what I send in:
-
-// db['User'].findAll().then(function(user){
-//   console.log('in find');
-//   user.getParameters().then(function(parameter){
-//     var p1 = parameter[0];
-//     console.log(p1.userparameter.descriptor);
-//   });
-// });
 

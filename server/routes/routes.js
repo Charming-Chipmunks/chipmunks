@@ -3,18 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
-var initialize = require('../models/initialize');
-
-// important routes
-
-// User
-// /user/:id - GET - get one user and all info associated with that user
-// /user/:id - POST - adds one user to the database and all the associatd info
-
-
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+//var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -23,13 +12,13 @@ router.get('/users/:userId', function(req, res) {
     where: {
       id: req.params.userId
     }
-  }).then(function(user){
+  }).then(function(user) {
     // need to extend the error handling to the rest of the routed
-    if(!user){
+    if (!user) {
       res.status(404);
       res.json({});
     } else {
-    res.json(user);
+      res.json(user);
     }
   }).catch((err) => {
     console.error(err);        // log error to standard error
@@ -69,9 +58,19 @@ router.get('/jobs/:userId', function(req, res) {
     where: {
       id: req.params.userId
     },
+    order: [[ models.Job, 'company']],
     include: [models.Job]
   }).then((user) => {
-    res.json(user);
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
+      user = user.Jobs.filter((job) => {
+        return job.UserJob.status === 'favored';
+      });
+      res.json(user);
+    }
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
@@ -119,6 +118,27 @@ router.post('/users/:userId/location/:locationId', function(req, res) {
     res.json({ error: err });  // send JSON object with error     
   });
 
+});
+
+// USER - get all actions for one User
+router.get('/actions/:userId', function(req, res) {
+  models.Action.findAll({
+    where: {
+      UserId: req.params.userId
+    }
+  }).then(function(user) {
+    // need to extend the error handling to the rest of the routed
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(user);
+    }
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error     
+  });
 });
 
 // LOCATION - ADD A LOCATION TO THE LOACTION TABLE
