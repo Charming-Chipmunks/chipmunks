@@ -12,10 +12,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-      
-        //Action.belongsTo(models.Job); // adds a jobid to Actions
-       // Action.belongsTo(models.User); // adds a userid to Actions
-
+        // no associations on the Actions Side
       }
     }
   });

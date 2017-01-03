@@ -7,10 +7,10 @@ var config    = require('./config');
 var db        = {};
 
 
-var sequelize = new Sequelize(config.name, config.username, config.password,   {
-    dialect: config.dialect,
-    host: config.host
-  });
+var sequelize = new Sequelize(config.name, config.username, config.password, {
+  dialect: config.dialect,
+  host: config.host
+});
 
 sequelize.sync(); //{force: true} removing the force helped
 
@@ -20,7 +20,9 @@ fs
     return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file !== 'config.js') && (file !== 'initialize.js');
   })
   .forEach(function(file) {
-    if (file.slice(-3) !== '.js') return;
+    if (file.slice(-3) !== '.js') { 
+      return;
+    }
     var model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
@@ -29,7 +31,7 @@ fs
 Object.keys(db).forEach(function(modelName) {
   if (db[modelName].associate) {
     db[modelName].associate(db);
-    console.log('added: ', modelName)
+    console.log('added: ', modelName);
   }
 });
 

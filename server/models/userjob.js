@@ -4,10 +4,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var UserJob = sequelize.define('UserJob', {
-    status: DataTypes.ENUM('new', 'unfavored','favored', 'rejected', 'expired')
+    status: DataTypes.ENUM('new', 'unfavored', 'favored', 'rejected', 'expired')
   }, {
     classMethods: {
       associate: function(models) {
+        // no associations on the contacts side
       }
     }
   });
