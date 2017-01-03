@@ -1,6 +1,7 @@
 // initialize.js
 // refactored the initialization of the database to this file.  will test next time we rebuild
 var Faker     = require('faker');
+var initData  = require('./initData');
 
 var db = require('./index');
 
@@ -27,6 +28,18 @@ for (let i = 0; i < 10; i ++ ) {
     var types = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
         'Schedule Phone Interview', 'Schedule Inperson Interview', 'Get Offer'];
 
+    // assoiate an action with a user
+   var actionUser;
+   var userId = Math.floor(Math.random() * 4 + 1);
+   console.log('USER ID : ', userId);
+
+    db['User'].find({
+      where: {
+        id: userId
+      }
+    }).then((user) =>{
+      actionUser = user;
+    });
 
     for (let j = 0; j < types.length; j ++ ){
 
@@ -41,29 +54,20 @@ for (let i = 0; i < 10; i ++ ) {
       db['Action'].create({
         type:           types[j],
         company:        job.company,
-        description:    'Do we need a description',
+        description:    'none',
         scheduledTime:  date[i % 2](),
         completedTime:  nullDate[i % 2]()
       }).then(function(action) {
 
-        // accociate an action with a user
-        db['User'].find({
-          where: {
-            id: i + 1
-          }
-        }).then((user) =>{
-          user.addActions(action);
-        });
         // associaet an action with a job
+        actionUser.addActions(action);
         job.addActions(action);
-
-        }
-      ).catch((err) => {
+      }).catch((err) => {
         console.error(err);
       });
 
       // create some concats and then associate it with a job
-      for (var k = 0; k < 5; k ++) {
+      for (let k = 0; k < 5; k ++) {
 
         db['Contact'].create({
           firstname:    Faker.name.firstName(),
@@ -78,7 +82,7 @@ for (let i = 0; i < 10; i ++ ) {
 
           db['User'].find ({
             where: {
-              id: i + 1
+              id: Math.floor(Math.random() * 4 + 1)
             }
           }).then((user) => {
             user.addContact(contact);
@@ -96,54 +100,59 @@ for (let i = 0; i < 10; i ++ ) {
 } // end of jobs for loop
 
 
-// seeding Parameter Table
-var list = ['javascript', 'C++', 'php', 'HTML', 'jQuery', 'Rails', 'Ruby', 'React', 'Angular', 'MongoDB', 'SQL', 'Front End'];
+// seeding Parameter Table - I will associate parameters with Jobs once I run the indeed.js
+var list = ['javascript', 'C++', 'React', 'Front End'];
 
-for (var j = 0; j < list.length; j++ ) {
+for (let j = 0; j < list.length; j++ ) {
   // create some job parameters
   db['Parameter'].create({
     descriptor:   list[j],
-    city:         Faker.address.city(),
-    state:        Faker.address.state(),
-    zip:          Math.random() * 10000,
-    radius:       Math.random() * 25
-  }).then(function(parameter) {
-
-    db['Job'].findAll({
-      where: {
-        id: {
-          $between: [1, 7]
+    city:         'San Francisco',
+    state:        'Ca',
+    zip:          94100,
+    radius:       25
+  }).then((parameter) => {
+    console.log('parameter created');
+    
+    // associate with Jobs
+    for (let k = 1; k < 5; k++) {
+      db['Job'].find({
+        where: {
+          id: (k) * (j + 1)
         }
-      }
-    }).then((jobs) => {
-      //associate job parameters with jobs
-      jobs.forEach((job, index) => {
-        parameter.addJobs(job);
+      }).then(job => {
+        job.addParameters(parameter);
+        console.log('Added Parameter');
+      }).catch(err => {
+        console.log(err);
       });
-    });
+    }
   }).catch((err) => {
-    console.error(err);
+    console.log(err);
   });
 }
 
+
 // seeding User Table
-for (let i = 0; i < 10; i++) {
+var names = initData.names;
+
+for (let i = 0; i < names.length; i++) {
   // create users
   db['User'].create({
-    firstname:  Faker.name.firstName(),
-    lastname:   Faker.name.lastName(),
-    email:      Faker.internet.email(),
-    address:    Faker.address.streetAddress(),
-    city:       Faker.address.city(),
-    state:      Faker.address.state(),
-    zip:        Math.random() * 10000
+    firstname:  names[i].firstname,
+    lastname:   names[i].lastname,
+    email:      names[i].email,
+    address:    names[i].address,
+    city:       names[i].city,
+    state:      names[i].state,
+    zip:        names[i].zip
 
   }).then(function(user) {
   // associate users with jobs
     db['Job'].findAll({
       where: {
         id: {
-          $between: [2, 20]
+          $between: [Math.floor(Math.random() * 4 + 1), Math.floor(Math.random() * 15 + 4)]
         }
       }
     }).then((jobs) =>{
@@ -154,14 +163,13 @@ for (let i = 0; i < 10; i++) {
     });
 
     // seeding parameters
-    for ( let j = 0; j < 4; j ++ ) {
-      db['Parameter'].find({
+    for (let k = 0; k < 3; k++) {
+      db['Parameter'].findAll({
         where: {
-          id: j
+          id: Math.floor(Math.random() * 4 + 1)
         }
       }).then((parameter) => {
-        // adding parameters to users
-        user.addParameters(parameter);
+        user.addParameters(parameter);            
       });
     }
 
@@ -169,5 +177,6 @@ for (let i = 0; i < 10; i++) {
     console.error(err);
   });
 }
+
 
 

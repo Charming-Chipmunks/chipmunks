@@ -1,25 +1,122 @@
 // indeed.js
 var request = require('request');
 var config = require('./config');
+var db = require('../models/index');
 
-var pid = config.indeedPublisher;
-var q = 'html';
-var l = 'San Francisco, Ca';
+let pid = config.indeedPublisher;
+let q = 'html';
+let l = 'San Francisco, Ca';
+let radius = 25;
+let jobType = 'fulltime';
+let limit = 50;
+let highlight = 1;
+let start = 1;
+let end = 1;
+
+var totalResults = 1;
 
 q = encodeURIComponent(q);
 l = encodeURIComponent(l);
 
-var options = {
-    url: `http://api.indeed.com/ads/apisearch?publisher=${pid}&format=json&q=${q}&l=${l}&sort=&radius=&st=&jt=&start=25&limit=1000&fromage=&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
-};
 
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
-    }
+
+  let options = {
+    url: `http://api.indeed.com/ads/apisearch?publisher=${pid}&format=json&q=${q}&l=${l}&
+    sort=&radius=${radius}&st=&jt=${jobType}&start=${start}&limit=${limit}&highlight=${highlight}&fromage=&
+    filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
+  };
+
+db['Parameter'].findAll({
+  where: {
+    id: 1
+  }
+}).then((parameters) => {
+  parameters.forEach((parameter) => {
+    console.log('descriptor: ', parameter.descriptor);
+    console.log('descriptor: ', parameter.city);
+    console.log('descriptor: ', parameter.state);
+
+    q = encodeURIComponent(parameter.descriptor);
+    l = encodeURIComponent(parameter.city + parameter.state);
+
+    getJobs(parameter);
+  });
+});  
+
+function getJobs (parameter) {
+
+request(options, function (error, response, body) {
+  console.log('ONE REQUEST SENT');
+  if (!error && response.statusCode === 200) {
+    body = JSON.parse(body);
+    totalResults = body.totalResults;
+    // for (var i = 1; i < totalResults; i = i + 25 ) {
+    //   start = i * 25;
+    //   request(options, function (error, response, body) {
+    //     if (!error && response.statusCode === 200) {
+    //       body = JSON.parse(body);
+
+    //       body.results.forEach((job) => {
+    //         db['Job'].create({
+    //           jobTitle:           job.jobtitle,
+    //           company:            job.compamy,
+    //           url:                job.url, 
+    //           address:            'none',
+    //           city:               job.city,
+    //           state:              job.state,
+    //           formatted_location: job.formattedLocationFull,
+    //           snippet:            job.snippet,
+    //           source:             job.source,
+    //           jobkey:             job.jobkey,
+    //           expires:            new Date(job.expired), // key should be expired
+    //           latitude:           job.latitude, 
+    //           longitude:          job.longitude
+    //           // in the future add:
+    //           // date
+    //           //country 
+    //         }).then((job) => {
+    //           console.log('added job: ', job.jobTitle);
+    //         }).catch((err) => {
+    //           console.log(err);
+    //         });
+    //       });
+    //     } 
+    //   });
+    // }
+
+    body.results.forEach((job) => {
+      db['Job'].create({
+        jobTitle:           job.jobtitle,
+        company:            job.compamy,
+        url:                job.url, 
+        address:            'none',
+        city:               job.city,
+        state:              job.state,
+        formatted_location: job.formattedLocationFull,
+        snippet:            job.snippet,
+        source:             job.source,
+        jobkey:             job.jobkey,
+        expires:            new Date(job.expired), // key should be expired
+        latitude:           job.latitude, 
+        longitude:          job.longitude
+        // in the future add:
+        // date
+        //country 
+      }).then((job) => {
+        console.log('added job: ', job.jobTitle);
+        job.addParameter(parameter);
+      }).catch((err) => {
+        console.log(err);
+      });
+    });
+  }
+});
+
 }
 
-request(options, callback);
+
+
+
 
 
 //var endpoint = http://api.indeed.com/ads/apisearch?publisher=INSERT_PUBISHER_HERE&q=javascript&l=san%2Cfrancisco%2C+Ca&sort=&radius=&st=&jt=&start=&limit=&fromage=&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2

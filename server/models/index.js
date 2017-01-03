@@ -17,7 +17,8 @@ sequelize.sync(); //{force: true} removing the force helped
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file !== 'config.js') && (file !== 'initialize.js');
+    return (file.indexOf('.') !== 0) && (file !== 'index.js') && 
+    (file !== 'config.js') && (file !== 'initialize.js') && (file !== 'initData.js');
   })
   .forEach(function(file) {
     if (file.slice(-3) !== '.js') { 
