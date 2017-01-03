@@ -34,5 +34,13 @@ module.exports = {
     state:      'Ca',
     zip:        94100
   }
-  ]
+  ],
+  
+  types: ['review', 'learn', 'connections', 'apply', 
+    'schedule', 'interview', 'schedule', 'interview', 
+    'email', 'phone', 'offer', 'meetup', 'resume'],
+
+  description: ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
+    'Schedule Phone Interview', 'Hold Phone Interview', 'Schedule Inperson Interview', 'Inperson Interview',
+    'Send Email To The Company', 'Phone Call With company', 'Get Offer', 'Attend Meetup', 'Send Resume']
 };
