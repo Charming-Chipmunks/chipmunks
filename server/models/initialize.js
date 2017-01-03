@@ -27,15 +27,23 @@ for (let i = 0; i < 50; i ++ ) {
     var types = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job', 
         'Schedule Phone Interview', 'Schedule Inperson Interview', 'Get Offer'];
 
+
     for (let j = 0; j < types.length; j ++ ){
+
+      function fakenull () {
+        return null;
+      }
+
+      var date = [Faker.date.future, Faker.date.past];
+      var nullDate = [Faker.date.past, fakenull];
 
       // create some actions for each job
       db['Action'].create({
         type:           types[j],
         company:        job.company,
         description:    'Do we need a description',
-        scheduledTime:  Faker.date.future(),
-        completedTime:  Faker.date.future()
+        scheduledTime:  date[i%2](),
+        completedTime:  nullDate[i%2]()
       }).then(function(action){
 
         // accociate an action with a user
