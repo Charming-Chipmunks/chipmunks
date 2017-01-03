@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { Link } from 'react-router';
+import axios from 'axios';
 import mobx from 'mobx';
 import Store from './Store';
 import JobView from './JobView';
 import SearchBar from './SearchBar';
 import SelectParams from './SelectParams';
 import CompanyList from './CompanyList';
-import axios from 'axios';
 
 
 @observer class Web extends React.Component {
@@ -19,9 +19,9 @@ import axios from 'axios';
   }
 
   componentWillMount() {
-    axios.get('/jobs/1')
+    axios.get('/jobs/3')
       .then(function(response) {
-        console.log('response.data', response.data);
+        console.log('jobs response.data', response.data);
         Store.jobList = response.data;
         // Store.jobList = response.data.Jobs;
       })
@@ -30,7 +30,7 @@ import axios from 'axios';
       });
     axios.get('/actions/1')
       .then(function(response) {
-        console.log('response.data', response.data);
+        console.log('actions response.data', response.data);
         Store.actions = response.data;
         // Store.jobList = response.data.Jobs;
       })

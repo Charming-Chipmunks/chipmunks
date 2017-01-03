@@ -3,15 +3,15 @@
 var Faker     = require('faker');
 
 var db = require('./index');
-  
+
   var sources = ['Indeed.com', 'Dice.com', 'My Search'];
 
  //fake seed data for Jobs table
-for (let i = 0; i < 50; i ++ ) {
+for (let i = 0; i < 10; i ++ ) {
   db['Job'].create({
     jobTitle:           Faker.company.bs() + ' programmer',
     company:            Faker.company.companyName(),
-    url:                Faker.internet.domainName(), 
+    url:                Faker.internet.domainName(),
     address:            Faker.address.streetAddress(),
     city:               Faker.address.city(),
     state:              Faker.address.state(),
@@ -20,11 +20,11 @@ for (let i = 0; i < 50; i ++ ) {
     source:             sources[i % 3],
     jobkey:             'job key' + Math.random() * 1000,
     expires:            Faker.date.future(),
-    latitude:           Math.random() * 10000, 
-    longitude:          Math.random() * 10000 
+    latitude:           Math.random() * 10000,
+    longitude:          Math.random() * 10000
   }).then((job) => {
 
-    var types = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job', 
+    var types = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
         'Schedule Phone Interview', 'Schedule Inperson Interview', 'Get Offer'];
 
 
@@ -56,12 +56,12 @@ for (let i = 0; i < 50; i ++ ) {
         });
         // associaet an action with a job
         job.addActions(action);
-        
+
         }
       ).catch((err) => {
         console.error(err);
       });
-    
+
       // create some concats and then associate it with a job
       for (var k = 0; k < 5; k ++) {
 
@@ -108,7 +108,7 @@ for (var j = 0; j < list.length; j++ ) {
     zip:          Math.random() * 10000,
     radius:       Math.random() * 25
   }).then(function(parameter) {
-  
+
     db['Job'].findAll({
       where: {
         id: {
@@ -127,7 +127,7 @@ for (var j = 0; j < list.length; j++ ) {
 }
 
 // seeding User Table
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 10; i++) {
   // create users
   db['User'].create({
     firstname:  Faker.name.firstName(),
@@ -136,7 +136,7 @@ for (let i = 0; i < 50; i++) {
     address:    Faker.address.streetAddress(),
     city:       Faker.address.city(),
     state:      Faker.address.state(),
-    zip:        Math.random() * 10000 
+    zip:        Math.random() * 10000
 
   }).then(function(user) {
   // associate users with jobs
@@ -144,7 +144,7 @@ for (let i = 0; i < 50; i++) {
       where: {
         id: {
           $between: [2, 20]
-        } 
+        }
       }
     }).then((jobs) =>{
       jobs.forEach((job, index) => {

@@ -16,7 +16,7 @@ import Store from './Store';
   render() {
     return (
       <form>
-        <input type="text" placeholder="Real Time Search" onChange={this.handleChange.bind(this)} value={Store.filterText.text}  />
+        <input type="text" placeholder="Real Time Search" onChange={this.handleChange.bind(this)} value={Store.filterText.text} />
       </form>
     );
   }

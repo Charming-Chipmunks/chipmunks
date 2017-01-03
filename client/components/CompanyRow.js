@@ -5,11 +5,11 @@ import { Link } from 'react-router';
 @observer class CompanyRow extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(this.props.company.company);
   }
+
   render() {
     return (<div>
-      <Link to={'company'}>
+      <Link to={'companies/' + this.props.company.id}>
       {this.props.company.company}
       </Link>
       </div>);
