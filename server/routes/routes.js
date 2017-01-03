@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-var initialize = require('../models/initialize');
+//var initialize = require('../models/initialize');
 
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
@@ -141,6 +141,30 @@ router.get('/actions/:userId', function(req, res) {
     res.json({ error: err });  // send JSON object with error
   });
 });
+
+// USER - get all actions for one User
+router.get('/actions/:userId/:jobId', function(req, res) {
+  models.Action.findAll({
+    where: {
+      UserId: req.params.userId,
+      JobId:  req.params.jobId 
+    }
+  }).then(function(user) {
+
+    // need to extend the error handling to the rest of the routed
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(user);
+    }
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error
+  });
+});
+
 
 // LOCATION - ADD A LOCATION TO THE LOACTION TABLE
 // working in postman
