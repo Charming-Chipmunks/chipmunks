@@ -58,7 +58,8 @@ class Store {
           actionType: 'recommendation',
           actionDetails: 'Send a reply to OVERDUE'
         }]
-      }
+      },
+      user: {}
     });
   }
 }

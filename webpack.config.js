@@ -2,12 +2,13 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    client: './client/components/webIndex.js',
-    extension: './extension/loader.js'
+    'client/dist/': './client/components/webIndex.js',
+    'extension/dist/content.': './extension/loader.js',
+    'extension/dist/background.': './extension/background.js'
   },
   output: {
     path: __dirname,
-    filename: '[name]/dist/bundle.js'
+    filename: '[name]bundle.js'
   },
   module: {
     loaders: [
