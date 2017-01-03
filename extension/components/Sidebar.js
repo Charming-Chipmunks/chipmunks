@@ -11,6 +11,19 @@ var setTab = function(tab) {
   Store.currentTab = tab;
 }
 
+chrome.runtime.sendMessage({
+  action: 'GET',
+  url: 'http://jobz.mooo.com/jobs/1'
+}, function(res) {
+  if (res.err) {
+    alert('error:'+err);
+  } else {
+    // alert(res.data);
+    Store.user = res.data;
+    console.log('store', Store.user);
+  }
+});
+
 var Sidebar = observer((props) => {
   return (
     <div className='side-container'>
