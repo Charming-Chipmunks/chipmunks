@@ -28,15 +28,6 @@ import CompanyList from './CompanyList';
       .catch(function(error) {
         console.log(error);
       });
-    axios.get('/actions/1')
-      .then(function(response) {
-        console.log('actions response.data', response.data);
-        Store.actions = response.data;
-        // Store.jobList = response.data.Jobs;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 
   render() {
@@ -48,7 +39,7 @@ import CompanyList from './CompanyList';
           Settings</Link>
           <SearchBar />
 
-          {Store.jobList[0] && <CompanyList />}
+          {Store.jobList.length && <CompanyList />}
 
           <div className='right'>
           {this.props.children}

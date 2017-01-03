@@ -35,7 +35,6 @@ import { observer } from 'mobx-react';
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (
       <div className = {this.state.status}>
-        {'HistoryItem'}
         <br/>
         {this.props.action.company &&
           <div>{this.props.action.company}</div>
@@ -50,7 +49,7 @@ import { observer } from 'mobx-react';
         action {this.props.action.action}
         actionType {this.props.action.actionType};
       */}
-        {this.props.action.actionDetails}
+        {this.props.action.description}
         <br/>
         -------------------------
     </div>

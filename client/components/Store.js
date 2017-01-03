@@ -15,7 +15,7 @@ class Store {
     city: 'San Francisco',
     state: 'CA'
   };
-  @observable jobList = [{ company: 'Airbnb' }, { company: 'SomeOtherCompany' }];
+  @observable jobList = [];
   // @observable jobList = [];
   @observable filterText = { text: '' };
   @observable actions = [];

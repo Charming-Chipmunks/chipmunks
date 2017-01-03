@@ -5,9 +5,8 @@ import { observer } from 'mobx-react';
   constructor(props) {
     super(props);
   }
-  handleclick() {
 
-  }
+  handleclick() {}
   render() {
     return (
       <div>

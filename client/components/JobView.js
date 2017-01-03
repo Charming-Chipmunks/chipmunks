@@ -10,9 +10,9 @@ import axios from 'axios';
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
+  componentWillReceiveProps() {
     console.log(this.props.params.id);
-    axios.get('/actions/1')
+    axios.get('/actions/' + this.props.params.id) //need to filter by company later
       .then(function(response) {
         console.log('actions response.data', response.data);
         Store.actions = response.data;
@@ -24,13 +24,15 @@ import axios from 'axios';
 
   }
   render() {
-    var historyList = Store.job.history.slice();
+    // var historyList = Store.job.history.slice();
+
+    var historyList = Store.actions.slice();
     var job = mobx.toJS(Store.job);
     var contacts = Store.contacts.slice();
     return (
       <div className='jobview'>
         <div>
-          <p><a href={'http://maps.google.com/?q=' + job.companyName}> {job.companyName}</a>  </p>
+          <p><a href={'http://maps.google.com/?q=' + job.companyName}> {job.companyName}</a> </p>
           <p> {job.positionName} </p>
           <p> {job.details} </p>
         </div>
