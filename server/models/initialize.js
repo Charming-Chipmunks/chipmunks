@@ -25,13 +25,15 @@ for (let i = 0; i < 10; i ++ ) {
     longitude:          Math.random() * 10000
   }).then((job) => {
 
-    var types = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
-        'Schedule Phone Interview', 'Schedule Inperson Interview', 'Get Offer'];
+    // var types = ['email', 'phone', 'inteview', 'meetup', 'resume', 'apply', 'learn', 'connections'];
+
+    // var description = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
+    //     'Schedule Phone Interview', 'Schedule Inperson Interview', 'Get Offer'];
 
     // assoiate an action with a user
-   var actionUser;
-   var userId = Math.floor(Math.random() * 4 + 1);
-   console.log('USER ID : ', userId);
+    var actionUser;
+    var userId = Math.floor(Math.random() * 4 + 1);
+    console.log('USER ID : ', userId);
 
     db['User'].find({
       where: {
@@ -41,7 +43,7 @@ for (let i = 0; i < 10; i ++ ) {
       actionUser = user;
     });
 
-    for (let j = 0; j < types.length; j ++ ){
+    for (let j = 0; j < initData.types.length; j ++ ) {
 
       function fakenull () {
         return null;
@@ -52,9 +54,9 @@ for (let i = 0; i < 10; i ++ ) {
 
       // create some actions for each job
       db['Action'].create({
-        type:           types[j],
+        type:           initData.types[j],
         company:        job.company,
-        description:    'none',
+        description:    initData.description[j],
         scheduledTime:  date[i % 2](),
         completedTime:  nullDate[i % 2]()
       }).then(function(action) {

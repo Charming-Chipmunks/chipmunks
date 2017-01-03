@@ -28,7 +28,7 @@ router.get('/users/:userId', function(req, res) {
   });
 });
 
-// 2) USER - POST adds one user to the
+// 2) USER - POST adds one user to the User Table
 // note:  use x-www-form-urlencoded when send req.body data
 router.post('/users/create', function(req, res) {
 
@@ -189,6 +189,29 @@ router.put('/actions/:userId/:actionId', function(req, res) {
   });
 });
 
+// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
+
+router.get('/contacts/:userId/:jobId', function(req, res) {
+
+  models.Contact.findAll({
+    where: {
+      UserId: req.params.userId,
+      JobId:  req.params.jobId
+    },
+  }).then((contacts) => {
+    if (!contacts) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(contacts);
+    }
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error
+  });
+
+});
 
 // LOCATION - ADD A LOCATION TO THE LOACTION TABLE
 // working in postman
