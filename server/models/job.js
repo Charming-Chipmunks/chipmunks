@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
     formatted_location: DataTypes.STRING,
     snippet:    DataTypes.TEXT, // need to check on how long a String is
     source:     DataTypes.STRING,
+    // we will need an additinonal source for 'indeed', 'dice', user, etc.
     jobkey:     DataTypes.STRING,
     expires:    DataTypes.DATE,
     latitude:   DataTypes.FLOAT,  // i think we need decimal for lat / long

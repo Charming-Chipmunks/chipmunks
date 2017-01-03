@@ -26,7 +26,11 @@ l = encodeURIComponent(l);
     filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
   };
 
-db['Parameter'].findAll({}).then((parameters) => {
+db['Parameter'].findAll({
+  where: {
+    id: 1
+  }
+}).then((parameters) => {
   parameters.forEach((parameter) => {
     console.log('descriptor: ', parameter.descriptor);
     console.log('descriptor: ', parameter.city);
@@ -35,50 +39,50 @@ db['Parameter'].findAll({}).then((parameters) => {
     q = encodeURIComponent(parameter.descriptor);
     l = encodeURIComponent(parameter.city + parameter.state);
 
-    getJobs();
+    getJobs(parameter);
   });
 });  
 
-function getJobs () {
+function getJobs (parameter) {
 
 request(options, function (error, response, body) {
   console.log('ONE REQUEST SENT');
   if (!error && response.statusCode === 200) {
     body = JSON.parse(body);
     totalResults = body.totalResults;
-    for (var i = 1; i < totalResults; i = i + 25 ) {
-      start = i * 25;
-      request(options, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-          body = JSON.parse(body);
+    // for (var i = 1; i < totalResults; i = i + 25 ) {
+    //   start = i * 25;
+    //   request(options, function (error, response, body) {
+    //     if (!error && response.statusCode === 200) {
+    //       body = JSON.parse(body);
 
-          body.results.forEach((job) => {
-            db['Job'].create({
-              jobTitle:           job.jobtitle,
-              company:            job.compamy,
-              url:                job.url, 
-              address:            'none',
-              city:               job.city,
-              state:              job.state,
-              formatted_location: job.formattedLocationFull,
-              snippet:            job.snippet,
-              source:             job.source,
-              jobkey:             job.jobkey,
-              expires:            new Date(job.expired), // key should be expired
-              latitude:           job.latitude, 
-              longitude:          job.longitude
-              // in the future add:
-              // date
-              //country 
-            }).then((job) => {
-              console.log('added job: ', job.jobTitle);
-            }).catch((err) => {
-              console.log(err);
-            });
-          });
-        } 
-      });
-    }
+    //       body.results.forEach((job) => {
+    //         db['Job'].create({
+    //           jobTitle:           job.jobtitle,
+    //           company:            job.compamy,
+    //           url:                job.url, 
+    //           address:            'none',
+    //           city:               job.city,
+    //           state:              job.state,
+    //           formatted_location: job.formattedLocationFull,
+    //           snippet:            job.snippet,
+    //           source:             job.source,
+    //           jobkey:             job.jobkey,
+    //           expires:            new Date(job.expired), // key should be expired
+    //           latitude:           job.latitude, 
+    //           longitude:          job.longitude
+    //           // in the future add:
+    //           // date
+    //           //country 
+    //         }).then((job) => {
+    //           console.log('added job: ', job.jobTitle);
+    //         }).catch((err) => {
+    //           console.log(err);
+    //         });
+    //       });
+    //     } 
+    //   });
+    // }
 
     body.results.forEach((job) => {
       db['Job'].create({
@@ -100,6 +104,7 @@ request(options, function (error, response, body) {
         //country 
       }).then((job) => {
         console.log('added job: ', job.jobTitle);
+        job.addParameter(parameter);
       }).catch((err) => {
         console.log(err);
       });
