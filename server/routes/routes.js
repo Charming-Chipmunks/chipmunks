@@ -142,22 +142,46 @@ router.get('/actions/:userId', function(req, res) {
   });
 });
 
-// USER - get all actions for one User
+// Actions - get all actions for one User
 router.get('/actions/:userId/:jobId', function(req, res) {
   models.Action.findAll({
     where: {
       UserId: req.params.userId,
       JobId:  req.params.jobId 
     }
-  }).then(function(user) {
+  }).then(function(action) {
 
     // need to extend the error handling to the rest of the routed
-    if (!user) {
+    if (!action) {
       res.status(404);
       res.json({});
     } else {
-      res.json(user);
+      res.json(action);
     }
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error
+  });
+});
+
+// PUT - get all actions for one User
+router.put('/actions/:userId/:actionId', function(req, res) {
+  models.Action.update(
+      { completedTime: new Date()},
+      { where: {
+        UserId: req.params.userId,
+        id:  req.params.actionId 
+      }
+    }).then(function(action) {
+    // need to extend the error handling to the rest of the routed
+        if (!action) {
+          res.status(404);
+          res.json({});
+        } else {
+         // action.updateAttributes();
+          res.json(action);
+        }
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
