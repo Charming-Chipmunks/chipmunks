@@ -21,8 +21,18 @@ import axios from 'axios';
   componentWillMount() {
     axios.get('/jobs/1')
       .then(function(response) {
-        // console.log(response.data.Jobs);
-        Store.jobList = response.data.Jobs;
+        console.log('response.data', response.data);
+        Store.jobList = response.data;
+        // Store.jobList = response.data.Jobs;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    axios.get('/actions/1')
+      .then(function(response) {
+        console.log('response.data', response.data);
+        Store.actions = response.data;
+        // Store.jobList = response.data.Jobs;
       })
       .catch(function(error) {
         console.log(error);
@@ -37,7 +47,9 @@ import axios from 'axios';
           <Link to={'preferences'}>
           Settings</Link>
           <SearchBar />
-          <CompanyList />
+
+          {Store.jobList[0] && <CompanyList />}
+
           <div className='right'>
           {this.props.children}
           </div>

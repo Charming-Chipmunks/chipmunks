@@ -15,11 +15,11 @@ class Store {
     city: 'San Francisco',
     state: 'CA'
   };
-  // @observable jobList = [{ name: 'Airbnb' }, { name: 'SomeOtherCompany' }];
-  @observable jobList = [];
+  @observable jobList = [{ company: 'Airbnb' }, { company: 'SomeOtherCompany' }];
+  // @observable jobList = [];
   @observable filterText = { text: '' };
-
-  @observable actions = [{
+  @observable actions = [];
+  /*@observable actions = [{
     company: 'Airbnb',
     scheduledTime: '2016-12-25 11:30:30',
     completedTime: '2016-12-25 11:30:30',
@@ -41,6 +41,7 @@ class Store {
     actionType: 'recommendation',
     actionDetails: 'Call a reply to OVERDUE'
   }];
+  */
 
   @observable company = {
     name: 'Airbnb',

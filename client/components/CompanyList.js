@@ -10,13 +10,11 @@ import CompanyRow from './CompanyRow';
   }
 
   render() {
-    var list = Store.jobList.slice();
-    console.log(list);
     return (
       <div>
-    {list.map((company, index) => {
+    {Store.jobList.map((company, index) => {
       company = mobx.toJS(company);
-      console.log(company);
+      // console.log(company);
       if (company.company.toLowerCase().includes(Store.filterText.text.toLowerCase())) {
         return <CompanyRow company={company} key={index} />;
       }
