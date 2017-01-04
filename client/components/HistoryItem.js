@@ -21,11 +21,21 @@ import { observer } from 'mobx-react';
       this.link = 'https://puu.sh/tap2G/a42c2a7d3d.png';
     } else if (this.props.action.type === 'interview') {
       this.link = 'https://puu.sh/tapdh/0ecbe0a3af.png';
+    } else if (this.props.action.type === 'schedule') {
+      this.link = 'https://puu.sh/tbcAs/cbd538ae96.png';
     }
 
-      this.state = {
-        status: ''
-      };
+    this.state = {
+      status: ''
+    };
+  }
+  markCompleted() {
+    //TODO: update database
+    // var newTime = new Date().toISOString().slice(0, 19).replace(/T/, ' ');
+    var newTime = moment();
+    // console.log(newTime);
+    this.props.action.completedTime = newTime;
+    this.forceUpdate();
   }
 
   componentWillReceiveProps() {
@@ -37,7 +47,6 @@ import { observer } from 'mobx-react';
     } else {
       this.state.status = 'overdue';
     }
-    // console.log(this.state.status);
     console.log(this.props.action);
     // Store.currentCompany = this.props.
   }
@@ -53,14 +62,13 @@ import { observer } from 'mobx-react';
         {this.props.action.company &&
           <div>{this.props.action.company}</div>
         }
-        { /*this.props.action.completedTime && <div>Time Completed {moment(time).from(moment()) }
-        </div>
-        */}
         {moment(time).from(moment())}
         <br/>
         <img src={this.link}/>
         Description {this.props.action.description}
         <br/>
+         {!this.props.action.completedTime && <button onClick={() => this.markCompleted()}>Mark as Done</button>}
+         <br/>
         -------------------------
     </div>
     );

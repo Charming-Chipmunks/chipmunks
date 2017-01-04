@@ -2,6 +2,7 @@
 import { observable } from 'mobx';
 class Store {
   constructor() {}
+  @observable currentUserId = 2;
   @observable params = {
     c: false,
     python: false,

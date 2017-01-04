@@ -19,7 +19,7 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-    axios.get('/jobs/4')
+    axios.get('/jobs/' + Store.currentUserId)
       .then(function(response) {
         console.log('jobs response.data', response.data);
         Store.jobList = response.data;
@@ -29,7 +29,7 @@ import CompanyList from './CompanyList';
         console.log(error);
       });
 
-    axios.get('/actions/3')
+    axios.get('/actions/' + Store.currentUserId)
       .then(function(response) {
         console.log('actions3', response.data);
         Store.actions = response.data;

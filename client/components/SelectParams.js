@@ -90,13 +90,13 @@ import Store from './Store';
         City <input type="text" ref='city' onChange={this.setC.bind(this)} value={Store.params.city} />
         State <select size='1' ref='state' onChange={this.setS.bind(this.value)}>
             <option value="Choose State" disabled>{Store.params.state}</option>
-            <option value="AL">AL</option>
-            <option value="AK">AK</option>
-            <option value="AZ">AZ</option>
-            <option value="AR">AR</option>
-            <option value="CA">CA</option>
-            <option value="CO">CO</option>
-            <option value="CT">CT</option>
+            <option value="Alabama">AL</option>
+            <option value="Alaska">AK</option>
+            <option value="Arizona">AZ</option>
+            <option value="Arkansaw">AR</option>
+            <option value="California">CA</option>
+            <option value="Colorado">CO</option>
+            <option value="Connecticut">CT</option>
             <option value="DE">DE</option>
             <option value="FL">FL</option>
             <option value="GA">GA</option>
