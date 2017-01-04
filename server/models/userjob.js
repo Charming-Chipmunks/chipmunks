@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    status: DataTypes.ENUM('new', 'unfavored', 'favored', 'rejected', 'expired')
+    status: DataTypes.ENUM('new', 'favored', 'rejected', 'expired')
   }, {
     classMethods: {
       associate: function(models) {

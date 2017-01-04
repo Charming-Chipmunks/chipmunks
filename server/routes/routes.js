@@ -84,6 +84,7 @@ router.get('/jobs/:userId/:status', function(req, res) {
       res.status(404);
       res.json({});
     } else {
+      res.json(user);
       // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
       user = user.Jobs.filter((job) => {
         console.log(req.body.status);
@@ -100,6 +101,8 @@ router.get('/jobs/:userId/:status', function(req, res) {
 
 });
 
+
+// Get the Parameters for One User
 router.get('/user/params/:userId', function(req, res) {
   models.User.find({
     where: {
@@ -123,6 +126,7 @@ router.get('/user/params/:userId', function(req, res) {
 
 // 4) USER - POST - Adds a job to a users favorite list
 // this is working in postman
+// req.body.status = new status for job/user combo
 router.put('/users/:userId/jobs/:jobId', function(req, res) {
 
   models.UserJob.update(
@@ -156,8 +160,13 @@ router.post('/users/:userId/location/:locationId', function(req, res) {
       id: req.params.userId
     }
   }).then((user) => {
-    user.addLocations(req.params.locationId);
-    res.json(user);
+    if (!user) {
+      res.status(404);
+      res.json({});      
+    } else {
+      user.addLocations(req.params.locationId);
+      res.json(user);
+    }
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
@@ -301,8 +310,28 @@ router.get('/location/:userId', function(req, res) {
 
 });
 
-// PARAMETER - GET A LIST OF ALL PARAMETERS FOR A USER
+//testing
 
+router.get('/test2/:userId', function(req, res) {
+
+  models.User.findAll({
+    include: [models.Job]
+  }).then((parameter) => {
+    if (!parameter) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(parameter);
+    }
+  }).catch((err) => {
+      console.error(err);        // log error to standard error
+      res.status(500);           // categorize as a Internat Server Error
+      res.json({ error: err });  // send JSON object with error
+  });
+});
+
+
+// PARAMETER - GET A LIST OF ALL PARAMETERS FOR A USER
 router.get('/parameter/:userId', function(req, res) {
 
   models.User.findAll({
@@ -311,7 +340,12 @@ router.get('/parameter/:userId', function(req, res) {
     // },
     include: [models.Parameter]
   }).then((parameter) => {
-    res.json(parameter);
+    if (!parameter) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(parameter);
+    }
     // var userId = parameter.id; //userID
 
     // //res.json(parameter);
@@ -329,6 +363,7 @@ router.get('/parameter/:userId', function(req, res) {
     //   });
     // });
     //res.json(parameter);
+
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
@@ -356,5 +391,7 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
   });
 
 });
+
+
 
 module.exports = router;
