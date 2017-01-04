@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-//var initialize = require('../models/initialize');
+var initialize = require('../models/initialize');
 
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
@@ -40,8 +40,13 @@ router.post('/users/create', function(req, res) {
     state:    req.body.state,
     zip:      req.body.zip
   }).then((user) => {
-    res.status(200);
-    res.send(user);
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.status(200);
+      res.send(user);
+    }
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
@@ -80,7 +85,42 @@ router.get('/jobs/:userId', function(req, res) {
 
 });
 
+router.get('/user/params/:userId', function(req, res) {
 
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    },
+    include: [models.Parameter]
+// }).then( parameter => {
+//   console.log(parameter);
+// });
+
+//   models.User.find({
+//     where: {
+//       id: req.params.userId
+//     },
+//     order: [[ models.Job, 'company']],
+//     include: [models.Job]
+  }).then((user) => {
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
+      // user = user.Jobs.filter((job) => {
+      //   return job.UserJob.status === 'favored';
+      // });
+      res.json(user);
+    }
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error
+  });
+
+});
 
 // 4) USER - POST - Adds a job to a users favorite list
 // this is working in postman
