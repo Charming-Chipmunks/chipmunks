@@ -2,7 +2,7 @@
 // refactored the initialization of the database to this file.  will test next time we rebuild
 var Faker     = require('faker');
 var initData  = require('./initData');
-
+var associate = require('../api/associateJobs');
 var db = require('./index');
 
   var sources = ['Indeed.com', 'Dice.com', 'My Search'];
@@ -171,6 +171,8 @@ for (let i = 0; i < names.length; i++) {
     console.error(err);
   });
 }
+
+setTimeout(associate, 10000);
 
 function fakenull () {
   return null;
