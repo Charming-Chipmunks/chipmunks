@@ -28,12 +28,14 @@ import { observer } from 'mobx-react';
         this.pending++;
       }
     });
-    console.log('this.actions', this.actions);
+    // console.log('this.actions', this.actions);
     return (<div className='actionList'>
       You have {this.pending} pending actions
       {this.actions.map ((action, index) => {
         action = mobx.toJS(action);
-        return <HistoryItem action={action} key={index}/>;
+        // if (!action.completedTime) {
+          return <HistoryItem action={action} key={index}/>;
+        // }
       })}
         </div>);
   }

@@ -27,6 +27,7 @@ import { observer } from 'mobx-react';
       this.state.status = 'overdue';
     }
     // console.log(this.state.status);
+    console.log(this.props.action);
     // Store.currentCompany = this.props.
   }
 
