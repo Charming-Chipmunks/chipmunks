@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-//var initialize = require('../models/initialize');
+var initialize = require('../models/initialize');
 
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
@@ -58,7 +58,7 @@ router.post('/users/create', function(req, res) {
 // 3) USER - Gets a list of all jobs a user has favorited
 // the key of this query is the include: [models.Job]
 
-router.put('/jobs/:userId', function(req, res) {
+router.get('/jobs/:userId/:status', function(req, res) {
 
   models.User.find({
     where: {
@@ -74,7 +74,7 @@ router.put('/jobs/:userId', function(req, res) {
       // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
       user = user.Jobs.filter((job) => {
         console.log(req.body.status);
-        return job.UserJob.status === req.body.status;
+        return job.UserJob.status === req.params.status;
       });
       console.log(user);
       res.json(user);
@@ -88,32 +88,16 @@ router.put('/jobs/:userId', function(req, res) {
 });
 
 router.get('/user/params/:userId', function(req, res) {
-
-
   models.User.find({
     where: {
       id: req.params.userId
     },
     include: [models.Parameter]
-// }).then( parameter => {
-//   console.log(parameter);
-// });
-
-//   models.User.find({
-//     where: {
-//       id: req.params.userId
-//     },
-//     order: [[ models.Job, 'company']],
-//     include: [models.Job]
   }).then((user) => {
     if (!user) {
       res.status(404);
       res.json({});
     } else {
-      // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
-      // user = user.Jobs.filter((job) => {
-      //   return job.UserJob.status === 'favored';
-      // });
       res.json(user);
     }
   }).catch((err) => {
@@ -216,25 +200,25 @@ router.get('/actions/:userId/:jobId', function(req, res) {
 // PUT - get all actions for one User
 router.put('/actions/:userId/:actionId', function(req, res) {
   models.Action.update(
-      { completedTime: new Date()},
-      { where: {
-        UserId: req.params.userId,
-        id:  req.params.actionId 
-      }
+    { completedTime: new Date()},
+    { where: {
+      UserId: req.params.userId,
+      id:  req.params.actionId 
+    }
     }).then(function(action) {
     // need to extend the error handling to the rest of the routed
-        if (!action) {
-          res.status(404);
-          res.json({});
-        } else {
-         // action.updateAttributes();
-          res.json(action);
-        }
-  }).catch((err) => {
-    console.error(err);        // log error to standard error
-    res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error
-  });
+      if (!action) {
+        res.status(404);
+        res.json({});
+      } else {
+        // action.updateAttributes();
+        res.json(action);
+      }
+    }).catch((err) => {
+      console.error(err);        // log error to standard error
+      res.status(500);           // categorize as a Internat Server Error
+      res.json({ error: err });  // send JSON object with error
+    });
 });
 
 // CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
@@ -357,75 +341,5 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
   });
 
 });
-
-
-// below is on hold until I work out rest ofthe workflow
-
-// // 5) GET - gets all contacts for on user
-// router.get('/contacts/:userId/', function(req, res) {
-
-//   models.Contact.findAll({
-//     where: {
-//       UserId: req.params.userId
-//     }
-//   }).then((contacts) => {
-//     res.json(contacts);
-//   }).catch((err) => {
-//     console.error(err);        // log error to standard error
-//     res.status(500);           // categorize as a Internat Server Error
-//     res.json({ error: err });  // send JSON object with error
-//   })
-
-// });
-
-
-// // 6) POST - adds a new contact for a user and a company
-
-// router.post('/contacts/:userId/:jobId', function(req, res) {
-
-//   models.Contact.findAll({
-//     where: {
-//       UserId: req.params.userId
-//     }
-//   }).then((contacts) => {
-//     res.json(contacts);
-//   }).catch((err) => {
-//     console.error(err);        // log error to standard error
-//     res.status(500);           // categorize as a Internat Server Error
-//     res.json({ error: err });  // send JSON object with error
-//   })
-
-// });
-
-
-
-// // update single todo
-// router.put('/todo/:id', function(req, res) {
-//   models.Todo.find({
-//     where: {
-//       id: req.params.id
-//     }
-//   }).then(function(todo) {
-//     if(todo){
-//       todo.updateAttributes({
-//         title: req.body.title,
-//         complete: req.body.complete
-//       }).then(function(todo) {
-//         res.send(todo);
-//       });
-//     }
-//   });
-// });
-
-// // delete a single todo
-// router.delete('/todo/:id', function(req, res) {
-//   models.Todo.destroy({
-//     where: {
-//       id: req.params.id
-//     }
-//   }).then(function(todo) {
-//     res.json(todo);
-//   });
-// });
 
 module.exports = router;
