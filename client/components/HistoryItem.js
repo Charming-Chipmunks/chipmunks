@@ -33,7 +33,7 @@ import { observer } from 'mobx-react';
     if (action.completedTime) {
       this.state.status = 'done';
     } else if (moment(action.scheduledTime).isAfter(moment())) {
-      this.state.status = 'todo';
+      this.state.status = 'pending';
     } else {
       this.state.status = 'overdue';
     }
@@ -59,10 +59,6 @@ import { observer } from 'mobx-react';
         {moment(time).from(moment())}
         <br/>
         <img src={this.link}/>
-        {/*
-        action {this.props.action.action}
-        actionType {this.props.action.actionType};
-      */}
         Description {this.props.action.description}
         <br/>
         -------------------------
