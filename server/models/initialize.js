@@ -67,35 +67,36 @@ for (let i = 0; i < 10; i ++ ) {
       }).catch((err) => {
         console.error(err);
       });
-
-      // create some concats and then associate it with a job
-      for (let k = 0; k < 5; k ++) {
-
-        db['Contact'].create({
-          firstname:    Faker.name.firstName(),
-          lastname:     Faker.name.lastName(),
-          email:        Faker.internet.email(),
-          mobilePhone:  Faker.phone.phoneNumber(),
-          workPhone:    Faker.phone.phoneNumber(),
-          title:        Faker.company.bs() + 'office worker'
-        }).then(function(contact) {
-
-          job.addContact(contact);
-
-          db['User'].find ({
-            where: {
-              id: Math.floor(Math.random() * 4 + 1)
-            }
-          }).then((user) => {
-            user.addContact(contact);
-          });
-
-        }).catch((err) => {
-          console.error(err);
-        });
-      } // end of contacts for loop
-
     } // end of actions for loop
+    
+    // create some concats and then associate it with a job
+    for (let k = 0; k < 2; k ++) {
+
+      db['Contact'].create({
+        firstname:    Faker.name.firstName(),
+        lastname:     Faker.name.lastName(),
+        email:        Faker.internet.email(),
+        mobilePhone:  Faker.phone.phoneNumber(),
+        workPhone:    Faker.phone.phoneNumber(),
+        title:        Faker.company.bs() + 'office worker'
+      }).then(function(contact) {
+
+        job.addContact(contact);
+
+        db['User'].find ({
+          where: {
+            id: Math.floor(Math.random() * 4 + 1)
+          }
+        }).then((user) => {
+          user.addContact(contact);
+        });
+
+      }).catch((err) => {
+        console.error(err);
+      });
+    } // end of contacts for loop
+
+
   }).catch((err) => {
     console.error(err);
   });
@@ -123,7 +124,7 @@ for (let j = 0; j < list.length; j++ ) {
           id: (k) * (j + 1)
         }
       }).then(job => {
-        job.addParameters(parameter);
+        job.addParameters(parameter, {status: 'active'});
         console.log('Added Parameter');
       }).catch(err => {
         console.log(err);

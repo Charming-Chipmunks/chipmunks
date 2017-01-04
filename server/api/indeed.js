@@ -11,12 +11,9 @@ let jobType = 'fulltime';
 let limit = 50;
 let highlight = 1;
 let start = 1;
-let end = 1;
 
 var totalResults = 1;
 
-q = encodeURIComponent(q);
-l = encodeURIComponent(l);
 
 
 
