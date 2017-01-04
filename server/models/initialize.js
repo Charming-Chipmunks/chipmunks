@@ -25,11 +25,6 @@ for (let i = 0; i < 10; i ++ ) {
     longitude:          Math.random() * 10000
   }).then((job) => {
 
-    // var types = ['email', 'phone', 'inteview', 'meetup', 'resume', 'apply', 'learn', 'connections'];
-
-    // var description = ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
-    //     'Schedule Phone Interview', 'Schedule Inperson Interview', 'Get Offer'];
-
     // assoiate an action with a user
     var actionUser;
     var userId = Math.floor(Math.random() * 4 + 1);
@@ -43,12 +38,8 @@ for (let i = 0; i < 10; i ++ ) {
       actionUser = user;
     });
 
+      
     for (let j = 0; j < initData.types.length; j ++ ) {
-
-      function fakenull () {
-        return null;
-      }
-
       var date = [Faker.date.future, Faker.date.past];
       var nullDate = [Faker.date.past, fakenull];
 
@@ -60,10 +51,10 @@ for (let i = 0; i < 10; i ++ ) {
         scheduledTime:  date[i % 2](),
         completedTime:  nullDate[i % 2]()
       }).then(function(action) {
-
         // associaet an action with a job
+        console.log("Job ID: ", job.id);
         actionUser.addActions(action);
-        job.addActions(action);
+        job.addActions(action); // should set the JobId on the Actions table
       }).catch((err) => {
         console.error(err);
       });
@@ -160,7 +151,7 @@ for (let i = 0; i < names.length; i++) {
       }
     }).then((jobs) =>{
       jobs.forEach((job, index) => {
-        var status = ['new', 'unfavored', 'favored', 'rejected', 'expired'];
+        var status = ['new', 'unfavored', 'favored', 'favored', 'favored'];
         user.addJobs(job, {status: status[i % 5]});
       });
     });
@@ -181,5 +172,8 @@ for (let i = 0; i < names.length; i++) {
   });
 }
 
+function fakenull () {
+  return null;
+}
 
 

@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-var initialize = require('../models/initialize');
+//var initialize = require('../models/initialize');
 
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
@@ -58,7 +58,7 @@ router.post('/users/create', function(req, res) {
 // 3) USER - Gets a list of all jobs a user has favorited
 // the key of this query is the include: [models.Job]
 
-router.get('/jobs/:userId', function(req, res) {
+router.put('/jobs/:userId', function(req, res) {
 
   models.User.find({
     where: {
@@ -73,8 +73,10 @@ router.get('/jobs/:userId', function(req, res) {
     } else {
       // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
       user = user.Jobs.filter((job) => {
-        return job.UserJob.status === 'favored';
+        console.log(req.body.status);
+        return job.UserJob.status === req.body.status;
       });
+      console.log(user);
       res.json(user);
     }
   }).catch((err) => {
@@ -311,7 +313,23 @@ router.get('/parameter/:userId', function(req, res) {
     },
     include: [models.Parameter]
   }).then((parameter) => {
-    res.json(parameter);
+    var userId = parameter.id; //userID
+
+    //res.json(parameter);
+    parameter.Parameters.forEach(item => {
+      models.Parameter.find({
+        where: {
+          id: item.id
+        },
+        include: [models.Job]
+      }).then( job => {
+        job.Jobs.forEach((item, index) => {
+          parameter.addJobs(item.id, {status: 'new'});
+        });
+        res.json(job); //jobs id is at job.jobs[i].id
+      });
+    });
+    //res.json(parameter);
   }).catch((err) => {
     console.error(err);        // log error to standard error
     res.status(500);           // categorize as a Internat Server Error
