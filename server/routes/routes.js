@@ -305,28 +305,29 @@ router.get('/location/:userId', function(req, res) {
 
 router.get('/parameter/:userId', function(req, res) {
 
-  models.User.find({
-    where: {
-      id: req.params.userId
-    },
+  models.User.findAll({
+    // where: {
+    //   id: req.params.userId
+    // },
     include: [models.Parameter]
   }).then((parameter) => {
-    var userId = parameter.id; //userID
+    res.json(parameter);
+    // var userId = parameter.id; //userID
 
-    //res.json(parameter);
-    parameter.Parameters.forEach(item => {
-      models.Parameter.find({
-        where: {
-          id: item.id
-        },
-        include: [models.Job]
-      }).then( job => {
-        job.Jobs.forEach((item, index) => {
-          parameter.addJobs(item.id, {status: 'new'});
-        });
-        res.json(job); //jobs id is at job.jobs[i].id
-      });
-    });
+    // //res.json(parameter);
+    // parameter.Parameters.forEach(item => {
+    //   models.Parameter.find({
+    //     where: {
+    //       id: item.id
+    //     },
+    //     include: [models.Job]
+    //   }).then( job => {
+    //     job.Jobs.forEach((item, index) => {
+    //       parameter.addJobs(item.id, {status: 'new'});
+    //     });
+    //     res.json(job); //jobs id is at job.jobs[i].id
+    //   });
+    // });
     //res.json(parameter);
   }).catch((err) => {
     console.error(err);        // log error to standard error

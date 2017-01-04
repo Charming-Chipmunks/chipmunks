@@ -4,6 +4,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var UserJob = sequelize.define('UserJob', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     status: DataTypes.ENUM('new', 'unfavored', 'favored', 'rejected', 'expired')
   }, {
     classMethods: {
