@@ -7,14 +7,25 @@ import { observer } from 'mobx-react';
     super(props);
     this.handleClick = this.handleClick.bind(this);
 
-    if (this.props.action.action === 'email') {
+    if (this.props.action.type === 'email') {
       this.link = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
-    } else if (this.props.action.action === 'phone') {
+    } else if (this.props.action.type === 'phone') {
       this.link = 'https://puu.sh/t6VwW/ab509518d2.png';
+    } else if (this.props.action.type === 'learn') {
+      this.link = 'https://puu.sh/taoBF/9e91a0dfef.png';
+    } else if (this.props.action.type === 'resume') {
+      this.link = 'https://puu.sh/taoI5/a680e57d69.png';
+    } else if (this.props.action.type === 'meetup') {
+      this.link = 'https://puu.sh/taoUj/3fc7013429.png';
+    } else if (this.props.action.type === 'review') {
+      this.link = 'https://puu.sh/tap2G/a42c2a7d3d.png';
+    } else if (this.props.action.type === 'interview') {
+      this.link = 'https://puu.sh/tapdh/0ecbe0a3af.png';
     }
-    this.state = {
-      status: ''
-    };
+
+      this.state = {
+        status: ''
+      };
   }
 
   componentWillReceiveProps() {

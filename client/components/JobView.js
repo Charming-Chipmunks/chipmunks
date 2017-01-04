@@ -12,7 +12,7 @@ import axios from 'axios';
   }
   componentWillReceiveProps() {
     console.log(this.props.params.id);
-    axios.get('/actions/1/' + this.props.params.id) //need to filter by company later
+    axios.get('/actions/3/' + this.props.params.id) //need to filter by company later
       .then(function(response) {
         console.log('actions/jobid response.data', response.data);
         Store.job = response.data;
@@ -20,7 +20,7 @@ import axios from 'axios';
       .catch(function(error) {
         console.log(error);
       });
-    axios.get('/contacts/1/' + this.props.params.id)
+    axios.get('/contacts/3/' + this.props.params.id)
       .then(function(response) {
         console.log('contacts/user/job response.data', response.data);
         Store.contacts = response.data;

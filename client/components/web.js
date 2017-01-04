@@ -19,7 +19,7 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-    axios.get('/jobs/3')
+    axios.get('/jobs/4')
       .then(function(response) {
         console.log('jobs response.data', response.data);
         Store.jobList = response.data;
