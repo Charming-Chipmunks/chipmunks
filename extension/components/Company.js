@@ -9,7 +9,7 @@ var Company = observer((props) => {
     <div>
       <div>{Store.company.name}</div>
       <div>{Store.company.location}</div>
-      <img src={Store.company.image} />
+      {Store.company.image && <img src={Store.company.image} />}
       <div>{Store.company.description}</div>
     </div>
   );
