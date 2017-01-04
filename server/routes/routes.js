@@ -84,21 +84,27 @@ router.get('/jobs/:userId', function(req, res) {
 
 // 4) USER - POST - Adds a job to a users favorite list
 // this is working in postman
-router.post('/users/:userId/jobs/:jobId', function(req, res) {
+router.put('/users/:userId/jobs/:jobId', function(req, res) {
 
-  models.User.find({
-    where: {
-      id: req.params.userId
+  models.UserJob.update(
+    { status: req.body.status},
+    { where: {
+      UserId: req.params.userId,
+      JobId:  req.params.jobId
     }
-  }).then((user) => {
-    user.addJobs(req.params.jobId);
-    res.json(user);
-  }).catch((err) => {
-    console.error(err);        // log error to standard error
-    res.status(500);           // categorize as a Internat Server Error
-    res.json({ error: err });  // send JSON object with error
-  });
-
+    }).then(function(jobLink) {
+      if (!jobLink) {
+        res.status(404);
+        res.json({});
+      } else {
+     // action.updateAttributes();
+        res.json(jobLink);
+      }
+    }).catch((err) => {
+      console.error(err);        // log error to standard error
+      res.status(500);           // categorize as a Internat Server Error
+      res.json({ error: err });  // send JSON object with error
+    });
 });
 
 // LOCATION - ADD A USER TO USERLOCATION TABLE
