@@ -19,6 +19,7 @@ var models = require('../models/index');
 // this is the initialize file
 var initialize = require('../models/initialize');
 
+
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
   models.User.find({
@@ -191,7 +192,7 @@ router.get('/actions/:userId/:jobId', function(req, res) {
   models.Action.findAll({
     where: {
       UserId: req.params.userId,
-      JobId:  req.params.jobId 
+      JobId:  req.params.jobId
     }
   }).then(function(action) {
 
@@ -212,11 +213,12 @@ router.get('/actions/:userId/:jobId', function(req, res) {
 // PUT - get all actions for one User
 router.put('/actions/:userId/:actionId', function(req, res) {
   models.Action.update(
-    { completedTime: new Date()},
-    { where: {
-      UserId: req.params.userId,
-      id:  req.params.actionId 
-    }
+      { completedTime: new Date()},
+      { where: {
+        UserId: req.params.userId,
+        id:  req.params.actionId
+      }
+
     }).then(function(action) {
     // need to extend the error handling to the rest of the routed
       if (!action) {

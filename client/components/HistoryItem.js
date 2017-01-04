@@ -27,11 +27,13 @@ import { observer } from 'mobx-react';
       this.state.status = 'overdue';
     }
     // console.log(this.state.status);
+    // Store.currentCompany = this.props.
   }
 
   handleClick() {}
 
   render() {
+
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (
       <div className = {this.state.status}>

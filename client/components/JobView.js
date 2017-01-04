@@ -12,11 +12,10 @@ import axios from 'axios';
   }
   componentWillReceiveProps() {
     console.log(this.props.params.id);
-    axios.get('/actions/' + this.props.params.id) //need to filter by company later
+    axios.get('/actions/3/' + this.props.params.id) //need to filter by company later
       .then(function(response) {
-        console.log('actions response.data', response.data);
-        Store.actions = response.data;
-        // Store.jobList = response.data.Jobs;
+        console.log('actions/jobid response.data', response.data);
+        Store.job = response.data;
       })
       .catch(function(error) {
         console.log(error);
@@ -24,10 +23,8 @@ import axios from 'axios';
 
   }
   render() {
-    // var historyList = Store.job.history.slice();
-
-    var historyList = Store.actions.slice();
-    var job = mobx.toJS(Store.job);
+    var historyList = Store.job.slice();
+    var job = mobx.toJS(Store.job); //NEEDS TO CHANGE FROM HERE AND ON
     var contacts = Store.contacts.slice();
     return (
       <div className='jobview'>
