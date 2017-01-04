@@ -108,7 +108,7 @@ for (let j = 0; j < list.length; j++ ) {
   }).then((parameter) => {
     console.log('parameter created');
     
-    // associate with Jobs
+    // // associate with Jobs
     for (let k = 1; k < 5; k++) {
       db['Job'].find({
         where: {
@@ -143,18 +143,18 @@ for (let i = 0; i < names.length; i++) {
 
   }).then(function(user) {
   // associate users with jobs
-    db['Job'].findAll({
-      where: {
-        id: {
-          $between: [Math.floor(Math.random() * 4 + 1), Math.floor(Math.random() * 15 + 4)]
-        }
-      }
-    }).then((jobs) =>{
-      jobs.forEach((job, index) => {
-        var status = ['new', 'unfavored', 'favored', 'favored', 'favored'];
-        user.addJobs(job, {status: status[i % 5]});
-      });
-    });
+    // db['Job'].findAll({
+    //   where: {
+    //     id: {
+    //       $between: [Math.floor(Math.random() * 4 + 1), Math.floor(Math.random() * 15 + 4)]
+    //     }
+    //   }
+    // }).then((jobs) =>{
+    //   jobs.forEach((job, index) => {
+    //     var status = ['new', 'unfavored', 'favored', 'favored', 'favored'];
+    //     user.addJobs(job, {status: status[i % 5]});
+    //   });
+    // });
 
     // seeding parameters
     for (let k = 0; k < 3; k++) {
