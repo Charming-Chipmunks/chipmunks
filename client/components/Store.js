@@ -15,7 +15,7 @@ class Store {
     city: 'San Francisco',
     state: 'CA'
   };
-  @observable jobList = [{ company: 'Airbnb' }, { company: 'SomeOtherCompany' }];
+  @observable jobList = [];
   // @observable jobList = [];
   @observable filterText = { text: '' };
   @observable actions = [];
@@ -55,30 +55,31 @@ class Store {
     name: 'Knox Sandy',
     email: 'knoxs@airbnb.com'
   }];
-  @observable job = {
-    companyName: 'Airbnb',
-    positionName: 'Javascript Developer',
-    details: 'A leading customer engagement platform here in downtown San Francisco is looking to add a Frontend Engineer to their growing team.',
-    history: [{
-      scheduledTime: '2016-12-25 11:30:30',
-      completedTime: '2016-12-25 11:30:30',
-      action: 'email',
-      actionType: 'userInteraction',
-      actionDetails: 'Email received from DONE',
-    }, {
-      scheduledTime: '2017-01-11 13:30:30',
-      completedTime: null,
-      action: 'email',
-      actionType: 'recommendation',
-      actionDetails: 'Send a reply to TODO'
-    }, {
-      scheduledTime: '2016-12-26 16:30:30',
-      completedTime: null,
-      action: 'phone',
-      actionType: 'recommendation',
-      actionDetails: 'Call a reply to OVERDUE'
-    }]
-  };
+  // @observable job = {
+  //   companyName: 'Airbnb',
+  //   positionName: 'Javascript Developer',
+  //   details: 'A leading customer engagement platform here in downtown San Francisco is looking to add a Frontend Engineer to their growing team.',
+  //   history: [{
+  //     scheduledTime: '2016-12-25 11:30:30',
+  //     completedTime: '2016-12-25 11:30:30',
+  //     action: 'email',
+  //     actionType: 'userInteraction',
+  //     actionDetails: 'Email received from DONE',
+  //   }, {
+  //     scheduledTime: '2017-01-11 13:30:30',
+  //     completedTime: null,
+  //     action: 'email',
+  //     actionType: 'recommendation',
+  //     actionDetails: 'Send a reply to TODO'
+  //   }, {
+  //     scheduledTime: '2016-12-26 16:30:30',
+  //     completedTime: null,
+  //     action: 'phone',
+  //     actionType: 'recommendation',
+  //     actionDetails: 'Call a reply to OVERDUE'
+  //   }]
+  // };
+  @observable job = [];
 }
 
 const store = window.store = new Store();

@@ -5,14 +5,15 @@ import { observer } from 'mobx-react';
   constructor(props) {
     super(props);
   }
-  handleclick() {
 
-  }
+  handleclick() {}
   render() {
     return (
       <div>
-        <p> {this.props.contact.name} </p>
+        <p> {this.props.contact.firstname + ' ' + this.props.contact.lastname} </p>
         <a href={'https://mail.google.com/mail/?view=cm&fs=1&to=' + this.props.contact.email}> {this.props.contact.email} </a>
+        <p>Mobile: {this.props.contact.mobilePhone}</p>
+        <p>Phone: {this.props.contact.workPhone}</p>
         <br/>---------------------------
       </div>
     );

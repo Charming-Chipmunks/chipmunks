@@ -19,7 +19,7 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-    axios.get('/jobs/3')
+    axios.get('/jobs/4')
       .then(function(response) {
         console.log('jobs response.data', response.data);
         Store.jobList = response.data;
@@ -28,11 +28,11 @@ import CompanyList from './CompanyList';
       .catch(function(error) {
         console.log(error);
       });
-    axios.get('/actions/1')
+
+    axios.get('/actions/3')
       .then(function(response) {
-        console.log('actions response.data', response.data);
+        console.log('actions3', response.data);
         Store.actions = response.data;
-        // Store.jobList = response.data.Jobs;
       })
       .catch(function(error) {
         console.log(error);
@@ -47,9 +47,7 @@ import CompanyList from './CompanyList';
           <Link to={'preferences'}>
           Settings</Link>
           <SearchBar />
-
-          {Store.jobList[0] && <CompanyList />}
-
+          {Store.jobList.length && <CompanyList />}
           <div className='right'>
           {this.props.children}
           </div>

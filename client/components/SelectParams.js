@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import mobx, { computed } from 'mobx';
 import Store from './Store';
 @observer class SelectParams extends React.Component {
-  //
   constructor(props) {
     super(props);
   }
