@@ -33,7 +33,7 @@ import { observer } from 'mobx-react';
   handleClick() {}
 
   render() {
-
+    console.log(this.props.action);
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (
       <div className = {this.state.status}>
@@ -51,7 +51,7 @@ import { observer } from 'mobx-react';
         action {this.props.action.action}
         actionType {this.props.action.actionType};
       */}
-        {this.props.action.description}
+        Description {this.props.action.description}
         <br/>
         -------------------------
     </div>

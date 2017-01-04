@@ -20,6 +20,14 @@ import axios from 'axios';
       .catch(function(error) {
         console.log(error);
       });
+    axios.get('/contacts/3/' + this.props.params.id)
+      .then(function(response) {
+        console.log('contacts/user/job response.data', response.data);
+        Store.contacts = response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 
   }
   render() {
