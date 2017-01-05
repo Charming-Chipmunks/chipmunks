@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react';
 import axios from 'axios';
+import Store from './Store';
 
 @observer class HistoryItem extends Component {
   constructor(props) {
@@ -43,14 +44,30 @@ import axios from 'axios';
     axios.put('/actions/' + this.props.action.UserId + '/' + this.props.action.id)
       .then(function(response) {
         console.log(response.data);
-        that.props.update().bind(this);
       })
       .catch(function(error) {
         console.log(error);
       });
+    //I can do this but i should edit the store
+    // axios.get('/actions/' + Store.currentUserId)
+    //   .then(function(response) {
+    //     // console.log('actions3', response.data);
+    //     Store.actions = response.data;
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    Store.actions.forEach((action, index) => {
+      console.log(action.id);
+      if (this.props.action.id === action.id) {
+        action.completedTime = moment();
+      }
+    });
+
   }
 
   componentWillReceiveProps() {
+
     var action = this.props.action;
     if (action.completedTime) {
       this.state.status = 'done';
