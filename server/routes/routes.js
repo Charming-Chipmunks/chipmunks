@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-// var initialize = require('../models/initialize');
+//var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -139,12 +139,15 @@ router.post('/users/:userId/location/:locationId', function(req, res) {
 });
 
 
+
+
 // USER - get all actions for one User
 router.get('/actions/:userId', function(req, res) {
   models.Action.findAll({
     where: {
       UserId: req.params.userId
-    }
+    },
+    order: ['scheduledTime'],
   }).then(function(user) {
     if (!user) {
       res.status(404);
@@ -177,6 +180,52 @@ router.get('/actions/:userId/:jobId', function(req, res) {
     console.error(err);
     res.status(500);
     res.json({ error: err });
+  });
+});
+
+// create a new action
+router.post('/actions/', function(req, res) {
+
+  models.Action.create({
+    type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
+    company:        req.body.company, 
+    description:    req.body.description, //text field with more description of the task / event
+    actionSource:   req.body.actionSource//, // tasks, user, reminder, company
+    //scheduledTime:  req.body.scheduledTime,
+    //completedTime:  req.body.completedTime
+  }).then((action) => {
+    if (!action) {
+      res.status(404);
+      res.json({});
+    } else {
+      // now I need to associate it with a user and a job.
+      models.User.find({
+        where: {
+          id: req.body.userId
+        }
+      }).then(user => {
+        user.addActions(action);
+      }).catch(err => {
+        console.log(err);
+      });
+
+      models.Job.find({
+        where: {
+          id: req.body.jobId
+        }
+      }).then(job => {
+        console.log(job);
+        job.addActions(action); 
+      }).catch(err => {
+        console.log(err);
+      });
+
+      res.json(action);
+    }
+  }).catch((err) => {
+    console.error(err); 
+    res.status(500); 
+    res.json({ error: err });  
   });
 });
 
@@ -246,12 +295,36 @@ router.get('/parameter/:userId', function(req, res) {
     res.status(500);
     res.json({ error: err });
   });
-
 });
 
-// PARAMETER - ADD A USER TO USERPARAMER TABLE
-// Add a location to UserLocation join table
-// working in postman
+// PARAMETER - Adds a new parameter to the parameter table and associates a user to it.
+// ?s  will each user get to see all parameters??  probaly not.
+// what parameters do we want to display?
+
+router.post('/parameter/:userId', function(req, res) {
+
+  models.Parameter.create({
+    descriptor:   req.body.descriptor,
+    city:         req.body.city,
+    state:        req.body.state,
+    zip:          req.body.zip,
+    radius:       req.body.radius
+  }).then((parameter) => {
+    if (!parameter) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.status(200);
+      res.send(parameter);
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);  
+    res.json({ error: err });  
+  });
+});
+
+// PARAMETER - ADD A USER and Parameter to a Parameter Table
 router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 
   models.User.find({
