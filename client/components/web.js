@@ -22,9 +22,9 @@ import CompanyList from './CompanyList';
 
     axios.get('/jobs/' + Store.currentUserId + '/favored')
       .then(function(response) {
-        console.log('jobs/userid/favored response.data', response.data.Jobs);
+        console.log('jobs/userid/favored response.data', response.data);
         // Store.jobList = response.data;
-        Store.jobList = response.data.Jobs;
+        Store.jobList = response.data;
       })
       .catch(function(error) {
         console.log(error);
