@@ -21,6 +21,7 @@ class Store {
   @observable actions = [];
   @observable company = {
     name: 'Airbnb',
+    title: '',
     location: '888 Brannan St, San Francisco, CA 94103',
     description: 'Airbnb helps people find great rooms to stay in.',
   }

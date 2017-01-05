@@ -24,6 +24,20 @@ import Store from './Store';
   }
   //May want to change these individual checkboxes to components
   render() {
+
+    axios.get('/parameters/' + Store.currentUserId)
+      .then(function(response) {
+        console.log('params data', response.data);
+
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+
+
+
+
     return (<form>
       <span> C++ </span>
       <input type="checkbox"
