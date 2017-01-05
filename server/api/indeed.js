@@ -11,9 +11,8 @@ let jobType = 'fulltime';
 let limit = 50;
 let highlight = 1;
 let start = 1;
-let sort = date;
-let fromage = 5;
-
+let sort = 'date';
+let fromage = 1;
 var totalResults = 1;
 
 
