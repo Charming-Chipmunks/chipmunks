@@ -33,13 +33,13 @@ router.get('/users/:userId', function(req, res) {
 router.post('/users/create', function(req, res) {
 
   models.User.create({
-    firstname:  req.body.firstname,
-    lastname:   req.body.lastname,
-    email:      req.body.email,
-    address:    req.body.address,
-    city:       req.body.city,
-    state:      req.body.state,
-    zip:        req.body.zip
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    address: req.body.address,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip
   }).then((user) => {
     if (!user) {
       res.status(404);
@@ -50,8 +50,8 @@ router.post('/users/create', function(req, res) {
     }
   }).catch((err) => {
     console.error(err);
-    res.status(500);  
-    res.json({ error: err });  
+    res.status(500);
+    res.json({ error: err });
   });
 
 });
@@ -65,7 +65,9 @@ router.get('/jobs/:userId/:status', function(req, res) {
     where: {
       id: req.params.userId
     },
-    order: [[ models.Job, 'company']],
+    order: [
+      [models.Job, 'company']
+    ],
     include: [models.Job]
   }).then((user) => {
     if (!user) {
@@ -78,9 +80,9 @@ router.get('/jobs/:userId/:status', function(req, res) {
       res.json(user);
     }
   }).catch((err) => {
-    console.error(err); 
-    res.status(500); 
-    res.json({ error: err }); 
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
   });
 
 });
@@ -92,26 +94,49 @@ router.get('/jobs/:userId/:status', function(req, res) {
 // PLEASE NOTE ENUMERATION TYPE FOR STATUS
 router.put('/users/:userId/jobs/:jobId', function(req, res) {
 
-  models.UserJob.update(
-    { status: req.body.status},
-    { where: {
+  models.UserJob.update({ status: req.body.status }, {
+    where: {
       UserId: req.params.userId,
-      JobId:  req.params.jobId
+      JobId: req.params.jobId
     }
-    }).then(function(jobLink) {
-      if (!jobLink) {
-        res.status(404);
-        res.json({});
-      } else {
-        res.json(jobLink);
-      }
-    }).catch((err) => {
-      console.error(err); 
-      res.status(500); 
-      res.json({ error: err });  
-    });
+  }).then(function(jobLink) {
+    if (!jobLink) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(jobLink);
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
 });
 
+
+// LOCATION - ADD A USER TO USERLOCATION TABLE
+// Add a location to UserLocation join table
+// working in postman
+router.post('/users/:userId/location/:locationId', function(req, res) {
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    }
+  }).then((user) => {
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      user.addLocations(req.params.locationId);
+      res.json(user);
+    }
+  }).catch((err) => {
+    console.error(err); // log error to standard error
+    res.status(500); // categorize as a Internat Server Error
+    res.json({ error: err }); // send JSON object with error
+  });
+});
 
 
 // USER - get all actions for one User
@@ -128,9 +153,9 @@ router.get('/actions/:userId', function(req, res) {
       res.json(user);
     }
   }).catch((err) => {
-    console.error(err); 
-    res.status(500); 
-    res.json({ error: err });  
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
   });
 });
 
@@ -139,7 +164,7 @@ router.get('/actions/:userId/:jobId', function(req, res) {
   models.Action.findAll({
     where: {
       UserId: req.params.userId,
-      JobId:  req.params.jobId
+      JobId: req.params.jobId
     }
   }).then(function(action) {
     if (!action) {
@@ -149,7 +174,7 @@ router.get('/actions/:userId/:jobId', function(req, res) {
       res.json(action);
     }
   }).catch((err) => {
-    console.error(err); 
+    console.error(err);
     res.status(500);
     res.json({ error: err });
   });
@@ -157,24 +182,23 @@ router.get('/actions/:userId/:jobId', function(req, res) {
 
 // Update completion time of one action to the current time.
 router.put('/actions/:userId/:actionId', function(req, res) {
-  models.Action.update(
-      { completedTime: new Date()},
-      { where: {
-        UserId: req.params.userId,
-        id:  req.params.actionId
-      }
-    }).then(function(action) {
-      if (!action) {
-        res.status(404);
-        res.json({});
-      } else {
-        res.json(action);
-      }
-    }).catch((err) => {
-      console.error(err); 
-      res.status(500); 
-      res.json({ error: err }); 
-    });
+  models.Action.update({ completedTime: new Date() }, {
+    where: {
+      UserId: req.params.userId,
+      id: req.params.actionId
+    }
+  }).then(function(action) {
+    if (!action) {
+      res.status(404);
+      res.json({});
+    } else {
+      res.json(action);
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
 });
 
 // CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
@@ -184,7 +208,7 @@ router.get('/contacts/:userId/:jobId', function(req, res) {
   models.Contact.findAll({
     where: {
       UserId: req.params.userId,
-      JobId:  req.params.jobId
+      JobId: req.params.jobId
     },
   }).then((contacts) => {
     if (!contacts) {
@@ -195,7 +219,7 @@ router.get('/contacts/:userId/:jobId', function(req, res) {
     }
   }).catch((err) => {
     console.error(err);
-    res.status(500); 
+    res.status(500);
     res.json({ error: err });
   });
 
@@ -261,9 +285,9 @@ router.get('/test2/:userId', function(req, res) {
       res.json(parameter);
     }
   }).catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.json({ error: err });
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
   });
 });
 

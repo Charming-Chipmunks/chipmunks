@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react';
+import axios from 'axios';
 
 @observer class HistoryItem extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+
 
     if (this.props.action.type === 'email') {
       this.link = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
@@ -21,11 +23,31 @@ import { observer } from 'mobx-react';
       this.link = 'https://puu.sh/tap2G/a42c2a7d3d.png';
     } else if (this.props.action.type === 'interview') {
       this.link = 'https://puu.sh/tapdh/0ecbe0a3af.png';
+    } else if (this.props.action.type === 'schedule') {
+      this.link = 'https://puu.sh/tbcAs/cbd538ae96.png';
     }
 
-      this.state = {
-        status: ''
-      };
+    this.state = {
+      status: ''
+    };
+  }
+  markCompleted() {
+    // console.log(this.props.action);
+    //TODO: update database
+    // var newTime = new Date().toISOString().slice(0, 19).replace(/T/, ' ');
+    var newTime = moment();
+    // console.log(newTime);
+    var that = this;
+    this.forceUpdate();
+    this.props.action.completedTime = newTime;
+    axios.put('/actions/' + this.props.action.UserId + '/' + this.props.action.id)
+      .then(function(response) {
+        console.log(response.data);
+        that.props.update().bind(this);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   componentWillReceiveProps() {
@@ -37,7 +59,6 @@ import { observer } from 'mobx-react';
     } else {
       this.state.status = 'overdue';
     }
-    // console.log(this.state.status);
     console.log(this.props.action);
     // Store.currentCompany = this.props.
   }
@@ -45,22 +66,21 @@ import { observer } from 'mobx-react';
   handleClick() {}
 
   render() {
-    console.log(this.props.action);
+    // console.log(this.props.action);
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (
       <div className = {this.state.status}>
         <br/>
-        {this.props.action.company &&
+        {this.props.displayCompany &&
           <div>{this.props.action.company}</div>
         }
-        { /*this.props.action.completedTime && <div>Time Completed {moment(time).from(moment()) }
-        </div>
-        */}
         {moment(time).from(moment())}
         <br/>
         <img src={this.link}/>
         Description {this.props.action.description}
         <br/>
+         {!this.props.action.completedTime && <button onClick={() => this.markCompleted()}>Mark as Done</button>}
+         <br/>
         -------------------------
     </div>
     );

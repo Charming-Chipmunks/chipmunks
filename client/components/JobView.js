@@ -10,6 +10,12 @@ import axios from 'axios';
   constructor(props) {
     super(props);
   }
+  filterForHistory(action) {
+    return !!action.completedTime;
+  }
+  filterForTask(action) {
+    return !action.completedTime;
+  }
   componentWillReceiveProps() {
     console.log(this.props.params.id);
     axios.get('/actions/3/' + this.props.params.id) //need to filter by company later
@@ -42,8 +48,16 @@ import axios from 'axios';
           <p> {job.details} </p>
         </div>
         --------------------------------------------------------------------------------------------------
-        <div className='historyList'>
-        {historyList.map ((action, index) =>{
+        <div className='Tasks'>
+        Tasks
+        {historyList.filter(this.filterForTask).sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map ((action, index) =>{
+          action = mobx.toJS(action);
+          return <HistoryItem action={action} key={index}/>;
+        })}
+        </div>
+         <div className='History'>
+        History
+        {historyList.filter(this.filterForHistory).sort((a, b) => a.completedTime < b.completedTime ? 1 : 0).map ((action, index) =>{
           action = mobx.toJS(action);
           return <HistoryItem action={action} key={index}/>;
         })}
