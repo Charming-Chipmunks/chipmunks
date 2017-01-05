@@ -37,16 +37,24 @@ import axios from 'axios';
 
   }
   render() {
-    var historyList = Store.job.slice();
-    var job = mobx.toJS(Store.job); //NEEDS TO CHANGE FROM HERE AND ON
+    var historyList = Store.job.slice(); //NEEDS TO CHANGE FROM HERE AND ON
     var contacts = Store.contacts.slice();
+    if (historyList[0]) {
+      var name = mobx.toJS(historyList[0]).company;
+      console.log(name);
+    }
     return (
       <div className='jobview'>
+
+        {historyList[0] &&
         <div>
-          <p><a href={'http://maps.google.com/?q=' + job.companyName}> {job.companyName}</a> </p>
-          <p> {job.positionName} </p>
-          <p> {job.details} </p>
+
+          <p><a href={'https://www.google.com/search?q=' + name}> {name}</a> </p>
+          <p><a href={'http://maps.google.com/?q=' + name}> {Store.company.location}</a></p>
+          <p> {Store.company.title} </p>
+          <p> {Store.company.description} </p>
         </div>
+      }
         --------------------------------------------------------------------------------------------------
         <div className='Tasks'>
         Tasks

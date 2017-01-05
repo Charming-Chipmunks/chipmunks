@@ -48,17 +48,9 @@ import Store from './Store';
       .catch(function(error) {
         console.log(error);
       });
-    //I can do this but i should edit the store
-    // axios.get('/actions/' + Store.currentUserId)
-    //   .then(function(response) {
-    //     // console.log('actions3', response.data);
-    //     Store.actions = response.data;
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+
     Store.actions.forEach((action, index) => {
-      console.log(action.id);
+      // console.log(action.id);
       if (this.props.action.id === action.id) {
         action.completedTime = moment();
       }
@@ -66,7 +58,22 @@ import Store from './Store';
 
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps() {}
+
+  handleClick() {}
+
+  render() {
+    //UPDATE STORE FOR CURRENT JOB
+    // THIS IS HAPPENING WAY TOO OFTEN.
+    // Store.company.name = this.props.action.company;
+    // Store.jobList.forEach((job, index) => {
+    //   if (job.company === this.props.action.company) {
+    //     Store.company.title = job.jobTitle;
+    //     console.log('title', job.jobTitle);
+    //     Store.company.description = job.snippet;
+    //     console.log('description', job.snippet);
+    //   }
+    // });
 
     var action = this.props.action;
     if (action.completedTime) {
@@ -76,13 +83,6 @@ import Store from './Store';
     } else {
       this.state.status = 'overdue';
     }
-    console.log(this.props.action);
-    // Store.currentCompany = this.props.
-  }
-
-  handleClick() {}
-
-  render() {
     // console.log(this.props.action);
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (
