@@ -19,11 +19,12 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-    axios.get('/jobs/' + Store.currentUserId)
+
+    axios.get('/jobs/' + Store.currentUserId + '/favored')
       .then(function(response) {
-        console.log('jobs response.data', response.data);
-        Store.jobList = response.data;
-        // Store.jobList = response.data.Jobs;
+        console.log('jobs/userid/favored response.data', response.data.Jobs);
+        // Store.jobList = response.data;
+        Store.jobList = response.data.Jobs;
       })
       .catch(function(error) {
         console.log(error);

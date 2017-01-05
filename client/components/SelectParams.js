@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import mobx, { computed } from 'mobx';
 import Store from './Store';
+//NEED TO DO ACTION ON SAVE, COMPARE CHANGES AND SEND EACH INDIVIDUAL CALL FOR PARAM
 @observer class SelectParams extends React.Component {
   constructor(props) {
     super(props);

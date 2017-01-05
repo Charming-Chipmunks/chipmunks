@@ -19,10 +19,16 @@ import { observer } from 'mobx-react';
     });
   }
 
+  rerenderCounter() {
+    //forceUpdate isn't working,
+    console.log('forceupdate');
+    this.componentWillReceiveProps();
+  }
+
   render() {
     this.actions = Store.actions.slice();
     this.pending = 0;
-    this.actions.map((action, index) => {
+    this.actions.forEach((action, index) => {
       action = mobx.toJS(action);
       if (!action.completedTime) {
         this.pending++;
@@ -31,11 +37,11 @@ import { observer } from 'mobx-react';
     // console.log('this.actions', this.actions);
     return (<div className='actionList'>
       You have {this.pending} pending actions
-      {this.actions.map ((action, index) => {
+      {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map ((action, index) => {
         action = mobx.toJS(action);
-        // if (!action.completedTime) {
-          return <HistoryItem action={action} key={index}/>;
-        // }
+        if (!action.completedTime) {
+          return <HistoryItem action={action} key={index} displayCompany={true} update={this.rerenderCounter}/>;
+        }
       })}
         </div>);
   }

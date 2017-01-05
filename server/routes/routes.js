@@ -50,8 +50,8 @@ router.post('/users/create', function(req, res) {
     }
   }).catch((err) => {
     console.error(err);
-    res.status(500);  
-    res.json({ error: err });  
+    res.status(500);
+    res.json({ error: err });
   });
 
 });
@@ -78,9 +78,9 @@ router.get('/jobs/:userId/:status', function(req, res) {
       res.json(user);
     }
   }).catch((err) => {
-    console.error(err); 
-    res.status(500); 
-    res.json({ error: err }); 
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
   });
 
 });
@@ -106,12 +106,35 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
         res.json(jobLink);
       }
     }).catch((err) => {
-      console.error(err); 
-      res.status(500); 
-      res.json({ error: err });  
+      console.error(err);
+      res.status(500);
+      res.json({ error: err });
     });
 });
 
+
+// LOCATION - ADD A USER TO USERLOCATION TABLE
+// Add a location to UserLocation join table
+// working in postman
+router.post('/users/:userId/location/:locationId', function(req, res) {
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    }
+  }).then((user) => {
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      user.addLocations(req.params.locationId);
+      res.json(user);
+    }
+  }).catch((err) => {
+    console.error(err);        // log error to standard error
+    res.status(500);           // categorize as a Internat Server Error
+    res.json({ error: err });  // send JSON object with error
+  });
 
 
 // USER - get all actions for one User
@@ -128,9 +151,9 @@ router.get('/actions/:userId', function(req, res) {
       res.json(user);
     }
   }).catch((err) => {
-    console.error(err); 
-    res.status(500); 
-    res.json({ error: err });  
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
   });
 });
 
@@ -149,7 +172,7 @@ router.get('/actions/:userId/:jobId', function(req, res) {
       res.json(action);
     }
   }).catch((err) => {
-    console.error(err); 
+    console.error(err);
     res.status(500);
     res.json({ error: err });
   });
@@ -171,9 +194,9 @@ router.put('/actions/:userId/:actionId', function(req, res) {
         res.json(action);
       }
     }).catch((err) => {
-      console.error(err); 
-      res.status(500); 
-      res.json({ error: err }); 
+      console.error(err);
+      res.status(500);
+      res.json({ error: err });
     });
 });
 
@@ -195,7 +218,7 @@ router.get('/contacts/:userId/:jobId', function(req, res) {
     }
   }).catch((err) => {
     console.error(err);
-    res.status(500); 
+    res.status(500);
     res.json({ error: err });
   });
 

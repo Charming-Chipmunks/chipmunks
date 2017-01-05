@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react';
+import axios from 'axios';
 
 @observer class HistoryItem extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+
 
     if (this.props.action.type === 'email') {
       this.link = 'https://puu.sh/t6VbF/f01ab2fd8e.png';
@@ -30,12 +32,22 @@ import { observer } from 'mobx-react';
     };
   }
   markCompleted() {
+    // console.log(this.props.action);
     //TODO: update database
     // var newTime = new Date().toISOString().slice(0, 19).replace(/T/, ' ');
     var newTime = moment();
     // console.log(newTime);
-    this.props.action.completedTime = newTime;
+    var that = this;
     this.forceUpdate();
+    this.props.action.completedTime = newTime;
+    axios.put('/actions/' + this.props.action.UserId + '/' + this.props.action.id)
+      .then(function(response) {
+        console.log(response.data);
+        that.props.update().bind(this);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   componentWillReceiveProps() {
@@ -54,12 +66,12 @@ import { observer } from 'mobx-react';
   handleClick() {}
 
   render() {
-    console.log(this.props.action);
+    // console.log(this.props.action);
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (
       <div className = {this.state.status}>
         <br/>
-        {this.props.action.company &&
+        {this.props.displayCompany &&
           <div>{this.props.action.company}</div>
         }
         {moment(time).from(moment())}
