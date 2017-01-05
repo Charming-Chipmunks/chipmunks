@@ -11,6 +11,8 @@ let jobType = 'fulltime';
 let limit = 50;
 let highlight = 1;
 let start = 1;
+let sort = date;
+let fromage = 5;
 
 var totalResults = 1;
 
@@ -19,8 +21,8 @@ var totalResults = 1;
 
   let options = {
     url: `http://api.indeed.com/ads/apisearch?publisher=${pid}&format=json&q=${q}&l=${l}&
-    sort=&radius=${radius}&st=&jt=${jobType}&start=${start}&limit=${limit}&highlight=${highlight}&fromage=&
-    filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
+    sort=${sort}&radius=${radius}&st=&jt=${jobType}&start=${start}&limit=${limit}&highlight=${highlight}&
+    fromage=${fromage}&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2`
   };
 
 db['Parameter'].findAll({

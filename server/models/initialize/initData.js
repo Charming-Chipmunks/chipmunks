@@ -42,5 +42,7 @@ module.exports = {
 
   description: ['Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
     'Schedule Phone Interview', 'Hold Phone Interview', 'Schedule Inperson Interview', 'Inperson Interview',
-    'Send Email To The Company', 'Phone Call With company', 'Get Offer', 'Attend Meetup', 'Send Resume']
+    'Send Email To The Company', 'Phone Call With company', 'Get Offer', 'Attend Meetup', 'Send Resume'],
+
+  parameters: ['javascript', 'C++', 'React', 'Front End']
 };
