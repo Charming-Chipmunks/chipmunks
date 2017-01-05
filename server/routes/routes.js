@@ -3,21 +3,9 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
-// var initialize = require('../models/initialize');
-
-// important routes
-
-// User
-// /user/:id - GET - get one user and all info associated with that user
-// /user/:id - POST - adds one user to the database and all the associatd info
-
-
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
 
 // this is the initialize file
-var initialize = require('../models/initialize');
+// var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -84,13 +72,10 @@ router.get('/jobs/:userId/:status', function(req, res) {
       res.status(404);
       res.json({});
     } else {
-      res.json(user);
       // kinda hacky,  but easir to filer than figure out how to ruu the query on the db
       user = user.Jobs.filter((job) => {
-        console.log(req.body.status);
         return job.UserJob.status === req.params.status;
       });
-      console.log(user);
       res.json(user);
     }
   }).catch((err) => {
