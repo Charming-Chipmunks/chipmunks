@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-//var initialize = require('../models/initialize');
+// var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -238,7 +238,7 @@ router.post('/actions/', function(req, res) {
       res.status(404);
       res.json({});
     } else {
-      // now I need to associate it with a user and a job.
+      // associate with a User
       models.User.find({
         where: {
           id: req.body.userId
@@ -249,16 +249,26 @@ router.post('/actions/', function(req, res) {
         console.log(err);
       });
 
+      // associate with a Job
       models.Job.find({
         where: {
           id: req.body.jobId
         }
       }).then(job => {
-        console.log(job);
         job.addActions(action); 
       }).catch(err => {
         console.log(err);
       });
+
+      // associate with a Contact
+      models.Contact.find({
+        where: {
+          id: req.body.contactId
+        }
+      }).then(contact => {
+        contact.addActions(action);
+      });
+
 
       res.json(action);
     }

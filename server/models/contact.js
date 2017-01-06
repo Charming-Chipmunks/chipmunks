@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // no associations on the contacts side
+        Contact.hasMany(models.Action);
       }
     }
   });
