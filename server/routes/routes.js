@@ -342,22 +342,16 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 router.get('/contacts/jobs/:email/:userId', function(req, res) {
 
   var unencoded = decodeURIComponent(req.params.email);
-  console.log(unencoded);
-  console.log(req.params.userId);
 
   models.Contact.find({
     where: {
-      email: req.params.email
-      //UserId: req.params.UserId
+      email: unencoded
     }
-    //include: [models.Job]
   }).then((contact) => {
-    console.log(contact);
     if (!contact) {
       res.status(404);
       res.json({});
     } else {
-      console.log(contact.JobId);
       models.Job.find({
         where: {
           id: contact.JobId
