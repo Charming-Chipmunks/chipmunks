@@ -275,7 +275,7 @@ router.put('/actions/:userId/:actionId', function(req, res) {
     where: {
       UserId: req.params.userId,
       id: req.params.actionId
-    }
+    },
   }).then(function(action) {
     if (!action) {
       res.status(404);
@@ -290,8 +290,91 @@ router.put('/actions/:userId/:actionId', function(req, res) {
   });
 });
 
-// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
 
+// CONTACTS - POST - CONNECTS A NEW CONTACT WITH A USER AND A JOB
+router.post('/contacts/:userId/:jobId', function(req, res) {
+
+  models.Contact.create({
+    firstname:    req.body.firstname,
+    lastname:     req.body.lastname, 
+    email:        req.body.email,
+    mobilePhone:  req.body.mobilePhone,
+    workPhone:    req.body.workPhone,
+    title:        req.body.title
+  }).then((contacts) => {
+    if (!contacts) {
+      res.status(404);
+      res.json({});
+    } else {
+
+      // associate Job
+      models.Job.find({
+        where: {
+          id: req.params.jobId
+        }
+      }).then((job) => {
+        console.log('in Jobs');
+        job.addContacts(contacts);
+      });
+
+      // associate User
+      models.User.find({
+        where: {
+          id: req.params.userId
+        }
+      }).then((user) => {
+        user.addContacts(contacts);
+      });
+
+      res.json(contacts);
+    }    
+
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+
+});
+
+
+// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
+router.get('/contacts/jobs/:email/:userId', function(req, res) {
+
+  var unencoded = decodeURIComponent(req.params.email);
+  console.log(unencoded);
+  console.log(req.params.userId);
+
+  models.Contact.find({
+    where: {
+      email: req.params.email
+      //UserId: req.params.UserId
+    }
+    //include: [models.Job]
+  }).then((contact) => {
+    console.log(contact);
+    if (!contact) {
+      res.status(404);
+      res.json({});
+    } else {
+      console.log(contact.JobId);
+      models.Job.find({
+        where: {
+          id: contact.JobId
+        }
+      }).then(job => {
+        res.json(job);
+      });
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+
+});
+
+// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
 router.get('/contacts/:userId/:jobId', function(req, res) {
 
   models.Contact.findAll({
