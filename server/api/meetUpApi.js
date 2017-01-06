@@ -1,14 +1,7 @@
 // meetUpApi.js
 var request = require('request');
 var config = require('./config');
-var meetup = require('meetup-api')({
-    key: '7969621358c535541696b13636c27'
-});
-
-// var headers = {
-//     'Authorization': 'Bearer {21c3a562f6018161f2b275e517c3026}'
-// };
-
+var meetup = require('meetup-api')({key: '7969621358c535541696b13636c27'});
 
 // var groupParameters = {
 //   'zip': '94100',

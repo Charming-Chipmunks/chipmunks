@@ -337,6 +337,30 @@ router.get('/parameter/:userId', function(req, res) {
   });
 });
 
+// PARAMETER - DELETE a Parameter for a users
+router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
+
+  models.User.find({
+    where: {
+      id: req.params.userId
+    }
+  }).then((user) => {
+    if (!user) {
+      res.status(404);
+      res.json({});
+    } else {
+      user.removeParameter(req.params.parameterId);
+      res.json(user);
+    }
+
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+});
+
+
 // PARAMETER - Adds a new parameter to the parameter table and associates a user to it.
 // ?s  will each user get to see all parameters??  probaly not.
 // what parameters do we want to display?
