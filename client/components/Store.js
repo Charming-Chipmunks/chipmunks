@@ -22,7 +22,8 @@ class Store {
   }];
   @observable job = [];
   @observable newParam = {
-    city: '',
+    city: 'San Francisco',
+    state: 'California'
     descriptor: ''
   }
 }
