@@ -28,18 +28,26 @@ import Param from './Param';
   }
   saveC() {
     console.log('savec');
+
+    axios.post('/parameter/' + Store.currentUserId, )
+      .then(function(response) {
+        console.log(response);
+      }).catch(function(error) {
+        console.log(error);
+      });
   }
-  paramChange (e) {
+  paramChange(e) {
     Store.newParam.descriptor = e.target.value;
   }
   render() {
     // console.log('paramlength', Store.params.length);
     var params = Store.params.slice();
     return (<div className='params'>
-       Enter Param <input type="text" ref='param' onChange={this.paramChange} value={Store.newParam.descriptor}/> <button onClick={this.saveC}>Save</button>
+      <form>
+       Enter Param <input type="text" ref='param' onChange={this.paramChange} value={Store.newParam.descriptor}/> <button onClick={this.saveC}>Save</button></form>
       {Store.params.length && params.map((param, index) => {
       param = mobx.toJS(param);
-      console.log(param);
+      // console.log(param);
       return <Param param={param} key={index}/>;
     })}
   </div>);

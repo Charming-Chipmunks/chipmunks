@@ -19,7 +19,7 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-    axios.get('/jobs/' + Store.currentUserId + '/favored')
+    axios.get('/jobs/' + Store.currentUserId + '/new')
       .then(function(response) {
         // console.log('jobs/userid/favored response.data', response.data);
         Store.jobList = response.data;
@@ -57,4 +57,3 @@ import CompanyList from './CompanyList';
 
 export default Web;
 
-// ReactDOM.render(<Web />, document.getElementById('web'));
