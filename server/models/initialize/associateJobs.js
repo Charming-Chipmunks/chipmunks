@@ -10,7 +10,7 @@ var db = require('../index');
 module.exports = function() {
 // get all users from the table, and include the parameter table
   db['User'].findAll({
-    include: [ db['Parameter'] ]
+    include: [ db['Parameter'] ] // check into adding , db['job'] to get access to the jobs 
   }).then((users) => {
     // each item returned is a User array
     users.forEach((user, index) => {

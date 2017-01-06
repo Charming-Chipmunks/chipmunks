@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-//var initialize = require('../models/initialize');
+// var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -238,7 +238,7 @@ router.post('/actions/', function(req, res) {
       res.status(404);
       res.json({});
     } else {
-      // now I need to associate it with a user and a job.
+      // associate with a User
       models.User.find({
         where: {
           id: req.body.userId
@@ -249,16 +249,26 @@ router.post('/actions/', function(req, res) {
         console.log(err);
       });
 
+      // associate with a Job
       models.Job.find({
         where: {
           id: req.body.jobId
         }
       }).then(job => {
-        console.log(job);
         job.addActions(action); 
       }).catch(err => {
         console.log(err);
       });
+
+      // associate with a Contact
+      models.Contact.find({
+        where: {
+          id: req.body.contactId
+        }
+      }).then(contact => {
+        contact.addActions(action);
+      });
+
 
       res.json(action);
     }
@@ -275,7 +285,7 @@ router.put('/actions/:userId/:actionId', function(req, res) {
     where: {
       UserId: req.params.userId,
       id: req.params.actionId
-    }
+    },
   }).then(function(action) {
     if (!action) {
       res.status(404);
@@ -290,8 +300,85 @@ router.put('/actions/:userId/:actionId', function(req, res) {
   });
 });
 
-// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
 
+// CONTACTS - POST - CONNECTS A NEW CONTACT WITH A USER AND A JOB
+router.post('/contacts/:userId/:jobId', function(req, res) {
+
+  models.Contact.create({
+    firstname:    req.body.firstname,
+    lastname:     req.body.lastname, 
+    email:        req.body.email,
+    mobilePhone:  req.body.mobilePhone,
+    workPhone:    req.body.workPhone,
+    title:        req.body.title
+  }).then((contacts) => {
+    if (!contacts) {
+      res.status(404);
+      res.json({});
+    } else {
+
+      // associate Job
+      models.Job.find({
+        where: {
+          id: req.params.jobId
+        }
+      }).then((job) => {
+        console.log('in Jobs');
+        job.addContacts(contacts);
+      });
+
+      // associate User
+      models.User.find({
+        where: {
+          id: req.params.userId
+        }
+      }).then((user) => {
+        user.addContacts(contacts);
+      });
+
+      res.json(contacts);
+    }    
+
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+
+});
+
+
+// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
+router.get('/contacts/jobs/:email/:userId', function(req, res) {
+
+  var unencoded = decodeURIComponent(req.params.email);
+
+  models.Contact.find({
+    where: {
+      email: unencoded
+    }
+  }).then((contact) => {
+    if (!contact) {
+      res.status(404);
+      res.json({});
+    } else {
+      models.Job.find({
+        where: {
+          id: contact.JobId
+        }
+      }).then(job => {
+        res.json(job);
+      });
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+
+});
+
+// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
 router.get('/contacts/:userId/:jobId', function(req, res) {
 
   models.Contact.findAll({
