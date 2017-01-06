@@ -26,6 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         User.belongsToMany(models.Parameter, {through: 'UserParameter'});
         User.belongsToMany(models.Job, {through: 'UserJob'});
+        User.belongsToMany(models.Event, {through: 'UserEvent'});
         User.hasMany(models.Action);
         User.hasMany(models.Contact);
       }

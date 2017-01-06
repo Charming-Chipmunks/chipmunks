@@ -87,6 +87,46 @@ router.get('/jobs/:userId/:status', function(req, res) {
 
 });
 
+// CREATE A JOB
+
+router.post('/job', function(req, res) {
+
+  models.Job.create({
+    jobTitle:   req.body.jobTitle,
+    company:    req.body.company,
+    url:        req.body.url, 
+    address:    req.body.address,
+    city:       req.body.city,
+    state:      req.body.state,
+    formatted_location: req.body.city + ', ' + req.body.state,
+    snippet:    req.body.snippet,
+    source:     'user',
+    origin:     req.body , //'indeed', 'dice', user, etc.
+    jobkey:     req.body.userid + ':' + new Date(),
+    //expires:    DataTypes.DATE,
+    //latitude:   DataTypes.FLOAT,  // i think we need decimal for lat / long
+    //longitude:  DataTypes.FLOAT 
+  }).then((job) => {
+    if (!job) {
+      res.status(404);
+      res.json({});
+    } else {
+      model.User.find({
+        where: {
+          id: req.body.id
+        }
+      }).then(user => {
+        user.addJobs(job, {status: 'favored', createdAt: new Date(), updatedAt: new Date() } );
+        res.json(job);
+      });
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+
+});
 
 // 4) USER - POST - Adds a job to a users favorite list
 // this is working in postman
@@ -303,25 +343,40 @@ router.get('/parameter/:userId', function(req, res) {
 
 router.post('/parameter/:userId', function(req, res) {
 
-  models.Parameter.create({
-    descriptor:   req.body.descriptor,
-    city:         req.body.city,
-    state:        req.body.state,
-    zip:          req.body.zip,
-    radius:       req.body.radius
-  }).then((parameter) => {
+  models.Parameter.find({
+    where: {
+      descriptor:   req.body.descriptor,
+      city:         req.body.city,
+      state:        req.body.state,
+      zip:          req.body.zip,
+      radius:       req.body.radius
+    }
+  }).then(parameter => {
     if (!parameter) {
-      res.status(404);
-      res.json({});
+      models.Parameter.create({
+        descriptor:   req.body.descriptor,
+        city:         req.body.city,
+        state:        req.body.state,
+        zip:          req.body.zip,
+        radius:       req.body.radius
+      }).then((parameter) => {
+          console.log('created new');
+          parameter.addUsers(req.params.userId);
+          res.status(200);
+          res.send(parameter);
+        });
     } else {
+      console.log('found one');
+      parameter.addUsers(req.params.userId);
       res.status(200);
       res.send(parameter);
-    }
+    }   
   }).catch((err) => {
     console.error(err);
     res.status(500);  
     res.json({ error: err });  
   });
+    
 });
 
 // PARAMETER - ADD A USER and Parameter to a Parameter Table
