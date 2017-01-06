@@ -17,10 +17,10 @@ import axios from 'axios';
     return !action.completedTime;
   }
   componentWillReceiveProps() {
-    console.log(this.props.params.id);
+    // console.log(this.props.params.id);
     axios.get('/actions/3/' + this.props.params.id) //need to filter by company later
       .then(function(response) {
-        console.log('actions/jobid response.data', response.data);
+        // console.log('actions/jobid response.data', response.data);
         Store.job = response.data;
       })
       .catch(function(error) {
@@ -28,7 +28,7 @@ import axios from 'axios';
       });
     axios.get('/contacts/3/' + this.props.params.id)
       .then(function(response) {
-        console.log('contacts/user/job response.data', response.data);
+        // console.log('contacts/user/job response.data', response.data);
         Store.contacts = response.data;
       })
       .catch(function(error) {
@@ -41,7 +41,7 @@ import axios from 'axios';
     var contacts = Store.contacts.slice();
     if (historyList[0]) {
       var name = mobx.toJS(historyList[0]).company;
-      console.log(name);
+      // console.log(name);
     }
     return (
       <div className='jobview'>

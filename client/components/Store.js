@@ -3,19 +3,7 @@ import { observable } from 'mobx';
 class Store {
   constructor() {}
   @observable currentUserId = 1;
-  @observable params = {
-    c: false,
-    python: false,
-    javascript: true,
-    node: true,
-    react: false,
-    angular: true,
-    front: false,
-    back: true,
-    full: true,
-    city: 'San Francisco',
-    state: 'CA'
-  };
+  @observable params = [];
   @observable jobList = [];
   @observable filterText = { text: '' };
   @observable actions = [];
@@ -33,6 +21,10 @@ class Store {
     email: 'knoxs@airbnb.com'
   }];
   @observable job = [];
+  @observable newParam = {
+    city: '',
+    descriptor: ''
+  }
 }
 
 const store = window.store = new Store();
