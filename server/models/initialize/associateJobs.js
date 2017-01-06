@@ -2,6 +2,11 @@
 
 var db = require('../index');
 
+/*  ASSOCIATE JOBS WORKING -  
+  1/5 = 3 PM
+  This is working 100% fine.  to make sure it runs in the cron job,  uncomment lies 10 and 38
+ */
+
 module.exports = function() {
 // get all users from the table, and include the parameter table
   db['User'].findAll({
@@ -21,6 +26,7 @@ module.exports = function() {
           job.Jobs.forEach((item, index) => {
             //var statusArr = ['new', 'favored'];
             //var rand = Math.floor(Math.random() * 2 );
+           // console.log('accociated');
             user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
           });
         }).catch((err) => {
