@@ -64,8 +64,8 @@ import Store from './Store';
 
   render() {
     //UPDATE STORE FOR CURRENT JOB
-    // THIS IS HAPPENING WAY TOO OFTEN.
     // Store.company.name = this.props.action.company;
+    // THIS IS HAPPENING WAY TOO
     // Store.jobList.forEach((job, index) => {
     //   if (job.company === this.props.action.company) {
     //     Store.company.title = job.jobTitle;
@@ -74,6 +74,8 @@ import Store from './Store';
     //     console.log('description', job.snippet);
     //   }
     // });
+
+
 
     var action = this.props.action;
     if (action.completedTime) {

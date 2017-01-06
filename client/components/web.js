@@ -9,7 +9,7 @@ import mobx from 'mobx';
 import Store from './Store';
 import JobView from './JobView';
 import SearchBar from './SearchBar';
-import SelectParams from './SelectParams';
+import ShowParams from './ShowParams';
 import CompanyList from './CompanyList';
 
 
@@ -19,10 +19,9 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-
     axios.get('/jobs/' + Store.currentUserId + '/favored')
       .then(function(response) {
-        console.log('jobs/userid/favored response.data', response.data);
+        // console.log('jobs/userid/favored response.data', response.data);
         Store.jobList = response.data;
       })
       .catch(function(error) {
@@ -31,7 +30,7 @@ import CompanyList from './CompanyList';
 
     axios.get('/actions/' + Store.currentUserId)
       .then(function(response) {
-        console.log('actions3', response.data);
+        // console.log('actions3', response.data);
         Store.actions = response.data;
       })
       .catch(function(error) {
