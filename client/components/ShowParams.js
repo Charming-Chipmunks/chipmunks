@@ -52,8 +52,8 @@ import Param from './Param';
       });
   }
 
-  paramChange(e) {
-    Store.newParam.descriptor = e.target.value;
+  change(e) {
+    Store.newParam[e.target.name] = e.target.value;
   }
 
   render() {
@@ -61,7 +61,7 @@ import Param from './Param';
     var params = Store.params.slice();
     return (<div className='params'>
       <form>
-       Enter Param <input type="text" ref='param' onChange={this.paramChange} value={Store.newParam.descriptor}/> <button onClick={this.saveParam}>Save</button></form>
+       Enter Param <input type="text" name='descriptor' onChange={this.change} value={Store.newParam.descriptor}/> <button onClick={this.saveParam}>Save</button></form>
       {Store.params.length && params.map((param, index) => {
         param = toJS(param);
       // console.log(param);

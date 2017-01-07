@@ -46,6 +46,9 @@ import axios from 'axios';
   timeChange(e) {
     Store.newTask.scheduledTime = e.target.value;
   }
+  change(e) {
+    Store.newTask[e.target.name] = e.target.value;
+  }
   save() {
     Store.newTask.jobId = this.props.params.id;
     Store.newTask.company = this.name;
@@ -70,9 +73,9 @@ import axios from 'axios';
       <div className='jobview'>
       <form>
         Enter a Task<br/>
-        Type<input type="text" ref='type' onChange={this.typeChange} value={Store.newTask.type}/><br/>
-        Description<input type="text" ref='description' onChange={this.descriptionChange} value={Store.newTask.description}/><br/>
-        YYYY-MM-DD HH:MM:SS <input type="text" ref='time' onChange={this.timeChange} value={Store.newTask.scheduledTime}/><br/>
+        Type<input type="text" name='type' onChange={this.change} value={Store.newTask.type}/><br/>
+        Description<input type="text" name='description' onChange={this.change} value={Store.newTask.description}/><br/>
+        YYYY-MM-DD HH:MM:SS <input type="text" name='scheduledTime' onChange={this.change} value={Store.newTask.scheduledTime}/><br/>
         <button onClick={this.save}>Save</button>
         </form>
         {historyList[0] &&

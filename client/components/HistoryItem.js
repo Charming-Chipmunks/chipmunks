@@ -63,21 +63,8 @@ import Store from './Store';
   handleClick() {}
 
   render() {
-    //UPDATE STORE FOR CURRENT JOB
-    // Store.company.name = this.props.action.company;
-    // THIS IS HAPPENING WAY TOO
-    // Store.jobList.forEach((job, index) => {
-    //   if (job.company === this.props.action.company) {
-    //     Store.company.title = job.jobTitle;
-    //     console.log('title', job.jobTitle);
-    //     Store.company.description = job.snippet;
-    //     console.log('description', job.snippet);
-    //   }
-    // });
-
-
-
     var action = this.props.action;
+    // console.log(action);
     if (action.completedTime) {
       this.state.status = 'done';
     } else if (moment(action.scheduledTime).isAfter(moment())) {
