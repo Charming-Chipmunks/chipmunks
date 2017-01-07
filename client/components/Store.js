@@ -5,6 +5,7 @@ class Store {
   @observable currentUserId = 1;
   @observable params = [];
   @observable jobList = [];
+  @observable newJobList = [];
   @observable filterText = { text: '' };
   @observable actions = [];
   @observable company = {
@@ -23,8 +24,32 @@ class Store {
   @observable job = [];
   @observable newParam = {
     city: 'San Francisco',
-    state: 'California'
-    descriptor: ''
+    state: 'Ca',
+    zip: 94100,
+    descriptor: '',
+    radius: 25
+  }
+  @observable newTask = {
+    actionSource: 'userInteraction',
+    userId: undefined,
+    jobId: '',
+    company: '',
+    description: '',
+    type: '',
+    scheduledTime: ''
+  }
+  @observable newJob = {
+    jobTitle: '',
+    company: '',
+    url: '',
+    address: '',
+    city: '',
+    state: '',
+    snippet: '',
+    source: 'user',
+    origin: 'user',
+    userid: undefined
+
   }
 }
 

@@ -8,30 +8,41 @@ import Param from './Param';
 @observer class ShowParams extends React.Component {
   constructor(props) {
     super(props);
+    this.getParams = this.getParams.bind(this);
   }
 
   onSave(e) {
     e.preventDefault();
-    // console.log(mobx.toJS(Store.params));
-    //update or send new params to server
-  }
-  componentWillMount() {
-    var that = this;
-    axios.get('/parameter/' + Store.currentUserId)
-      .then(function(response) {
-        console.log('params data', response.data[0]);
-        Store.params = response.data[0].Parameters;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-  saveC() {
-    console.log('savec');
-
-    axios.post('/parameter/' + Store.currentUserId, )
+    axios.put('/parameters' + Store.currentUserId, mobx.toJS(Store.params))
       .then(function(response) {
         console.log(response);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    // update or send new params to server
+  }
+  getParams() {
+ 
+  }
+  componentWillMount() {
+    this.getParams();
+  }
+  saveParam() {
+    console.log('saveParam');
+    console.log(this);
+    // console.log(Store.newParam);
+    axios.post('/parameter/' + Store.currentUserId, mobx.toJS(Store.newParam))
+      .then(function(response) {
+        console.log(response);
+        axios.get('/parameter/' + Store.currentUserId)
+          .then(function(response) {
+            console.log('params data', response.data[0]);
+            Store.params = response.data[0].Parameters;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+
       }).catch(function(error) {
         console.log(error);
       });
@@ -44,12 +55,12 @@ import Param from './Param';
     var params = Store.params.slice();
     return (<div className='params'>
       <form>
-       Enter Param <input type="text" ref='param' onChange={this.paramChange} value={Store.newParam.descriptor}/> <button onClick={this.saveC}>Save</button></form>
+       Enter Param <input type="text" ref='param' onChange={this.paramChange} value={Store.newParam.descriptor}/> <button onClick={this.saveParam}>Save</button></form>
       {Store.params.length && params.map((param, index) => {
-      param = mobx.toJS(param);
+        param = mobx.toJS(param);
       // console.log(param);
-      return <Param param={param} key={index}/>;
-    })}
+        return <Param param={param} key={index}/>;
+      })}
   </div>);
   }
 }
