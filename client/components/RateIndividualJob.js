@@ -22,7 +22,7 @@ import Store from './Store';
   no() {
     console.log('no');
     var id = this.props.company.id;
-    axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'unfavored' })
+    axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'rejected' })
       .then(function(response) {
         console.log(response);
       }).catch(function(error) {
