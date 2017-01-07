@@ -106,6 +106,9 @@ var isLoggedIn = function(req, res, next) {
   res.redirect('/auth/google');
 };
 
+var nodeadmin = require('nodeadmin');
+app.use(nodeadmin(app));
+
 
 // app.get('/login', function(req, res) {
 //   res.redirect
