@@ -6,7 +6,7 @@ var initUsers         = require('./initialize/initUser');
 var initActions       = require('./initialize/initActions');
 var initContacts      = require('./initialize/initContacts');
 var initCron          = require('./initialize/initCron');
-//var initIndeedCrawler = require('./initialize/initIndeedCrawler');
+var initIndeedCrawler = require('./initialize/initIndeedCrawler');
 
 
 initJobs();

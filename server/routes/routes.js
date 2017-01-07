@@ -101,7 +101,7 @@ router.post('/job', function(req, res) {
     formatted_location: req.body.city + ', ' + req.body.state,
     snippet:    req.body.snippet,
     source:     'user',
-    origin:     req.body , //'indeed', 'dice', user, etc.
+    origin:     req.body.origin , //'indeed', 'dice', user, etc.
     jobkey:     req.body.userid + ':' + new Date(),
     //expires:    DataTypes.DATE,
     //latitude:   DataTypes.FLOAT,  // i think we need decimal for lat / long
@@ -111,7 +111,7 @@ router.post('/job', function(req, res) {
       res.status(404);
       res.json({});
     } else {
-      model.User.find({
+      models.User.find({
         where: {
           id: req.body.id
         }
