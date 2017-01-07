@@ -21,7 +21,7 @@ module.exports = function () {
           email:        Faker.internet.email(),
           mobilePhone:  Faker.phone.phoneNumber(),
           workPhone:    Faker.phone.phoneNumber(),
-          title:        Faker.company.bs() + 'office worker'
+          title:        Faker.company.bs() + ' employee'
         }).then(function(contact) {
           job.addContact(contact);
           users[k].addContact(contact);

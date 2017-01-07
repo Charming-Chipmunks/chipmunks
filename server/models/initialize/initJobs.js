@@ -14,7 +14,7 @@ module.exports = function () {
       address:            Faker.address.streetAddress(),
       city:               Faker.address.city(),
       state:              Faker.address.state(),
-      formatted_location: 'formstted location',
+      formatted_location: 'formatted location',
       snippet:            Faker.lorem.sentences(),
       source:             sources[i % 3],
       jobkey:             'job key' + Math.random() * 1000,

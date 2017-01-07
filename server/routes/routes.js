@@ -78,7 +78,7 @@ router.get('/jobs/:userId/:status', function(req, res) {
       user = user.Jobs.filter((job) => {
         return job.UserJob.status === req.params.status;
       });
-      res.json(user).end();
+      res.json(user);
     }
   }).catch((err) => {
     console.error(err);
@@ -153,33 +153,6 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
     res.json({ error: err });
   });
 });
-
-
-// LOCATION - ADD A USER TO USERLOCATION TABLE
-// Add a location to UserLocation join table
-// working in postman
-router.post('/users/:userId/location/:locationId', function(req, res) {
-
-  models.User.find({
-    where: {
-      id: req.params.userId
-    }
-  }).then((user) => {
-    if (!user) {
-      res.status(404);
-      res.json({});
-    } else {
-      user.addLocations(req.params.locationId);
-      res.json(user);
-    }
-  }).catch((err) => {
-    console.error(err); // log error to standard error
-    res.status(500); // categorize as a Internat Server Error
-    res.json({ error: err }); // send JSON object with error
-  });
-});
-
-
 
 
 // USER - get all actions for one User
@@ -281,6 +254,7 @@ router.post('/actions/', function(req, res) {
 
 // Update completion time of one action to the current time.
 router.put('/actions/:userId/:actionId', function(req, res) {
+  
   models.Action.update({ completedTime: new Date() }, {
     where: {
       UserId: req.params.userId,
@@ -348,7 +322,7 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 });
 
 
-// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
+// CONTACTS - GET A CONTACT and RELATED JOB INFO GIVEN CONTACT EMAIL AND USERID
 router.get('/contacts/jobs/:email/:userId', function(req, res) {
 
   var unencoded = decodeURIComponent(req.params.email);
@@ -367,7 +341,7 @@ router.get('/contacts/jobs/:email/:userId', function(req, res) {
           id: contact.JobId
         }
       }).then(job => {
-        res.json({job: job, contact: contact});
+        res.json({job: job,contact: contact});
 
       });
     }
@@ -405,17 +379,17 @@ router.get('/contacts/:userId/:jobId', function(req, res) {
 // PARAMETER - GET A LIST OF ALL PARAMETERS FOR A USER
 router.get('/parameter/:userId', function(req, res) {
 
-  models.User.findAll({
+  models.User.find({
     where: {
       id: req.params.userId
     },
     include: [models.Parameter]
-  }).then((parameter) => {
-    if (!parameter) {
+  }).then((user) => {
+    if (!user) {
       res.status(404);
       res.json({});
     } else {
-      res.json(parameter);
+      res.json(user);
     }
 
   }).catch((err) => {
