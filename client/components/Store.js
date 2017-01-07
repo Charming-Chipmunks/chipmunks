@@ -48,7 +48,7 @@ class Store {
     snippet: '',
     source: 'user',
     origin: 'user',
-    userid: undefined
+    id: undefined
 
   }
 }

@@ -29,7 +29,8 @@ import mobx from 'mobx';
     Store.newJob.snippet = e.target.value;
   }
   save() {
-    Store.newJob.userid = Store.currentUserId;
+    Store.newJob.id = Store.currentUserId;
+    console.log(mobx.toJS(Store.newJob));
     axios.post('/job', mobx.toJS(Store.newJob))
       .then(function(response) {
         console.log(response);
