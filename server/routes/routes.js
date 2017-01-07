@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-// var initialize = require('../models/initialize');
+var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
