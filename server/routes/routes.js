@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models/index');
 
 // this is the initialize file
-var initialize = require('../models/initialize');
+//var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -46,7 +46,7 @@ router.post('/users/create', function(req, res) {
       res.json({});
     } else {
       res.status(200);
-      res.send(user);
+      res.json(user);
     }
   }).catch((err) => {
     console.error(err);
@@ -77,7 +77,7 @@ router.get('/jobs/:userId/:status', function(req, res) {
       user = user.Jobs.filter((job) => {
         return job.UserJob.status === req.params.status;
       });
-      res.json(user);
+      res.json(user).end();
     }
   }).catch((err) => {
     console.error(err);
@@ -269,7 +269,6 @@ router.post('/actions/', function(req, res) {
         contact.addActions(action);
       });
 
-
       res.json(action);
     }
   }).catch((err) => {
@@ -367,7 +366,8 @@ router.get('/contacts/jobs/:email/:userId', function(req, res) {
           id: contact.JobId
         }
       }).then(job => {
-        res.json(job);
+        res.json({job: job, contact: contact});
+
       });
     }
   }).catch((err) => {
