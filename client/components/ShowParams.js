@@ -23,7 +23,7 @@ import Param from './Param';
     // update or send new params to server
   }
   getParams() {
-    console.log('getparms this', this);
+    // console.log('getparms this', this);
     axios.get('/parameter/' + Store.currentUserId)
       .then(function(response) {
         console.log('params data', response.data[0]);
