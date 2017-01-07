@@ -1,14 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import mobx, { computed } from 'mobx';
+import mobx, { action } from 'mobx';
 import Store from './Store';
 import axios from 'axios';
 import Param from './Param';
-//NEED TO DO ACTION ON SAVE, COMPARE CHANGES AND SEND EACH INDIVIDUAL CALL FOR PARAM
+
 @observer class ShowParams extends React.Component {
   constructor(props) {
     super(props);
     this.getParams = this.getParams.bind(this);
+    this.saveParam = this.saveParam.bind(this);
   }
 
   onSave(e) {
@@ -22,34 +23,39 @@ import Param from './Param';
     // update or send new params to server
   }
   getParams() {
- 
+    // console.log('getparms this', this);
+    axios.get('/parameter/' + Store.currentUserId)
+      .then(function(response) {
+        console.log('params data', response.data[0]);
+        Store.params = response.data[0].Parameters;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
+
   componentWillMount() {
     this.getParams();
   }
+
   saveParam() {
     console.log('saveParam');
-    console.log(this);
+    console.log('saveParam this', this);
+    var that = this;
     // console.log(Store.newParam);
     axios.post('/parameter/' + Store.currentUserId, mobx.toJS(Store.newParam))
       .then(function(response) {
         console.log(response);
-        axios.get('/parameter/' + Store.currentUserId)
-          .then(function(response) {
-            console.log('params data', response.data[0]);
-            Store.params = response.data[0].Parameters;
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-
+        that.getParams();
       }).catch(function(error) {
         console.log(error);
       });
   }
+
   paramChange(e) {
     Store.newParam.descriptor = e.target.value;
   }
+
   render() {
     // console.log('paramlength', Store.params.length);
     var params = Store.params.slice();

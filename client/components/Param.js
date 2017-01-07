@@ -10,8 +10,6 @@ import mobx from 'mobx';
     this.removeParam = this.removeParam.bind(this);
   }
   removeParam() {
-    // console.log(this.props.param);
-
     axios.delete('/parameter/' + this.props.param.id + '/user/' + Store.currentUserId)
       .then(function(response) {
         console.log(response);

@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import axios from 'axios';
 import Store from './Store';
+
 @observer class RateIndividualJob extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +11,7 @@ import Store from './Store';
     this.no = this.no.bind(this);
   }
   yes() {
-    console.log('yes');
+    // console.log('yes');
     var id = this.props.company.id;
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'favored' })
       .then(function(response) {
@@ -20,7 +21,7 @@ import Store from './Store';
       });
   }
   no() {
-    console.log('no');
+    // console.log('no');
     var id = this.props.company.id;
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'rejected' })
       .then(function(response) {

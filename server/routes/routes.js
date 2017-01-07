@@ -8,6 +8,7 @@ var models = require('../models/index');
 //var initialize = require('../models/initialize');
 
 
+
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
   models.User.find({
