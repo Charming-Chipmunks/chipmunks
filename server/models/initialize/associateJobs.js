@@ -2,7 +2,7 @@
 
 var db = require('../index');
 
-/*  ASSOCIATE JOBS WORKING -  
+/*  ASSOCIATE JOBS WORKING -
   1/5 = 3 PM
   This is working 100% fine.  to make sure it runs in the cron job,  uncomment lies 10 and 38
  */
@@ -10,11 +10,11 @@ var db = require('../index');
 module.exports = function() {
 // get all users from the table, and include the parameter table
   db['User'].findAll({
-    include: [ db['Parameter'] ] // check into adding , db['job'] to get access to the jobs 
+    include: [ db['Parameter'] ] // check into adding , db['job'] to get access to the jobs
   }).then((users) => {
     // each item returned is a User array
     users.forEach((user, index) => {
-      // each user has a Parameter's array    
+      // each user has a Parameter's array
       user.Parameters.forEach((item, index) => {
         db['Parameter'].find({
           where: {
@@ -31,7 +31,7 @@ module.exports = function() {
             user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
           });
         }).catch((err) => {
-          console.error(err);       
+          console.error(err);
         });
       });
     });
