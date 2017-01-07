@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { observer } from 'mobx-react';
 import axios from 'axios';
+import Store from './Store';
 
 @observer class HistoryItem extends Component {
   constructor(props) {
@@ -43,14 +44,39 @@ import axios from 'axios';
     axios.put('/actions/' + this.props.action.UserId + '/' + this.props.action.id)
       .then(function(response) {
         console.log(response.data);
-        that.props.update().bind(this);
       })
       .catch(function(error) {
         console.log(error);
       });
+
+    Store.actions.forEach((action, index) => {
+      // console.log(action.id);
+      if (this.props.action.id === action.id) {
+        action.completedTime = moment();
+      }
+    });
+
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps() {}
+
+  handleClick() {}
+
+  render() {
+    //UPDATE STORE FOR CURRENT JOB
+    // Store.company.name = this.props.action.company;
+    // THIS IS HAPPENING WAY TOO
+    // Store.jobList.forEach((job, index) => {
+    //   if (job.company === this.props.action.company) {
+    //     Store.company.title = job.jobTitle;
+    //     console.log('title', job.jobTitle);
+    //     Store.company.description = job.snippet;
+    //     console.log('description', job.snippet);
+    //   }
+    // });
+
+
+
     var action = this.props.action;
     if (action.completedTime) {
       this.state.status = 'done';
@@ -59,13 +85,6 @@ import axios from 'axios';
     } else {
       this.state.status = 'overdue';
     }
-    console.log(this.props.action);
-    // Store.currentCompany = this.props.
-  }
-
-  handleClick() {}
-
-  render() {
     // console.log(this.props.action);
     var time = this.props.action.completedTime || this.props.action.scheduledTime;
     return (

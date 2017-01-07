@@ -8,6 +8,7 @@ var models = require('../models/index');
 //var initialize = require('../models/initialize');
 
 
+
 // USER - get info for one user
 router.get('/users/:userId', function(req, res) {
   models.User.find({
@@ -94,7 +95,7 @@ router.post('/job', function(req, res) {
   models.Job.create({
     jobTitle:   req.body.jobTitle,
     company:    req.body.company,
-    url:        req.body.url, 
+    url:        req.body.url,
     address:    req.body.address,
     city:       req.body.city,
     state:      req.body.state,
@@ -105,7 +106,7 @@ router.post('/job', function(req, res) {
     jobkey:     req.body.userid + ':' + new Date(),
     //expires:    DataTypes.DATE,
     //latitude:   DataTypes.FLOAT,  // i think we need decimal for lat / long
-    //longitude:  DataTypes.FLOAT 
+    //longitude:  DataTypes.FLOAT
   }).then((job) => {
     if (!job) {
       res.status(404);
@@ -228,10 +229,10 @@ router.post('/actions/', function(req, res) {
 
   models.Action.create({
     type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
-    company:        req.body.company, 
+    company:        req.body.company,
     description:    req.body.description, //text field with more description of the task / event
-    actionSource:   req.body.actionSource//, // tasks, user, reminder, company
-    //scheduledTime:  req.body.scheduledTime,
+    actionSource:   req.body.actionSource, // tasks, user, reminder, company
+    scheduledTime:  req.body.scheduledTime
     //completedTime:  req.body.completedTime
   }).then((action) => {
     if (!action) {
@@ -255,7 +256,7 @@ router.post('/actions/', function(req, res) {
           id: req.body.jobId
         }
       }).then(job => {
-        job.addActions(action); 
+        job.addActions(action);
       }).catch(err => {
         console.log(err);
       });
@@ -272,9 +273,9 @@ router.post('/actions/', function(req, res) {
       res.json(action);
     }
   }).catch((err) => {
-    console.error(err); 
-    res.status(500); 
-    res.json({ error: err });  
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
   });
 });
 
@@ -305,7 +306,7 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 
   models.Contact.create({
     firstname:    req.body.firstname,
-    lastname:     req.body.lastname, 
+    lastname:     req.body.lastname,
     email:        req.body.email,
     mobilePhone:  req.body.mobilePhone,
     workPhone:    req.body.workPhone,
@@ -336,7 +337,7 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
       });
 
       res.json(contacts);
-    }    
+    }
 
   }).catch((err) => {
     console.error(err);
@@ -481,13 +482,13 @@ router.post('/parameter/:userId', function(req, res) {
       parameter.addUsers(req.params.userId);
       res.status(200);
       res.send(parameter);
-    }   
+    }
   }).catch((err) => {
     console.error(err);
-    res.status(500);  
-    res.json({ error: err });  
+    res.status(500);
+    res.json({ error: err });
   });
-    
+
 });
 
 // PARAMETER - ADD A USER and Parameter to a Parameter Table

@@ -19,12 +19,6 @@ import { observer } from 'mobx-react';
     });
   }
 
-  rerenderCounter() {
-    //forceUpdate isn't working,
-    console.log('forceupdate');
-    this.componentWillReceiveProps();
-  }
-
   render() {
     this.actions = Store.actions.slice();
     this.pending = 0;
@@ -40,7 +34,7 @@ import { observer } from 'mobx-react';
       {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map ((action, index) => {
         action = mobx.toJS(action);
         if (!action.completedTime) {
-          return <HistoryItem action={action} key={index} displayCompany={true} update={this.rerenderCounter}/>;
+          return <HistoryItem action={action} key={index} displayCompany={true}/>;
         }
       })}
         </div>);

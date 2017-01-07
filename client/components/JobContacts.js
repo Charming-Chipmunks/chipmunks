@@ -12,6 +12,7 @@ import { observer } from 'mobx-react';
   render() {
     return (
       <div className='contact'>
+      Contacts<br/>
         {this.props.contacts.map((contact, i) => {
           contact = mobx.toJS(contact);
           return <Contact contact={contact} key={i}/>;
