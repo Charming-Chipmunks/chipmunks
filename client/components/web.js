@@ -19,7 +19,7 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
-    axios.get('/jobs/' + Store.currentUserId + '/new')
+    axios.get('/jobs/' + Store.currentUserId + '/favored')
       .then(function(response) {
         // console.log('jobs/userid/favored response.data', response.data);
         Store.jobList = response.data;
@@ -45,6 +45,12 @@ import CompanyList from './CompanyList';
           <br/>
           <Link to={'preferences'}>
           Settings</Link>
+          <br/>
+          <Link to={'rateJobs'}>
+          Rate new jobs</Link>
+          <br/>
+          <Link to={'addJob'}>
+          Add Job</Link>
           <SearchBar />
           {Store.jobList.length && <CompanyList />}
           <div className='right'>

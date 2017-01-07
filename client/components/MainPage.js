@@ -19,8 +19,6 @@ import { observer } from 'mobx-react';
     });
   }
 
-
-
   render() {
     this.actions = Store.actions.slice();
     this.pending = 0;
