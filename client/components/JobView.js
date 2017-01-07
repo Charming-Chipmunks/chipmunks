@@ -9,6 +9,7 @@ import axios from 'axios';
 @observer class JobView extends Component {
   constructor(props) {
     super(props);
+    this.save = this.save.bind(this);
   }
   filterForHistory(action) {
     return !!action.completedTime;
@@ -17,10 +18,10 @@ import axios from 'axios';
     return !action.completedTime;
   }
   componentWillReceiveProps() {
-    console.log(this.props.params.id);
-    axios.get('/actions/3/' + this.props.params.id) //need to filter by company later
+    console.log('jobId', this.props.params.id);
+    axios.get('/actions/' + Store.currentUserId + '/' + this.props.params.id) //need to filter by company later
       .then(function(response) {
-        console.log('actions/jobid response.data', response.data);
+        // console.log('actions/jobid response.data', response.data);
         Store.job = response.data;
       })
       .catch(function(error) {
@@ -28,7 +29,7 @@ import axios from 'axios';
       });
     axios.get('/contacts/3/' + this.props.params.id)
       .then(function(response) {
-        console.log('contacts/user/job response.data', response.data);
+        // console.log('contacts/user/job response.data', response.data);
         Store.contacts = response.data;
       })
       .catch(function(error) {
@@ -36,17 +37,52 @@ import axios from 'axios';
       });
 
   }
+  typeChange(e) {
+    Store.newTask.type = e.target.value;
+  }
+  descriptionChange(e) {
+    Store.newTask.description = e.target.value;
+  }
+  timeChange(e) {
+    Store.newTask.scheduledTime = e.target.value;
+  }
+  save() {
+    Store.newTask.jobId = this.props.params.id;
+    Store.newTask.company = this.name;
+    Store.newTask.userId = Store.currentUserId;
+    axios.post('/actions/', mobx.toJS(Store.newTask))
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
   render() {
-    var historyList = Store.job.slice();
-    var job = mobx.toJS(Store.job); //NEEDS TO CHANGE FROM HERE AND ON
+    var historyList = Store.job.slice(); //NEEDS TO CHANGE FROM HERE AND ON
     var contacts = Store.contacts.slice();
+    if (historyList[0]) {
+      var name = mobx.toJS(historyList[0]).company;
+      this.name = name;
+      // console.log(name);
+    }
     return (
       <div className='jobview'>
+      <form>
+        Enter a Task<br/>
+        Type<input type="text" ref='type' onChange={this.typeChange} value={Store.newTask.type}/><br/>
+        Description<input type="text" ref='description' onChange={this.descriptionChange} value={Store.newTask.description}/><br/>
+        YYYY-MM-DD HH:MM:SS <input type="text" ref='time' onChange={this.timeChange} value={Store.newTask.scheduledTime}/><br/>
+        <button onClick={this.save}>Save</button>
+        </form>
+        {historyList[0] &&
         <div>
-          <p><a href={'http://maps.google.com/?q=' + job.companyName}> {job.companyName}</a> </p>
-          <p> {job.positionName} </p>
-          <p> {job.details} </p>
+          <p><a href={'https://www.google.com/search?q=' + name}> {name}</a> </p>
+          <p><a href={'http://maps.google.com/?q=' + name}> {Store.company.location}</a></p>
+          <p> {Store.company.title} </p>
+          <p> {Store.company.description} </p>
         </div>
+      }
         --------------------------------------------------------------------------------------------------
         <div className='Tasks'>
         Tasks
@@ -73,3 +109,12 @@ import axios from 'axios';
 }
 
 export default JobView;
+
+
+
+// type
+// company
+// description
+// actionSource
+// userId
+// jobId

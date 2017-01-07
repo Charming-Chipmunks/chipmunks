@@ -3,24 +3,14 @@ import { observable } from 'mobx';
 class Store {
   constructor() {}
   @observable currentUserId = 1;
-  @observable params = {
-    c: false,
-    python: false,
-    javascript: true,
-    node: true,
-    react: false,
-    angular: true,
-    front: false,
-    back: true,
-    full: true,
-    city: 'San Francisco',
-    state: 'CA'
-  };
+  @observable params = [];
   @observable jobList = [];
+  @observable newJobList = [];
   @observable filterText = { text: '' };
   @observable actions = [];
   @observable company = {
     name: 'Airbnb',
+    title: '',
     location: '888 Brannan St, San Francisco, CA 94103',
     description: 'Airbnb helps people find great rooms to stay in.',
   }
@@ -32,6 +22,35 @@ class Store {
     email: 'knoxs@airbnb.com'
   }];
   @observable job = [];
+  @observable newParam = {
+    city: 'San Francisco',
+    state: 'Ca',
+    zip: 94100,
+    descriptor: '',
+    radius: 25
+  }
+  @observable newTask = {
+    actionSource: 'userInteraction',
+    userId: undefined,
+    jobId: '',
+    company: '',
+    description: '',
+    type: '',
+    scheduledTime: ''
+  }
+  @observable newJob = {
+    jobTitle: '',
+    company: '',
+    url: '',
+    address: '',
+    city: '',
+    state: '',
+    snippet: '',
+    source: 'user',
+    origin: 'user',
+    id: undefined
+
+  }
 }
 
 const store = window.store = new Store();
