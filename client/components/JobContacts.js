@@ -21,6 +21,7 @@ import axios from 'axios';
     axios.post('/contacts/' + Store.currentUserId + '/' + this.props.id, toJS(Store.newContact))
       .then(function(response) {
         console.log(response);
+        Store.contacts.push(response.data);
       }).catch(function(error) {
         console.log(error);
       });
