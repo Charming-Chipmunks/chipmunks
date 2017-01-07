@@ -118,7 +118,6 @@ var isLoggedIn = function(req, res, next) {
   res.redirect('/auth/google');
 };
 
-
 // app.get('/login', function(req, res) {
 //   res.redirect
 // });
