@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import mobx from 'mobx';
+import { toJS } from 'mobx';
 import Store from './Store';
 import HistoryItem from './HistoryItem';
 import JobContacts from './JobContacts';
@@ -50,7 +50,7 @@ import axios from 'axios';
     Store.newTask.jobId = this.props.params.id;
     Store.newTask.company = this.name;
     Store.newTask.userId = Store.currentUserId;
-    axios.post('/actions/', mobx.toJS(Store.newTask))
+    axios.post('/actions/', toJS(Store.newTask))
       .then(function(response) {
         console.log(response);
       })
@@ -62,7 +62,7 @@ import axios from 'axios';
     var historyList = Store.job.slice(); //NEEDS TO CHANGE FROM HERE AND ON
     var contacts = Store.contacts.slice();
     if (historyList[0]) {
-      var name = mobx.toJS(historyList[0]).company;
+      var name = toJS(historyList[0]).company;
       this.name = name;
       // console.log(name);
     }
@@ -87,14 +87,14 @@ import axios from 'axios';
         <div className='Tasks'>
         Tasks
         {historyList.filter(this.filterForTask).sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map ((action, index) =>{
-          action = mobx.toJS(action);
+          action = toJS(action);
           return <HistoryItem action={action} key={index}/>;
         })}
         </div>
          <div className='History'>
         History
         {historyList.filter(this.filterForHistory).sort((a, b) => a.completedTime < b.completedTime ? 1 : 0).map ((action, index) =>{
-          action = mobx.toJS(action);
+          action = toJS(action);
           return <HistoryItem action={action} key={index}/>;
         })}
         </div>

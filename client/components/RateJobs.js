@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import axios from 'axios';
 import Store from './Store';
-import mobx from 'mobx';
+import { toJS } from 'mobx';
 import RateIndividualJob from './RateIndividualJob';
 
 @observer class RateJobs extends React.Component {
@@ -23,14 +23,14 @@ import RateIndividualJob from './RateIndividualJob';
   }
   render() {
 
-    var list = mobx.toJS(Store.newJobList);
+    var list = toJS(Store.newJobList);
     console.log(list.length);
     if (list.length > 0) {
       return (
         <ul>
         {list.map((company, index) => {
           console.log(index);
-          company = mobx.toJS(company);
+          company = toJS(company);
           return <RateIndividualJob company={company} key={index}/>;
         }
         )}

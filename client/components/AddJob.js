@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Store from './Store';
 import axios from 'axios';
-import mobx from 'mobx';
+import { toJS } from 'mobx';
 @observer class AddJob extends React.Component {
   constructor(props) {
     super(props);
@@ -30,8 +30,8 @@ import mobx from 'mobx';
   }
   save() {
     Store.newJob.id = Store.currentUserId;
-    console.log(mobx.toJS(Store.newJob));
-    axios.post('/job', mobx.toJS(Store.newJob))
+    console.log(toJS(Store.newJob));
+    axios.post('/job', toJS(Store.newJob))
       .then(function(response) {
         console.log(response);
       })
