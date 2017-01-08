@@ -119,8 +119,9 @@ router.post('/job', function(req, res) {
         }
       }).then(user => {
         user.addJobs(job, {status: 'favored', createdAt: new Date(), updatedAt: new Date() } );
-        // create new actions;
-        utils.addActionsToNewJob(user, job, req.body.company);
+        // create new actions
+        // adding a new job will add the initial actions (review company. look for comtacts,  )
+        utils.addActionsToNewJob(user, job, req.body);
         res.json(job);
       });
     }
@@ -160,7 +161,7 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
               id: req.params.jobId
             }
           }).then( job => {
-            utils.addActionsToNewJob(user, job, job.company);
+            utils.addActionsToNewJob(user, job, job);
           });
         });
       }
