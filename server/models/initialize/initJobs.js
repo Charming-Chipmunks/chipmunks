@@ -6,7 +6,7 @@ var db        = require('../index');
 var sources = ['Indeed.com', 'Dice.com', 'My Search'];
 
 module.exports = function () {
-  for (let i = 0; i < 10; i ++ ) {
+  for (let i = 0; i < 1; i ++ ) {
     db['Job'].create({
       jobTitle:           Faker.company.bs() + ' programmer',
       company:            Faker.company.companyName(),
