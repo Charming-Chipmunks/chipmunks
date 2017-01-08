@@ -9,7 +9,7 @@ var db      = require('../index');
   This is working 100% fine.  to make sure it runs in the cron job,  uncomment lies 12 and 22
  */
 
-module.exports = function () {
+//module.exports = function () {
  
   db['Parameter'].findAll().then((parameters) => {
     parameters.forEach((parameter) => {
@@ -18,7 +18,7 @@ module.exports = function () {
   }).catch((err) => {
     console.error(err);
   });
-};
+//};
 
 
 

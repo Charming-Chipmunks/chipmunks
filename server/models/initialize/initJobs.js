@@ -6,7 +6,7 @@ var db        = require('../index');
 var sources = ['Indeed.com', 'Dice.com', 'My Search'];
 
 module.exports = function () {
-  for (let i = 0; i < 10; i ++ ) {
+  for (let i = 0; i < 1; i ++ ) {
     db['Job'].create({
       jobTitle:           Faker.company.bs() + ' programmer',
       company:            Faker.company.companyName(),
@@ -14,7 +14,7 @@ module.exports = function () {
       address:            Faker.address.streetAddress(),
       city:               Faker.address.city(),
       state:              Faker.address.state(),
-      formatted_location: 'formstted location',
+      formatted_location: 'formatted location',
       snippet:            Faker.lorem.sentences(),
       source:             sources[i % 3],
       jobkey:             'job key' + Math.random() * 1000,

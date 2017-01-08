@@ -1,12 +1,12 @@
 //routes.js
 
-var express = require('express');
-var router = express.Router();
-var models = require('../models/index');
+var express   = require('express');
+var router    = express.Router();
+var models    = require('../models/index');
+var utils     = require('./route-utils');
 
 // this is the initialize file
 //var initialize = require('../models/initialize');
-
 
 
 // USER - get info for one user
@@ -57,7 +57,7 @@ router.post('/users/create', function(req, res) {
 
 });
 
-// 3) USER - Gets a list of all jobs a user has favorited
+// 3) USER - Gets a list of all jobs a user by status
 // the key of this query is the include: [models.Job]
 
 router.get('/jobs/:userId/:status', function(req, res) {
@@ -78,7 +78,7 @@ router.get('/jobs/:userId/:status', function(req, res) {
       user = user.Jobs.filter((job) => {
         return job.UserJob.status === req.params.status;
       });
-      res.json(user).end();
+      res.json(user);
     }
   }).catch((err) => {
     console.error(err);
@@ -89,6 +89,7 @@ router.get('/jobs/:userId/:status', function(req, res) {
 });
 
 // CREATE A JOB
+// in create job we should create the list of actions for the user
 
 router.post('/job', function(req, res) {
 
@@ -101,7 +102,7 @@ router.post('/job', function(req, res) {
     state:      req.body.state,
     formatted_location: req.body.city + ', ' + req.body.state,
     snippet:    req.body.snippet,
-    source:     'user',
+    source:     req.body.source,
     origin:     req.body.origin , //'indeed', 'dice', user, etc.
     jobkey:     req.body.userid + ':' + new Date(),
     //expires:    DataTypes.DATE,
@@ -118,6 +119,9 @@ router.post('/job', function(req, res) {
         }
       }).then(user => {
         user.addJobs(job, {status: 'favored', createdAt: new Date(), updatedAt: new Date() } );
+        // create new actions
+        // adding a new job will add the initial actions (review company. look for comtacts,  )
+        utils.addActionsToNewJob(user, job, req.body);
         res.json(job);
       });
     }
@@ -145,7 +149,23 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
       res.status(404);
       res.json({});
     } else {
-      res.json(jobLink);
+      if (req.body.status === 'favored') {
+        models.User.find({
+          where: {
+            id: req.params.userId
+          }
+        }).then(user => {
+          
+          models.Job.find({
+            where: {
+              id: req.params.jobId
+            }
+          }).then( job => {
+            utils.addActionsToNewJob(user, job, job);
+          });
+        });
+      }
+        res.json(jobLink);
     }
   }).catch((err) => {
     console.error(err);
@@ -153,33 +173,6 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
     res.json({ error: err });
   });
 });
-
-
-// LOCATION - ADD A USER TO USERLOCATION TABLE
-// Add a location to UserLocation join table
-// working in postman
-router.post('/users/:userId/location/:locationId', function(req, res) {
-
-  models.User.find({
-    where: {
-      id: req.params.userId
-    }
-  }).then((user) => {
-    if (!user) {
-      res.status(404);
-      res.json({});
-    } else {
-      user.addLocations(req.params.locationId);
-      res.json(user);
-    }
-  }).catch((err) => {
-    console.error(err); // log error to standard error
-    res.status(500); // categorize as a Internat Server Error
-    res.json({ error: err }); // send JSON object with error
-  });
-});
-
-
 
 
 // USER - get all actions for one User
@@ -203,7 +196,7 @@ router.get('/actions/:userId', function(req, res) {
   });
 });
 
-// Actions - get all actions for one User
+// Actions - get all actions for one User for one Job
 router.get('/actions/:userId/:jobId', function(req, res) {
   models.Action.findAll({
     where: {
@@ -281,6 +274,7 @@ router.post('/actions/', function(req, res) {
 
 // Update completion time of one action to the current time.
 router.put('/actions/:userId/:actionId', function(req, res) {
+  
   models.Action.update({ completedTime: new Date() }, {
     where: {
       UserId: req.params.userId,
@@ -348,7 +342,7 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 });
 
 
-// CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
+// CONTACTS - GET A CONTACT and RELATED JOB INFO GIVEN CONTACT EMAIL AND USERID
 router.get('/contacts/jobs/:email/:userId', function(req, res) {
 
   var unencoded = decodeURIComponent(req.params.email);
@@ -367,7 +361,7 @@ router.get('/contacts/jobs/:email/:userId', function(req, res) {
           id: contact.JobId
         }
       }).then(job => {
-        res.json({job: job, contact: contact});
+        res.json({job: job,contact: contact});
 
       });
     }
@@ -405,17 +399,17 @@ router.get('/contacts/:userId/:jobId', function(req, res) {
 // PARAMETER - GET A LIST OF ALL PARAMETERS FOR A USER
 router.get('/parameter/:userId', function(req, res) {
 
-  models.User.findAll({
+  models.User.find({
     where: {
       id: req.params.userId
     },
     include: [models.Parameter]
-  }).then((parameter) => {
-    if (!parameter) {
+  }).then((user) => {
+    if (!user) {
       res.status(404);
       res.json({});
     } else {
-      res.json(parameter);
+      res.json(user);
     }
 
   }).catch((err) => {
@@ -450,8 +444,7 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 
 
 // PARAMETER - Adds a new parameter to the parameter table and associates a user to it.
-// ?s  will each user get to see all parameters??  probaly not.
-// what parameters do we want to display?
+
 
 router.post('/parameter/:userId', function(req, res) {
 
@@ -491,7 +484,7 @@ router.post('/parameter/:userId', function(req, res) {
 
 });
 
-// PARAMETER - ADD A USER and Parameter to a Parameter Table
+// PARAMETER - ADD A USER and Parameter to a UserParameter Table
 router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 
   models.User.find({
@@ -508,7 +501,6 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
   });
 
 });
-
 
 
 //testing
@@ -530,7 +522,6 @@ router.get('/test2/:userId', function(req, res) {
     res.json({ error: err });
   });
 });
-
 
 
 
