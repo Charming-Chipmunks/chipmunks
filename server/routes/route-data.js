@@ -40,24 +40,33 @@ module.exports = {
   },
 
   apply: function(body) {
-      var apply = [
-        `Did you send in that application?`,
-        `Studies have shown that if you dont apply within a week of locating that job,  you most likely aren't interested`,
-        `Send in that application, this could be your job!`
-      ];
+    var apply = [
+      `Did you send in that application?`,
+      `Studies have shown that if you dont apply within a week of locating that job,  you most likely aren't interested`,
+      `Send in that application, this could be your job!`
+    ];
 
     return apply[Math.floor(Math.random() * apply.length)];
   },
+
+  followup: function() {
+    var follow = [
+      `You should give them 7 days before you follow up.`,
+      `Following up shows you are interested in the job.`,
+      `Just be patient for a few days, then follow up.`
+    ];
+    return follow[Math.floor(Math.random() * follow.length)];
+  },
+
 
   types: [
     'like', 
     'learn', 
     'connections', 
     'apply', 
+    'follow up',     
+    'interview',
     'schedule', 
-    'interview', 
-    'schedule', 
-    'interview', 
     'email', 
     'phone', 
     'offer', 

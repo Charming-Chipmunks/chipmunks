@@ -2,41 +2,87 @@
 var Faker     = require('faker');
 var db        = require('../index');
 var initData  = require('./initData');
+var descriptions = require('../../routes/route-data');
 
+const LIKED = 0;
+const STUDY = 1;
+const APPLY_TO_JOB = 2;
+const FIND_CONNECTION = 3;
+const FOLLOW_UP = 4;
 
-module.exports = function () {
+//module.exports = function () {
   // create actions - 13 actions per user per job
   db['User'].findAll({
     include: [db['Job']]
   }).then(users => {
 
     for (let k = 0; k < users.length; k++) {
+    console.log('in findall', users);
+
       users[k].Jobs.forEach((job) => {
+        console.log('in actions loop');
 
-        for (let j = 0; j < initData.types.length; j ++ ) {
-          var date = [Faker.date.future, Faker.date.past];
-          var nullDate = [Faker.date.past, fakenull];
+    var date = new Date ();
 
-          // create some actions for each job
+    db['Action'].create({
+      type:           descriptions.types[LIKED],
+      company:        job.company,
+      description:    descriptions.likes(job),
+      scheduledTime:  date,
+      completedTime:  null
+    }).then(function(likeAction) {
+      users[k].addActions(likeAction);
+      job.addActions(likeAction); 
+
+      db['Action'].create({
+        type:           descriptions.types[STUDY],
+        company:        job.company,
+        description:    descriptions.study(job),
+        scheduledTime:  date.setDate(date.getDate() + descriptions.daysForLearning),
+        completedTime:  null
+      }).then(function(learnAction) {
+        users[k].addActions(learnAction);
+        job.addActions(learnAction); 
+      
+        db['Action'].create({
+          type:           descriptions.types[FIND_CONNECTION],
+          company:        job.company,
+          description:    descriptions.connections(job),
+          scheduledTime:  date,
+          completedTime:  null
+        }).then(function(connectAction) {
+          users[k].addActions(connectAction);
+          job.addActions(connectAction); 
+
           db['Action'].create({
-            type:           initData.types[j],
+            type:           descriptions.types[APPLY_TO_JOB],
             company:        job.company,
-            description:    initData.description[j],
-            scheduledTime:  date[j % 2](),
-            completedTime:  nullDate[j % 2]()
-          }).then(function(action) {
-            users[k].addActions(action);
-            job.addActions(action); 
+            description:    descriptions.apply(job),
+            scheduledTime:  date.setDate(date.getDate() + descriptions.daysForApplication),
+            completedTime:  null
+          }).then(function(applyAction) {
+            users[k].addActions(applyAction);
+            job.addActions(applyAction); 
           }).catch((err) => {
             console.error(err);
           });
-        } // end of actions for loop
+          
+        }).catch((err) => {
+          console.error(err);
+        });
+
+      }).catch((err) => {
+        console.error(err);
+      });
+      
+    }).catch((err) => {
+      console.error(err);
+    });
       });
     }
   }).catch(err => {
     console.log(err);
   });
-  function fakenull () {
-    return null;
-  }
-};
+
+
+//};

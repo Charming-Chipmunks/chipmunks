@@ -24,10 +24,6 @@ var db = require('../index');
         }).then( job => {
         // this gets the Jobs associated with the parameter
           job.Jobs.forEach((item, index) => {
-            //var statusArr = ['new', 'favored'];
-            //var rand = Math.floor(Math.random() * 2 );
-           // console.log('accociated');
-           //loo in the UderJobs join table and see if its already there
            db['UserJob'].find({
             where: {
               UserId: user.id,
