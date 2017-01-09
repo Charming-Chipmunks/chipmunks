@@ -8,6 +8,8 @@ const LIKED = 0;
 const STUDY = 1;
 const APPLY_TO_JOB = 2;
 const FIND_CONNECTION = 3;
+const FOLLOW_UP = 4;
+
 
 module.exports = {
 
@@ -32,7 +34,6 @@ module.exports = {
         type:           descriptions.types[STUDY],
         company:        body.company,
         description:    descriptions.study(body),
-        // would be awesome if we could get a link to the company on crunchbase
         scheduledTime:  date.setDate(date.getDate() + descriptions.daysForLearning),
         completedTime:  null
       }).then(function(learnAction) {
@@ -43,7 +44,6 @@ module.exports = {
           type:           descriptions.types[FIND_CONNECTION],
           company:        body.company,
           description:    descriptions.connections(body),
-          // would be awesome if we could get a link to the company on crunchbase
           scheduledTime:  date,
           completedTime:  null
         }).then(function(connectAction) {
@@ -54,7 +54,6 @@ module.exports = {
             type:           descriptions.types[APPLY_TO_JOB],
             company:        body.company,
             description:    descriptions.apply(body),
-            // would be awesome if we could get a link to the company on crunchbase
             scheduledTime:  date.setDate(date.getDate() + descriptions.daysForApplication),
             completedTime:  null
           }).then(function(applyAction) {
@@ -74,6 +73,50 @@ module.exports = {
       
     }).catch((err) => {
       console.error(err);
+    });
+  },
+
+  processAction: function(actionId, userId) {
+    // see what the action is,  and if it fits the right type,  take some new actions
+    var date = new Date ();
+
+    models['Action'].find({
+      where: {
+        id: actionId
+      }
+    }).then(action => {
+      if (action.type === 'apply') {
+        console.log('application sent it');
+        models['Action'].create({
+          type:           descriptions.types[FOLLOW_UP],
+          company:        action.company,
+          description:    descriptions.followup(action.company),
+          scheduledTime:  date.setDate(date.getDate() + 4),
+          completedTime:  null
+        }).then(followUpAction =>{
+          // associate the new Action with the User
+
+          models['User'].find({
+            where: {
+              id: userId
+            }
+          }).then(user => {
+            user.addAction(followUpAction);
+          });
+          // associste the new action with a Job
+          models['Job'].find({
+            where: {
+              id: action.JobId
+            }
+          }).then(job => {
+            job.addAction(followUpAction);
+          });        
+
+        });
+      } else if (action.type === 'interview') {
+        
+
+      }
     });
   } 
 };

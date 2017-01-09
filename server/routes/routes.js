@@ -6,7 +6,7 @@ var models    = require('../models/index');
 var utils     = require('./route-utils');
 
 // this is the initialize file
-//var initialize = require('../models/initialize');
+var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -121,6 +121,7 @@ router.post('/job', function(req, res) {
         user.addJobs(job, {status: 'favored', createdAt: new Date(), updatedAt: new Date() } );
         // create new actions
         // adding a new job will add the initial actions (review company. look for comtacts,  )
+        // when do I send the updated actions to the user?
         utils.addActionsToNewJob(user, job, req.body);
         res.json(job);
       });
@@ -273,6 +274,7 @@ router.post('/actions/', function(req, res) {
 });
 
 // Update completion time of one action to the current time.
+// we may want to broaden this case to apply to closing and opening of all ations
 router.put('/actions/:userId/:actionId', function(req, res) {
   
   models.Action.update({ completedTime: new Date() }, {
@@ -285,6 +287,8 @@ router.put('/actions/:userId/:actionId', function(req, res) {
       res.status(404);
       res.json({});
     } else {
+      // here I need to check and see what the completed action was and add items to the DB as necessary
+      utils.processAction(req.params.actionId, req.params.userId);
       res.json(action);
     }
   }).catch((err) => {
