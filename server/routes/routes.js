@@ -257,7 +257,6 @@ router.post('/actions/', function(req, res) {
     company:        req.body.company,
     description:    req.body.description, //text field with more description of the task / event
     actionSource:   req.body.actionSource, // tasks, user, reminder, company
-    scheduledTime:  req.body.scheduledTime
     completedTime:  req.body.completedTime
   }).then((action) => {
 
