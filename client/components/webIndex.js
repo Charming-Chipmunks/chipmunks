@@ -7,6 +7,7 @@ import JobView from './JobView';
 import Web from './web';
 import RateJobs from './RateJobs';
 import AddJob from './AddJob';
+
 ReactDOM.render(
   <Router history = {hashHistory}>
     <Route path='/' component={Web}>
