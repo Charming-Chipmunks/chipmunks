@@ -15,10 +15,12 @@ class Store {
     description: 'Airbnb helps people find great rooms to stay in.',
   }
   @observable contacts = [{
-    name: 'Sandy Knox',
+    firstname: 'Sandy',
+    lastname: 'Knox',
     email: 'sandyk@airbnb.com'
   }, {
-    name: 'Knox Sandy',
+    firstname: 'Knox',
+    lastname: 'Sandy',
     email: 'knoxs@airbnb.com'
   }];
   @observable job = [];
@@ -50,6 +52,14 @@ class Store {
     origin: 'user',
     id: undefined
 
+  }
+  @observable newContact = {
+    title: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    mobilePhone: '',
+    workPhone: '',
   }
 }
 

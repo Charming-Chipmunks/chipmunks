@@ -1,6 +1,6 @@
 import React from 'react';
 import Store from './Store';
-import mobx from 'mobx';
+import {toJS} from 'mobx';
 import HistoryItem from './HistoryItem';
 import { observer } from 'mobx-react';
 
@@ -12,7 +12,7 @@ import { observer } from 'mobx-react';
     this.actions = Store.actions.slice();
     this.pending = 0;
     this.actions.map((action, index) => {
-      action = mobx.toJS(action);
+      action = toJS(action);
       if (!action.completedTime) {
         this.pending++;
       }
@@ -23,7 +23,7 @@ import { observer } from 'mobx-react';
     this.actions = Store.actions.slice();
     this.pending = 0;
     this.actions.forEach((action, index) => {
-      action = mobx.toJS(action);
+      action = toJS(action);
       if (!action.completedTime) {
         this.pending++;
       }
@@ -32,7 +32,7 @@ import { observer } from 'mobx-react';
     return (<div className='actionList'>
       You have {this.pending} pending actions
       {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map ((action, index) => {
-        action = mobx.toJS(action);
+        action = toJS(action);
         if (!action.completedTime) {
           return <HistoryItem action={action} key={index} displayCompany={true}/>;
         }

@@ -5,13 +5,12 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { Link } from 'react-router';
 import axios from 'axios';
-import mobx from 'mobx';
+import { toJS } from 'mobx';
 import Store from './Store';
 import JobView from './JobView';
 import SearchBar from './SearchBar';
 import ShowParams from './ShowParams';
 import CompanyList from './CompanyList';
-
 
 @observer class Web extends React.Component {
   constructor(props) {
@@ -62,4 +61,3 @@ import CompanyList from './CompanyList';
 }
 
 export default Web;
-

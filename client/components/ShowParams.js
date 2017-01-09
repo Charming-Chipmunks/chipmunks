@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import mobx, { action } from 'mobx';
+import { toJS } from 'mobx';
 import Store from './Store';
 import axios from 'axios';
 import Param from './Param';
@@ -14,7 +14,7 @@ import Param from './Param';
 
   onSave(e) {
     e.preventDefault();
-    axios.put('/parameters' + Store.currentUserId, mobx.toJS(Store.params))
+    axios.put('/parameters' + Store.currentUserId, toJS(Store.params))
       .then(function(response) {
         console.log(response);
       }).catch(function(error) {
@@ -43,7 +43,7 @@ import Param from './Param';
     console.log('saveParam this', this);
     var that = this;
     // console.log(Store.newParam);
-    axios.post('/parameter/' + Store.currentUserId, mobx.toJS(Store.newParam))
+    axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
       .then(function(response) {
         console.log(response);
         that.getParams();
@@ -52,8 +52,8 @@ import Param from './Param';
       });
   }
 
-  paramChange(e) {
-    Store.newParam.descriptor = e.target.value;
+  change(e) {
+    Store.newParam[e.target.name] = e.target.value;
   }
 
   render() {
@@ -61,9 +61,9 @@ import Param from './Param';
     var params = Store.params.slice();
     return (<div className='params'>
       <form>
-       Enter Param <input type="text" ref='param' onChange={this.paramChange} value={Store.newParam.descriptor}/> <button onClick={this.saveParam}>Save</button></form>
+       Enter Param <input type="text" name='descriptor' onChange={this.change} value={Store.newParam.descriptor}/> <button onClick={this.saveParam}>Save</button></form>
       {Store.params.length && params.map((param, index) => {
-        param = mobx.toJS(param);
+        param = toJS(param);
       // console.log(param);
         return <Param param={param} key={index}/>;
       })}

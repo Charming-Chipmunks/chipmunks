@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 @observer class Contact extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.contact);
   }
 
   handleclick() {}
