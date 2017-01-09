@@ -258,7 +258,7 @@ router.post('/actions/', function(req, res) {
     description:    req.body.description, //text field with more description of the task / event
     actionSource:   req.body.actionSource, // tasks, user, reminder, company
     scheduledTime:  req.body.scheduledTime
-    // completedTime:  req.body.completedTime || null
+    completedTime:  req.body.completedTime
   }).then((action) => {
 
     if (!action) {
