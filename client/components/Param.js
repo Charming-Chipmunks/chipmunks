@@ -15,8 +15,8 @@ import mobx from 'mobx';
         console.log(response);
         axios.get('/parameter/' + Store.currentUserId)
           .then(function(response) {
-            console.log('params data', response.data[0]);
-            Store.params = response.data[0].Parameters;
+            // console.log('params data', response.data);
+            Store.params = response.data.Parameters;
           })
           .catch(function(error) {
             console.log(error);
