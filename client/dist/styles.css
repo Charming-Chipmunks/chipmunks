@@ -9,3 +9,66 @@
 .pending {
   color: green;
 }
+
+/*
+ * RATE COMPANY COMPONENT CSS STYLINGS  
+*/
+.rateCompany{
+  border-radius: 3px;
+  border: 2px solid #c62828;
+ /* width: 100%; */
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  padding: 15px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.rateCompanyInfoBox{
+ width: 80%;
+ padding-left: 10px;
+}
+
+.rateCompanyAction{
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: row;
+  align-content: space-around;
+  width: 20%;
+}
+
+.rateCompanyJob{ 
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 3px;
+  margin-bottom: 2px
+}
+
+.rateCompanyName{
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 2px;
+  margin-bottom: 2px
+}
+
+.rateCompanyText{
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1.2;
+  margin-top: 2px;
+  margin-bottom: 2px
+}
+
+.favorJob{
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+}
+
+.rankingThunbs{
+  height: 50px;
+}
+
