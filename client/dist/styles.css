@@ -10,6 +10,47 @@
   color: green;
 }
 
+
+/*
+ * WEB.js css stylings
+*/
+.mainContainer{
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-content: space-around;
+  width: 100%;
+}
+
+.leftMain{
+  width: 25%;
+  position: fixed;
+  /* to get the items off the left, I need to add a padding to the items in it*/
+}
+
+.rightMain{
+  width: 75%;
+}
+
+/*
+ * Add Company
+*/
+
+.addJob{
+  display: flex;
+  width: 100%;
+}
+
+.createJob{
+  background-color: red;
+  border-radius: 3px;
+  text-align: center;
+  color:  white;
+}
+
+
+
+
 /*
  * RATE COMPANY COMPONENT CSS STYLINGS  
 */
