@@ -58,9 +58,10 @@ import axios from 'axios';
     Store.newTask.userId = Store.currentUserId;
     axios.post('/actions/', toJS(Store.newTask))
       .then(function(response) {
-        console.log(response);
-        console.log(page);
-        page.update();
+        console.log('save response data', response.data);
+        Store.job.push(response.data);
+        // console.log(page);
+        // page.update();
       })
       .catch(function(error) {
         console.log(error);
