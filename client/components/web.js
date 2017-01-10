@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { Link } from 'react-router';
+import { Link, IndexLink } from 'react-router';
 import axios from 'axios';
 import { toJS } from 'mobx';
 import Store from './Store';
@@ -42,29 +42,30 @@ import CompanyList from './CompanyList';
   render() {
     return (
       <div id="mainApp">
-
-      <nav>
-        <div className="nav-wrapper">
-          <Link to={'home'}>Logo</Link>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li><Link to={'preferences'}>Settings</Link></li>
-            <li><Link to={'rateJobs'}>Rate new jobs</Link></li>
-            <li><Link to={'addJob'}>Add Job</Link></li>
-          </ul>
-        </div>
-      </nav>
+      <div className="navbar-fixed">
+        <nav>
+          <div className="nav-wrapper">
+            <IndexLink to="/">Logo</IndexLink>
+            <ul id="nav-mobile" className="right hide-on-med-and-down">
+              <li><Link to={'preferences'}>Settings</Link></li>
+              <li><Link to={'rateJobs'}>Rate new jobs</Link></li>
+              <li><Link to={'addJob'}>Add Job</Link></li>
+            </ul>
+          </div>
+        </nav>
+      </div>  
       <SearchBar />
-        <div className='leftBar'>
-         
+      <div className="mainContainer">
+        <div className='leftMain'>
           {Store.jobList.length && <CompanyList />}
-          <div className='right'>
-
+        </div>
+        <div className='rightMain'>
+          <div className='container'>
+            {this.props.children}
           </div>
         </div>
-        <div className='container'>
-          {this.props.children}
-        </div>
       </div>
+     </div> 
     );
   }
 }
