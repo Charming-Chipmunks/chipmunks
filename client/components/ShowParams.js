@@ -26,8 +26,8 @@ import Param from './Param';
     // console.log('getparms this', this);
     axios.get('/parameter/' + Store.currentUserId)
       .then(function(response) {
-        console.log('params data', response.data[0]);
-        Store.params = response.data[0].Parameters;
+        console.log('params data', response.data);
+        Store.params = response.data.Parameters;
       })
       .catch(function(error) {
         console.log(error);
@@ -38,15 +38,16 @@ import Param from './Param';
     this.getParams();
   }
 
-  saveParam() {
+  saveParam(e) {
+    e.preventDefault();
     console.log('saveParam');
     console.log('saveParam this', this);
     var that = this;
     // console.log(Store.newParam);
     axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
       .then(function(response) {
-        console.log(response);
-        that.getParams();
+        console.log(response.data);
+        Store.params.push(response.data);
       }).catch(function(error) {
         console.log(error);
       });

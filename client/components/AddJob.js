@@ -11,12 +11,14 @@ import { toJS } from 'mobx';
   change(e) {
     Store.newJob[e.target.name] = e.target.value;
   }
-  save() {
+  save(e) {
+    e.preventDefault();
     Store.newJob.id = Store.currentUserId;
     console.log(toJS(Store.newJob));
     axios.post('/job', toJS(Store.newJob))
       .then(function(response) {
-        console.log(response);
+        console.log(response.data);
+        Store.jobList.push(response.data);
       })
       .catch(function(error) {
         console.log(error);
