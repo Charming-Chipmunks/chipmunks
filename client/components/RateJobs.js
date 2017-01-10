@@ -28,10 +28,10 @@ import RateIndividualJob from './RateIndividualJob';
     if (list.length > 0) {
       return (
         <ul>
-        {list.map((company, index) => {
+        {list.map((Job, index) => {
           console.log(index);
-          company = toJS(company);
-          return <RateIndividualJob company={company} key={index} id={index}/>;
+          Job = toJS(Job);
+          return <RateIndividualJob job={Job} key={index} id={index}/>;
         }
         )}
       </ul>);
