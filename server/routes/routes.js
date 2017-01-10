@@ -5,8 +5,18 @@ var router    = express.Router();
 var models    = require('../models/index');
 var utils     = require('./route-utils');
 
+
 // this is the initialize file
-var initialize = require('../models/initialize');
+// var initialize = require('../models/initialize');
+
+//AUTH
+
+
+
+
+
+
+
 
 
 // USER - get info for one user
@@ -156,17 +166,18 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
             id: req.params.userId
           }
         }).then(user => {
-          
+
           models.Job.find({
             where: {
               id: req.params.jobId
             }
           }).then( job => {
             utils.addActionsToNewJob(user, job, job);
+            res.json(job);
           });
         });
       }
-        res.json(jobLink);
+        // res.json(jobLink);
     }
   }).catch((err) => {
     console.error(err);
@@ -276,7 +287,7 @@ router.post('/actions/', function(req, res) {
 // Update completion time of one action to the current time.
 // we may want to broaden this case to apply to closing and opening of all ations
 router.put('/actions/:userId/:actionId', function(req, res) {
-  
+
   models.Action.update({ completedTime: new Date() }, {
     where: {
       UserId: req.params.userId,

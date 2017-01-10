@@ -6,11 +6,11 @@ module.exports = function(sequelize, DataTypes) {
     password: DataTypes.STRING,
     firstname:  {
       type:     DataTypes.STRING,
-      allowNull: false
+      allowNull: true
       },
     lastname:   {
       type:     DataTypes.STRING,
-      allowNull: false
+      allowNull: true
       },
     email:      {
         type:     DataTypes.STRING,
@@ -20,7 +20,11 @@ module.exports = function(sequelize, DataTypes) {
     address:    DataTypes.STRING,
     city:       DataTypes.STRING,
     state:      DataTypes.STRING,
-    zip:        DataTypes.INTEGER  
+    zip:        DataTypes.INTEGER,
+    googleId:   DataTypes.STRING,
+    googleToken:DataTypes.STRING,
+    googleName: DataTypes.STRING,
+    googleEmail:DataTypes.STRING,
   }, {
     classMethods: {
       associate: function(models) {
