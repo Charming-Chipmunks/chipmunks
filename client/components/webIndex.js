@@ -7,6 +7,13 @@ import JobView from './JobView';
 import Web from './web';
 import RateJobs from './RateJobs';
 import AddJob from './AddJob';
+// material-ui libraries
+//import injectTapEventPlugin from 'react-tap-event-plugin';
+//import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+//injectTapEventPlugin();
 
 ReactDOM.render(
   <Router history = {hashHistory}>

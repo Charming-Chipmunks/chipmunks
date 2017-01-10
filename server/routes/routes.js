@@ -6,7 +6,7 @@ var models    = require('../models/index');
 var utils     = require('./route-utils');
 
 // this is the initialize file
-var initialize = require('../models/initialize');
+// var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -163,10 +163,11 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
             }
           }).then( job => {
             utils.addActionsToNewJob(user, job, job);
+            res.json(job);
           });
         });
       }
-        res.json(jobLink);
+       // res.json(jobLink);
     }
   }).catch((err) => {
     console.error(err);

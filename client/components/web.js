@@ -11,6 +11,8 @@ import JobView from './JobView';
 import SearchBar from './SearchBar';
 import ShowParams from './ShowParams';
 import CompanyList from './CompanyList';
+//import {} from '';
+
 
 @observer class Web extends React.Component {
   constructor(props) {
@@ -39,23 +41,30 @@ import CompanyList from './CompanyList';
 
   render() {
     return (
-      <div className='leftBar'><Link to={'home'}>
-          Home</Link>
-          <br/>
-          <Link to={'preferences'}>
-          Settings</Link>
-          <br/>
-          <Link to={'rateJobs'}>
-          Rate new jobs</Link>
-          <br/>
-          <Link to={'addJob'}>
-          Add Job</Link>
-          <SearchBar />
+      <div id="mainApp">
+
+      <nav>
+        <div className="nav-wrapper">
+          <Link to={'home'}>Logo</Link>
+          <ul id="nav-mobile" className="right hide-on-med-and-down">
+            <li><Link to={'preferences'}>Settings</Link></li>
+            <li><Link to={'rateJobs'}>Rate new jobs</Link></li>
+            <li><Link to={'addJob'}>Add Job</Link></li>
+          </ul>
+        </div>
+      </nav>
+      <SearchBar />
+        <div className='leftBar'>
+         
           {Store.jobList.length && <CompanyList />}
           <div className='right'>
-          {this.props.children}
+
           </div>
         </div>
+        <div className='container'>
+          {this.props.children}
+        </div>
+      </div>
     );
   }
 }
