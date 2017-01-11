@@ -29,11 +29,10 @@ class SideBarCompany extends React.Component {
     return (
       <Link to={'companies/' + this.props.company.id}>
         <li className="sideBarCompany" onClick={this.handleClick.bind(this)}>
-         <div>
-            {this.props.company.company} {this.props.company.jobTitle}
-          </div>
+         <div className="sideBarCompanyName">{this.props.company.company}</div>
+         <div className="sideBarCompanyJobTitle">{this.props.company.jobTitle}</div>
         </li>
-         </Link>
+      </Link>
     );
   }
 

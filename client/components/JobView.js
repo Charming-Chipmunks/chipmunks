@@ -41,9 +41,18 @@ import TaskBox from './TaskBox';
   }
 
   render() {
+    var step = Store.jobList.slice();
+    var location = 0;
+    // stopped here Tuesday night
+    var thisJob = step.map((job, index) => {
+        if (job.id === this.props.params.id) {
+          console.log('Filter - job :', job.id);
+          location = index;
+        }
+      }); 
 
-    var thisJob = Store.jobList.filter(job => job.id === this.props.params.id); 
-    thisJob = toJS(thisJob);
+    thisJob = toJS(step[location]);
+    console.log('this job: ', thisJob);
    
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
