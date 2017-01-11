@@ -10,7 +10,7 @@ const APPLY_TO_JOB = 2;
 const FIND_CONNECTION = 3;
 const FOLLOW_UP = 4;
 
-//module.exports = function () {
+module.exports = function () {
   // create actions - 13 actions per user per job
   db['User'].findAll({
     include: [db['Job']]
@@ -85,4 +85,4 @@ const FOLLOW_UP = 4;
   });
 
 
-//};
+};

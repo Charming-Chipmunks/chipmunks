@@ -2,10 +2,10 @@
 import { observable } from 'mobx';
 class Store {
   constructor() {}
-  @observable currentUserId = 1;
+  @observable currentUserId = 1; // this will be set at login time
   @observable params = [];
-  @observable jobList = [];
-  @observable newJobList = [];
+  @observable jobList = []; // jobs that are favored
+  @observable newJobList = []; // jobs that need to be rated
   @observable filterText = { text: '' };
   @observable actions = [];
   @observable company = {

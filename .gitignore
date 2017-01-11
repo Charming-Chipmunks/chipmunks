@@ -38,3 +38,6 @@ bower_components/
 server/api/config.js
 server/models/config.js
 
+# assets files
+client/dist/assets
+

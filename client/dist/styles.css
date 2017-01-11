@@ -9,3 +9,183 @@
 .pending {
   color: green;
 }
+
+
+/*
+ * WEB.js css stylings
+*/
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  width: 100%;
+}
+.container{
+  width: 95%;
+  margin: 0 20px !important;
+}
+
+
+/*
+ * JobView Page: ; 
+ */
+
+.companyStats{
+  border: 2px solid red;
+  width:100%;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-around;
+}
+
+.companyStatsBox {
+  flex: 1;
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: blue;
+}
+
+.companyTasks{
+  width: 100%;
+  border: 2px solid red;  
+}
+
+/*
+ * Add Company
+*/
+
+.addJob{
+  display: flex;
+  width: 100%;
+}
+
+.createJob {
+  background-color: red;
+  border-radius: 3px;
+  text-align: center;
+  color:  white;
+  display: inline-flex;
+  width: 100%
+}
+
+
+/*
+ * TaskBox
+ */
+
+.taskBox{
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  border: 2px solid red;
+  margin: 2px auto;
+}
+.leftTaskIcons{
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  width: 15%;
+  flex: 3 20%;
+}
+
+.rightTaskIcons{
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  width: 15%;
+  flex: 3 20%;
+}
+.daysDue{
+  flex: 3;
+  display: inline-block;
+  width: 30px;
+}
+
+.taskIconImg{
+  flex: 3;
+  display: inline-block;
+  width: 30px;
+}
+
+.taskDescription{
+  flex: 3 60%;
+  width: 70%;
+}
+
+.doneTask{
+  width: 50px;
+}
+
+.cancelTask{
+  width: 50px;
+}
+
+/*
+ * RATE COMPANY COMPONENT CSS STYLINGS  
+*/
+.rateCompany{
+  border-radius: 3px;
+  border: 2px solid #c62828;
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+  padding: 15px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.rateCompanyInfoBox{
+ width: 100%;
+ padding-left: 10px;
+}
+
+.rateCompanyAction{
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: row;
+  align-content: space-around;
+  width: 20%;
+}
+
+.rateCompanyJob{ 
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 3px;
+  margin-bottom: 2px
+}
+
+.rateCompanyName{
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 2px;
+  margin-bottom: 2px
+}
+
+.rateCompanyText{
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1.2;
+  margin-top: 2px;
+  margin-bottom: 2px
+}
+
+.favorJob{
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+}
+
+.rankingThunbs{
+  height: 50px;
+}
+
+.paginator{ 
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+ }
