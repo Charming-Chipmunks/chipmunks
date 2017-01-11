@@ -7,7 +7,7 @@ var db = require('../index');
   This is working 100% fine.  to make sure it runs in the cron job,  uncomment lies 10 and 38
  */
 
-//module.exports = function() {
+module.exports = function() {
 // get all users from the table, and include the parameter table
   db['User'].findAll({
     include: [ db['Parameter'] ] // check into adding , db['job'] to get access to the jobs
@@ -42,4 +42,4 @@ var db = require('../index');
       });
     });
   });
-//};
+};

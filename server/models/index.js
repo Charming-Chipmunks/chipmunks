@@ -9,7 +9,8 @@ var db        = {};
 
 var sequelize = new Sequelize(config.name, config.username, config.password, {
   dialect: config.dialect,
-  host: config.host
+  host: config.host,
+  logging: false,
 });
 
 sequelize.sync(); //{force: true} removing the force helped
@@ -17,11 +18,11 @@ sequelize.sync(); //{force: true} removing the force helped
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js') && 
+    return (file.indexOf('.') !== 0) && (file !== 'index.js') &&
     (file !== 'config.js') && (file !== 'initialize.js') && (file !== 'initData.js');
   })
   .forEach(function(file) {
-    if (file.slice(-3) !== '.js') { 
+    if (file.slice(-3) !== '.js') {
       return;
     }
     var model = sequelize['import'](path.join(__dirname, file));
