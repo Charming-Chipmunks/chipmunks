@@ -17,7 +17,7 @@ import { toJS } from 'mobx';
     console.log(toJS(Store.newJob));
     axios.post('/job', toJS(Store.newJob))
       .then(function(response) {
-       // console.log(response.data);
+        console.log('send save response');
         Store.jobList.push(response.data);
       })
       .catch(function(error) {
@@ -29,7 +29,6 @@ import { toJS } from 'mobx';
 
     return (
       <div className="addJob">
-
         <div className="row">
           <form className="col s12">
             <div className="row">
@@ -45,7 +44,7 @@ import { toJS } from 'mobx';
           {/* Need to investigate the ability to add a job desription to a new job*/}
             <div className="row">
               <div className="input-field col s12">
-                <input id="url" type="text" className="validate" name='url' onChange={this.change} value={Store.newJob.snippet}/>
+                <input id="url" type="text" className="validate" name='snippet' onChange={this.change} value={Store.newJob.snippet}/>
                 <label className="active">Job Description</label>
               </div>
             </div>         
@@ -71,16 +70,17 @@ import { toJS } from 'mobx';
                 <label className="active">State</label>
               </div>
             </div>
-            <div className="row">
+{/*            <div className="row">
               <div className="input-field col s12">
                 <input id="email" type="email" className="validate"/>
                 <label className="active">Email</label>
               </div>
+            </div>*/}
+            <div className="row">  
             </div>
+              <div className="createJob" onClick={this.save}>Save Opportunity</div>
           </form>
-        
         </div> 
-        <div className="createJob" onClick={this.save}>Save Opportunity</div>
 
 
 

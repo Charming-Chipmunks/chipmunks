@@ -68,7 +68,7 @@ router.get('/jobs/:userId/:status', function(req, res) {
       id: req.params.userId
     },
     order: [
-      [models.Job, 'company']
+      [models.Job, 'createdAt']
     ],
     include: [models.Job]
   }).then((user) => {
@@ -167,6 +167,10 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
             res.json(job);
           });
         });
+      } else if(req.body.status === 'rejected') {
+        res.json({status: 'rejected'});
+      } else if (req.body.status === 'unfavored') {
+        res.json({status: 'unfavored'});
       }
 <<<<<<< fe01c810aac55a15a6f1d01e2b5f787c368e8d79
         // res.json(jobLink);

@@ -2,42 +2,42 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import axios from 'axios';
 import Store from './Store';
+import JobDescription from './JobDescription';
 
 @observer class RateIndividualJob extends React.Component {
+
   constructor(props) {
     super(props);
     this.yes = this.yes.bind(this);
     this.no = this.no.bind(this);
     this.removeFromList = this.removeFromList.bind(this);
   }
+
   removeFromList() {
-    //console.log(this.props.id);
+    console.log('removing job id: ', this.props.id);
     Store.newJobList.splice(this.props.id, 1);
   }
+
   yes() {
-    // console.log('yes');
-    var that = this;
+    this.removeFromList();
     var id = this.props.job.id;
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'favored' })
       .then(function(response) {
-        //console.log(response);
         Store.jobList.push(response.data);
-        that.removeFromList();
       }).catch(function(error) {
-        //console.log(error);
+        console.log(error);
       });
   }
+
   no() {
-    // console.log('no');
-    var that = this;
+    this.removeFromList();
     var id = this.props.job.id;
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'rejected' })
-      .then(function(response) {
-        //console.log(response);
-        Store.jobList.push(response.data);      
-        that.removeFromList();
+      .then(function(response) { 
+
+        console.log('in NO :', response);
       }).catch(function(error) {
-        //console.log(error);
+        console.log(error);
       });
   }
 
@@ -48,17 +48,10 @@ import Store from './Store';
     //  I can build out here for the company list for chooseing like or not like
     return (<li>
       <div className="rateCompany">
-        <div className="rateCompanyInfoBox left">
-            <h3 className="rateCompanyJob">{this.props.job.jobTitle}</h3>
-            <span className="new badge red"></span>
-          <h5 className="rateCompanyName">{this.props.job.company}</h5>
-          <p className="rateCompanyText">{this.props.job.snippet}</p>
-        </div>
+        <JobDescription job={this.props.job}/>
         <div className="rateCompanyAction right">
-          <div className="favorJob" onClick={this.yes}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
-          <div className="favorJob" onClick={this.no}><img className="rankingThunbs" src="./assets/icons/thumbsdown.png"/></div>
-{/*          <button onClick={this.yes}>Yes</button>
-          <button onClick={this.no}>No</button>*/}
+          <div className="favorJob" onClick={this.yes.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
+          <div className="favorJob" onClick={this.no.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsdown.png"/></div>
         </div>
       </div>
       </li>);

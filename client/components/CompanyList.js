@@ -13,11 +13,14 @@ import CompanyRow from './CompanyRow';
     return (
       <ul>
 
-    {Store.jobList.sort((a, b) => a.company > b.company ? 1 : 0).map((company, index) => {
-      // console.log(company.company);
+
+    { 
+      Store.jobList.sort((a, b) => a.company > b.company ? 1 : 0).map((company, index) => {
+      // if the server returns a sorted list, we cold remove the need for this sort
+      //console.log(company.company);
       company = toJS(company);
       if (company.company.toLowerCase().includes(Store.filterText.text.toLowerCase())) {
-        return <CompanyRow company={company} key={index} />;
+        return <CompanyRow company={company} key={index} position={index}/>;
       }
     })}
     </ul>

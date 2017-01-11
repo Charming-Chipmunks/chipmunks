@@ -14,22 +14,41 @@
 /*
  * WEB.js css stylings
 */
-.mainContainer{
+.mainContainer {
   display: flex;
-  flex: 1;
   flex-direction: row;
   align-content: space-around;
   width: 100%;
 }
-
-.leftMain{
-  width: 25%;
-  position: fixed;
-  /* to get the items off the left, I need to add a padding to the items in it*/
+.container{
+  width: 95%;
+  margin: 0 20px !important;
 }
 
-.rightMain{
-  width: 75%;
+
+/*
+ * JobView Page: ; 
+ */
+
+.companyStats{
+  border: 2px solid red;
+  width:100%;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-around;
+}
+
+.companyStatsBox {
+  flex: 1;
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: blue;
+}
+
+.companyTasks{
+  width: 100%;
+  border: 2px solid red;  
 }
 
 /*
@@ -41,15 +60,68 @@
   width: 100%;
 }
 
-.createJob{
+.createJob {
   background-color: red;
   border-radius: 3px;
   text-align: center;
   color:  white;
+  display: inline-flex;
+  width: 100%
 }
 
 
+/*
+ * TaskBox
+ */
 
+.taskBox{
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  border: 2px solid red;
+  margin: 2px auto;
+}
+.leftTaskIcons{
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  width: 15%;
+  flex: 3 20%;
+}
+
+.rightTaskIcons{
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  width: 15%;
+  flex: 3 20%;
+}
+.daysDue{
+  flex: 3;
+  display: inline-block;
+  width: 30px;
+}
+
+.taskIconImg{
+  flex: 3;
+  display: inline-block;
+  width: 30px;
+}
+
+.taskDescription{
+  flex: 3 60%;
+  width: 70%;
+}
+
+.doneTask{
+  width: 50px;
+}
+
+.cancelTask{
+  width: 50px;
+}
 
 /*
  * RATE COMPANY COMPONENT CSS STYLINGS  
@@ -57,9 +129,8 @@
 .rateCompany{
   border-radius: 3px;
   border: 2px solid #c62828;
- /* width: 100%; */
-  display: flex;
-  flex: 1;
+  width: 100%;
+  display: inline-flex;
   flex-direction: row;
   padding: 15px;
   margin-top: 2px;
@@ -67,7 +138,7 @@
 }
 
 .rateCompanyInfoBox{
- width: 80%;
+ width: 100%;
  padding-left: 10px;
 }
 
@@ -113,3 +184,8 @@
   height: 50px;
 }
 
+.paginator{ 
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+ }

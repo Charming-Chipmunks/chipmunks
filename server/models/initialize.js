@@ -12,10 +12,7 @@ var initIndeedCrawler = require('./initialize/initIndeedCrawler');
 initJobs();
 setTimeout(initParams, 2000);
 setTimeout(initUsers, 4000);
-setTimeout(associate, 6000);
 setTimeout(initContacts, 12000);
 setTimeout(initActions, 15000);
 setTimeout(initIndeedCrawler, 20000);
-
-
-
+setTimeout(associate, 60000);

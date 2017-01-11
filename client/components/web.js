@@ -11,7 +11,7 @@ import JobView from './JobView';
 import SearchBar from './SearchBar';
 import ShowParams from './ShowParams';
 import CompanyList from './CompanyList';
-//import {} from '';
+
 
 
 @observer class Web extends React.Component {
@@ -20,16 +20,19 @@ import CompanyList from './CompanyList';
   }
 
   componentWillMount() {
+
+    // gets the list of "favored jobs"
     axios.get('/jobs/' + Store.currentUserId + '/favored')
       .then(function(response) {
-        // console.log('jobs/userid/favored response.data', response.data);
+        console.log('got currentJobs');
         Store.jobList = response.data;
       })
       .catch(function(error) {
         console.log(error);
       });
 
-    axios.get('/actions/' + Store.currentUserId)
+    // get a list of upcomiing actions IMPLEMET LATER
+    axios.get(`/actions/${Store.currentUserId}/18`)
       .then(function(response) {
         // console.log('actions3', response.data);
         Store.actions = response.data;
@@ -45,7 +48,7 @@ import CompanyList from './CompanyList';
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper">
-            <IndexLink to="/">Logo</IndexLink>
+            <IndexLink to="/"><img src="./assets/icons/callback.png" /></IndexLink>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><Link to={'preferences'}>Settings</Link></li>
               <li><Link to={'rateJobs'}>Rate new jobs</Link></li>
@@ -55,12 +58,14 @@ import CompanyList from './CompanyList';
         </nav>
       </div>  
       <SearchBar />
-      <div className="mainContainer">
-        <div className='leftMain'>
-          {Store.jobList.length && <CompanyList />}
-        </div>
-        <div className='rightMain'>
-          <div className='container'>
+      <div className="container">
+        <div className="row">
+
+          <div className="col s3 left">
+            {Store.jobList.length && <CompanyList />}
+          </div>
+
+          <div className="col s9">
             {this.props.children}
           </div>
         </div>
