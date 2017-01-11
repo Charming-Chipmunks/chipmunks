@@ -21,8 +21,8 @@
   width: 100%;
 }
 .container{
-  width: 95%;
-  margin: 0 20px !important;
+  width: 95% !important;
+  margin: 20px 20px !important;
 }
 
 
@@ -200,7 +200,7 @@
 
 .sideBarLetter{
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 800;
   color: lightgrey;
   margin-left: 5px;
 }
@@ -211,13 +211,23 @@
 
 .sideBarCompanyName{
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   color: lightgrey;
 }
 
 .sideBarCompanyJobTitle{
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
+  font-style: italic;
   color: lightgrey;
   margin-left: 5px;
+}
+
+.sideBarContact{
+  border: 2px solid red;
+}
+
+.hello{
+  background-color: green;
+  width: 100%;
 }

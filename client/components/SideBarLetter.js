@@ -15,8 +15,6 @@ class SideBarLetter extends React.Component {
   }
 
   handleClick () {
-    //this.props.handleClick();
-    console.log('parent handle click');
     this.setState({hover: !this.state.hover});
   }
 
@@ -32,7 +30,6 @@ class SideBarLetter extends React.Component {
         <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> {this.props.letter}
             <ul>
                 {this.props.list.map((company, index) => {
-                  console.log('inner map :', company.id);
                   return (<SideBarCompany company={company} key={index} />); 
                 })}
               </ul>

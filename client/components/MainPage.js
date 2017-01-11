@@ -36,7 +36,7 @@ import { observer } from 'mobx-react';
     });
 
     this.actions = this.actions.slice(0, 10);
-    // console.log('this.actions', this.actions);
+
     return (<div className='actionList'>
       You have {this.pending} pending actions
       {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {

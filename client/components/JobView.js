@@ -7,6 +7,7 @@ import JobContacts from './JobContacts';
 import axios from 'axios';
 import JobDescription from './JobDescription';
 import TaskBox from './TaskBox';
+import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 
 @observer class JobView extends Component {
   constructor(props) {
@@ -19,16 +20,11 @@ import TaskBox from './TaskBox';
   filterForTask(action) {
     return !action.completedTime;
   }
-
-  // we should have the company in the list,  so I need to go to the store and get it
  
   componentWillReceiveProps() {
-    console.log('props from Link:', Store.currentUserId, this.props.params.id );
-
+    
     axios.get('/actions/' + Store.currentUserId + '/' + this.props.params.id) //need to filter by company later
       .then(function(response) {
-
-        console.log('actions/jobid response.data', response.data);
         Store.actions = response.data;
       })
       .catch(function(error) {
@@ -43,42 +39,52 @@ import TaskBox from './TaskBox';
   render() {
     var step = Store.jobList.slice();
     var location = 0;
+    
     // stopped here Tuesday night
     var thisJob = step.map((job, index) => {
-        if (job.id === this.props.params.id) {
-          console.log('Filter - job :', job.id);
-          location = index;
-        }
-      }); 
+      if (job.id === this.props.params.id) {
+        location = index;
+      }
+    }); 
 
     thisJob = toJS(step[location]);
-    console.log('this job: ', thisJob);
    
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
 
     return (
-      <div className='jobView'>
-        <JobDescription job={thisJob}/>
-        <div className="companyStats">
-          <div className="companyStatsBox"> 
-          # days since last action
-          </div>
-          <div className="companyStatsBox"> 
-          # days active
-          </div>
-          <div className="companyStatsBox">
-          # of interactions 
+      <div>
+        
+        <div className="col m2 right"> {/* this is where the right naV bar will go:*/}
+          <div className="hello">
+            <CompanyInfoRightSideBar job={thisJob}/>
           </div>
         </div>
-        <div className="companyTasks">
-          {jobActions.map((action, index) => {
-            console.log('Job View - Action: ', action);
-            return ( <TaskBox task={action} key={index}/>);
-          })
-        }
+        
+        <div className="col m8 center">
+          <div className='jobView'>
+            <JobDescription job={thisJob}/>
+            <div className="companyStats">
+              <div className="companyStatsBox"> 
+              # days since last action
+              </div>
+              <div className="companyStatsBox"> 
+              # days active
+              </div>
+              <div className="companyStatsBox">
+              # of interactions 
+              </div>
+            </div>
+            <div className="companyTasks">
+              {jobActions.map((action, index) => {
+                return ( <TaskBox task={action} key={index}/>);
+              })
+            }
+            </div>
+          </div>
         </div>
-      </div>
+
+     </div> 
     );
   }
 }

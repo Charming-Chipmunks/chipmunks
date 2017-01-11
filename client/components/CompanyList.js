@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
 import Store from './Store';
 import CompanyRow from './CompanyRow';
 import SideBarLetter from './SideBarLetter';
@@ -21,7 +20,7 @@ import SideBarLetter from './SideBarLetter';
     var names = [];
     
     list.forEach(company => {
-      var firstLetter = company.company.slice(0,1);
+      var firstLetter = company.company.slice(0, 1);
       if (obj[firstLetter] === undefined) {
         // if (firstLetter === )  should do a regex search for numbers and put all numbers in one bucker
         obj[firstLetter] = [];
@@ -33,7 +32,7 @@ import SideBarLetter from './SideBarLetter';
     
     var keys = Object.keys(obj);
     keys.sort();
-    for (let i = 0; i< keys.length; i++){
+    for (let i = 0; i< keys.length; i++) {
       names.push(obj[keys[i]]); 
     }
 
@@ -44,7 +43,6 @@ import SideBarLetter from './SideBarLetter';
         <h5 className="rateCompanyText"> {list.length} Open Opportunities</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {
-            console.log('in names loop');
             return (<SideBarLetter list={letter} key={index} letter={keys[index]}/>);
           })
           }

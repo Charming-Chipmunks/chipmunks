@@ -10,12 +10,11 @@ import { observer } from 'mobx-react';
   handleclick() {}
   render() {
     return (
-      <div>
+      <div className="sideBarContact">
         <p> {this.props.contact.firstname + ' ' + this.props.contact.lastname} </p>
-        <a href={'https://mail.google.com/mail/?view=cm&fs=1&to=' + this.props.contact.email}> {this.props.contact.email} </a>
-        <p>Mobile: {this.props.contact.mobilePhone}</p>
-        <p>Phone: {this.props.contact.workPhone}</p>
-        <br/>---------------------------
+        <a href={'https://mail.google.com/mail/?view=cm&fs=1&to=' + this.props.contact.email}> <i className="material-icons">email</i> </a>
+        <i className="material-icons">email</i> <p>  :{this.props.contact.mobilePhone}</p>
+        <i className="material-icons">email</i> <p>: {this.props.contact.workPhone}</p>
       </div>
     );
   }

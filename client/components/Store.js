@@ -8,12 +8,7 @@ class Store {
   @observable newJobList = []; // jobs that need to be rated
   @observable filterText = { text: '' };
   @observable actions = [];
-  @observable company = {
-    name: 'Airbnb',
-    title: '',
-    location: '888 Brannan St, San Francisco, CA 94103',
-    description: 'Airbnb helps people find great rooms to stay in.',
-  }
+  @observable company = {};
   @observable contacts = [{
     firstname: 'Sandy',
     lastname: 'Knox',
