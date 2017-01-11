@@ -62,7 +62,7 @@ import CompanyList from './CompanyList';
         <div className="row">
 
           <div className="col s3 left">
-            {Store.jobList.length && <CompanyList />}
+            <CompanyList />
           </div>
 
           <div className="col s9">
