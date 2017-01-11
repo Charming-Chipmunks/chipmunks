@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import MainPage from './MainPage';
 import ShowParams from './ShowParams';
 import JobView from './JobView';
@@ -9,7 +9,7 @@ import RateJobs from './RateJobs';
 import AddJob from './AddJob';
 
 ReactDOM.render(
-  <Router history = {hashHistory}>
+  <Router history = {browserHistory}>
     <Route path='/' component={Web}>
       <IndexRoute component={MainPage}> </IndexRoute>
         <Route path="preferences" name="preferences" component={ShowParams}> </Route>
