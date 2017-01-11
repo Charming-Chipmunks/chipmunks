@@ -28,7 +28,7 @@ module.exports = function () {
             id: paramsarr[rand][j]
           }
         }).then((parameter) => {
-          user.addParameters(parameter);            
+          user.addParameters(parameter);
         });
       }
     }).catch((err) => {

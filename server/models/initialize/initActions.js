@@ -10,7 +10,7 @@ const APPLY_TO_JOB = 2;
 const FIND_CONNECTION = 3;
 const FOLLOW_UP = 4;
 
-//module.exports = function () {
+module.exports = function () {
   // create actions - 13 actions per user per job
   db['User'].findAll({
     include: [db['Job']]
@@ -32,7 +32,7 @@ const FOLLOW_UP = 4;
       completedTime:  null
     }).then(function(likeAction) {
       users[k].addActions(likeAction);
-      job.addActions(likeAction); 
+      job.addActions(likeAction);
 
       db['Action'].create({
         type:           descriptions.types[STUDY],
@@ -42,8 +42,8 @@ const FOLLOW_UP = 4;
         completedTime:  null
       }).then(function(learnAction) {
         users[k].addActions(learnAction);
-        job.addActions(learnAction); 
-      
+        job.addActions(learnAction);
+
         db['Action'].create({
           type:           descriptions.types[FIND_CONNECTION],
           company:        job.company,
@@ -52,7 +52,7 @@ const FOLLOW_UP = 4;
           completedTime:  null
         }).then(function(connectAction) {
           users[k].addActions(connectAction);
-          job.addActions(connectAction); 
+          job.addActions(connectAction);
 
           db['Action'].create({
             type:           descriptions.types[APPLY_TO_JOB],
@@ -62,11 +62,11 @@ const FOLLOW_UP = 4;
             completedTime:  null
           }).then(function(applyAction) {
             users[k].addActions(applyAction);
-            job.addActions(applyAction); 
+            job.addActions(applyAction);
           }).catch((err) => {
             console.error(err);
           });
-          
+
         }).catch((err) => {
           console.error(err);
         });
@@ -74,7 +74,7 @@ const FOLLOW_UP = 4;
       }).catch((err) => {
         console.error(err);
       });
-      
+
     }).catch((err) => {
       console.error(err);
     });
@@ -85,4 +85,4 @@ const FOLLOW_UP = 4;
   });
 
 
-//};
+};
