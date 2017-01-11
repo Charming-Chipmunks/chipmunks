@@ -189,3 +189,35 @@
   width: 30px;
   margin: 2px;
  }
+
+
+/*
+ * Sidebar Classes
+ */
+.sideLetters{
+  background-color: red;
+}
+
+.sideBarLetter{
+  font-size: 20px;
+  font-weight: 900;
+  color: lightgrey;
+  margin-left: 5px;
+}
+
+.sideBarCompany{
+  margin-left: 15px;
+}
+
+.sideBarCompanyName{
+  font-size: 14px;
+  font-weight: 500;
+  color: lightgrey;
+}
+
+.sideBarCompanyJobTitle{
+  font-size: 12px;
+  font-weight: 500;
+  color: lightgrey;
+  margin-left: 5px;
+}

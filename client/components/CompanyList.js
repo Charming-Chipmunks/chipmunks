@@ -40,13 +40,16 @@ import SideBarLetter from './SideBarLetter';
     console.log(names);
     
     return (
-      <ul id="slide" className="sideLetters">
-        {names.map((letter, index) => {
-          console.log('in names loop');
-          return (<SideBarLetter list={letter} key={index} letter={keys[index]}/>);
-        })
-        }
-      </ul>
+      <div className="leftSideBar">
+        <h5 className="rateCompanyText"> {list.length} Open Opportunities</h5>
+        <ul id="slide" className="sideLetters">
+          {names.map((letter, index) => {
+            console.log('in names loop');
+            return (<SideBarLetter list={letter} key={index} letter={keys[index]}/>);
+          })
+          }
+        </ul>
+      </div>
     );
   }
 }
