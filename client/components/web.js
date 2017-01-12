@@ -45,15 +45,15 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
         console.log(error);
       });
 
-      // GET ALL THE CONTACTS
-    axios.get(`/actions/${Store.currentUserId}/18`)
-      .then(function(response) {
-        // console.log('actions3', response.data);
-        Store.actions = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    //   // GET ALL THE CONTACTS
+    // axios.get(`/contacts/${Store.currentUserId}/`)
+    //   .then(function(response) {
+    //     // console.log('actions3', response.data);
+    //     Store.actions = response.data;
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
   }
 
   render() {

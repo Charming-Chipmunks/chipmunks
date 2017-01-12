@@ -11,8 +11,10 @@ import SideBarLetter from './SideBarLetter';
 
   render() {
 
-    var list = Store.jobList.sort((a, b) => a['company'].localeCompare(b['company']));
-    list = list.filter(company => company['company'] !== '');
+    // var list = Store.jobList.sort((a, b) => a['company'].localeCompare(b['company']));
+    // list = list.filter(company => company['company'] !== '');
+    var list = Store.jobList;
+    // list.filter(())
 
     var previousLetter = 'A';
     var count = 0;
@@ -21,8 +23,15 @@ import SideBarLetter from './SideBarLetter';
 
     list.forEach(company => {
       var firstLetter = company.company.slice(0, 1);
-      if (obj[firstLetter] === undefined) {
-        // if (firstLetter === )  should do a regex search for numbers and put all numbers in one bucker
+      console.log(firstLetter);
+      console.log(company.company);
+      if (firstLetter.match(/([0-9])/)) {
+        console.log('isNum');
+        if (obj[0] === undefined) {
+          obj[0] = [];
+        }
+        obj[0].push(company);
+      } else if (obj[firstLetter] === undefined) {
         obj[firstLetter] = [];
         obj[firstLetter].push(company);
       } else {
