@@ -40,9 +40,9 @@ import Paginator from './Paginator';
   }
 
   rightArrowClick() {
-     this.setState({
+    this.setState({
       page: this.state.page + 1
-     }); 
+    });
   }
 
   render() {
@@ -57,7 +57,7 @@ import Paginator from './Paginator';
       var paginationNum = 0;
       if (this.state.page > 4) {
         paginationNum = this.state.page - 5;
-      } 
+      }
 
       var loopNum = paginationNum + 5;
       for (let i = paginationNum; i < loopNum; i++ ) {
@@ -92,7 +92,7 @@ import Paginator from './Paginator';
         <div>
           <ul className="pagination">
             <li className={leftArrow} onClick={this.leftArrowClick.bind(this)}><i className="material-icons">chevron_left</i></li>
-            {pages}  
+            {pages}
             <li className={rightArrow} onClick={this.rightArrowClick.bind(this)}><i className="material-icons">chevron_right</i></li>
           </ul>
         </div>

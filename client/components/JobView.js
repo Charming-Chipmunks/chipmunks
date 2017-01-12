@@ -20,29 +20,29 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   filterForTask(action) {
     return !action.completedTime;
   }
- 
+
   componentWillReceiveProps() {
-    
+
     axios.get(`/actions/${Store.currentUserId}/${this.props.params.id}`)
       .then(function(response) {
-        console.log('actions results : ', response.data);
         Store.actions = response.data;
+        console.log('actions results : ', toJS(response.data));
       })
       .catch(function(error) {
         console.log(error);
       });
-  
+
       axios.get('/contacts/' + Store.currentUserId + '/' + this.props.params.id)
       .then(function(response) {
         Store.contacts = response.data;
         console.log('contacts call  for data :', response.data);
-      
+
       })
       .catch(function(error) {
         console.log(error);
       });
     }
-  
+
 
   change(e) {
     Store.newTask[e.target.name] = e.target.value;
@@ -51,40 +51,40 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   render() {
     var step = Store.jobList.slice();
     var location = 0;
-    
+
     // stopped here Tuesday night
     var thisJob = step.map((job, index) => {
       if (job.id === this.props.params.id) {
         location = index;
       }
-    }); 
+    });
 
     thisJob = toJS(step[location]);
-   
+
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
 
     return (
       <div>
-        
+
         <div className="col m3 right"> {/* this is where the right naV bar will go:*/}
           <div className="hello">
             <CompanyInfoRightSideBar job={thisJob}/>
           </div>
         </div>
-        
+
         <div className="col m9 left">
           <div className='jobView'>
             <JobDescription job={thisJob}/>
             <div className="companyStats">
-              <div className="companyStatsBox"> 
+              <div className="companyStatsBox">
               # days since last action
               </div>
-              <div className="companyStatsBox"> 
+              <div className="companyStatsBox">
               # days active
               </div>
               <div className="companyStatsBox">
-              # of interactions 
+              # of interactions
               </div>
             </div>
             <div className="companyTasks">
@@ -96,7 +96,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
           </div>
         </div>
 
-     </div> 
+     </div>
     );
   }
 }

@@ -165,12 +165,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', isLoggedIn, routes);
-// app.use('/', routes);
 
 //WILDCARD
-// app.get('*', function(req, res) {
+
 app.get('*', isLoggedIn, function(req, res) {
-  res.send('Hello World' + process.env.PORT);
+  res.redirect('/')
+  // res.send('Hello World' + process.env.PORT);
 });
 
 app.listen(process.env.PORT || 3000, function() {
