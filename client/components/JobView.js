@@ -66,6 +66,13 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
 
+    var thisJobActions = jobActions.filter((action) => { 
+      console.log('one Action:', action);
+      return action.JobJd === targetId});
+
+    thisJobActions = toJS(thisJobActions);
+    console.log('Actions for this Job: ', thisJobActions);
+
     return (
       <div>
 
@@ -90,7 +97,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
               </div>
             </div>
             <div className="companyTasks">
-              {jobActions.map((action, index) => {
+              {thisJobActions.map((action, index) => {
                 return ( <TaskBox task={action} key={index}/>);
               })
             }

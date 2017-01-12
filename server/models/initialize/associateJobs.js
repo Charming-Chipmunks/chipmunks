@@ -8,6 +8,8 @@ var db = require('../index');
  */
 
 module.exports = function() {
+
+  var status = ['new', 'favored', 'rejected'];
 // get all users from the table, and include the parameter table
   db['User'].findAll({
     include: [ db['Parameter'] ] // check into adding , db['job'] to get access to the jobs
@@ -32,7 +34,7 @@ module.exports = function() {
            }).then(foundLink => {
             if (!foundLink) {
               // this is working!
-              user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
+              user.addJobs(item.id, {status: status[Math.floor(Math.random() * 3)], createdAt: new Date(), updatedAt: new Date() } );
             }
            });
           });

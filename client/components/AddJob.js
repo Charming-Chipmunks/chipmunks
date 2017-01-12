@@ -41,7 +41,6 @@ import { toJS } from 'mobx';
                 <label className="active">Job Title</label>
               </div>
             </div>
-          {/* Need to investigate the ability to add a job desription to a new job*/}
             <div className="row">
               <div className="input-field col s12">
                 <input id="url" type="text" className="validate" name='snippet' onChange={this.change} value={Store.newJob.snippet}/>
@@ -70,32 +69,12 @@ import { toJS } from 'mobx';
                 <label className="active">State</label>
               </div>
             </div>
-{/*            <div className="row">
-              <div className="input-field col s12">
-                <input id="email" type="email" className="validate"/>
-                <label className="active">Email</label>
-              </div>
-            </div>*/}
             <div className="row">  
             </div>
               <div className="createJob" onClick={this.save}>Save Opportunity</div>
           </form>
         </div> 
 
-
-
-{/*
-        <form>
-          Company   <input type="text" name='company' onChange={this.change} value={Store.newJob.company}/><br/>
-          Title     <input type="text" name='jobTitle' onChange={this.change} value={Store.newJob.jobTitle}/><br/>
-          URL       <input type="text" name='url' onChange={this.change} value={Store.newJob.url}/><br/>
-          Address   <input type="text" name='address' onChange={this.change} value={Store.newJob.address}/><br/>
-          City      <input type="text" name='city' onChange={this.change} value={Store.newJob.city}/><br/>
-          State     <input type="text" name='state' onChange={this.change} value={Store.newJob.state}/><br/>
-          Snippet   <input type="text" name='snippet' onChange={this.change} value={Store.newJob.snippet}/><br/>
-        </form>
-
-    */}
       </div>
     );
   }
