@@ -2,6 +2,14 @@
 import { observable } from 'mobx';
 class Store {
   constructor() {}
+
+  // FAVORED JOBS
+  // CONTACTS FOR EACH JOB
+  // ACTIONS FOR EACH JOB
+  // PARAMETERS
+  // USER ID
+  // NEW JOB LIST
+
   @observable currentUserId = 1; // this will be set at login time
   @observable params = [];
   @observable jobList = []; // jobs that are favored

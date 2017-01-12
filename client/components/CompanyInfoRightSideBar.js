@@ -13,36 +13,24 @@ import Contact      from './Contact';
     super(props);
   }
 
-  componentWillReceiveProps(){
 
-    ///contacts/:userId/:jobId
-      axios.get('/contacts/' + Store.currentUserId + '/' + this.props.job.id)
-      .then(function(response) {
-        Store.contacts = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
 
   render() {
 
     var name = toJS(Store.company);
     var contacts = toJS(Store.contacts);
-    console.log('right sude bar contacts, :', contacts);
-    console.log('CompanyInfoRightSide: ', name);
 
     return (
       <div>
         <div className="companyContactInfo">
-          <h6>{this.props.job.company}</h6>
-          <h6>{this.props.job.city}</h6>
-          <h6>{this.props.job.state}</h6>
+          <div className="rateCompanyJob">{this.props.job.company}</div>
+          <div className="rateCompanyName">{this.props.job.city}</div>
+          <div className="rateCompanyName">{this.props.job.state}</div>
         </div>
         <div>
-          {contacts.map(contact => {
+          {contacts.map((contact, index) => {
             // create a contact element here
-            return (<Contact contact={contact} />);
+            return (<Contact contact={contact} key={index} />);
           })}
         </div>
       </div>

@@ -42,3 +42,11 @@ server/googleConfig.js
 # assets files
 client/dist/assets
 
+# sql management files
+dropphil
+dropphil.sql
+phil.sql
+resetphil
+savephil
+
+

@@ -27,9 +27,9 @@ class SideBarCompany extends React.Component {
   render () {
 
     return (
-      <Link to={'companies/' + this.props.company.id}>
+      <Link to={'/companies/' + this.props.company.id}>
         <li className="sideBarCompany" onClick={this.handleClick.bind(this)}>
-         <div className="sideBarCompanyName">{this.props.company.company}</div>
+         <div className="rateCompanyJob">{this.props.company.company}</div>
          <div className="sideBarCompanyJobTitle">{this.props.company.jobTitle}</div>
         </li>
       </Link>

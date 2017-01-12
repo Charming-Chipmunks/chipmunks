@@ -12,6 +12,16 @@ const FOLLOW_UP = 4;
 
 module.exports = function () {
   // create actions - 13 actions per user per job
+  console.log('INIT ACTIONS');
+  console.log('INIT ACTIONS');
+  console.log('INIT ACTIONS');
+  console.log('INIT ACTIONS');
+  console.log('INIT ACTIONS');
+console.log('INIT ACTIONS');
+console.log('INIT ACTIONS');
+console.log('INIT ACTIONS');
+console.log('INIT ACTIONS');
+console.log('INIT ACTIONS');
   db['User'].findAll({
     include: [db['Job']]
   }).then(users => {

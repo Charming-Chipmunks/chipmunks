@@ -23,14 +23,26 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
  
   componentWillReceiveProps() {
     
-    axios.get('/actions/' + Store.currentUserId + '/' + this.props.params.id) //need to filter by company later
+    axios.get(`/actions/${Store.currentUserId}/${this.props.params.id}`)
       .then(function(response) {
+        console.log('actions results : ', response.data);
         Store.actions = response.data;
       })
       .catch(function(error) {
         console.log(error);
       });
-  }
+  
+      axios.get('/contacts/' + Store.currentUserId + '/' + this.props.params.id)
+      .then(function(response) {
+        Store.contacts = response.data;
+        console.log('contacts call  for data :', response.data);
+      
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
+  
 
   change(e) {
     Store.newTask[e.target.name] = e.target.value;
@@ -55,13 +67,13 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     return (
       <div>
         
-        <div className="col m2 right"> {/* this is where the right naV bar will go:*/}
+        <div className="col m3 right"> {/* this is where the right naV bar will go:*/}
           <div className="hello">
             <CompanyInfoRightSideBar job={thisJob}/>
           </div>
         </div>
         
-        <div className="col m8 center">
+        <div className="col m9 left">
           <div className='jobView'>
             <JobDescription job={thisJob}/>
             <div className="companyStats">

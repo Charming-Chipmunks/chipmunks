@@ -1,5 +1,4 @@
 //routes.js
-
 var express   = require('express');
 var router    = express.Router();
 var models    = require('../models/index');
@@ -7,7 +6,7 @@ var utils     = require('./route-utils');
 
 
 // this is the initialize file
-// var initialize = require('../models/initialize');
+var initialize = require('../models/initialize');
 
 
 // USER - get info for one user
@@ -172,11 +171,6 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
       } else if (req.body.status === 'unfavored') {
         res.json({status: 'unfavored'});
       }
-<<<<<<< fe01c810aac55a15a6f1d01e2b5f787c368e8d79
-        // res.json(jobLink);
-=======
-       // res.json(jobLink);
->>>>>>> saving for integration with clients side updating changes
     }
   }).catch((err) => {
     console.error(err);

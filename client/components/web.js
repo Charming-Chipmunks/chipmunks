@@ -41,6 +41,8 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
       .catch(function(error) {
         console.log(error);
       });
+  
+      // GET ALL THE CONTACTS
   }
 
   render() {
@@ -52,9 +54,9 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
             <IndexLink to="/"><img src="./assets/icons/callback.png" /></IndexLink>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><SearchBar /></li>
-              <li><Link to={'preferences'}>Settings</Link></li>
-              <li><Link to={'rateJobs'}>Rate new jobs</Link></li>
-              <li><Link to={'addJob'}>Add Job</Link></li>
+              <li><Link to={'/preferences'}>Settings</Link></li>
+              <li><Link to={'/rateJobs'}>Rate new jobs</Link></li>
+              <li><Link to={'/addJob'}>Add Job</Link></li>
             </ul>
           </div>
         </nav>

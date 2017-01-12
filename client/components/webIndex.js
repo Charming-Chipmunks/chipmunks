@@ -14,11 +14,10 @@ ReactDOM.render(
   <Router history = {browserHistory}>
     <Route path='/' component={Web}>
       <IndexRoute component={MainPage}> </IndexRoute>
-        <Route path="preferences" name="preferences" component={ShowParams}> </Route>
-        <Route path="home" name="home" component={MainPage}> </Route>
-        <Route path='companies/:id' name='companies' component={JobView}> </Route>
-        <Route path='rateJobs' name='rateJobs' component={RateJobs}> </Route>
-        <Route path='addJob' name='addJob' component={AddJob}> </Route>
+        <Route path="/preferences" name="preferences" component={ShowParams}> </Route>
+        <Route path='/companies/:id' name='companies' component={JobView}> </Route>
+        <Route path='/rateJobs' name='rateJobs' component={RateJobs}> </Route>
+        <Route path='/addJob' name='addJob' component={AddJob}> </Route>
     </Route>
   </Router>
 , document.getElementById('web'));
