@@ -12,6 +12,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 @observer class JobView extends Component {
   constructor(props) {
     super(props);
+    this.getData = this.getData.bind(this);
   }
 
   filterForHistory(action) {
@@ -20,34 +21,41 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   filterForTask(action) {
     return !action.completedTime;
   }
+  componentWillMount() {
+    this.getData(this.props.params.id);
+  }
+
+  getData(id) {
+    axios.get(`/actions/${Store.currentUserId}/${id}`)
+      .then(function(response) {
+        Store.jobActions = response.data;
+        console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    axios.get('/contacts/' + Store.currentUserId + '/' + id)
+      .then(function(response) {
+        Store.contacts = response.data;
+        // console.log('contacts call  for data :', response.data);
+
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  }
 
   componentWillReceiveProps(nextProps) {
 
     console.log(nextProps);
     console.log('jobviewWillReceiveProps ID', nextProps.params.id);
+    this.getData(nextProps.params.id);
 
     // THIS IS NOT FEEDING THE PROP PROPERLY
 
-    axios.get(`/actions/${Store.currentUserId}/${nextProps.params.id}`)
-      .then(function(response) {
-        Store.job = response.data;
-        console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
-
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-      axios.get('/contacts/' + Store.currentUserId + '/' + nextProps.params.id)
-      .then(function(response) {
-        Store.contacts = response.data;
-        console.log('contacts call  for data :', response.data);
-
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    }
+  }
 
 
   change(e) {
@@ -66,15 +74,15 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     });
     console.log('location', location);
     var thisJob = toJS(step[location]);
-    var jobActions = Store.job.slice();
+    var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
 
-    var thisJobActions = jobActions.filter((action) => { 
-      console.log('one Action:', action);
-      return action.JobJd === targetId});
+    // var thisJobActions = jobActions.filter((action) => {
+    //   console.log('one Action:', action);
+    //   return action.JobId === targetId});
 
-    thisJobActions = toJS(thisJobActions);
-    console.log('Actions for this Job: ', thisJobActions);
+    // thisJobActions = toJS(thisJobActions);
+    // console.log('Actions for this Job: ', thisJobActions);
 
     return (
       <div>
@@ -100,7 +108,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
               </div>
             </div>
             <div className="companyTasks">
-              {thisJobActions.map((action, index) => {
+              {jobActions.map((action, index) => {
                 return ( <TaskBox task={action} key={index}/>);
               })
             }
@@ -114,8 +122,3 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 }
 
 export default JobView;
-
-
-
-
-

@@ -27,7 +27,7 @@ class Store {
     lastname: 'Sandy',
     email: 'knoxs@airbnb.com'
   }];
-  @observable job = [];
+  @observable jobActions = [];
   @observable newParam = {
     city: 'San Francisco',
     state: 'Ca',
