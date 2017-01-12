@@ -74,6 +74,16 @@ class Store {
     });
   }
 
+  @computed get pendingNumber() {
+    var pending = 0;
+    this.actions.forEach((action, index) => {
+      // action = toJS(action);
+      if (!action.completedTime) {
+        pending++;
+      }
+    });
+    return pending;
+  }
 }
 
 const store = window.store = new Store();

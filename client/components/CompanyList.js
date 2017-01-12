@@ -3,16 +3,35 @@ import { observer } from 'mobx-react';
 import Store from './Store';
 import CompanyRow from './CompanyRow';
 import SideBarLetter from './SideBarLetter';
+import { toJS } from 'mobx';
 
 @observer class CompanyList extends Component {
   constructor(props) {
     super(props);
+    this.filter = this.filter.bind();
+  }
+  filter(company) {
+    var text = Store.filterText.text.toLowerCase();
+    // company = toJS(company);
+    // console.log(company);
+    if (company.company.toLowerCase().includes(text)) {
+      return true;
+    }
+    if (company.jobTitle.toLowerCase().includes(text)) {
+      return true;
+    }
+    if (company.snippet.toLowerCase().includes(text)) {
+      return true;
+    }
   }
 
   render() {
+    var list = Store.jobList.filter(this.filter);
 
-    var list = Store.jobList.sort((a, b) => a['company'].localeCompare(b['company']));
-    list = list.filter(company => company['company'] !== '');
+    list = list.sort((a, b) => a['company'].localeCompare(b['company']));
+    // list = list.filter(company => company['company'] !== '');
+    // var list = Store.jobList;
+
 
     var previousLetter = 'A';
     var count = 0;
@@ -21,8 +40,12 @@ import SideBarLetter from './SideBarLetter';
 
     list.forEach(company => {
       var firstLetter = company.company.slice(0, 1);
-      if (obj[firstLetter] === undefined) {
-        // if (firstLetter === )  should do a regex search for numbers and put all numbers in one bucker
+      if (firstLetter.match(/([0-9])/)) {
+        if (obj[0] === undefined) {
+          obj[0] = [];
+        }
+        obj[0].push(company);
+      } else if (obj[firstLetter] === undefined) {
         obj[firstLetter] = [];
         obj[firstLetter].push(company);
       } else {
@@ -36,7 +59,7 @@ import SideBarLetter from './SideBarLetter';
       names.push(obj[keys[i]]);
     }
 
-    console.log(names);
+    // console.log(names);
 
     return (
       <div className="leftSideBar z-depth-3">
@@ -53,4 +76,3 @@ import SideBarLetter from './SideBarLetter';
 }
 
 export default CompanyList;
-

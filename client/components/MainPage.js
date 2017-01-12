@@ -40,7 +40,7 @@ import { observer } from 'mobx-react';
     this.actions = this.actions.slice(0, 10);
 
     return (<div className='actionList'>
-      You have {this.pending} pending actions
+      You have {Store.pendingNumber} pending actions
       {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {
         action = toJS(action);
         if (!action.completedTime) {
