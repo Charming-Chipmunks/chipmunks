@@ -16,9 +16,10 @@ module.exports = {
   // preloads actions to the user when they create a new job
   // adds first four actions
   // 'Liked Job', 'Learn About Company', 'Search For Connection', 'Apply To The Job',
-  addActionsToNewJob: function(user, job, body) {
+  addActionsToNewJob: function(user, job, body, req, res) {
 
     var date = new Date ();
+    var newActions = [];
 
     models['Action'].create({
       type:           descriptions.types[LIKED],
@@ -29,6 +30,7 @@ module.exports = {
     }).then(function(likeAction) {
       user.addActions(likeAction);
       job.addActions(likeAction); 
+      newActions.push(likeAction);
 
       models['Action'].create({
         type:           descriptions.types[STUDY],
@@ -39,7 +41,8 @@ module.exports = {
       }).then(function(learnAction) {
         user.addActions(learnAction);
         job.addActions(learnAction); 
-      
+        newActions.push(learnAction);
+
         models['Action'].create({
           type:           descriptions.types[FIND_CONNECTION],
           company:        body.company,
@@ -49,6 +52,7 @@ module.exports = {
         }).then(function(connectAction) {
           user.addActions(connectAction);
           job.addActions(connectAction); 
+          newActions.push(connectAction);
 
           models['Action'].create({
             type:           descriptions.types[APPLY_TO_JOB],
@@ -58,7 +62,10 @@ module.exports = {
             completedTime:  null
           }).then(function(applyAction) {
             user.addActions(applyAction);
-            job.addActions(applyAction); 
+            job.addActions(applyAction);
+            newActions.push(applyAction);
+            res.json(results);
+
           }).catch((err) => {
             console.error(err);
           });

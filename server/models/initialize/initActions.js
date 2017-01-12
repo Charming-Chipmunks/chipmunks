@@ -22,6 +22,7 @@ console.log('INIT ACTIONS');
 console.log('INIT ACTIONS');
 console.log('INIT ACTIONS');
 console.log('INIT ACTIONS');
+ 
   db['User'].findAll({
     include: [db['Job']]
   }).then(users => {
@@ -32,47 +33,62 @@ console.log('INIT ACTIONS');
       users[k].Jobs.forEach((job) => {
         console.log('in actions loop');
 
-    var date = new Date ();
+        db['UserJob'].find({
+          where: {
+            UserId:   users[k].id,
+            JobId:    job.id
+          }
+        }).then((userjob) => {
+          if (userjob.status === 'favored'){
+            console.log('yes');
+          }
+        })
 
-    db['Action'].create({
-      type:           descriptions.types[LIKED],
-      company:        job.company,
-      description:    descriptions.likes(job),
-      scheduledTime:  date,
-      completedTime:  null
-    }).then(function(likeAction) {
-      users[k].addActions(likeAction);
-      job.addActions(likeAction);
+      var date = new Date ();
 
       db['Action'].create({
-        type:           descriptions.types[STUDY],
+        type:           descriptions.types[LIKED],
         company:        job.company,
-        description:    descriptions.study(job),
-        scheduledTime:  date.setDate(date.getDate() + descriptions.daysForLearning),
+        description:    descriptions.likes(job),
+        scheduledTime:  date,
         completedTime:  null
-      }).then(function(learnAction) {
-        users[k].addActions(learnAction);
-        job.addActions(learnAction);
+      }).then(function(likeAction) {
+        users[k].addActions(likeAction);
+        job.addActions(likeAction);
 
         db['Action'].create({
-          type:           descriptions.types[FIND_CONNECTION],
+          type:           descriptions.types[STUDY],
           company:        job.company,
-          description:    descriptions.connections(job),
-          scheduledTime:  date,
+          description:    descriptions.study(job),
+          scheduledTime:  date.setDate(date.getDate() + descriptions.daysForLearning),
           completedTime:  null
-        }).then(function(connectAction) {
-          users[k].addActions(connectAction);
-          job.addActions(connectAction);
+        }).then(function(learnAction) {
+          users[k].addActions(learnAction);
+          job.addActions(learnAction);
 
           db['Action'].create({
-            type:           descriptions.types[APPLY_TO_JOB],
+            type:           descriptions.types[FIND_CONNECTION],
             company:        job.company,
-            description:    descriptions.apply(job),
-            scheduledTime:  date.setDate(date.getDate() + descriptions.daysForApplication),
+            description:    descriptions.connections(job),
+            scheduledTime:  date,
             completedTime:  null
-          }).then(function(applyAction) {
-            users[k].addActions(applyAction);
-            job.addActions(applyAction);
+          }).then(function(connectAction) {
+            users[k].addActions(connectAction);
+            job.addActions(connectAction);
+
+            db['Action'].create({
+              type:           descriptions.types[APPLY_TO_JOB],
+              company:        job.company,
+              description:    descriptions.apply(job),
+              scheduledTime:  date.setDate(date.getDate() + descriptions.daysForApplication),
+              completedTime:  null
+            }).then(function(applyAction) {
+              users[k].addActions(applyAction);
+              job.addActions(applyAction);
+            }).catch((err) => {
+              console.error(err);
+            });
+
           }).catch((err) => {
             console.error(err);
           });
@@ -84,15 +100,13 @@ console.log('INIT ACTIONS');
       }).catch((err) => {
         console.error(err);
       });
-
-    }).catch((err) => {
-      console.error(err);
     });
-      });
-    }
-  }).catch(err => {
-    console.log(err);
-  });
+      
+  } // end of for loop
+
+    }).catch(err => {
+      console.log(err);
+    });
 
 
 };

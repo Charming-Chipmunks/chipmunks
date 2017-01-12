@@ -19,10 +19,14 @@ import JobDescription from './JobDescription';
   }
 
   yes() {
+    // remove the job from the Store
     this.removeFromList();
     var id = this.props.job.id;
+
+    // tell the DB to set as favored
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'favored' })
       .then(function(response) {
+        // push it onto the local Store list 
         Store.jobList.push(response.data);
       }).catch(function(error) {
         console.log(error);
@@ -30,11 +34,13 @@ import JobDescription from './JobDescription';
   }
 
   no() {
+    // remove the job from the Store
     this.removeFromList();
     var id = this.props.job.id;
+
+    // tell thr DB to set as rejected
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'rejected' })
       .then(function(response) { 
-
         console.log('in NO :', response);
       }).catch(function(error) {
         console.log(error);

@@ -27,7 +27,13 @@ import mobx from 'mobx';
   }
 
   render() {
-    return <div>{this.props.param.descriptor + ' ' + this.props.param.city + ', ' + this.props.param.state} <button onClick={this.removeParam}>Remove</button> </div>;
+
+    return (
+      <div className="chip">
+        <img src="./assets/params/javascript.png" alt="Contact Person" />
+          {this.props.param.descriptor} jobs in {this.props.param.city}, {this.props.param.state}
+        <i class="close material-icons">close</i>
+      </div>);
   }
 }
 export default Param;

@@ -9,10 +9,10 @@ var initContacts      = require('./initialize/initContacts');
 var initIndeedCrawler = require('./initialize/initIndeedCrawler');
 
 
-initJobs();
-setTimeout(initParams, 2000);
-setTimeout(initUsers, 3000);
-setTimeout(initIndeedCrawler, 5000);
-setTimeout(initActions, 40000);
-setTimeout(initContacts, 60000);
-setTimeout(associate, 70000);
+// initJobs();
+// setTimeout(initParams, 2000);
+// setTimeout(initUsers, 3000);
+// setTimeout(initIndeedCrawler, 5000);
+ setTimeout(initActions, 10);
+ setTimeout(initContacts, 30000);
+//setTimeout(associate, 30000);

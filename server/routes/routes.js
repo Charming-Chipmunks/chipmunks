@@ -6,11 +6,9 @@ var utils     = require('./route-utils');
 
 
 // this is the initialize file
-
 // var initialize = require('../models/initialize');
-
-
 // USER - get info for one user
+
 router.get('/users/:userId', function(req, res) {
   models.User.find({
     where: {
@@ -163,8 +161,8 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
               id: req.params.jobId
             }
           }).then( job => {
-            utils.addActionsToNewJob(user, job, job);
-            res.json(job);
+            utils.addActionsToNewJob(user, job, job, req, res);
+            //res.json(job);
           });
         });
       } else if(req.body.status === 'rejected') {
@@ -182,12 +180,13 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
 
 
 // USER - get all actions for one User
+
 router.get('/actions/:userId', function(req, res) {
   models.Action.findAll({
     where: {
       UserId: req.params.userId
     },
-    order: ['scheduledTime'],
+    order: ['scheduledTime']
   }).then(function(user) {
     if (!user) {
       res.status(404);

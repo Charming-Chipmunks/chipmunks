@@ -22,14 +22,17 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   }
 
   componentWillReceiveProps(nextProps) {
+
     console.log(nextProps);
     console.log('jobviewWillReceiveProps ID', nextProps.params.id);
+
     // THIS IS NOT FEEDING THE PROP PROPERLY
 
     axios.get(`/actions/${Store.currentUserId}/${nextProps.params.id}`)
       .then(function(response) {
         Store.actions = response.data;
         console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+
       })
       .catch(function(error) {
         console.log(error);
@@ -66,6 +69,13 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
 
+    var thisJobActions = jobActions.filter((action) => { 
+      console.log('one Action:', action);
+      return action.JobJd === targetId});
+
+    thisJobActions = toJS(thisJobActions);
+    console.log('Actions for this Job: ', thisJobActions);
+
     return (
       <div>
 
@@ -90,7 +100,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
               </div>
             </div>
             <div className="companyTasks">
-              {jobActions.map((action, index) => {
+              {thisJobActions.map((action, index) => {
                 return ( <TaskBox task={action} key={index}/>);
               })
             }

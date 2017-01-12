@@ -15,6 +15,8 @@ import { observer } from 'mobx-react';
     // get pending companys
   }
   componentWillReceiveProps() {
+
+    // this takes the actions from the estore
     this.actions = Store.actions.slice();
     this.pending = 0;
     this.actions.map((action, index) => {
