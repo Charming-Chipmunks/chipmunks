@@ -37,6 +37,9 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
       .then(function(response) {
         console.log('actions3', response.data);
         Store.actions = response.data;
+        const { filteredActions } = Store;
+        var result = filteredActions;
+        console.log('filteredActions: ', filteredActions);
       })
       .catch(function(error) {
         console.log(error);

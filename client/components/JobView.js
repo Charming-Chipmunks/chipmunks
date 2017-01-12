@@ -22,14 +22,17 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   }
 
   componentWillReceiveProps(nextProps) {
+
     console.log(nextProps);
     console.log('jobviewWillReceiveProps ID', nextProps.params.id);
+
     // THIS IS NOT FEEDING THE PROP PROPERLY
 
     axios.get(`/actions/${Store.currentUserId}/${nextProps.params.id}`)
       .then(function(response) {
         Store.actions = response.data;
         console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+
       })
       .catch(function(error) {
         console.log(error);

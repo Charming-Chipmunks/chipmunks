@@ -39,7 +39,7 @@ import SideBarLetter from './SideBarLetter';
     console.log(names);
 
     return (
-      <div className="leftSideBar">
+      <div className="leftSideBar z-depth-3">
         <h5 className="rateCompanyText"> {list.length} Open Opportunities</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {

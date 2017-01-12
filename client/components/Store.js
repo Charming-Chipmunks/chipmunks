@@ -1,5 +1,5 @@
 //MobX Store
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 class Store {
   constructor() {}
 
@@ -17,6 +17,7 @@ class Store {
   @observable filterText = { text: '' };
   @observable actions = [];
   @observable company = {};
+  @observable actionFilter= 4863;
   @observable contacts = [{
     firstname: 'Sandy',
     lastname: 'Knox',
@@ -64,6 +65,15 @@ class Store {
     mobilePhone: '',
     workPhone: '',
   }
+
+  @computed get filteredActions() {
+   // var matchesFilter = new RegExp(this.filter, "i");
+   // usea regex if working with strings
+    return this.actions.filter(action => {
+      return (action.id === this.filter);
+    });
+  }
+
 }
 
 const store = window.store = new Store();
