@@ -9,17 +9,17 @@ import { observer } from 'mobx-react';
 
   constructor(props) {
     super(props);
-    this.handleClick.bind(this);
-    this.handleHover.bind(this);
+    // this.handleClick.bind(this);
+    // this.handleHover.bind(this);
     this.state = {
       hover: false
     };
   }
 
-  handleClick () {
-    console.log('sidebarletter handleclick');
-    this.setState({hover: !this.state.hover});
-  }
+  // handleClick () {
+  //   console.log('sidebarletter handleclick');
+  //   this.setState({hover: !this.state.hover});
+  // }
 
   handleHover() {
     this.setState({hover: true});
@@ -28,7 +28,7 @@ import { observer } from 'mobx-react';
 
   render () {
     return (
-        <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> {this.props.letter}
+        <li className="sideBarLetter"> {this.props.letter}
             <ul>
                 {this.props.list.map((company, index) => {
                   company = toJS(company);
@@ -40,5 +40,5 @@ import { observer } from 'mobx-react';
   }
 
 }
-
+//  <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> {this.props.letter}
 export default SideBarLetter;

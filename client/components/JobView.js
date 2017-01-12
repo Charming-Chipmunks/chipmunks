@@ -22,11 +22,13 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   }
 
   componentWillReceiveProps() {
+    // console.log('jobviewWillReceiveProps ID', this.props.params.id);
+    // THIS IS NOT FEEDING THE PROP PROPERLY
 
     axios.get(`/actions/${Store.currentUserId}/${this.props.params.id}`)
       .then(function(response) {
         Store.actions = response.data;
-        console.log('actions results : ', toJS(response.data));
+        // console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
       })
       .catch(function(error) {
         console.log(error);
@@ -49,17 +51,18 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   }
 
   render() {
+
     var step = Store.jobList.slice();
     var location = 0;
 
     // stopped here Tuesday night
-    var thisJob = step.map((job, index) => {
-      if (job.id === this.props.params.id) {
+    step.forEach((job, index) => {
+      if (job.id === Number(this.props.params.id)) {
         location = index;
       }
     });
-
-    thisJob = toJS(step[location]);
+    // console.log('location', location);
+    var thisJob = toJS(step[location]);
 
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
