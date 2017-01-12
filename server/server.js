@@ -34,7 +34,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-  // console.log(user);
   done(null, user.id);
 });
 
@@ -42,22 +41,18 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   models.User.find({ where: { id: id } })
     .then(function(User) {
-      console.log('deserialize');
-
       done(null, User);
     }).catch(function(err) {
       console.log(err);
     });
-  //this is the example
-  // models.User.findById(id, function(err, user) {
-  //   done(err, user);
-  // });
 });
 
 
 passport.use(new GoogleStrategy(gconfig,
   function(token, refreshToken, profile, done) {
-    // process.nextTick(function() {
+    console.log(profile);
+    // console.log('token', token);
+    // console.log('refresh', refreshToken);
     console.log('passport googlestrategy');
     console.log('passport googlestrategy');
     console.log('passport googlestrategy');
@@ -73,10 +68,12 @@ passport.use(new GoogleStrategy(gconfig,
         console.log('no user');
         //need to create user
         models.User.create({
+          firstname: profile.name.givenName,
+          lastname: profile.name.familyName,
           googleId: profile.id,
           googleToken: token,
           googleName: profile.displayName,
-          googleEmail: profile.emails[0].value,
+          email: profile.emails[0].value,
         }).then(function(user) {
           done(null, User);
         });
