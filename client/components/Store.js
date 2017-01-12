@@ -2,18 +2,21 @@
 import { observable } from 'mobx';
 class Store {
   constructor() {}
-  @observable currentUserId = 1;
+
+  // FAVORED JOBS
+  // CONTACTS FOR EACH JOB
+  // ACTIONS FOR EACH JOB
+  // PARAMETERS
+  // USER ID
+  // NEW JOB LIST
+
+  @observable currentUserId = 1; // this will be set at login time
   @observable params = [];
-  @observable jobList = [];
-  @observable newJobList = [];
+  @observable jobList = []; // jobs that are favored
+  @observable newJobList = []; // jobs that need to be rated
   @observable filterText = { text: '' };
   @observable actions = [];
-  @observable company = {
-    name: 'Airbnb',
-    title: '',
-    location: '888 Brannan St, San Francisco, CA 94103',
-    description: 'Airbnb helps people find great rooms to stay in.',
-  }
+  @observable company = {};
   @observable contacts = [{
     firstname: 'Sandy',
     lastname: 'Knox',

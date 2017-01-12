@@ -9,3 +9,249 @@
 .pending {
   color: green;
 }
+
+
+/*
+ * WEB.js css stylings
+*/
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  width: 100%;
+}
+.container{
+  width: 95% !important;
+  margin: 20px 20px !important;
+}
+
+
+/*
+ * JobView Page: ; 
+ */
+
+.companyStats{
+  border: 2px solid red;
+  width:100%;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-around;
+}
+
+.companyStatsBox {
+  flex: 1;
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: blue;
+}
+
+.companyTasks{
+  width: 100%;
+  border: 2px solid red;  
+}
+
+/*
+ * Add Company
+*/
+
+.addJob{
+  display: flex;
+  width: 100%;
+}
+
+.createJob {
+  background-color: red;
+  border-radius: 3px;
+  text-align: center;
+  color:  white;
+  display: inline-flex;
+  width: 100%
+}
+
+
+/*
+ * TaskBox
+ */
+
+.taskBox{
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  border: 2px solid red;
+  margin: 2px auto;
+}
+.leftTaskIcons{
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  width: 15%;
+  flex: 3 20%;
+}
+
+.rightTaskIcons{
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  width: 15%;
+  flex: 3 20%;
+}
+.daysDue{
+  flex: 3;
+  display: inline-block;
+  width: 30px;
+}
+
+.taskIconImg{
+  flex: 3;
+  display: inline-block;
+  width: 30px;
+}
+
+.taskDescription{
+  flex: 3 60%;
+  width: 70%;
+}
+
+.doneTask{
+  width: 50px;
+}
+
+.cancelTask{
+  width: 50px;
+}
+
+/*
+ * RATE COMPANY COMPONENT CSS STYLINGS  
+*/
+.rateCompany{
+  border-radius: 3px;
+  border: 2px solid #c62828;
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+  padding: 15px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.rateCompanyInfoBox{
+ width: 100%;
+ padding-left: 10px;
+}
+
+.rateCompanyAction{
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: row;
+  align-content: space-around;
+  width: 20%;
+}
+
+.rateCompanyJob{ 
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 3px;
+  margin-bottom: 2px;
+  color: lightgrey;
+}
+
+.rateCompanyName{
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.rateCompanyText{
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1.2;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.favorJob{
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+}
+
+.rankingThunbs{
+  height: 50px;
+}
+
+.paginator{ 
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+ }
+
+
+/*
+ * Sidebar Classes
+ */
+.sideLetters{
+  background-color: red;
+}
+
+.sideBarLetter{
+  font-size: 20px;
+  font-weight: 800;
+  color: lightgrey;
+  margin-left: 5px;
+}
+
+.sideBarCompany{
+  margin-left: 15px;
+}
+
+.companyContactInfo{
+  margin: 5px;
+}
+
+.sideBarCompanyName{
+  font-size: 14px;
+  font-weight: 400;
+  color: lightgrey;
+}
+
+.sideBarCompanyJobTitle{
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic;
+  color: lightgrey;
+  margin-left: 5px;
+}
+
+.sideBarContact{
+    border: 2px solid #d9d9d9;
+    width: 90%;
+    margin: 3px auto;
+    border-radius: 4px;
+    background-color: #d9d9d9
+}
+
+.hello{
+  background-color: #9e9e9e;
+  width: 100%;
+}
+
+.contactName{
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic;
+  color: white;
+  margin-left: 5px;
+}
+
+.contactPhoneNumber{
+  font-size: 10px;
+  font-weight: 400;
+  color: #424242;
+  margin-left: 2px;
+}

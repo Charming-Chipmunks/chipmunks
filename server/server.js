@@ -97,6 +97,8 @@ passport.use(new GoogleStrategy(gconfig,
 // ));
 //Auth Middleware
 var isLoggedIn = function(req, res, next) {
+  next();
+  return;
   console.log('logincheck');
   // console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
@@ -140,6 +142,7 @@ app.get('/auth/google/callback', function(req, res, next) {
 
 ////
 app.use(isLoggedIn, express.static(path.resolve(__dirname, '../client/dist')));
+// app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 //DEVELOPMENT CONVENIENCES
 app.get('/staging', function(req, res) {
@@ -165,8 +168,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', isLoggedIn, routes);
+// app.use('/', routes);
 
 //WILDCARD
+// app.get('*', function(req, res) {
 app.get('*', isLoggedIn, function(req, res) {
   res.send('Hello World' + process.env.PORT);
 });

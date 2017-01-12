@@ -9,7 +9,7 @@ var db      = require('../index');
   This is working 100% fine.  to make sure it runs in the cron job,  uncomment lies 12 and 22
  */
 
-//module.exports = function () {
+module.exports = function () {
  
   db['Parameter'].findAll().then((parameters) => {
     parameters.forEach((parameter) => {
@@ -18,7 +18,7 @@ var db      = require('../index');
   }).catch((err) => {
     console.error(err);
   });
-//};
+};
 
 
 
@@ -71,7 +71,7 @@ function crawlOneParameter (parameter) {
 
       var loopNums = totalResults / 25;
 
-      for (let k = 1; k < loopNums; k ++) {  
+      for (let k = 1; k < 10; k ++) {  // changed to 10 from loopNums
         getResults(k, parameter);
       } // end of for loop
 

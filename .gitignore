@@ -39,3 +39,14 @@ server/api/config.js
 server/models/config.js
 server/googleConfig.js
 
+# assets files
+client/dist/assets
+
+# sql management files
+dropphil
+dropphil.sql
+phil.sql
+resetphil
+savephil
+
+

@@ -10,7 +10,7 @@ var db        = {};
 var sequelize = new Sequelize(config.name, config.username, config.password, {
   dialect: config.dialect,
   host: config.host,
-  logging: false,
+  // logging: false,
 });
 
 sequelize.sync(); //{force: true} removing the force helped

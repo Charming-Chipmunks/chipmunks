@@ -8,6 +8,12 @@ import { observer } from 'mobx-react';
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    // get pending actions
+
+    // get pending companys
+  }
   componentWillReceiveProps() {
     this.actions = Store.actions.slice();
     this.pending = 0;
@@ -28,10 +34,12 @@ import { observer } from 'mobx-react';
         this.pending++;
       }
     });
-    // console.log('this.actions', this.actions);
+
+    this.actions = this.actions.slice(0, 10);
+
     return (<div className='actionList'>
       You have {this.pending} pending actions
-      {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map ((action, index) => {
+      {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {
         action = toJS(action);
         if (!action.completedTime) {
           return <HistoryItem action={action} key={index} displayCompany={true}/>;

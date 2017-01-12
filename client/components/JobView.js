@@ -5,114 +5,98 @@ import Store from './Store';
 import HistoryItem from './HistoryItem';
 import JobContacts from './JobContacts';
 import axios from 'axios';
+import JobDescription from './JobDescription';
+import TaskBox from './TaskBox';
+import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 
 @observer class JobView extends Component {
   constructor(props) {
     super(props);
-    this.save = this.save.bind(this);
-    this.update = this.update.bind(this);
   }
+
   filterForHistory(action) {
     return !!action.completedTime;
   }
   filterForTask(action) {
     return !action.completedTime;
   }
-  update() {
-    axios.get('/actions/' + Store.currentUserId + '/' + this.props.params.id) //need to filter by company later
-      .then(function(response) {
-        // console.log('actions/jobid response.data', response.data);
-        Store.job = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+ 
   componentWillReceiveProps() {
-    console.log('jobId', this.props.params.id);
-    axios.get('/actions/' + Store.currentUserId + '/' + this.props.params.id) //need to filter by company later
+    
+    axios.get(`/actions/${Store.currentUserId}/${this.props.params.id}`)
       .then(function(response) {
-        // console.log('actions/jobid response.data', response.data);
-        Store.job = response.data;
+        console.log('actions results : ', response.data);
+        Store.actions = response.data;
       })
       .catch(function(error) {
         console.log(error);
       });
-    axios.get('/contacts/' + Store.currentUserId + '/' + this.props.params.id)
+  
+      axios.get('/contacts/' + Store.currentUserId + '/' + this.props.params.id)
       .then(function(response) {
-        // console.log('contacts/user/job response.data', response.data);
         Store.contacts = response.data;
+        console.log('contacts call  for data :', response.data);
+      
       })
       .catch(function(error) {
         console.log(error);
       });
-  }
+    }
+  
+
   change(e) {
     Store.newTask[e.target.name] = e.target.value;
   }
-  save(e) {
-    var page = this;
-    e.preventDefault();
-    Store.newTask.jobId = this.props.params.id;
-    Store.newTask.company = this.name;
-    Store.newTask.userId = Store.currentUserId;
-    axios.post('/actions/', toJS(Store.newTask))
-      .then(function(response) {
-        console.log('save response data', response.data);
-        Store.job.push(response.data);
-        // console.log(page);
-        // page.update();
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+
   render() {
-    var historyList = Store.job.slice(); //NEEDS TO CHANGE FROM HERE AND ON
-    var contacts = Store.contacts.slice();
-    if (historyList[0]) {
-      var name = toJS(historyList[0]).company;
-      this.name = name;
-      // console.log(name);
-    }
-    return (
-      <div className='jobview'>
-      <form>
-        Enter a Task<br/>
-        Type<input type="text" name='type' onChange={this.change} value={Store.newTask.type}/><br/>
-        Description<input type="text" name='description' onChange={this.change} value={Store.newTask.description}/><br/>
-        YYYY-MM-DD HH:MM:SS <input type="text" name='scheduledTime' onChange={this.change} value={Store.newTask.scheduledTime}/><br/>
-        <button onClick={this.save}>Save</button>
-        </form>
-        {historyList[0] &&
-        <div>
-          <p><a href={'https://www.google.com/search?q=' + name}> {name}</a> </p>
-          <p><a href={'http://maps.google.com/?q=' + name}> {Store.company.location}</a></p>
-          <p> {Store.company.title} </p>
-          <p> {Store.company.description} </p>
-        </div>
+    var step = Store.jobList.slice();
+    var location = 0;
+    
+    // stopped here Tuesday night
+    var thisJob = step.map((job, index) => {
+      if (job.id === this.props.params.id) {
+        location = index;
       }
-        --------------------------------------------------------------------------------------------------
-        <div className='Tasks'>
-        Tasks
-        {historyList.filter(this.filterForTask).sort((a, b) => a.scheduledTime > b.scheduledTime ? 1 : 0).map ((action, index) =>{
-          action = toJS(action);
-          return <HistoryItem action={action} key={index}/>;
-        })}
+    }); 
+
+    thisJob = toJS(step[location]);
+   
+    var jobActions = Store.actions.slice();
+    jobActions = toJS(jobActions);
+
+    return (
+      <div>
+        
+        <div className="col m3 right"> {/* this is where the right naV bar will go:*/}
+          <div className="hello">
+            <CompanyInfoRightSideBar job={thisJob}/>
+          </div>
         </div>
-         <div className='History'>
-        History
-        {historyList.filter(this.filterForHistory).sort((a, b) => a.completedTime < b.completedTime ? 1 : 0).map ((action, index) =>{
-          action = toJS(action);
-          return <HistoryItem action={action} key={index}/>;
-        })}
+        
+        <div className="col m9 left">
+          <div className='jobView'>
+            <JobDescription job={thisJob}/>
+            <div className="companyStats">
+              <div className="companyStatsBox"> 
+              # days since last action
+              </div>
+              <div className="companyStatsBox"> 
+              # days active
+              </div>
+              <div className="companyStatsBox">
+              # of interactions 
+              </div>
+            </div>
+            <div className="companyTasks">
+              {jobActions.map((action, index) => {
+                return ( <TaskBox task={action} key={index}/>);
+              })
+            }
+            </div>
+          </div>
         </div>
-        --------------------------------------------------------------------------------------------------
-        <div className="contacts">
-          <JobContacts contacts={contacts} id={this.props.params.jobId} />
-          --------------------------------------------------------------------------------------------------
-        </div>
-      </div>
+
+     </div> 
     );
   }
 }
@@ -121,9 +105,5 @@ export default JobView;
 
 
 
-// type
-// company
-// description
-// actionSource
-// userId
-// jobId
+
+
