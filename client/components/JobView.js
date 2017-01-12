@@ -21,20 +21,21 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     return !action.completedTime;
   }
 
-  componentWillReceiveProps() {
-    // console.log('jobviewWillReceiveProps ID', this.props.params.id);
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    console.log('jobviewWillReceiveProps ID', nextProps.params.id);
     // THIS IS NOT FEEDING THE PROP PROPERLY
 
-    axios.get(`/actions/${Store.currentUserId}/${this.props.params.id}`)
+    axios.get(`/actions/${Store.currentUserId}/${nextProps.params.id}`)
       .then(function(response) {
         Store.actions = response.data;
-        // console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+        console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
       })
       .catch(function(error) {
         console.log(error);
       });
 
-      axios.get('/contacts/' + Store.currentUserId + '/' + this.props.params.id)
+      axios.get('/contacts/' + Store.currentUserId + '/' + nextProps.params.id)
       .then(function(response) {
         Store.contacts = response.data;
         console.log('contacts call  for data :', response.data);
@@ -51,19 +52,17 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   }
 
   render() {
-
     var step = Store.jobList.slice();
     var location = 0;
-
-    // stopped here Tuesday night
+    console.log('render paramsid' ,this.props.params.id);
+    // stopped here Tuesday night;
     step.forEach((job, index) => {
       if (job.id === Number(this.props.params.id)) {
         location = index;
       }
     });
-    // console.log('location', location);
+    console.log('location', location);
     var thisJob = toJS(step[location]);
-
     var jobActions = Store.actions.slice();
     jobActions = toJS(jobActions);
 

@@ -7,11 +7,12 @@ import { observer } from 'mobx-react';
 
   constructor(props) {
     super(props);
+    console.log(this.props.company.id);
     // this.handleClick.bind(this);
     // this.handleHover.bind(this);
-    this.state = {
-      hover: false
-    };
+    // this.state = {
+    //   hover: false
+    // };
   }
 
   // handleClick () {
@@ -23,13 +24,12 @@ import { observer } from 'mobx-react';
   //   // this.setState({hover: !this.state.hover});
   // }
 
-  handleHover() {
-    this.setState({hover: true});
-    console.log('hover');
-  }
+  // handleHover() {
+  //   this.setState({hover: true});
+  //   console.log('hover');
+  // }
 
   render () {
-    console.log(this.props.company.id);
     return (
       <Link to={'/companies/' + this.props.company.id}>
         <li className="sideBarCompany">
@@ -39,8 +39,5 @@ import { observer } from 'mobx-react';
       </Link>
     );
   }
-
 }
-        { /*<li className="sideBarCompany" onClick={this.handleClick.bind(this)}>*/}
-
 export default SideBarCompany;
