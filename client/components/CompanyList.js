@@ -3,18 +3,35 @@ import { observer } from 'mobx-react';
 import Store from './Store';
 import CompanyRow from './CompanyRow';
 import SideBarLetter from './SideBarLetter';
+import { toJS } from 'mobx';
 
 @observer class CompanyList extends Component {
   constructor(props) {
     super(props);
+    this.filter = this.filter.bind();
+  }
+  filter(company) {
+    var text = Store.filterText.text.toLowerCase();
+    company = toJS(company);
+    console.log(company);
+    if (company.company.toLowerCase().includes(text)) {
+      return true;
+    }
+    if (company.jobTitle.toLowerCase().includes(text)) {
+      return true;
+    }
+    if (company.snippet.toLowerCase().includes(text)) {
+      return true;
+    }
   }
 
   render() {
+    var list = Store.jobList.filter(this.filter);
 
-    // var list = Store.jobList.sort((a, b) => a['company'].localeCompare(b['company']));
+    list = list.sort((a, b) => a['company'].localeCompare(b['company']));
     // list = list.filter(company => company['company'] !== '');
-    var list = Store.jobList;
-    // list.filter(())
+    // var list = Store.jobList;
+
 
     var previousLetter = 'A';
     var count = 0;
@@ -62,4 +79,3 @@ import SideBarLetter from './SideBarLetter';
 }
 
 export default CompanyList;
-
