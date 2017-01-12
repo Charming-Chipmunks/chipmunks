@@ -1,6 +1,7 @@
 //jobDescription.jsx
 import React from 'react';
 import { observer } from 'mobx-react';
+
 @observer class JobDescription extends React.Component {
 
   constructor(props) {

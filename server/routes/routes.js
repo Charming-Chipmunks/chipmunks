@@ -451,7 +451,7 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 });
 
 
-// PARAMETER - Adds a new parameter to the parameter table and associates a user to it.
+// PARAMETER - Adds a new parameter to the parameter table and associates a user to it
 
 
 router.post('/parameter/:userId', function(req, res) {
@@ -481,8 +481,8 @@ router.post('/parameter/:userId', function(req, res) {
     } else {
       console.log('found one');
       parameter.addUsers(req.params.userId);
-      res.status(200);
-      res.send(parameter);
+      res.status(404);
+      res.json({parameter: 'exists'});
     }
   }).catch((err) => {
     console.error(err);

@@ -74,20 +74,29 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     });
     console.log('location', location);
     var thisJob = toJS(step[location]);
+
+    //thisJob
+    
+
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
 
-    // var thisJobActions = jobActions.filter((action) => {
-    //   console.log('one Action:', action);
-    //   return action.JobId === targetId});
+    console.log('job actions: ', jobActions);
 
-    // thisJobActions = toJS(thisJobActions);
-    // console.log('Actions for this Job: ', thisJobActions);
+    var numTasks = jobActions.length;
+
+    var dayOpened = new Date();
+    var lastInteraction = new Date(1980, 1, 1);
+
+    var daysActive = Math.floor(dayOpened - jobActions[0].createdAt);
+    // jobActions.map(action => {
+    //   if (action.createdAt < new Date())
+    // });
 
     return (
       <div>
 
-        <div className="col m3 right"> {/* this is where the right naV bar will go:*/}
+        <div className="col m3 right">
           <div className="hello">
             <CompanyInfoRightSideBar job={thisJob}/>
           </div>
@@ -101,10 +110,12 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
               # days since last action
               </div>
               <div className="companyStatsBox">
-              # days active
+              {daysActive}<br/>
+              Days Active
               </div>
               <div className="companyStatsBox">
-              # of interactions
+              {numTasks}<br/>
+              Interactiobs
               </div>
             </div>
             <div className="companyTasks">

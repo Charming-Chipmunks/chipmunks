@@ -9,6 +9,7 @@ import mobx from 'mobx';
     super(props);
     this.removeParam = this.removeParam.bind(this);
   }
+
   removeParam() {
     axios.delete('/parameter/' + this.props.param.id + '/user/' + Store.currentUserId)
       .then(function(response) {
@@ -32,7 +33,7 @@ import mobx from 'mobx';
       <div className="chip">
         <img src="./assets/params/javascript.png" alt="Contact Person" />
           {this.props.param.descriptor} jobs in {this.props.param.city}, {this.props.param.state}
-        <i class="close material-icons">close</i>
+        <i className="material-icons" onClick={this.removeParam.bind(this)}>thumb_down</i>
       </div>);
   }
 }
