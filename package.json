@@ -1,7 +1,7 @@
 {
-  "name": "chipmunks",
+  "name": "Callback",
   "version": "1.0.0",
-  "description": "Opportunities, a career coaching app",
+  "description": "Callback, a career coaching app",
   "main": "index.js",
   "scripts": {
     "start-webpack": "webpack --config webpack.config.js --progress --watch",
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bloodymushroom/chipmunks.git"
+    "url": "git+https://github.com/Charming-Chipmunks/chipmunks"
   },
   "author": "charming chipmunks",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bloodymushroom/chipmunks/issues"
+    "url": "https://github.com/Charming-Chipmunks/chipmunks"
   },
   "babel": {
     "presets": [
