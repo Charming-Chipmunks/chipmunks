@@ -17,7 +17,7 @@ import { observer } from 'mobx-react';
 
   // handleClick () {
   //   console.log('this.props.company', this.props.company);
-  //   // Store.job = this.props.company;
+  //   // Store.jobActions = this.props.company;
   //   //this.props.handleClick();
   //   console.log('sidebarcompany handle click');
 

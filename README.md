@@ -1,6 +1,6 @@
 # Project Name
 
-> Opportunities - a career coach app.
+> Callback - a career coach app.
 
 ## Team
 

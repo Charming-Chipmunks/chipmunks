@@ -44,7 +44,7 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
       .catch(function(error) {
         console.log(error);
       });
-  
+
       // GET ALL THE CONTACTS
     axios.get(`/actions/${Store.currentUserId}/18`)
       .then(function(response) {
@@ -71,7 +71,7 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
             </ul>
           </div>
         </nav>
-      </div>  
+      </div>
 
       <div className="container">
         <div className="row">
@@ -83,7 +83,7 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
           </div>
         </div>
       </div>
-     </div> 
+     </div>
     );
   }
 }
