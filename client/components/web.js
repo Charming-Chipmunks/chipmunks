@@ -3,8 +3,9 @@ import React                      from 'react';
 import ReactDOM                   from 'react-dom';
 import { observer }               from 'mobx-react';
 import { Link, IndexLink }        from 'react-router';
-import { observable }             from 'mobx';
+import { toJS, observable }       from 'mobx';
 import axios                      from 'axios';
+
 // locally defined
 import Store                      from './Store';
 import JobView                    from './JobView';

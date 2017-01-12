@@ -12,8 +12,8 @@ import { toJS } from 'mobx';
   }
   filter(company) {
     var text = Store.filterText.text.toLowerCase();
-    company = toJS(company);
-    console.log(company);
+    // company = toJS(company);
+    // console.log(company);
     if (company.company.toLowerCase().includes(text)) {
       return true;
     }
@@ -40,10 +40,7 @@ import { toJS } from 'mobx';
 
     list.forEach(company => {
       var firstLetter = company.company.slice(0, 1);
-      console.log(firstLetter);
-      console.log(company.company);
       if (firstLetter.match(/([0-9])/)) {
-        console.log('isNum');
         if (obj[0] === undefined) {
           obj[0] = [];
         }
@@ -62,7 +59,7 @@ import { toJS } from 'mobx';
       names.push(obj[keys[i]]);
     }
 
-    console.log(names);
+    // console.log(names);
 
     return (
       <div className="leftSideBar z-depth-3">

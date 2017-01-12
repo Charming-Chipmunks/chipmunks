@@ -7,7 +7,6 @@ import { observer } from 'mobx-react';
 
   constructor(props) {
     super(props);
-    console.log(this.props.company.id);
     // this.handleClick.bind(this);
     // this.handleHover.bind(this);
     // this.state = {
