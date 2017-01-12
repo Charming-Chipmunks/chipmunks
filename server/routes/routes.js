@@ -6,7 +6,8 @@ var utils     = require('./route-utils');
 
 
 // this is the initialize file
-var initialize = require('../models/initialize');
+
+// var initialize = require('../models/initialize');
 
 
 // USER - get info for one user

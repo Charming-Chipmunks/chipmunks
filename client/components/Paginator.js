@@ -1,7 +1,7 @@
 // Paginator.js
 import React from 'react';
-
-class Paginator extends React.Component {
+import { observer } from 'mobx-react';
+@observer class Paginator extends React.Component {
 
   constructor(props) {
     super(props);
@@ -10,7 +10,7 @@ class Paginator extends React.Component {
 
   handleClick () {
     this.props.handleClick();
-        console.log('parent handle click');
+    console.log('paginator handle click');
   }
 
   render () {
