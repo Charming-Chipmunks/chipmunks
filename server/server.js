@@ -118,6 +118,14 @@ var isLoggedIn = function(req, res, next) {
   //MOBILE
   //console.log('credentials', req.get('credentials'));
   if (req.get('credentials')) {
+          var addUserToSession = function(userId) {
+            req.session = req.session || {};
+            req.session.exponent = {};
+            req.session.exponent.user = userId;
+          }
+    // addUserToSession(1);
+    // return next();
+    
     console.log('credentials', req.get('credentials'));
     request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.get('credentials'), (err, response, body) => {
       console.log('GOOGLE ID', JSON.parse(response.body).sub);
@@ -125,24 +133,27 @@ var isLoggedIn = function(req, res, next) {
       if (profile.sub) {
         models.User.find({
           where: {
-            googleId: profile.id
+            googleId: profile.sub
           }
         }).then(function(User) {
+
           // console.log('User', User);
           if (!User) {
             console.log('no user');
             //need to create user
             models.User.create({
-              googleId: profile.id,
+              googleId: profile.sub,
               googleName: profile.name,
               googleEmail: profile.email,
             }).then(function(user) {
               console.log('Created user', user.id);
+              addUserToSession(User.id);
               return next();
             });
           } else {
             console.log('Found user', User.id);
-            return done(null, User);
+            addUserToSession(User.id);
+            return next();
           }
         }).catch(function(error) {
           console.log('Error finding user', error);
