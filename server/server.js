@@ -10,6 +10,8 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var gconfig = require('./googleConfig');
 var models = require('./models/index');
 var flash = require('connect-flash');
+
+var request = require('request');
 //
 require('dotenv').config();
 
@@ -47,12 +49,8 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-
 passport.use(new GoogleStrategy(gconfig,
   function(token, refreshToken, profile, done) {
-    console.log(profile);
-    // console.log('token', token);
-    // console.log('refresh', refreshToken);
     console.log('passport googlestrategy');
     console.log('passport googlestrategy');
     console.log('passport googlestrategy');
@@ -98,12 +96,59 @@ var isLoggedIn = function(req, res, next) {
   return;
   console.log('logincheck');
   // console.log(req.isAuthenticated());
+
+  //PASSPORT
   if (req.isAuthenticated()) {
     console.log('success');
     return next();
   }
-  console.log('fail');
-  res.redirect('/auth/google');
+
+  //MOBILE
+  //console.log('credentials', req.get('credentials'));
+  if (req.get('credentials')) {
+    console.log('credentials', req.get('credentials'));
+    request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.get('credentials'), (err, response, body) => {
+      console.log('GOOGLE ID', JSON.parse(response.body).sub);
+      var profile = JSON.parse(response.body);
+      if (profile.sub) {
+        models.User.find({
+          where: {
+            googleId: profile.id
+          }
+        }).then(function(User) {
+          // console.log('User', User);
+          if (!User) {
+            console.log('no user');
+            //need to create user
+            models.User.create({
+              googleId: profile.id,
+              googleName: profile.name,
+              googleEmail: profile.email,
+            }).then(function(user) {
+              console.log('Created user', user.id);
+              return next();
+            });
+          } else {
+            console.log('Found user', User.id);
+            return done(null, User);
+          }
+        }).catch(function(error) {
+          console.log('Error finding user', error);
+          res.redirect('/auth/google');
+        });
+      } else {
+        console.log('fail');
+        res.redirect('/auth/google');
+      }
+    });
+  } else {
+    console.log('fail');
+    res.redirect('/auth/google');
+    
+  }
+  // if( req.cookie.idToken && google.isValid(req.cookie.idToken)) {
+  //   return next();
+  // }
 };
 
 var nodeadmin = require('nodeadmin');
