@@ -55,6 +55,12 @@ import Store from './Store';
         action.completedTime = moment();
       }
     });
+    Store.job.forEach((action, index) => {
+      // console.log(action.id);
+      if (this.props.action.id === action.id) {
+        action.completedTime = moment();
+      }
+    });
 
   }
 

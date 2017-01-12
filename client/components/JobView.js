@@ -30,7 +30,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 
     axios.get(`/actions/${Store.currentUserId}/${nextProps.params.id}`)
       .then(function(response) {
-        Store.actions = response.data;
+        Store.job = response.data;
         console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
 
       })
@@ -57,7 +57,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
   render() {
     var step = Store.jobList.slice();
     var location = 0;
-    console.log('render paramsid' ,this.props.params.id);
+    console.log('render paramsid', this.props.params.id);
     // stopped here Tuesday night;
     step.forEach((job, index) => {
       if (job.id === Number(this.props.params.id)) {
@@ -66,7 +66,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     });
     console.log('location', location);
     var thisJob = toJS(step[location]);
-    var jobActions = Store.actions.slice();
+    var jobActions = Store.job.slice();
     jobActions = toJS(jobActions);
 
     var thisJobActions = jobActions.filter((action) => { 
