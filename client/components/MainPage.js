@@ -33,12 +33,11 @@ import axios from 'axios';
 
   render() {
     this.actions = Store.actions.slice();
-    console.log('email', Store.stats.email);
     return (<div className='MainPage'>
       <div className="stats">
       <canvas id="myChart" width="400" height="200"> </canvas>
       <br/>
-      You have sent {Store.stats.email} emails
+      You have sent {Store.stats.sentEmail} emails, received {Store.stats.receivedEmail} emails, and had {Store.stats.phone} phone calls in total.
       </div>
       <div className='actionList'>
       You have {Store.pendingNumber} pending actions
