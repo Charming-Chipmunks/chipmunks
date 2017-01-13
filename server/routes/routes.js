@@ -4,6 +4,7 @@ var router    = express.Router();
 var models    = require('../models/index');
 var utils     = require('./route-utils');
 var db = require('../models/index');
+require('dotenv').config();
 
 
 
@@ -14,6 +15,9 @@ var db = require('../models/index');
 //AUTH
 
 var checkUser = function(req, user) {
+  if (process.env.DISABLE_AUTH) {
+    return true;
+  }
   console.log('User claims to be', user);
   if (!req.session) {
     console.log('no session');
