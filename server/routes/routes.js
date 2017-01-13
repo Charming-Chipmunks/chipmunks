@@ -3,13 +3,78 @@ var express   = require('express');
 var router    = express.Router();
 var models    = require('../models/index');
 var utils     = require('./route-utils');
+var db = require('../models/index');
+require('dotenv').config();
+
+
 
 
 // this is the initialize file
 // var initialize = require('../models/initialize');
+
+//AUTH
+
+var checkUser = function(req, user) {
+  if (process.env.DISABLE_AUTH) {
+    return true;
+  }
+  console.log('User claims to be', user);
+  if (!req.session) {
+    console.log('no session');
+    return false;
+  }
+  var passport = req.session.passport && req.session.passport.user;
+  var exponent = req.session.exponent && req.session.exponent.user;
+  console.log('PASSPORT ID', passport);
+  console.log('MOBILE ID', exponent);
+  var id = passport || exponent;
+  console.log('User is', id);
+  if (parseInt(id) !== parseInt(user)) {
+    //res.send(401, 'Unauthorized request for user data');
+    console.log('You shouldn\'t be doing that');
+    return false;
+  }
+  return id;
+}
+
+var rejectUser = function(res) {
+  res.status(401).send('You don\'t have permission to access the requested data.');
+}
+
+
+
+
+
+router.get('/user', function(req, res) {
+  var passport = req.session.passport && req.session.passport.user;
+  var exponent = req.session.exponent && req.session.exponent.user;
+  var id = passport || exponent;
+  if (id) {
+    models.User.find({
+      where: {
+        id: id
+      }
+    }).then(function(user) {
+      if (!user) {
+        res.status(404);
+        res.json({});
+      } else {
+        res.json(user);
+      }
+    }).catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.json({ error: err });
+    });
+  }
+});
+
 // USER - get info for one user
 
 router.get('/users/:userId', function(req, res) {
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  }
   models.User.find({
     where: {
       id: req.params.userId
@@ -60,7 +125,9 @@ router.post('/users/create', function(req, res) {
 // the key of this query is the include: [models.Job]
 
 router.get('/jobs/:userId/:status', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.User.find({
     where: {
       id: req.params.userId
@@ -91,7 +158,9 @@ router.get('/jobs/:userId/:status', function(req, res) {
 // in create job we should create the list of actions for the user
 
 router.post('/job', function(req, res) {
-
+  if (!checkUser(req, req.body.id)) {
+    return rejectUser(res);
+  }
   models.Job.create({
     jobTitle:   req.body.jobTitle,
     company:    req.body.company,
@@ -138,7 +207,9 @@ router.post('/job', function(req, res) {
 // req.body.status = new status for job/user combo
 // PLEASE NOTE ENUMERATION TYPE FOR STATUS
 router.put('/users/:userId/jobs/:jobId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.UserJob.update({ status: req.body.status }, {
     where: {
       UserId: req.params.userId,
@@ -182,6 +253,9 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
 // USER - get all actions for one User
 
 router.get('/actions/:userId', function(req, res) {
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.Action.findAll({
     where: {
       UserId: req.params.userId
@@ -203,6 +277,9 @@ router.get('/actions/:userId', function(req, res) {
 
 // Actions - get all actions for one User for one Job
 router.get('/actions/:userId/:jobId', function(req, res) {
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.Action.findAll({
     where: {
       UserId: req.params.userId,
@@ -224,14 +301,15 @@ router.get('/actions/:userId/:jobId', function(req, res) {
 
 // create a new action
 router.post('/actions/', function(req, res) {
-
+  if (!checkUser(req, req.body.userId)) {
+    return rejectUser(res);
+  }
   models.Action.create({
     type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
     company:        req.body.company,
     description:    req.body.description, //text field with more description of the task / event
     actionSource:   req.body.actionSource, // tasks, user, reminder, company
-    scheduledTime:  req.body.scheduledTime
-    //completedTime:  req.body.completedTime
+    completedTime:  req.body.completedTime
   }).then((action) => {
     if (!action) {
       res.status(404);
@@ -280,7 +358,9 @@ router.post('/actions/', function(req, res) {
 // Update completion time of one action to the current time.
 // we may want to broaden this case to apply to closing and opening of all ations
 router.put('/actions/:userId/:actionId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.Action.update({ completedTime: new Date() }, {
     where: {
       UserId: req.params.userId,
@@ -305,7 +385,9 @@ router.put('/actions/:userId/:actionId', function(req, res) {
 
 // CONTACTS - POST - CONNECTS A NEW CONTACT WITH A USER AND A JOB
 router.post('/contacts/:userId/:jobId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.Contact.create({
     firstname:    req.body.firstname,
     lastname:     req.body.lastname,
@@ -352,7 +434,9 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 
 // CONTACTS - GET A CONTACT and RELATED JOB INFO GIVEN CONTACT EMAIL AND USERID
 router.get('/contacts/jobs/:email/:userId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   var unencoded = decodeURIComponent(req.params.email);
 
   models.Contact.find({
@@ -383,7 +467,9 @@ router.get('/contacts/jobs/:email/:userId', function(req, res) {
 
 // CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
 router.get('/contacts/:userId/:jobId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.Contact.findAll({
     where: {
       UserId: req.params.userId,
@@ -406,7 +492,9 @@ router.get('/contacts/:userId/:jobId', function(req, res) {
 
 // PARAMETER - GET A LIST OF ALL PARAMETERS FOR A USER
 router.get('/parameter/:userId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.User.find({
     where: {
       id: req.params.userId
@@ -429,7 +517,9 @@ router.get('/parameter/:userId', function(req, res) {
 
 // PARAMETER - DELETE a Parameter for a users
 router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.User.find({
     where: {
       id: req.params.userId
@@ -455,7 +545,44 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 
 
 router.post('/parameter/:userId', function(req, res) {
+  var associateJobs = function(userId, parameterId) {
+    console.log(userId, parameterId);
+    db['User'].find({
+      where: {
+        id: userId
+      }
+    }).then (user => {
+      db['Parameter'].find({
+        where: {
+          id: parameterId
+        },
+        include: [ db['Job'] ]
+      }).then( job => {
+      // this gets the Jobs associated with the parameter
+        // console.log('found these jobs for you', job.Jobs);
+        job.Jobs.forEach((item, index) => {
+          db['UserJob'].find({
+            where: {
+              UserId: userId,
+              JobId:  item.id
+            }
+          }).then(foundLink => {
+            if (!foundLink) {
+              // this is working!
+              user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
+            }
+          });
+        });
+      })
+    }).catch((err) => {
+      console.error(err);
+    });
+  };
 
+
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.Parameter.find({
     where: {
       descriptor:   req.body.descriptor,
@@ -477,12 +604,14 @@ router.post('/parameter/:userId', function(req, res) {
           parameter.addUsers(req.params.userId);
           res.status(200);
           res.send(parameter);
+          associateJobs(req.params.userId, parameter.id);
         });
     } else {
       console.log('found one');
       parameter.addUsers(req.params.userId);
       res.status(200);
       res.send(parameter);
+      associateJobs(req.params.userId, parameter.id);
     }
   }).catch((err) => {
     console.error(err);
@@ -494,7 +623,9 @@ router.post('/parameter/:userId', function(req, res) {
 
 // PARAMETER - ADD A USER and Parameter to a UserParameter Table
 router.post('/users/:userId/parameter/:parameterId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.User.find({
     where: {
       id: req.params.userId
@@ -514,7 +645,9 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 //testing
 
 router.get('/test2/:userId', function(req, res) {
-
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  };
   models.User.findAll({
     include: [models.Job]
   }).then((parameter) => {
