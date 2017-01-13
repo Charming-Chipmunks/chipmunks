@@ -21,10 +21,6 @@ import Store from './Store';
     this.props.onClick();
   }
 
-  // handleActionClick (index) {
-  //   for (var i = 0; i < activityArray.length; i++) {
-  //   }
-  // }
 
   change(e) {
     Store.addActivity.description = e.target.value;

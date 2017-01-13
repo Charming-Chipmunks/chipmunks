@@ -86,11 +86,10 @@ import ActivityModal from './ActivityModal';
       }
     });
 
-    console.log('location', location);
     var thisJob = toJS(step[location]);
-
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
+    console.log('actions: ', jobActions);
 
     if (jobActions.length > 0 ) {
       var daysActive = moment(jobActions[0].createdAt).from(moment());
@@ -125,6 +124,27 @@ import ActivityModal from './ActivityModal';
               </div>
             </div>
             <div className="companyTasks">
+            <div className="taskBox">
+              <div className="leftTaskIcons">
+                <div className="daysDue">
+                  <h6 className="rateCompanyText medium">Due</h6>
+                </div>
+                <div className="iconTask">
+                  <h6 className="rateCompanyText medium">Type</h6>
+                </div>
+              </div>
+              <div className="taskDescription">
+                <h6 className="rateCompanyText medium">Task Description</h6>
+              </div>
+              <div className="rightTaskIcons">
+                <div className="doneTask">
+                  <h6 className="rateCompanyText medium">Mark Complete</h6>
+                </div>
+                <div className="doneTask">
+                  <h6 className="rateCompanyText medium">Edit</h6>
+                </div>
+              </div>
+             </div>
               {jobActions.map((action, index) => {
                 return ( <TaskBox task={action} key={index}/>);
               })
@@ -151,3 +171,4 @@ import ActivityModal from './ActivityModal';
 }
 
 export default JobView;
+

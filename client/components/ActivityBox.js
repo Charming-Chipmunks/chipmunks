@@ -12,7 +12,6 @@ import Store from './Store';
 
   handleClick () {
     Store.selectedActivityBox = this.props.id;
-    console.log('in click', this.state.selected);
     this.props.onClick;
   }
 

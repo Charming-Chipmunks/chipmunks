@@ -3,13 +3,19 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import axios from 'axios';
+import Store from './Store';
 
 @observer class TaskBox extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleDoneClick = this.handleDoneClick.bind(this);
+
   }
+
+  //  probable can accomplish the below based on some math with the date and a component will mount
+  // need a way to get an new group of items from the database and reconsitiue based on DONE status.
+
 
   handleDoneClick () {
 
@@ -38,35 +44,36 @@ import axios from 'axios';
       dateMessage = 'Done';
     } else {
       var dueDate = this.props.task.scheduledTime;
-      
       dueDate = new Date(dueDate);
-
       var days = Math.abs(dueDate - currDate);
       
       var oneDay = 1000 * 60 * 60 * 24;
       days = Math.floor(days / oneDay);
-      if (days < 1) {
-        var styles = {
-          background: {
-            border: '1px solid red'
-          }
-      };
-        dateMessage = 'Due Today';
       
-      } else if (days === 1){
-        var styles = {
-          background: {
-            border: '1px solid yellow'
-          }
-        };
-        dateMessage = 'Due in 1 Day';
-      } else {
-        var styles = {
-          background: { }
-        };
-        dateMessage = `Due in ${days} days`; 
-      }
-    }
+    //   if (this.props.task.type !== 'like') { 
+    //     if (days < 1) {
+    //       var styles = {
+    //         background: {
+    //           border: '1px solid red'
+    //         }
+    //       };
+    //       dateMessage = 'Due Today';
+        
+    //     } else if (days === 1){
+    //       var styles = {
+    //         background: {
+    //           border: '1px solid yellow'
+    //         }
+    //       };
+    //       dateMessage = 'Due in 1 Day';
+    //     } else {
+    //       var styles = {
+    //         background: { }
+    //       };
+    //       dateMessage = `Due in ${days} days`; 
+    //     }
+    //   }
+     }
 
     // sets icon
     var iconName = '';
@@ -99,7 +106,7 @@ import axios from 'axios';
 
 
     return (
-      <div className="taskBox" style={styles.background}>
+      <div className="taskBox" >
         <div className="leftTaskIcons">
           <div className="daysDue">
             <h6 className="rateCompanyText">{dateMessage}</h6>
