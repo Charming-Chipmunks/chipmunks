@@ -33,7 +33,7 @@ var findJobs = function(userId, cb, res) {
   }).then(function(jobs) {
     // GET ALL ACTIVE JOBS
     var list = JSON.parse(JSON.stringify(jobs));
-    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, emails: 0, phone: 0 };
+    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, email: 0, phone: 0 };
     var bigList = [];
     list.forEach((element, index) => {
       if (element) {
@@ -81,6 +81,8 @@ var calculateStatsForJob = function(actionList, results) {
         results.offer++;
       } else if (action.type === 'phone') {
         results.phone++;
+      } else if (action.type === 'email') {
+        results.email++;
       }
     }
   });

@@ -26,15 +26,20 @@ import axios from 'axios';
       });
 
   }
-  componentWillUpdate() {
+  componentWillMount() {
     this.getStats();
   }
 
 
   render() {
     this.actions = Store.actions.slice();
+    console.log('email', Store.stats.email);
     return (<div className='MainPage'>
+      <div className="stats">
       <canvas id="myChart" width="400" height="200"> </canvas>
+      <br/>
+      You have sent {Store.stats.email} emails
+      </div>
       <div className='actionList'>
       You have {Store.pendingNumber} pending actions
       {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {

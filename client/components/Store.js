@@ -70,7 +70,8 @@ class Store {
     applied: 0,
     interviewed: 0,
     offered: 0,
-    phone: 0
+    phone: 0,
+    email: 0
   }
   @computed get barChartStats() {
     var statsArray = [];
@@ -82,7 +83,7 @@ class Store {
     var results = {
       type: 'horizontalBar',
       data: {
-        labels: ['Liked', 'Applied', 'Interviewd', 'Offered'],
+        labels: ['Liked', 'Applied', 'Interviewed', 'Offered'],
         datasets: [{
           label: '# of actions',
           data: statsArray,
