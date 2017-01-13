@@ -129,7 +129,6 @@ var isLoggedIn = function(req, res, next) {
     // addUserToSession(1);
     // return next();
     
-    console.log('credentials', req.get('credentials'));
     request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.get('credentials'), (err, response, body) => {
       console.log('GOOGLE ID', JSON.parse(response.body).sub);
       var profile = JSON.parse(response.body);
