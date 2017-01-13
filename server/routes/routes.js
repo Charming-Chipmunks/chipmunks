@@ -3,6 +3,9 @@ var express   = require('express');
 var router    = express.Router();
 var models    = require('../models/index');
 var utils     = require('./route-utils');
+var db = require('../models/index');
+
+
 
 
 // this is the initialize file
@@ -538,6 +541,41 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 
 
 router.post('/parameter/:userId', function(req, res) {
+  var associateJobs = function(userId, parameterId) {
+    console.log(userId, parameterId);
+    db['User'].find({
+      where: {
+        id: userId
+      }
+    }).then (user => {
+      db['Parameter'].find({
+        where: {
+          id: parameterId
+        },
+        include: [ db['Job'] ]
+      }).then( job => {
+      // this gets the Jobs associated with the parameter
+        // console.log('found these jobs for you', job.Jobs);
+        job.Jobs.forEach((item, index) => {
+          db['UserJob'].find({
+            where: {
+              UserId: userId,
+              JobId:  item.id
+            }
+          }).then(foundLink => {
+            if (!foundLink) {
+              // this is working!
+              user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
+            }
+          });
+        });
+      })
+    }).catch((err) => {
+      console.error(err);
+    });
+  };
+
+
   if (!checkUser(req, req.params.userId)) {
     return rejectUser(res);
   };
@@ -562,12 +600,14 @@ router.post('/parameter/:userId', function(req, res) {
           parameter.addUsers(req.params.userId);
           res.status(200);
           res.send(parameter);
+          associateJobs(req.params.userId, parameter.id);
         });
     } else {
       console.log('found one');
       parameter.addUsers(req.params.userId);
       res.status(200);
       res.send(parameter);
+      associateJobs(req.params.userId, parameter.id);
     }
   }).catch((err) => {
     console.error(err);
