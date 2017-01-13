@@ -104,8 +104,8 @@ passport.use(new GoogleStrategy(gconfig,
 // ));
 //Auth Middleware
 var isLoggedIn = function(req, res, next) {
-  next();
-  return;
+  // next();
+  // return;
   console.log('logincheck');
   // console.log(req.isAuthenticated());
 
