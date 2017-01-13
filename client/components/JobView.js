@@ -58,23 +58,17 @@ import ActivityModal from './ActivityModal';
     axios.get('/contacts/' + Store.currentUserId + '/' + id)
       .then(function(response) {
         Store.contacts = response.data;
-        // console.log('contacts call  for data :', response.data);
-
       })
       .catch(function(error) {
         console.log(error);
       });
-
   }
 
   componentWillReceiveProps(nextProps) {
-
     console.log(nextProps);
     console.log('jobviewWillReceiveProps ID', nextProps.params.id);
     this.getData(nextProps.params.id);
-
     // THIS IS NOT FEEDING THE PROP PROPERLY
-
   }
 
 
@@ -85,37 +79,24 @@ import ActivityModal from './ActivityModal';
   render() {
     var step = Store.jobList.slice();
     var location = 0;
-    console.log('render paramsid', this.props.params.id);
-    // stopped here Tuesday night;
+
     step.forEach((job, index) => {
       if (job.id === Number(this.props.params.id)) {
         location = index;
       }
     });
+
     console.log('location', location);
     var thisJob = toJS(step[location]);
 
-    //thisJob
-    
-
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
-
-    console.log('job actions: ', jobActions);
-
-    var numTasks = jobActions.length;
-
-    var dayOpened = new Date();
 
     if (jobActions.length > 0 ) {
       var daysActive = moment(jobActions[0].createdAt).from(moment());
       var lastInteraction = moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
       var numInteractions = jobActions.length;
     }
-
-    // jobActions.map(action => {
-    //   if (action.createdAt < new Date())
-    // });
 
     return (
       <div>
@@ -159,7 +140,7 @@ import ActivityModal from './ActivityModal';
                 style={modalStyles}
                 contentLabel="No Overlay Click Modal"> 
 
-          <ActivityModal onClick={this.closeModal.bind(this)} > 
+          <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} > 
             <h2>This is so meta</h2>
           </ActivityModal>
 

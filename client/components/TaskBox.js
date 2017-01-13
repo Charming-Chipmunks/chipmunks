@@ -46,10 +46,24 @@ import axios from 'axios';
       var oneDay = 1000 * 60 * 60 * 24;
       days = Math.floor(days / oneDay);
       if (days < 1) {
+        var styles = {
+          background: {
+            border: '1px solid red'
+          }
+      };
         dateMessage = 'Due Today';
+      
       } else if (days === 1){
+        var styles = {
+          background: {
+            border: '1px solid yellow'
+          }
+        };
         dateMessage = 'Due in 1 Day';
       } else {
+        var styles = {
+          background: { }
+        };
         dateMessage = `Due in ${days} days`; 
       }
     }
@@ -71,7 +85,7 @@ import axios from 'axios';
       iconName = 'record voice over';
     } else if (this.props.task.type === 'schedule') {
       iconName = 'record voice over';
-    } else if (this.props.task.type === 'emaiil') {
+    } else if (this.props.task.type === 'email') {
       iconName = 'record voice over';
     } else if (this.props.task.type === 'phone') {
       iconName = 'phone';
@@ -85,7 +99,7 @@ import axios from 'axios';
 
 
     return (
-      <div className="taskBox">
+      <div className="taskBox" style={styles.background}>
         <div className="leftTaskIcons">
           <div className="daysDue">
             <h6 className="rateCompanyText">{dateMessage}</h6>

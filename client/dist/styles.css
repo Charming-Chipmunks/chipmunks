@@ -36,7 +36,7 @@
     display: inline-flex;
     flex-direction: row;
     align-content: space-around;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .companyStatsBox {
@@ -314,14 +314,19 @@
 .activityModalType {
   border: 1px solid red;
   border-radius: 4px;
-  display: inline-flex;
-  flex-direction: row;
-  align-content: space-between;
-  align-items: center;
+  width: 550px;
 }
 
 .activityBox{
-  font-size: 48px;
+  height: 100px;
+  width: 100px;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  display: inline-block;
+  margin: 2px;
+  border: 1px solid red;
+  border-radius: 4px;
 }
 
 

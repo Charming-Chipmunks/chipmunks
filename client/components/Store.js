@@ -17,8 +17,18 @@ class Store {
   @observable filterText = { text: '' };
   @observable actions = [];
   @observable company = {};
-  @observable actionFilter = 4863;
-  @observable contacts = [{ //contacts by job
+  @observable selectedActivityBox = -1;
+  @observable actionFilter= 4863;
+  @observable addActivity = {
+    type: '',
+    company: '',
+    description: '',
+    scheduledTime: '',
+    completedTime: '',
+    actionSource: 'user',
+  };
+  
+  @observable contacts = [{
     firstname: 'Sandy',
     lastname: 'Knox',
     email: 'sandyk@airbnb.com'
