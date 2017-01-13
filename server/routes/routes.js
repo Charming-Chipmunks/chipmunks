@@ -37,6 +37,24 @@ var checkUser = function(req, user) {
   return id;
 }
 
+var getUser = function(req) {
+  if (process.env.DISABLE_AUTH) {
+    console.warn('AUTH DISABLED.  DEFAULTING TO USER 1');
+    return 1;
+  }
+  if (!req.session) {
+    console.log('no session');
+    return false;
+  }
+  var passport = req.session.passport && req.session.passport.user;
+  var exponent = req.session.exponent && req.session.exponent.user;
+  console.log('PASSPORT ID', passport);
+  console.log('MOBILE ID', exponent);
+  var id = passport || exponent;
+  console.log('User is', id);
+  return id;
+}
+
 var rejectUser = function(res) {
   res.status(401).send('You don\'t have permission to access the requested data.');
 }
@@ -119,6 +137,18 @@ router.post('/users/create', function(req, res) {
     res.json({ error: err });
   });
 
+});
+
+router.put('/users', function(req, res) {
+  var user = getUser(req);
+  if (!user) {
+    return rejectUser(res);
+  };
+  models.User.find({
+    where: {
+      id: user
+    }
+  })
 });
 
 // 3) USER - Gets a list of all jobs a user by status
