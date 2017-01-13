@@ -23,13 +23,17 @@ var findJobs = function(userId, cb, res) {
           status: {
             $eq: 'expired'
           }
+        }, {
+          status: {
+            $eq: 'closed'
+          }
         }]
       }
     }
   }).then(function(jobs) {
     // GET ALL ACTIVE JOBS
     var list = JSON.parse(JSON.stringify(jobs));
-    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0 };
+    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, emails: 0, phone: 0 };
     var bigList = [];
     list.forEach((element, index) => {
       if (element) {
@@ -46,6 +50,7 @@ var findJobs = function(userId, cb, res) {
         }
       }).then(function(jobActionList) {
         //array of arrays of actions
+        console.log(jobActionList);
         jobActionList = (JSON.parse(JSON.stringify(jobActionList)));
         cb(jobActionList, actionList);
         if (index === bigList.length - 1) {
@@ -62,18 +67,20 @@ var findJobs = function(userId, cb, res) {
 
 var calculateStatsForJob = function(actionList, results) {
   // console.log(actionList);
-  actionList.forEach(job => {
-    console.log(job.type);
-    if (job.completedTime) {
-      if (job.type === 'like') {
+  actionList.forEach(action => {
+    console.log(action.type);
+    if (action.completedTime) {
+      if (action.type === 'like') {
         console.log('liked');
         results.like++;
-      } else if (job.type === 'apply') {
+      } else if (action.type === 'apply') {
         results.applied++;
-      } else if (job.type === 'interview') {
+      } else if (action.type === 'interview') {
         results.interviewed++;
-      } else if (job.type === 'offer') {
+      } else if (action.type === 'offer') {
         results.offer++;
+      } else if (action.type === 'phone') {
+        results.phone++;
       }
     }
   });

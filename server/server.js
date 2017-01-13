@@ -132,10 +132,6 @@ app.get('/auth/google/callback', function(req, res, next) {
     successRedirect: '/',
     failureRedirect: '/auth/google'
   })
-  // ,
-  // console.log('callback');
-  // // Successful authentication, redirect home.
-  // res.redirect('/');
 );
 
 ////

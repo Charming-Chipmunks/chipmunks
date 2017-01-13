@@ -26,7 +26,7 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
     // gets the list of "favored jobs"
     axios.get('/jobs/' + Store.currentUserId + '/favored')
       .then(function(response) {
-        console.log('got currentJobs');
+        // console.log('got currentJobs');
         Store.jobList = response.data;
       })
       .catch(function(error) {
@@ -36,11 +36,11 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
     // get a list of upcomiing actions IMPLEMET LATER
     axios.get(`/actions/${Store.currentUserId}`)
       .then(function(response) {
-        console.log('actions3', response.data);
+        // console.log('actions3', response.data);
         Store.actions = response.data;
         const { filteredActions } = Store;
         var result = filteredActions;
-        console.log('filteredActions: ', filteredActions);
+        // console.log('filteredActions: ', filteredActions);
       })
       .catch(function(error) {
         console.log(error);
