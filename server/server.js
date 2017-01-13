@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var routes = require('./routes/routes');
+var stats = require('./stats');
 //Auth
 var passport = require('passport');
 var session = require('express-session');
@@ -164,12 +165,12 @@ app.get('/j', function(req, res) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/', isLoggedIn, stats);
 app.use('/', isLoggedIn, routes);
-
 //WILDCARD
 
 app.get('*', isLoggedIn, function(req, res) {
-  res.redirect('/')
+  res.redirect('/');
   // res.send('Hello World' + process.env.PORT);
 });
 
