@@ -20,21 +20,13 @@ module.exports = {
   //       'NODE_ENV': JSON.stringify('production')
   //     }
   //   }),
-    // new ClosureCompilerPlugin({
-    //       compiler: {
-    //         language_in: 'ECMASCRIPT7',
-    //         language_out: 'ECMASCRIPT5',
-    //         compilation_level: 'ADVANCED'
-    //       },
-    //       concurrency: 3,
-        // }),
-    //  new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     screw_ie8: true,
-    //     warnings: false
-    //   }
-    // }),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.AggressiveMergingPlugin()  // Merge chunks
-    // ]
+  //    new webpack.optimize.UglifyJsPlugin({
+  //     compress: {
+  //       screw_ie8: true,
+  //       warnings: false
+  //     }
+  //   }),
+  //   new webpack.optimize.DedupePlugin(),
+  //   new webpack.optimize.AggressiveMergingPlugin()  // Merge chunks
+  //   ]
 };
