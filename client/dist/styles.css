@@ -31,19 +31,23 @@
  */
 
 .companyStats{
-  border: 2px solid red;
-  width:100%;
-  display: inline-flex;
-  flex-direction: row;
-  align-content: space-around;
+    border: 2px solid #b71c1c;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-content: space-around;
+    border-radius: 2px;
 }
 
 .companyStatsBox {
-  flex: 1;
-  height: 50px;
-  width: 50px;
-  margin: 10px;
-  background-color: blue;
+    flex: 1;
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+    background-color: #78909c;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 4px;
 }
 
 .companyTasks{
@@ -303,7 +307,30 @@
 }
 
 
+/*
+ *  Activty Modal 
+ */
+
+.activityModalType {
+  border: 1px solid red;
+  border-radius: 4px;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+}
+
+.activityBox{
+  font-size: 48px;
+}
 
 
-
-
+.yellow {
+  background-color: yellow;
+}
+.blue {
+  background-color: blue;
+}
+.green {
+  background-color: green;
+}

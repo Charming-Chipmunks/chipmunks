@@ -8,11 +8,31 @@ import axios from 'axios';
 import JobDescription from './JobDescription';
 import TaskBox from './TaskBox';
 import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
+import moment from 'moment';
+import Modal from 'react-modal';
+import modalStyles from './modalStyles';
+import ActivityModal from './ActivityModal';
 
 @observer class JobView extends Component {
+  
   constructor(props) {
     super(props);
-    this.getData = this.getData.bind(this);
+    this.getData          = this.getData.bind(this);
+    this.openModal        = this.openModal.bind(this);
+    this.closeModal       = this.closeModal.bind(this);
+    this.state            = { modalIsOpen: false };
+  }
+
+  // for modal
+  openModal () {
+    this.setState({
+      modalIsOpen: true
+    });
+  }
+
+  // for modal
+  closeModal () {
+    this.setState({modalIsOpen: false});
   }
 
   filterForHistory(action) {
@@ -86,9 +106,13 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     var numTasks = jobActions.length;
 
     var dayOpened = new Date();
-    var lastInteraction = new Date(1980, 1, 1);
 
-    var daysActive = Math.floor(dayOpened - jobActions[0].createdAt);
+    if (jobActions.length > 0 ) {
+      var daysActive = moment(jobActions[0].createdAt).from(moment());
+      var lastInteraction = moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
+      var numInteractions = jobActions.length;
+    }
+
     // jobActions.map(action => {
     //   if (action.createdAt < new Date())
     // });
@@ -107,15 +131,16 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
             <JobDescription job={thisJob}/>
             <div className="companyStats">
               <div className="companyStatsBox">
-              # days since last action
+              Last Interaction<br/>
+              {lastInteraction}
               </div>
               <div className="companyStatsBox">
-              {daysActive}<br/>
-              Days Active
+              Opened<br/>
+              {daysActive}
               </div>
               <div className="companyStatsBox">
-              {numTasks}<br/>
-              Interactiobs
+              {numInteractions}<br/>
+              Interactions
               </div>
             </div>
             <div className="companyTasks">
@@ -126,7 +151,19 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
             </div>
           </div>
         </div>
+        <button onClick={this.openModal}>Log</button>
 
+        <Modal  isOpen={this.state.modalIsOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={this.closeModal}
+                style={modalStyles}
+                contentLabel="No Overlay Click Modal"> 
+
+          <ActivityModal onClick={this.closeModal.bind(this)} > 
+            <h2>This is so meta</h2>
+          </ActivityModal>
+
+        </Modal>
      </div>
     );
   }

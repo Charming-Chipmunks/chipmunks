@@ -42,8 +42,7 @@ import axios from 'axios';
       dueDate = new Date(dueDate);
 
       var days = Math.abs(dueDate - currDate);
-      console.log('# milliseconds : ', days);
-      //Get 1 day in milliseconds
+      
       var oneDay = 1000 * 60 * 60 * 24;
       days = Math.floor(days / oneDay);
       if (days < 1) {
