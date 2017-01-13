@@ -8,11 +8,31 @@ import axios from 'axios';
 import JobDescription from './JobDescription';
 import TaskBox from './TaskBox';
 import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
+import moment from 'moment';
+import Modal from 'react-modal';
+import modalStyles from './modalStyles';
+import ActivityModal from './ActivityModal';
 
 @observer class JobView extends Component {
+  
   constructor(props) {
     super(props);
-    this.getData = this.getData.bind(this);
+    this.getData          = this.getData.bind(this);
+    this.openModal        = this.openModal.bind(this);
+    this.closeModal       = this.closeModal.bind(this);
+    this.state            = { modalIsOpen: false };
+  }
+
+  // for modal
+  openModal () {
+    this.setState({
+      modalIsOpen: true
+    });
+  }
+
+  // for modal
+  closeModal () {
+    this.setState({modalIsOpen: false});
   }
 
   filterForHistory(action) {
@@ -74,20 +94,33 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     });
     console.log('location', location);
     var thisJob = toJS(step[location]);
+
+    //thisJob
+    
+
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
 
-    // var thisJobActions = jobActions.filter((action) => {
-    //   console.log('one Action:', action);
-    //   return action.JobId === targetId});
+    console.log('job actions: ', jobActions);
 
-    // thisJobActions = toJS(thisJobActions);
-    // console.log('Actions for this Job: ', thisJobActions);
+    var numTasks = jobActions.length;
+
+    var dayOpened = new Date();
+
+    if (jobActions.length > 0 ) {
+      var daysActive = moment(jobActions[0].createdAt).from(moment());
+      var lastInteraction = moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
+      var numInteractions = jobActions.length;
+    }
+
+    // jobActions.map(action => {
+    //   if (action.createdAt < new Date())
+    // });
 
     return (
       <div>
 
-        <div className="col m3 right"> {/* this is where the right naV bar will go:*/}
+        <div className="col m3 right">
           <div className="hello">
             <CompanyInfoRightSideBar job={thisJob}/>
           </div>
@@ -98,13 +131,16 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
             <JobDescription job={thisJob}/>
             <div className="companyStats">
               <div className="companyStatsBox">
-              # days since last action
+              Last Interaction<br/>
+              {lastInteraction}
               </div>
               <div className="companyStatsBox">
-              # days active
+              Opened<br/>
+              {daysActive}
               </div>
               <div className="companyStatsBox">
-              # of interactions
+              {numInteractions}<br/>
+              Interactions
               </div>
             </div>
             <div className="companyTasks">
@@ -115,7 +151,19 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
             </div>
           </div>
         </div>
+        <button onClick={this.openModal}>Log</button>
 
+        <Modal  isOpen={this.state.modalIsOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={this.closeModal}
+                style={modalStyles}
+                contentLabel="No Overlay Click Modal"> 
+
+          <ActivityModal onClick={this.closeModal.bind(this)} > 
+            <h2>This is so meta</h2>
+          </ActivityModal>
+
+        </Modal>
      </div>
     );
   }
