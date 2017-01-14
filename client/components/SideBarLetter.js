@@ -1,41 +1,48 @@
 // SideBarLetter.js
-import React from 'react';
-import Link from 'react-router';
+import React          from 'react';
+import Link           from 'react-router';
+import { toJS }       from 'mobx';
+import { observer }   from 'mobx-react';
+
+import Store          from './Store';
 import SideBarCompany from './SideBarCompany';
-import { toJS } from 'mobx';
-import { observer } from 'mobx-react';
+
+var classObject = 'funfun';
 
 @observer class SideBarLetter extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.state = {hide: false};
     // this.handleHover.bind(this);
-    this.state = {
-      hover: false
-    };
+
   }
 
-  // handleClick () {
-  //   console.log('sidebarletter handleclick');
-  //   this.setState({hover: !this.state.hover});
-  // }
+  handleClick () {
+    console.log('sidebarletter handleclick');
 
-  handleHover() {
-    this.setState({hover: true});
-    console.log('hover');
+    this.setState({hide: !this.state.hide});
   }
 
   render () {
+
+    if (this.state.hide === false) {
+      classObject = '';
+    } else {
+      classObject = 'hide';
+    }
+
+    
     return (
-        <li className="sideBarLetter"> {this.props.letter}
-            <ul>
-                {this.props.list.map((company, index) => {
-                  company = toJS(company);
-                  return (<SideBarCompany company={company} key={index} />);
-                })}
-              </ul>
-        </li>
+      <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> {this.props.letter}
+        <ul className={`${classObject}`}>
+          {this.props.list.map((company, index) => {
+            company = toJS(company);
+            return (<SideBarCompany company={company} key={index} />);
+          })}
+        </ul>
+      </li>
     );
   }
 

@@ -59,11 +59,8 @@ import { toJS } from 'mobx';
       names.push(obj[keys[i]]);
     }
 
-    // console.log(names);
-
     return (
       <div className="leftSideBar z-depth-3">
-      <h3>hello?</h3>
         <h5 className="rateCompanyText"> {list.length} Open Opportunities</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {

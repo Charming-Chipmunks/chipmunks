@@ -20,6 +20,7 @@ class Store {
   @observable selectedActivityBox = -1;
   @observable actionFilter= 4863;
   @observable jobActions = [];
+  @observable hiddenCompanyLetters = [];
   @observable addActivity = {
     type: '',
     company: '',
@@ -64,8 +65,8 @@ class Store {
     snippet: '',
     source: 'user',
     origin: 'user',
-    id: undefined
-
+    userid: '',
+    id: ''
   }
   @observable newContact = {
     title: '',

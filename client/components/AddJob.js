@@ -12,8 +12,11 @@ import { toJS } from 'mobx';
     Store.newJob[e.target.name] = e.target.value;
   }
   save(e) {
-    e.preventDefault();
+    //e.preventDefault();
+    Store.newJob.userid = Store.currentUserId;
     Store.newJob.id = Store.currentUserId;
+    console.log('current Store.currentUserId :', Store.currentUserId);
+
     console.log(toJS(Store.newJob));
     axios.post('/job', toJS(Store.newJob))
       .then(function(response) {
@@ -23,6 +26,15 @@ import { toJS } from 'mobx';
       .catch(function(error) {
         console.log(error);
       });
+
+    Store.newJob.company = '';
+    Store.newJob.jobTitle = '';
+    Store.newJob.snippet = '';
+    Store.newJob.url = '';
+    Store.newJob.address = '';
+    Store.newJob.city = '';
+    Store.newJob.state = '';
+
   }
 
   render() {
