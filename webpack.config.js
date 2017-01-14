@@ -1,14 +1,20 @@
 var path = require('path');
 var webpack = require('webpack');
 var ClosureCompilerPlugin = require('webpack-closure-compiler');
+
 module.exports = {
-  entry: {
-    'client/dist/': './client/components/webIndex.js'
-  },
+  entry: [
+    'webpack-hot-middleware/client', './client/components/webIndex.js'
+  ],
   output: {
     path: __dirname,
     filename: '[name]bundle.js'
   },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+
   module: {
     loaders: [{
       test: /\.js?$/,

@@ -75,15 +75,16 @@ var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up'
     return (
       <div> 
         <header>Activity Log</header>
-        <div className="activityModalType">
-          {activityArray.map((activity, index) => {
-            return (<ActivityBox type={activity} key={index} id={index} />);
-          })}
-        </div>  
-        <div>
-          <DayPicker onDayClick={ (e, day) => window.alert(day) } />
+        <div className="modalSelectors">
+          <div className="activityModalType">
+            {activityArray.map((activity, index) => {
+              return (<ActivityBox type={activity} key={index} id={index} />);
+            })}
+          </div>  
+          <div>
+            <DayPicker onDayClick={ (e, day) => window.alert(day) } />
+          </div>
         </div>
-
         <form>
           <div className="row">
             <div className="input-field col s12">

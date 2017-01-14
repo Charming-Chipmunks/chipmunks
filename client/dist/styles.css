@@ -213,7 +213,7 @@
  * Sidebar Classes
  */
 .sideLetters{
-  background-color: red;
+  background-color: #c62828 ;
 }
 
 .sideBarLetter{
@@ -320,15 +320,23 @@
  *  Activty Modal 
  */
 
+.modalSelectors{
+  display: flex;
+  width: 550px;
+
+}
+
+
 .activityModalType {
+  flex: 1;
   border: 1px solid red;
   border-radius: 4px;
-  width: 550px;
+  width: 250px;
 }
 
 .activityBox{
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   font-size: 18px;
   font-weight: 400;
   font-style: italic;
@@ -354,7 +362,8 @@
 }
 
 .DayPicker {
-  display: flex;
+  flex: 1;
+  width: 250px;
   flex-wrap: wrap;
   justify-content: center;
   position: relative;

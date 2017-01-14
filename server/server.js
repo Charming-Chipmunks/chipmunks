@@ -3,10 +3,18 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var routes = require('./routes/routes');
 var stats = require('./stats');
+
+//
+var webpack = require('webpack');  
+var webpackMiddleware = require('webpack-dev-middleware');  
+var config = require('../webpack.config.js');
+
+
 //Auth
 var passport = require('passport');
 var session = require('express-session');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 // var GoogleStrategy = require ('passport-oauth2');
 var gconfig = require('./googleConfig');
 var models = require('./models/index');
@@ -15,6 +23,8 @@ var flash = require('connect-flash');
 require('dotenv').config();
 
 var app = express();
+const compiler = webpack(config);
+
 //CORS
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -33,6 +43,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(webpackMiddleware(compiler)); 
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);

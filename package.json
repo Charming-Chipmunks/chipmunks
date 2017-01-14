@@ -85,8 +85,10 @@
     "react-modal": "^1.6.5",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.1",
+    "react-transform": "0.0.3",
     "request": "^2.79.0",
     "sequelize": "^3.28.0",
-    "sequelize-cli": "^2.5.1"
+    "sequelize-cli": "^2.5.1",
+    "style-loader": "^0.13.1"
   }
 }
