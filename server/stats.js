@@ -36,6 +36,7 @@ var findJobs = function(userId, cb, res) {
     var list = JSON.parse(JSON.stringify(jobs));
     var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
     var bigList = [];
+    var size = 0;
     list.forEach((element, index) => {
       if (element) {
         // console.log('elem', element);
@@ -54,7 +55,10 @@ var findJobs = function(userId, cb, res) {
         console.log(jobActionList);
         jobActionList = (JSON.parse(JSON.stringify(jobActionList)));
         cb(jobActionList, actionList);
-        if (index === bigList.length - 1) {
+        size++;
+        console.log('size', size);
+
+        if (size === bigList.length) {
           res.json(actionList);
         }
       }).catch((err) => {
@@ -96,7 +100,7 @@ var stats = function(userId, res) {
 
 var lastWeekStats = function(userId, res) {
   var oneWeekAgo = moment().subtract(7, 'd').toDate();
-  console.log(oneWeekAgo);
+  // console.log(oneWeekAgo);
   models.Action.findAll({
     where: {
       UserId: userId,
@@ -142,23 +146,34 @@ var weekStats = function(userId, numOfWeeks, res) {
     actions = JSON.parse(JSON.stringify(actions));
     var results = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
     calculateStatsForJob(actions, results);
-    res.json (results);
+    res.json(results);
   }).catch(function(error) {
     console.log(error);
   });
 };
 // weekStats(1, 0);
+var res = {
+  json: function(data) {
+    console.log(JSON.parse(JSON.stringify(data)));
+  }
+};
+
+// stats(1, res);
+var monthWeeklyStats = function(userId, res) {
+
+};
+
 
 
 router.get('/stats/:userId', function(req, res) {
-  console.log('instats');
+  console.log('Lifetime Stats');
   stats(req.params.userId, res);
 });
 router.get('/stats/lastWeek/:userId', function(req, res) {
   lastWeekStats(req.params.userId, res);
 });
 router.get('/stats/:userId/:week', function(req, res) {
-  weekStats (req.params.userId, req.params.week, res);
+  weekStats(req.params.userId, req.params.week, res);
 });
 
 
