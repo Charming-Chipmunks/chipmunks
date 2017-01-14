@@ -3,25 +3,32 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import axios from 'axios';
+import Store from './Store';
 
 @observer class TaskBox extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleDoneClick = this.handleDoneClick.bind(this);
+
   }
+
+  //  probable can accomplish the below based on some math with the date and a component will mount
+  // need a way to get an new group of items from the database and reconsitiue based on DONE status.
+
 
   handleDoneClick () {
 
+
     axios.put(`/actions/${Store.currentUserId}/${this.props.task.id}`)
       .then(function(response) {
-        // if it comes back,  we need to figure out is we have a completed task array or
-        // how to display that
-        // for now,  maybe just update the completed time and rerender
+        console.log('task completed');
+        console.log('response', response.data);
       })
       .catch(function(error) {
         console.log(error);
       });
+    this.props.complete(this.props.task.id);
   }
 
   handleEditClick () {
@@ -32,60 +39,65 @@ import axios from 'axios';
 
     var currDate = new Date();
     var dateMessage = '';
+    var vis = {};
+    var styles = {};
 
     // sets proper date
     if (this.props.task.completedTime !== null ) {
       dateMessage = 'Done';
+      vis = { hide: { visibility: 'hidden'} };
     } else {
       var dueDate = this.props.task.scheduledTime;
-      
       dueDate = new Date(dueDate);
-
       var days = Math.abs(dueDate - currDate);
       
       var oneDay = 1000 * 60 * 60 * 24;
       days = Math.floor(days / oneDay);
+      
+     
       if (days < 1) {
         dateMessage = 'Due Today';
-      } else if (days === 1){
+        styles = { highlight: {border: '1px solid red'} };
+      } else if (days === 1) {
         dateMessage = 'Due in 1 Day';
+        styles = { highlight: { border: '1px solid yellow'} };
       } else {
         dateMessage = `Due in ${days} days`; 
-      }
+        styles = { highlight: { border: '1px solid yellow'} };
+      } 
     }
 
     // sets icon
     var iconName = '';
     if (this.props.task.type === 'like') {
-      iconName = 'thumb up';
-      //<i class="material-icons">face</i>
+      iconName = 'thumb_up';
     } else if (this.props.task.type === 'learn') {
       iconName = 'computer';
     } else if (this.props.task.type === 'connections') {
-      iconName = 'computer';
+      iconName = 'contact_phone';
     } else if (this.props.task.type === 'apply') {
       iconName = 'send';
     } else if (this.props.task.type === 'follow up') {
-      iconName = '';
+      iconName = 'loop';
     } else if (this.props.task.type === 'interview') {
       iconName = 'record voice over';
     } else if (this.props.task.type === 'schedule') {
-      iconName = 'record voice over';
-    } else if (this.props.task.type === 'emaiil') {
-      iconName = 'record voice over';
+      iconName = 'assignment';
+    } else if (this.props.task.type === 'email') {
+      iconName = 'email';
     } else if (this.props.task.type === 'phone') {
       iconName = 'phone';
     } else if (this.props.task.type === 'offer') {
-      iconName = 'record voice over';
+      iconName = 'local bar';
     } else if (this.props.task.type === 'meetup') {
-      iconName = 'record voice over';
+      iconName = 'local cafe';
     } else if (this.props.task.type === 'resume') {
       iconName = 'insert drive file';
     }
 
 
     return (
-      <div className="taskBox">
+      <div className="taskBox" style={styles.highligh}>
         <div className="leftTaskIcons">
           <div className="daysDue">
             <h6 className="rateCompanyText">{dateMessage}</h6>
@@ -99,10 +111,10 @@ import axios from 'axios';
         </div>
         <div className="rightTaskIcons">
           <div className="doneTask">
-            <i className="material-icons" onClick={this.handleDoneClick.bind(this)}>done</i>
+            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>done</i>
           </div>
           <div className="doneTask">
-            <i className="material-icons" onClick={this.handleDoneClick.bind(this)}>edit</i>
+            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>edit</i>
           </div>
         </div>
       </div>

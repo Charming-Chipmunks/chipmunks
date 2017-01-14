@@ -41,10 +41,10 @@ import { toJS } from 'mobx';
     list.forEach(company => {
       var firstLetter = company.company.slice(0, 1);
       if (firstLetter.match(/([0-9])/)) {
-        if (obj[0] === undefined) {
-          obj[0] = [];
+        if (obj['#'] === undefined) {
+          obj['#'] = [];
         }
-        obj[0].push(company);
+        obj['#'].push(company);
       } else if (obj[firstLetter] === undefined) {
         obj[firstLetter] = [];
         obj[firstLetter].push(company);

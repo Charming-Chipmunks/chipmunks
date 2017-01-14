@@ -13,17 +13,17 @@ import axios from 'axios';
 
 
   getStats() {
-    axios.get('/stats/' + Store.currentUserId)
-      .then(function(response) {
-        console.log(response.data);
-        Store.stats = response.data;
-        var ctx = document.getElementById('myChart');
-        console.log(ctx);
-        let myChart = new Chart(ctx, Store.barChartStats);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // axios.get('/stats/' + Store.currentUserId)
+    //   .then(function(response) {
+    //     console.log(response.data);
+    //     Store.stats = response.data;
+    //     var ctx = document.getElementById('myChart');
+    //     console.log(ctx);
+    //     let myChart = new Chart(ctx, Store.barChartStats);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
 
   }
   componentWillMount() {

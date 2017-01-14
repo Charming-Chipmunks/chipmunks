@@ -66,7 +66,7 @@ import Param from './Param';
       <div className="paramListTitle"> Create a New Job Search
        </div>
       <div className="jobParameterForm">
-        <form autocomplete="on">
+        <form>
           <div className="row">
             <div className="input-field col s6">
               <input type="text" name='descriptor' list="parameters" onChange={this.change} value={Store.newParam.descriptor}/>

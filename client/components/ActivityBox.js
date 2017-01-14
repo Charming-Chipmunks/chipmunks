@@ -1,43 +1,59 @@
 // ActivityBox.js
 import React from 'react';
 import { observer } from 'mobx-react';
+import Store from './Store';
 
 @observer class ActivityBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      selected: false
-    };
     this.handleClick.bind(this);
   }
 
   handleClick () {
-    this.setState({selected: !this.state.selected});
-    console.log('in click', this.state.selected);
+    Store.selectedActivityBox = this.props.id;
+    this.props.onClick;
   }
 
   render () {
 
-    if (!this.state.selected) {
+    if (Store.selectedActivityBox === this.props.id) {
       console.log('choose this color: ', this.props.color);
       var styles = {
         background: {
-          backgroundColor: this.props.color
+          backgroundColor: '#ffffff'
         }
       };
     } else {
       console.log('choose this color: ffffff');
       var styles = {
         background: {
-          backgroundColor: '#ffffff'
+          backgroundColor: '#575757'
         }
       };
     }
 
+    // if (!this.state.selected) {
+    //   console.log('choose this color: ', this.props.color);
+    //   var styles = {
+    //     background: {
+    //       backgroundColor: this.props.color
+    //     }
+    //   };
+    // } else {
+    //   console.log('choose this color: ffffff');
+    //   var styles = {
+    //     background: {
+    //       backgroundColor: '#575757'
+    //     }
+    //   };
+    // }
+
 
     return ( 
-        <div className="activityBox" onClick={this.handleClick.bind(this)} style={styles}>Call</div>
+        <div className="activityBox" onClick={this.handleClick.bind(this)} style={styles.background}>
+          <i className="material-icons">done</i>
+        </div>
     );
   }
 

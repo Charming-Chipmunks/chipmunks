@@ -1,26 +1,30 @@
-import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
-import Store from './Store';
-import HistoryItem from './HistoryItem';
-import JobContacts from './JobContacts';
-import axios from 'axios';
-import JobDescription from './JobDescription';
-import TaskBox from './TaskBox';
-import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
-import moment from 'moment';
-import Modal from 'react-modal';
-import modalStyles from './modalStyles';
-import ActivityModal from './ActivityModal';
+import React, { Component }     from 'react';
+import { toJS }                 from 'mobx';
+import { observer }             from 'mobx-react';
+import moment                   from 'moment';
+import { IndexLink }            from 'react-router';
+
+import Store                    from './Store';
+import HistoryItem              from './HistoryItem';
+import JobContacts              from './JobContacts';
+import axios                    from 'axios';
+import JobDescription           from './JobDescription';
+import TaskBox                  from './TaskBox';
+import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
+import Modal                    from 'react-modal';
+import modalStyles              from './modalStyles';
+import ActivityModal            from './ActivityModal';
 
 @observer class JobView extends Component {
   
   constructor(props) {
     super(props);
-    this.getData          = this.getData.bind(this);
-    this.openModal        = this.openModal.bind(this);
-    this.closeModal       = this.closeModal.bind(this);
-    this.state            = { modalIsOpen: false };
+    this.getData              = this.getData.bind(this);
+    this.openModal            = this.openModal.bind(this);
+    this.closeModal           = this.closeModal.bind(this);
+    this.state                = { modalIsOpen: false };
+    this.handleTaskComplete   = this.handleTaskComplete.bind(this);
+    this.handleCloseJob       = this.handleCloseJob.bind(this);
   }
 
   // for modal
@@ -33,6 +37,7 @@ import ActivityModal from './ActivityModal';
   // for modal
   closeModal () {
     this.setState({modalIsOpen: false});
+    
   }
 
   filterForHistory(action) {
@@ -45,6 +50,13 @@ import ActivityModal from './ActivityModal';
     this.getData(this.props.params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    console.log('jobviewWillReceiveProps ID', nextProps.params.id);
+    this.getData(nextProps.params.id);
+    // THIS IS NOT FEEDING THE PROP PROPERLY
+  }
+
   getData(id) {
     axios.get(`/actions/${Store.currentUserId}/${id}`)
       .then(function(response) {
@@ -55,28 +67,58 @@ import ActivityModal from './ActivityModal';
         console.log(error);
       });
 
-    axios.get('/contacts/' + Store.currentUserId + '/' + id)
+    axios.get('/contacts/' + Store.currentUserId + '/' + this.id)
       .then(function(response) {
         Store.contacts = response.data;
-        // console.log('contacts call  for data :', response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 
+  handleTaskComplete (id) {
+    console.log('action id: ', id);
+    // find the item in the Store, and mark it as complete.
+    Store.jobActions[id].completedTime = new Date();
+    
+    var updateAction = Store.jobActions[id];
+    updateAction = toJS(updateAction);
+    console.log('is this updated ?', updateAction);
+  }
+
+  handleCloseJob () {
+
+    axios.put(`/users/${Store.currentUserId}/jobs/${this.props.params.id}`, { status: 'closed' })
+      .then(function(response) {
+       // success
       })
       .catch(function(error) {
         console.log(error);
       });
 
+    // remove from the store.jobList
+    var step = Store.jobList.slice();
+    var location = 0;
+
+    step.forEach((job, index) => {
+      if (job.id === Number(this.props.params.id)) {
+        location = index;
+        var removedElement = Store.jobList.splice(location, 1);
+        console.log('removed elements', removedElement.length);
+      }
+    });
+
+    // remove the actions associated with the job from the store
+    var actionsToFilter = Store.actions.slice();
+    var location = 0;
+
+    actionsToFilter.forEach((action, index) => {
+      if (action.JobId === Number(this.props.params.id)) {
+        var removedElement = Store.actions.splice(index, 1);
+        console.log(`removed element from ${action.JobId} ${action.description} ${removedElement.length}`);
+      }
+    });
   }
-
-  componentWillReceiveProps(nextProps) {
-
-    console.log(nextProps);
-    console.log('jobviewWillReceiveProps ID', nextProps.params.id);
-    this.getData(nextProps.params.id);
-
-    // THIS IS NOT FEEDING THE PROP PROPERLY
-
-  }
-
 
   change(e) {
     Store.newTask[e.target.name] = e.target.value;
@@ -85,37 +127,23 @@ import ActivityModal from './ActivityModal';
   render() {
     var step = Store.jobList.slice();
     var location = 0;
-    console.log('render paramsid', this.props.params.id);
-    // stopped here Tuesday night;
+
     step.forEach((job, index) => {
       if (job.id === Number(this.props.params.id)) {
         location = index;
       }
     });
-    console.log('location', location);
+
     var thisJob = toJS(step[location]);
-
-    //thisJob
-    
-
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
-
-    console.log('job actions: ', jobActions);
-
-    var numTasks = jobActions.length;
-
-    var dayOpened = new Date();
+    console.log('actions: ', jobActions);
 
     if (jobActions.length > 0 ) {
       var daysActive = moment(jobActions[0].createdAt).from(moment());
       var lastInteraction = moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
       var numInteractions = jobActions.length;
     }
-
-    // jobActions.map(action => {
-    //   if (action.createdAt < new Date())
-    // });
 
     return (
       <div>
@@ -144,14 +172,38 @@ import ActivityModal from './ActivityModal';
               </div>
             </div>
             <div className="companyTasks">
+            <div className="taskBox">
+              <div className="leftTaskIcons">
+                <div className="daysDue">
+                  <h6 className="rateCompanyText medium">Due</h6>
+                </div>
+                <div className="iconTask">
+                  <h6 className="rateCompanyText medium">Type</h6>
+                </div>
+              </div>
+              <div className="taskDescription">
+                <h6 className="rateCompanyText medium">Task Description</h6>
+              </div>
+              <div className="rightTaskIcons">
+                <div className="doneTask">
+                  <h6 className="rateCompanyText medium">Mark Complete</h6>
+                </div>
+                <div className="doneTask">
+                  <h6 className="rateCompanyText medium">Edit</h6>
+                </div>
+              </div>
+             </div>
               {jobActions.map((action, index) => {
-                return ( <TaskBox task={action} key={index}/>);
+                return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)}/>);
               })
             }
             </div>
           </div>
         </div>
-        <button onClick={this.openModal}>Log</button>
+        <IndexLink to="/">
+          <div className="closeJobButton" onClick={this.handleCloseJob.bind(this)}>Close Job</div>
+        </IndexLink>
+        <button onClick={this.openModal}>Log Activity</button>
 
         <Modal  isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
@@ -159,7 +211,7 @@ import ActivityModal from './ActivityModal';
                 style={modalStyles}
                 contentLabel="No Overlay Click Modal"> 
 
-          <ActivityModal onClick={this.closeModal.bind(this)} > 
+          <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} > 
             <h2>This is so meta</h2>
           </ActivityModal>
 
@@ -170,3 +222,4 @@ import ActivityModal from './ActivityModal';
 }
 
 export default JobView;
+

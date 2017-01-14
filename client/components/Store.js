@@ -15,10 +15,21 @@ class Store {
   @observable jobList = []; // jobs that are favored
   @observable newJobList = []; // jobs that need to be rated
   @observable filterText = { text: '' };
-  @observable actions = [];
+  @observable actions = []; // all the actions for a person
   @observable company = {};
-  @observable actionFilter = 4863;
-  @observable contacts = [{ //contacts by job
+  @observable selectedActivityBox = -1;
+  @observable actionFilter= 4863;
+  @observable jobActions = [];
+  @observable addActivity = {
+    type: '',
+    company: '',
+    description: '',
+    scheduledTime: '',
+    completedTime: '',
+    actionSource: 'user',
+  };
+  
+  @observable contacts = [{
     firstname: 'Sandy',
     lastname: 'Knox',
     email: 'sandyk@airbnb.com'
@@ -27,7 +38,6 @@ class Store {
     lastname: 'Sandy',
     email: 'knoxs@airbnb.com'
   }];
-  @observable jobActions = [];
   @observable newParam = {
     city: 'San Francisco',
     state: 'Ca',

@@ -7,26 +7,9 @@ import { observer } from 'mobx-react';
 
   constructor(props) {
     super(props);
-    // this.handleClick.bind(this);
-    // this.handleHover.bind(this);
-    // this.state = {
-    //   hover: false
-    // };
+
   }
 
-  // handleClick () {
-  //   console.log('this.props.company', this.props.company);
-  //   // Store.jobActions = this.props.company;
-  //   //this.props.handleClick();
-  //   console.log('sidebarcompany handle click');
-
-  //   // this.setState({hover: !this.state.hover});
-  // }
-
-  // handleHover() {
-  //   this.setState({hover: true});
-  //   console.log('hover');
-  // }
 
   render () {
     return (

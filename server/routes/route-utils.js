@@ -26,7 +26,7 @@ module.exports = {
       company:        body.company,
       description:    descriptions.likes(body),
       scheduledTime:  date,
-      completedTime:  null
+      completedTime:  date
     }).then(function(likeAction) {
       user.addActions(likeAction);
       job.addActions(likeAction); 
@@ -64,7 +64,7 @@ module.exports = {
             user.addActions(applyAction);
             job.addActions(applyAction);
             newActions.push(applyAction);
-            res.json(results);
+            res.json(applyAction);
 
           }).catch((err) => {
             console.error(err);

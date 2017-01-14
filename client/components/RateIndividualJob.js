@@ -22,15 +22,18 @@ import JobDescription from './JobDescription';
     // remove the job from the Store
     this.removeFromList();
     var id = this.props.job.id;
-
     // tell the DB to set as favored
+    console.log('sent to DB tp add actions:', this.props.job.company);
+
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'favored' })
       .then(function(response) {
-        // push it onto the local Store list 
-        Store.jobList.push(response.data);
       }).catch(function(error) {
         console.log(error);
       });
+    
+    Store.jobList.push(this.props.job);
+
+
   }
 
   no() {
