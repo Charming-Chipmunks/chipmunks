@@ -118,6 +118,37 @@ var lastWeekStats = function(userId, res) {
 };
 
 
+var weekStats = function(userId, numOfWeeks, res) {
+  console.log('weekStatsRes', res);
+  var start = moment().startOf('week').subtract(7 * numOfWeeks, 'd').toDate();
+  var end = numOfWeeks === 0 ? moment().toDate() : moment().startOf('week').subtract(7 * (numOfWeeks - 1), 'd').toDate();
+  console.log(start);
+  console.log(end);
+
+  models.Action.findAll({
+    where: {
+      UserId: userId,
+      $and: [{
+        completedTime: {
+          $gt: start
+        }
+      }, {
+        completedTime: {
+          $lt: end
+        }
+      }]
+    }
+  }).then(function(actions) {
+    actions = JSON.parse(JSON.stringify(actions));
+    var results = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+    calculateStatsForJob(actions, results);
+    res.json (results);
+  }).catch(function(error) {
+    console.log(error);
+  });
+};
+// weekStats(1, 0);
+
 
 router.get('/stats/:userId', function(req, res) {
   console.log('instats');
@@ -126,4 +157,9 @@ router.get('/stats/:userId', function(req, res) {
 router.get('/stats/lastWeek/:userId', function(req, res) {
   lastWeekStats(req.params.userId, res);
 });
+router.get('/stats/:userId/:week', function(req, res) {
+  weekStats (req.params.userId, req.params.week, res);
+});
+
+
 module.exports = router;

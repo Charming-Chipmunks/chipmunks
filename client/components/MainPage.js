@@ -15,11 +15,9 @@ import axios from 'axios';
   getStats() {
     axios.get('/stats/' + Store.currentUserId)
       .then(function(response) {
-        console.log(response.data);
+        console.log('totalstats', response.data);
         Store.stats = response.data;
         var ctx = document.getElementById('myChart');
-        console.log(ctx);
-        console.log(Store.barChartStats);
         let myChart = new Chart(ctx, Store.barChartStats);
       })
       .catch(function(error) {
