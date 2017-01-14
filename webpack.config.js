@@ -10,23 +10,19 @@ module.exports = {
     filename: '[name]bundle.js'
   },
   module: {
-    rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
-    ]
-  },
-  // plugins: [
-  //   new webpack.DefinePlugin({  // <-- Key to reducing React's size
-  //     'process.env': {
-  //       'NODE_ENV': JSON.stringify('production')
-  //     }
-  //   }),
-  //    new webpack.optimize.UglifyJsPlugin({
-  //     compress: {
-  //       screw_ie8: true,
-  //       warnings: false
-  //     }
-  //   }),
-  //   new webpack.optimize.DedupePlugin(),
-  //   new webpack.optimize.AggressiveMergingPlugin()  // Merge chunks
-  //   ]
+    loaders: [{
+      test: /\.js?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader'
+    }, {
+      test: /\.css?$/,
+      loader: 'css-loader' // This are the loaders
+    }]
+  }
+    //***********  SAVE
+  //  rules: [
+  //    { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+  //    { test: /\.css$/, exclude: /node_modules/, loader: 'css-loader' }
+  //  ]
+
 };
