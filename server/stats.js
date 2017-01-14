@@ -1,6 +1,7 @@
 var models = require('./models');
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 
 userId = 1;
 
@@ -68,7 +69,7 @@ var findJobs = function(userId, cb, res) {
 var calculateStatsForJob = function(actionList, results) {
   // console.log(actionList);
   actionList.forEach(action => {
-    console.log(action.type);
+    console.log('actiontype', action.type);
     if (action.completedTime) {
       if (action.type === 'like') {
         console.log('liked');
@@ -92,8 +93,37 @@ var calculateStatsForJob = function(actionList, results) {
 var stats = function(userId, res) {
   findJobs(userId, calculateStatsForJob, res);
 };
+
+var lastWeekStats = function(userId, res) {
+  var oneWeekAgo = moment().subtract(7, 'd').toDate();
+  console.log(oneWeekAgo);
+  models.Action.findAll({
+    where: {
+      UserId: userId,
+      $and: {
+        completedTime: {
+          $gt: oneWeekAgo
+        }
+      }
+    }
+  }).then(function(actions) {
+    console.log(JSON.parse(JSON.stringify(actions)));
+    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+    calculateStatsForJob(actions, actionList);
+    res.json(actionList);
+
+  }).catch(function(err) {
+    console.log(err);
+  });
+};
+
+
+
 router.get('/stats/:userId', function(req, res) {
   console.log('instats');
   stats(req.params.userId, res);
+});
+router.get('/stats/lastWeek/:userId', function(req, res) {
+  lastWeekStats(req.params.userId, res);
 });
 module.exports = router;

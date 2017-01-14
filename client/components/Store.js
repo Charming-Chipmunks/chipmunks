@@ -76,14 +76,8 @@ class Store {
     mobilePhone: '',
     workPhone: '',
   }
-  @observable stats = {
-    like: 0,
-    applied: 0,
-    interviewed: 0,
-    offered: 0,
-    phone: 0,
-    email: 0
-  }
+  @observable stats = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+  @observable lastWeekStats = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
   @computed get barChartStats() {
     var statsArray = [];
     statsArray.push(this.stats.like);
