@@ -124,6 +124,10 @@
   flex: 3 60%;
   width: 70%;
   margin: 3px;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
 }
 
 .doneTask{

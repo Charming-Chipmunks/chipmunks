@@ -161,6 +161,7 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
               id: req.params.jobId
             }
           }).then( job => {
+            console.log('****** ADD ACTIONS  ******', job.company);
             utils.addActionsToNewJob(user, job, job, req, res);
             //res.json(job);
           });
@@ -187,12 +188,38 @@ router.get('/actions/:userId', function(req, res) {
       UserId: req.params.userId
     },
     order: ['scheduledTime']
-  }).then(function(user) {
-    if (!user) {
+  }).then(function(actions) {
+    if (!actions) {
       res.status(404);
       res.json({});
     } else {
-      res.json(user);
+      // get all active job #s for the user
+      models.UserJob.findAll({
+        where: {
+          UserId: req.params.userId,
+          status: 'favored'
+        }
+      }).then(function (userJobs) {
+        var results = [];
+        if (!userJobs) {
+          // this may be that there are no user favored jobs
+          res.status(404);
+          res.json({});
+        } else {
+
+          userJobs.forEach((uj) => {
+            actions.forEach((action, index) =>{
+              if (uj.JobId === action.JobId) {
+                results.push(action);  
+              }
+            });
+          });
+          //console.log('Actions results: ', results);
+          res.json(results);
+        }
+      });
+
+     // res.json(results);
     }
   }).catch((err) => {
     console.error(err);

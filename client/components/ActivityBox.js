@@ -51,7 +51,9 @@ import Store from './Store';
 
 
     return ( 
-        <div className="activityBox" onClick={this.handleClick.bind(this)} style={styles.background}>{this.props.type}</div>
+        <div className="activityBox" onClick={this.handleClick.bind(this)} style={styles.background}>
+          <i className="material-icons">done</i>
+        </div>
     );
   }
 
