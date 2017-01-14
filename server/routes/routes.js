@@ -251,14 +251,14 @@ router.get('/actions/:userId/:jobId', function(req, res) {
 
 // create a new action
 router.post('/actions/', function(req, res) {
-
+  console.log(req.body);
   models.Action.create({
     type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
     company:        req.body.company,
     description:    req.body.description, //text field with more description of the task / event
     actionSource:   req.body.actionSource, // tasks, user, reminder, company
     scheduledTime:  req.body.scheduledTime
-    //completedTime:  req.body.completedTime
+    // completedTime:  req.body.completedTime || null
   }).then((action) => {
 
     if (!action) {

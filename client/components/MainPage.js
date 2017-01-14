@@ -13,18 +13,24 @@ import axios from 'axios';
 
 
   getStats() {
-    // axios.get('/stats/' + Store.currentUserId)
-    //   .then(function(response) {
-    //     console.log(response.data);
-    //     Store.stats = response.data;
-    //     var ctx = document.getElementById('myChart');
-    //     console.log(ctx);
-    //     let myChart = new Chart(ctx, Store.barChartStats);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
-
+    axios.get('/stats/' + Store.currentUserId)
+      .then(function(response) {
+        console.log('totalstats', response.data);
+        Store.stats = response.data;
+        var ctx = document.getElementById('myChart');
+        let myChart = new Chart(ctx, Store.barChartStats);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    axios.get('/stats/lastWeek/' + Store.currentUserId)
+      .then(function(response) {
+        console.log('lastweek', response.data);
+        Store.lastWeekStats = response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
   componentWillMount() {
     this.getStats();
@@ -37,7 +43,9 @@ import axios from 'axios';
       <div className="stats">
       <canvas id="myChart" width="400" height="200"> </canvas>
       <br/>
-      You have sent {Store.stats.sentEmail} emails, received {Store.stats.receivedEmail} emails, and had {Store.stats.phone} phone calls in total.
+      Last week you sent {Store.lastWeekStats.sentEmail} emails, received {Store.lastWeekStats.receivedEmail} emails, and had {Store.lastWeekStats.phone} phone calls.
+      <br/>
+      You have sent {Store.stats.sentEmail} emails, received {Store.stats.receivedEmail} emails, and had {Store.stats.phone} phone calls in total. liked {Store.stats.like} companies
       </div>
       <div className='actionList'>
       You have {Store.pendingNumber} pending actions

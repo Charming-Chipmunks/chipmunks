@@ -27,7 +27,7 @@
 }
 
 /*
- * JobView Page: ; 
+ * JobView Page: ;
  */
 
 .companyStats{
@@ -51,7 +51,7 @@
 }
 
 .companyTasks{
-  width: 100%; 
+  width: 100%;
 }
 
 /*
@@ -140,7 +140,7 @@
 }
 
 /*
- * RATE COMPANY COMPONENT CSS STYLINGS  
+ * RATE COMPANY COMPONENT CSS STYLINGS
 */
 .rateCompany{
   border-radius: 3px;
@@ -167,7 +167,7 @@
   width: 20%;
 }
 
-.rateCompanyJob{ 
+.rateCompanyJob{
   font-size: 16px;
   font-weight: 400;
   font-style: italic;
@@ -202,7 +202,7 @@
   height: 50px;
 }
 
-.paginator{ 
+.paginator{
   height: 30px;
   width: 30px;
   margin: 2px;
@@ -317,7 +317,7 @@
 
 
 /*
- *  Activty Modal 
+ *  Activty Modal
  */
 
 .modalSelectors{
@@ -481,4 +481,34 @@
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: #FFF;
   background-color: #4A90E2;
+}
+
+/* Landing Page Commponents whooooo */
+.interestBar {
+ display: flex;
+ flex-flow: row wrap;
+ justify-content: flex-start;
+ height: 175px;
+}
+
+.interestBarItem {
+ width: 100px;
+ height: 100px;
+ margin: 10px;
+ background-color: lightgrey;
+ color: white;
+ border-radius: 10px;
+ text-align: center;
+}
+
+.graphContainer {
+ flex: 1;
+ height: 250px;
+ display: flex;
+ flex-flow: row;
+ justify-content: space-around;
+}
+
+.graphBox {
+ flex: 1 100%;
 }
