@@ -196,7 +196,7 @@ export default class LandingPage extends React.Component {
         <div style={{flexGrow: 1, height: '100px'}}>
           <LandingHeader title="Next Pending Task"/>
           {
-            Store.activeTasks.length > 0 && <TaskBox task={toJS(Store.activeTasks)[0]}/>
+            Store.activeTasks && Store.activeTasks.length > 0 && <TaskBox task={toJS(Store.activeTasks)[0]}/>
           }
         </div>
         <div style={{flex:1}}>
