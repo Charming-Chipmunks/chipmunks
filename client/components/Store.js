@@ -1,5 +1,6 @@
 //MobX Store
 import { observable, computed } from 'mobx';
+import moment from 'moment';
 class Store {
   constructor() {}
 
@@ -140,6 +141,35 @@ class Store {
       }
     });
     return pending;
+  }
+
+  @computed get activeTasks() {
+    var ret = [];
+
+    this.actions.forEach((action, index) => {
+      if (!action.completedTime) {
+        ret.push(action);
+      }
+    })
+    console.log('activeTasks: ', ret)
+    return ret;
+  }
+
+  @computed get todaysTasks() {
+    var ret = [];
+    var today = moment();
+
+    this.actions.forEach((action, index) => {
+      var scheduled = moment(action.scheduledTime);
+
+      var diff = scheduled.diff(today, 'days');
+      console.log('diff: ', diff)
+      if (!action.completedTime && diff === 1) {
+        ret.push(action);
+      }
+    })
+
+    return ret;
   }
 }
 

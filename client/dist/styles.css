@@ -26,6 +26,38 @@
   margin: 20px 20px !important;
 }
 
+/* Landing Page Commponents whooooo */
+.interestBar {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  height: 175px;
+}
+
+.interestBarItem {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  background-color: lightgrey;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.graphContainer {
+  flex: 1;
+  height: 250px;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.graphBox {
+  flex: 1 100%;
+}
+
+
+
 /*
  * JobView Page: ;
  */
