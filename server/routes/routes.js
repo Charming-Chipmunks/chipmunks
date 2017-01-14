@@ -260,6 +260,7 @@ router.post('/actions/', function(req, res) {
     scheduledTime:  req.body.scheduledTime
     //completedTime:  req.body.completedTime
   }).then((action) => {
+
     if (!action) {
       res.status(404);
       res.json({});
@@ -287,13 +288,15 @@ router.post('/actions/', function(req, res) {
       });
 
       // associate with a Contact
-      models.Contact.find({
-        where: {
-          id: req.body.contactId
-        }
-      }).then(contact => {
-        contact.addActions(action);
-      });
+      if (req.body.contactId !== undefined) {
+        models.Contact.find({
+          where: {
+            id: req.body.contactId
+          }
+        }).then(contact => {
+          contact.addActions(action);
+        });
+      }
 
       res.json(action);
     }
@@ -537,9 +540,7 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 
 });
 
-
 //testing
-
 router.get('/test2/:userId', function(req, res) {
 
   models.User.findAll({
@@ -557,9 +558,5 @@ router.get('/test2/:userId', function(req, res) {
     res.json({ error: err });
   });
 });
-
-
-
-
 
 module.exports = router;

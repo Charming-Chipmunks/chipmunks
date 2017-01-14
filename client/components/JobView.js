@@ -37,6 +37,7 @@ import ActivityModal            from './ActivityModal';
   // for modal
   closeModal () {
     this.setState({modalIsOpen: false});
+    
   }
 
   filterForHistory(action) {
