@@ -23,24 +23,40 @@ import MainRightSidebar           from './MainRightSidebar';
   }
 
   componentWillMount() {
-
-    // gets the list of "favored jobs"
-    axios.get('/jobs/' + Store.currentUserId + '/favored')
+    axios.get('/user')
       .then(function(response) {
-        Store.jobList = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+        Store.currentUserId = response.data.id;
+        // gets the list of "favored jobs"
+        axios.get('/jobs/' + Store.currentUserId + '/favored')
+          .then(function(response) {
+            console.log('got currentJobs');
+            Store.jobList = response.data;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
 
-    // get a list of upcomiing actions IMPLEMET LATER
-    axios.get(`/actions/${Store.currentUserId}`)
-      .then(function(response) {
-        Store.actions = response.data;
-        console.log(Store.activeTasks)
-        const { filteredActions } = Store;
-        var result = filteredActions;
-        // console.log('filteredActions: ', filteredActions);
+        // get a list of upcomiing actions IMPLEMET LATER
+        axios.get(`/actions/${Store.currentUserId}`)
+          .then(function(response) {
+            Store.actions = response.data;
+            const { filteredActions } = Store;
+            var result = filteredActions;
+            // console.log('filteredActions: ', filteredActions);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+
+        // // GET ALL THE CONTACTS
+        // axios.get(`/contacts/${Store.currentUserId}/`)
+        //   .then(function(response) {
+        //     // console.log('actions3', response.data);
+        //     Store.actions = response.data;
+        //   })
+        //   .catch(function(error) {
+        //     console.log(error);
+        //   });``
       })
       .catch(function(error) {
         console.log(error);

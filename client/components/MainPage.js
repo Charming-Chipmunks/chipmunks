@@ -48,6 +48,11 @@ import axios from 'axios';
     this.getStats();
   }
 
+  componentWillReceiveProps() {
+    // this takes the actions from the estore
+    this.actions = Store.actions.slice();
+  }
+
 
   render() {
     this.actions = Store.actions.slice();
