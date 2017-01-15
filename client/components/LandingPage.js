@@ -157,18 +157,21 @@ class GoalsGraphView extends React.Component {
 
 export default class LandingPage extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
     componentWillMount() {
-      axios.get(`/actions/${Store.currentUserId}`)
-      .then(function(response) {
-        Store.actions = response.data;
-        // console.log('filteredActions: ', filteredActions);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+
+      if(Store.currentUserId) {
+        axios.get(`/actions/${Store.currentUserId}`)
+        .then(function(response) {
+          Store.actions = response.data;
+          // console.log('filteredActions: ', filteredActions);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
     }
 
   render() {

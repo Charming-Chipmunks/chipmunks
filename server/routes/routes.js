@@ -64,9 +64,6 @@ var rejectUser = function(res) {
 };
 
 
-
-
-
 router.get('/user', function(req, res) {
   var passport = req.session.passport && req.session.passport.user;
   var exponent = req.session.exponent && req.session.exponent.user;
@@ -642,6 +639,7 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 
 
 router.post('/parameter/:userId', function(req, res) {
+  
   var associateJobs = function(userId, parameterId) {
     db['User'].find({
       where: {
@@ -701,7 +699,10 @@ router.post('/parameter/:userId', function(req, res) {
           parameter.addUsers(req.params.userId);
           res.status(200);
           res.send(parameter);
+          // I need to send an indeed request if there isn't a parameter that exists.
+
           associateJobs(req.params.userId, parameter.id);
+
         });
     } else {
       console.log('found one');
