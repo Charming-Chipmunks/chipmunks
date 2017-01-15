@@ -5,11 +5,14 @@ import moment from 'moment';
 import axios from 'axios';
 import Store from './Store';
 
+var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
+
 @observer class TaskBox extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleDoneClick = this.handleDoneClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
 
   }
 
@@ -18,7 +21,6 @@ import Store from './Store';
 
 
   handleDoneClick () {
-
 
     axios.put(`/actions/${Store.currentUserId}/${this.props.task.id}`)
       .then(function(response) {
@@ -32,7 +34,25 @@ import Store from './Store';
   }
 
   handleEditClick () {
-    // edit actions
+
+    //Store.selectedActivityBox = this.props.task.id;
+
+    var place = -1;
+    typeArray.forEach((item, index) => {
+       console.log('item in for each', item);
+
+      if (item === this.props.task.type) {
+        console.log('location', index);
+       place = index;
+      }
+    });
+
+    Store.selectedActivityBox = place;
+    console.log('Settting selectedActivityBox to: ', place);
+
+    this.props.edit(this.props.task.id);
+
+
   }
 
   render() {
@@ -43,6 +63,7 @@ import Store from './Store';
     var styles = {};
 
     // sets proper date
+    //console.log()
     if (this.props.task.completedTime !== null ) {
       dateMessage = 'Done';
       vis = { hide: { visibility: 'hidden'} };
@@ -67,32 +88,37 @@ import Store from './Store';
       } 
     }
 
+var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up', 'Resume', 'Interview', 'Offer' ];
+
     // sets icon
     var iconName = '';
+
+    console.log('task type:', this.props.task.type);
+
     if (this.props.task.type === 'like') {
       iconName = 'thumb_up';
     } else if (this.props.task.type === 'learn') {
       iconName = 'computer';
-    } else if (this.props.task.type === 'connections') {
+    } else if (this.props.task.type === 'connections' || this.props.task.type === 'connect' ) {
       iconName = 'contact_phone';
     } else if (this.props.task.type === 'apply') {
       iconName = 'send';
     } else if (this.props.task.type === 'follow up') {
       iconName = 'loop';
     } else if (this.props.task.type === 'interview') {
-      iconName = 'record voice over';
-    } else if (this.props.task.type === 'schedule') {
+      iconName = 'bookmark';
+    } else if (this.props.task.type === 'schedule' ) {
       iconName = 'assignment';
     } else if (this.props.task.type === 'email') {
       iconName = 'email';
-    } else if (this.props.task.type === 'phone') {
+    } else if (this.props.task.type === 'phone' ||  this.props.task.type === 'call') {
       iconName = 'phone';
     } else if (this.props.task.type === 'offer') {
-      iconName = 'local bar';
-    } else if (this.props.task.type === 'meetup') {
-      iconName = 'local cafe';
+      iconName = 'stars';
+    } else if (this.props.task.type === 'meetup' || this.props.task.type === 'meet-up' ) {
+      iconName = 'build';
     } else if (this.props.task.type === 'resume') {
-      iconName = 'insert drive file';
+      iconName = 'reorder';
     }
 
 
@@ -114,7 +140,7 @@ import Store from './Store';
             <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>done</i>
           </div>
           <div className="doneTask">
-            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>edit</i>
+            <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>edit</i>
           </div>
         </div>
       </div>

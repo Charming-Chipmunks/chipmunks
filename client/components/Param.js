@@ -33,7 +33,7 @@ import mobx from 'mobx';
       <div className="chip">
         <img src="./assets/params/javascript.png" alt="Contact Person" />
           {this.props.param.descriptor} jobs in {this.props.param.city}, {this.props.param.state}
-        <i className="material-icons" onClick={this.removeParam.bind(this)}>thumb_down</i>
+        <i className="material-icons" onClick={this.removeParam.bind(this)}>close</i>
       </div>);
   }
 }

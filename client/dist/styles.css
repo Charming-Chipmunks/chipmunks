@@ -251,18 +251,31 @@
  * Sidebar Classes
  */
 .sideLetters{
-  background-color: #c62828 ;
+  background-color: #ea555e ;
 }
 
 .sideBarLetter{
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
   color: lightgrey;
-  margin-left: 5px;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.sideBarLetterOpportunities {
+  font-size: 12px;
+  font-weight: 200;
+  color: lightgrey;
+  text-align: left;
+  font-style: italic;
+  margin-left: 2px
 }
 
 .sideBarCompany{
   margin-left: 15px;
+  margin-right: 15px;
+  border-bottom: thin solid lightgrey;
 }
 
 .companyContactInfo{
@@ -271,16 +284,15 @@
 
 .sideBarCompanyName{
   font-size: 14px;
-  font-weight: 400;
-  color: lightgrey;
+  font-weight: 300;
+  color: white;
 }
 
 .sideBarCompanyJobTitle{
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 10px;
+  font-weight: 300;
   font-style: italic;
-  color: lightgrey;
-  margin-left: 5px;
+  color: white;
 }
 
 .sideBarContact{
@@ -364,17 +376,42 @@
 
 }
 
+.activityTypeHeader{
+  width: 250;
+  height: 75;
+  border: 1px solid blue;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 3px;
+  margin-bottom: 2px;
+  color: lightgrey;
+  text-align: center;
+}
+
+.activityModalIcons {
+  width: 250px;
+  height: 200px;
+  border: 1px solid blue;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  align-items: center;
+
+}
 
 .activityModalType {
-  flex: 1;
+/*  flex: 1;*/
+  display:  inline-block;
   border: 1px solid red;
   border-radius: 4px;
   width: 250px;
 }
 
 .activityBox{
-  height: 50px;
-  width: 50px;
+  flex-grow: 1;
+  width: 25%;
+  height: 25%;
   font-size: 18px;
   font-weight: 400;
   font-style: italic;
@@ -384,6 +421,11 @@
   border-radius: 4px;
 }
 
+.activityBoxName {
+  font-size: 10px;
+  font-weight: 400;
+  font-style: italic;
+}
 
 .yellow {
   background-color: yellow;
@@ -399,8 +441,13 @@
   font-weight: 500;
 }
 
+
+.DayPicker-Day--selected {
+  background-color: red; 
+}
+
 .DayPicker {
-  flex: 1;
+/*  flex: 1;*/
   width: 250px;
   flex-wrap: wrap;
   justify-content: center;

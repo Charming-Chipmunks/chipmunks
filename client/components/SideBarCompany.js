@@ -19,7 +19,7 @@ import { observer } from 'mobx-react';
     return (
       <Link to={'/companies/' + this.props.company.id} onClick={this.handleClick.bind(this)}>
         <li className="sideBarCompany">
-         <div className="rateCompanyJob">{this.props.company.company}</div>
+         <div className="sideBarCompanyName">{this.props.company.company}</div>
          <div className="sideBarCompanyJobTitle">{this.props.company.jobTitle}</div>
         </li>
       </Link>

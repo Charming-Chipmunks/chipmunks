@@ -48,6 +48,16 @@ import MainRightSidebar           from './MainRightSidebar';
             console.log(error);
           });
 
+        // get parameters
+        axios.get('/parameter/' + Store.currentUserId)
+          .then(function(response) {
+            console.log('params data', response.data);
+            Store.params = response.data.Parameters;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+          
         // // GET ALL THE CONTACTS
         // axios.get(`/contacts/${Store.currentUserId}/`)
         //   .then(function(response) {
@@ -62,15 +72,6 @@ import MainRightSidebar           from './MainRightSidebar';
         console.log(error);
       });
 
-    // get parameters
-    axios.get('/parameter/' + Store.currentUserId)
-      .then(function(response) {
-        console.log('params data', response.data);
-        Store.params = response.data.Parameters;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 
   render() {

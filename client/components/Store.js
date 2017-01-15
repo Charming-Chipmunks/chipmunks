@@ -11,7 +11,7 @@ class Store {
   // USER ID
   // NEW JOB LIST
 
-  @observable currentUserId = 1; // this will be set at login time
+  @observable currentUserId = ''; // this will be set at login time
   @observable params = [];
   @observable jobList = []; // jobs that are favored
   @observable newJobList = []; // jobs that need to be rated

@@ -1,15 +1,20 @@
 // ActivityModal.js
-import React          from 'react';
-import axios          from 'axios';
-import { observer }   from 'mobx-react';
+import React                   from 'react';
+import axios                   from 'axios';
+import { observer }            from 'mobx-react';
 
-import ActivityBox    from './ActivityBox';
-import Store          from './Store';
-import DayPicker      from 'react-day-picker';
+import ActivityBox              from './ActivityBox';
+import Store                    from './Store';
+import TextField                from 'material-ui/TextField';
+import DayPicker, { DateUtils } from 'react-day-picker';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
 import 'react-day-picker/lib/style.css';
 
 var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up', 'Resume', 'Interview', 'Offer' ];
+var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
+var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop', 'reorder', 'bookmark', 'stars'];
+
 
 @observer class ActivityModal extends React.Component {
 
@@ -17,53 +22,86 @@ var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up'
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    //this.handleActionClick = this.handleActionClick.bind(this);
+    this.saveDate = this.saveDate.bind(this);
+   // this.isDaySelected = this.isDaySelected.bind(this);
+  }
+
+  componentWillMount() {
+    
+    if (this.props.action !== undefined) { 
+      Store.addActivity.scheduledTime = this.props.action.scheduledTime;
+      Store.addActivity.description = this.props.action.description;
+      Store.addActivity.company = this.props.action.company;
+    }
+  }
+
+  saveDate (e, date) {
+    Store.addActivity.scheduledTime = date;
   }
 
   handleClick () {
 
-  //   router.post('/actions/', function(req, res) {
-
-  // models.Action.create({
-  //   type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
-  //   company:        req.body.company,
-  //   description:    req.body.description, //text field with more description of the task / event
-  //   actionSource:   req.body.actionSource, // tasks, user, reminder, company
-  //   scheduledTime:  req.body.scheduledTime
-
-
     Store.addActivity.company = this.props.job.company;
     Store.addActivity.actionSource = 'user';
+
     // do some error checking to make sure an action has been selected
-    if (Store.selectedActivityBox !== -1) {
+    if (Store.selectedActivityBox !== -1 && Store.addActivity.scheduledTime !== '') {
+
+      // error check for date before today?
+
       var activityNum = Store.selectedActivityBox;
-      console.log('job id: ', this.props.job.id);
+      var type = activityArray[activityNum];
+      type = type.toLowerCase();
+
       var obj = {
         userId: Store.currentUserId,
         jobId: this.props.job.id,
-        type: activityArray[activityNum],
+        type: type,
         description: Store.addActivity.description,
         company: this.props.job.company,
         actionSource: 'user',
-        scheduledTime:  new Date() // for the time being set scheduled time to now
+        scheduledTime:  Store.addActivity.scheduledTime,
+        completedTime: null
       };
 
-
+    if (this.props.action !== undefined) {
+      // post if it is a new action 
       axios.post(`/actions`, obj)
       .then(function(response) {
-        console.log('jobview actions results : ', response.data);
+        Store.jobActions.push(response.data);
+
       })
       .catch(function(error) {
         console.log(error);
       });
+    } else {
+     // put to update if it is an edit 
+    var putObj = {
+      type: type,
+      description:    Store.addActivity.description,
+      scheduledTime:  Store.addActivity.scheduledTime,
+      // should also add a check box to complete activity on update
+    };
+
+      axios.put(`/actions`, putObj)
+      .then(function(response) {
+        Store.jobActions.push(response.data);
+
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
 
       Store.selectedActivityBox = -1;
+      Store.addActivity.description = '';
+      Store.addActivity.scheduledTime = '';
+
       this.props.onClick();
-    } else{ 
+    } else { 
       // will have to message that no task type selected.
     }
   }
-
 
   change(e) {
     Store.addActivity.description = e.target.value;
@@ -72,17 +110,27 @@ var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up'
 
   render () {
 
+    console.log('Activity Modal Store:', Store.selectedActivityBox);
+    
     return (
+      <MuiThemeProvider >
       <div> 
         <header>Activity Log</header>
         <div className="modalSelectors">
           <div className="activityModalType">
-            {activityArray.map((activity, index) => {
-              return (<ActivityBox type={activity} key={index} id={index} />);
-            })}
+            <div  className="activityTypeHeader"> 
+              <p>Activity Type</p>
+            </div>
+            <div className="activityModalIcons">
+              {activityArray.map((activity, index) => {
+                return (<ActivityBox type={activity} icon={iconNameArray[index]} key={index} id={index} />);
+              })}
+            </div>  
           </div>  
           <div>
-            <DayPicker onDayClick={ (e, day) => window.alert(day) } />
+
+            <DayPicker onDayClick={ this.saveDate } />
+          
           </div>
         </div>
         <form>
@@ -94,12 +142,12 @@ var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up'
               <label className="active">Activty Description</label>
             </div>
           </div>
-
+              <TextField hintText="MultiLine with rows: 2 and rowsMax: 4"  multiLine={true}
+                          rows={2} rowsMax={4} />
         </form>
-{/*        <InfiniteCalendar width={400} height={600} selectedDate={today} 
-                          disabledDays={[0,6]} minDate={minDate} keyboardSupport={true}/>*/}
         <div className="activityClose" onClick={this.handleClick.bind(this)}>Save</div>
       </div>
+      </MuiThemeProvider>
     );
   }
 
