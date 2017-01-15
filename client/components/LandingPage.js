@@ -72,7 +72,7 @@ class ActivityGraphView extends React.Component {
 
   render() {
     return(
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', margin: '5px'}}>
         <div className='row'>
           <div className='col m6 left'>Actions due today:</div>
           <div className='col m6 right'>{Store.todaysTasks.length}</div>
@@ -83,6 +83,10 @@ class ActivityGraphView extends React.Component {
         </div>
         <div className='row'>
           <div className='col m6 left'>New jobs today:</div>
+          <div className='col m6 right'>{Store.todaysJobs.length}</div>
+        </div>
+        <div className='row'>
+          <div className='col m6 left'>Jobs with last activity > 10 days:</div>
           <div className='col m6 right'>{Store.todaysJobs.length}</div>
         </div>
       </div>
@@ -189,7 +193,7 @@ export default class LandingPage extends React.Component {
     console.log('active tasks:', Store.activeTasks)
     return (
       <div style={styles.landingContainer}>
-        <div className='col m9 left'>
+        <div className='col m12 left'>
           <div style={styles.mainDiv}>
             <h5>Welcome, Joosang!</h5>
           </div>
@@ -214,7 +218,12 @@ export default class LandingPage extends React.Component {
           <div style={{flexGrow: 1, height: '100px'}}>
             <LandingHeader title="Next Pending Task"/>
             {
-              Store.activeTasks && Store.activeTasks.length > 0 && <TaskBox task={Store.activeTasks[0]}/>
+              Store.activeTasks && Store.activeTasks.length > 0 
+              && <TaskBox task={Store.activeTasks[0]}/>
+            }
+            {
+              Store.activeTasks && Store.activeTasks.length === 0 
+              && <div>No pending actions. Review jobs to generate!</div>
             }
           </div>
           <div style={{flex:1}}>
@@ -227,10 +236,10 @@ export default class LandingPage extends React.Component {
             }
           </div>
         </div>
-        <div className='col m3 right'>
-          <MainRightSidebar />
-        </div>
       </div>
     )
   }
 }
+        // <div className='col m3 right'>
+        //   <MainRightSidebar />
+        // </div>

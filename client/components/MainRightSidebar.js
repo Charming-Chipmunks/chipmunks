@@ -1,6 +1,8 @@
 import React from 'react';
 import Store from './Store';
 import { toJS } from 'mobx';
+import { Link, IndexLink } from 'react-router';
+
 
 // material ui
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -53,15 +55,16 @@ export default class MainRightSidebar extends React.Component {
       <div className='greyBorder'>
           <List>
             <Subheader>General</Subheader>
-            <ListItem primaryText="Your Parameters" />
-            <ListItem primaryText="Your Contacts" leftIcon={<ContentDrafts />} />
+            <ListItem primaryText={<Link style={{color:'black'}} to='/preferences'>Preferences</Link>} />
+            <ListItem primaryText={<Link style={{color:'black'}} to='/activitiesMain'>Actions Home</Link>} />
+            <ListItem primaryText={<Link style={{color:'black'}} to='/activitiesMain'>Jobs Home</Link>} />
             <br />
             <Subheader>Statistics</Subheader>
             <ListItem primaryText="Actions"
               initiallyOpen={true}
               primaryTogglesNestedList={true}
               nestedItems={[
-                <ListItem onPress={(item) => console.log('item clicked', item)} key={1} open={this.state.statsOpen} primaryText="Daily"/>,
+                <ListItem key={1} open={this.state.statsOpen} primaryText="Daily"/>,
                 <ListItem key={2} open={this.state.statsOpen} primaryText="Weekly"/>,
                 <ListItem key={3} open={this.state.statsOpen} primaryText="All Time"/>
               ]}

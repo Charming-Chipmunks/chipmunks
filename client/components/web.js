@@ -13,7 +13,8 @@ import SearchBar                  from './SearchBar';
 import ShowParams                 from './ShowParams';
 import CompanyList                from './CompanyList';
 import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
-
+import LandingPage                from './LandingPage';
+import MainRightSidebar           from './MainRightSidebar';
 
 
 @observer class Web extends React.Component {
@@ -36,9 +37,20 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
     axios.get(`/actions/${Store.currentUserId}`)
       .then(function(response) {
         Store.actions = response.data;
+        console.log(Store.activeTasks)
         const { filteredActions } = Store;
         var result = filteredActions;
         // console.log('filteredActions: ', filteredActions);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    // get parameters
+    axios.get('/parameter/' + Store.currentUserId)
+      .then(function(response) {
+        console.log('params data', response.data);
+        Store.params = response.data.Parameters;
       })
       .catch(function(error) {
         console.log(error);
@@ -67,8 +79,12 @@ import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
           <div className="col m2 left">
             <CompanyList />
           </div>
-          <div className="col m10">
-            {this.props.children}
+          <div className="col m8">
+            {false && <LandingPage />}
+            {true && this.props.children}
+          </div>
+          <div className="col m2 left">
+            <MainRightSidebar />
           </div>
         </div>
       </div>
