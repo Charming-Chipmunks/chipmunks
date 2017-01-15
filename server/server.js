@@ -4,10 +4,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/routes');
 var stats = require('./stats');
 
-//
-var webpack = require('webpack');  
-var webpackMiddleware = require('webpack-dev-middleware');  
-var config = require('../webpack.config.js');
+
+// var webpack = require('webpack');
+// var webpackMiddleware = require('webpack-dev-middleware');
+// var config = require('../webpack.config.js');
 
 
 //Auth
@@ -23,7 +23,7 @@ var flash = require('connect-flash');
 require('dotenv').config();
 
 var app = express();
-const compiler = webpack(config);
+// const compiler = webpack(config);
 
 //CORS
 app.use(function(req, res, next) {
@@ -43,7 +43,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(webpackMiddleware(compiler)); 
+// app.use(webpackMiddleware(compiler));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
