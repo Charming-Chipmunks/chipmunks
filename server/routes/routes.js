@@ -16,7 +16,8 @@ require('dotenv').config();
 
 var checkUser = function(req, user) {
   if (process.env.DISABLE_AUTH) {
-    return true;
+    console.warn('AUTH DISABLED.  DEFAULTING TO USER 1');
+    return 1;
   }
   console.log('User claims to be', user);
   if (!req.session) {
@@ -27,7 +28,7 @@ var checkUser = function(req, user) {
   var exponent = req.session.exponent && req.session.exponent.user;
   console.log('PASSPORT ID', passport);
   console.log('MOBILE ID', exponent);
-  var id = passport || exponent;
+  var id = exponent || passport;
   console.log('User is', id);
   if (parseInt(id) !== parseInt(user)) {
     //res.send(401, 'Unauthorized request for user data');
@@ -40,6 +41,9 @@ var checkUser = function(req, user) {
 var getUser = function(req) {
   if (process.env.DISABLE_AUTH) {
     console.warn('AUTH DISABLED.  DEFAULTING TO USER 1');
+    req.params.userId = 1;
+    req.body.userId = 1;
+    req.body.id = 1;
     return 1;
   }
   if (!req.session) {
@@ -67,6 +71,9 @@ router.get('/user', function(req, res) {
   var passport = req.session.passport && req.session.passport.user;
   var exponent = req.session.exponent && req.session.exponent.user;
   var id = passport || exponent;
+  if (process.env.DISABLE_AUTH) {
+    id = 1;
+  }
   if (id) {
     models.User.find({
       where: {
@@ -366,7 +373,8 @@ router.post('/actions/', function(req, res) {
     description:    req.body.description, //text field with more description of the task / event
     actionSource:   req.body.actionSource, // tasks, user, reminder, company
     completedTime:  req.body.completedTime,
-    scheduledTime:  req.body.scheduledTime
+    scheduledTime:  req.body.scheduledTime,
+    contactId:      req.body.contactId
   }).then((action) => {
 
     if (!action) {
@@ -467,7 +475,6 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
           id: req.params.jobId
         }
       }).then((job) => {
-        console.log('in Jobs');
         job.addContacts(contacts);
       });
 
@@ -606,7 +613,6 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 
 router.post('/parameter/:userId', function(req, res) {
   var associateJobs = function(userId, parameterId) {
-    console.log(userId, parameterId);
     db['User'].find({
       where: {
         id: userId

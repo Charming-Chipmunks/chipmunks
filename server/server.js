@@ -24,6 +24,13 @@ var request = require('request');
 //
 require('dotenv').config();
 
+if (process.env.DISABLE_AUTH) {
+  console.warn('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  console.warn('!!!AUTHENTICATION DISABLED!!!');
+  console.warn('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+}
+
 var app = express();
 // const compiler = webpack(config);
 
