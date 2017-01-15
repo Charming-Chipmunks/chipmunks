@@ -164,10 +164,20 @@ class Store {
 
       var diff = scheduled.diff(today, 'days');
       console.log('diff: ', diff)
-      if (!action.completedTime && diff === 1) {
+      if (!action.completedTime && diff === 0) {
         ret.push(action);
       }
     })
+
+    return ret;
+  }
+
+  @computed get todaysJobs() {
+    var ret = [];
+
+    this.newJobList.forEach((job, index) => {
+      console.log('created:', job.createdAt)
+    }) 
 
     return ret;
   }

@@ -6,6 +6,8 @@ import { observer } from 'mobx-react';
 import Chart from 'chart.js';
 import axios from 'axios';
 import TaskBox from './TaskBox';
+import MainRightSidebar from './MainRightSidebar'
+import RateIndividualJob from './RateIndividualJob'
 
 //Graph Views
 import $ from 'jquery';
@@ -79,6 +81,10 @@ class ActivityGraphView extends React.Component {
           <div className='col m6 left'>Total pending actions:</div>
           <div className='col m6 right'>{Store.pendingNumber}</div>
         </div>
+        <div className='row'>
+          <div className='col m6 left'>New jobs today:</div>
+          <div className='col m6 right'>{Store.todaysJobs.length}</div>
+        </div>
       </div>
     )
   }
@@ -105,10 +111,10 @@ class GoalsGraphView extends React.Component {
     <MuiThemeProvider>
       <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', margin: '5px'}}>
         <div>
-          <div className='col m3 left'>
+          <div className='col m4 left'>
             Application Progress:
           </div>
-          <div className='col m9 right' >
+          <div className='col m8 right' >
             <div className='row'>
               <LinearProgress mode="determinate" value={this.state.applicationsComplete/this.state.applicationsTotal*100} />
               <span>{this.state.applicationsComplete}/{this.state.applicationsTotal} applications sent</span>
@@ -116,10 +122,10 @@ class GoalsGraphView extends React.Component {
           </div>
         </div>
         <div>
-          <div className='col m3 left'>
+          <div className='col m4 left'>
             Email Progress:
           </div>
-          <div className='col m9 right'>
+          <div className='col m8 right'>
             <div className='row'>
               <LinearProgress mode="determinate" value={this.state.emailsComplete/this.state.emailsTotal*100} />
               <span>{this.state.emailsComplete}/{this.state.emailsTotal} emails sent</span>
@@ -127,10 +133,10 @@ class GoalsGraphView extends React.Component {
           </div>
         </div>
         <div>
-          <div className='col m3 left'>
+          <div className='col m4 left'>
             Interview Practice:
           </div>
-          <div className='col m9 right' >
+          <div className='col m8 right' >
             <div className='row'>
               <LinearProgress mode="determinate" value={this.state.interviewPracticeComplete/this.state.interviewPracticeTotal*100} />
               <span>{this.state.interviewPracticeComplete}/{this.state.interviewPracticeTotal} hours</span>
@@ -150,12 +156,23 @@ export default class LandingPage extends React.Component {
     super(props)
   }
 
+    componentWillMount() {
+      axios.get(`/actions/${Store.currentUserId}`)
+      .then(function(response) {
+        Store.actions = response.data;
+        // console.log('filteredActions: ', filteredActions);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
+
   render() {
     var styles = {
       landingContainer: {
         display: 'flex',
         flexGrow: 1,
-        flexDirection: 'column',
+        flexDirection: 'row',
         height: '100%'
       },
       graphDiv: {
@@ -172,36 +189,46 @@ export default class LandingPage extends React.Component {
     console.log('active tasks:', Store.activeTasks)
     return (
       <div style={styles.landingContainer}>
-        <div style={styles.mainDiv}>
-          <h5>Welcome, Joosang!</h5>
-        </div>
-        <div style={{flex:1}}>
-          <LandingHeader title="Your Interests"/>
-          <InterestBar />
-        </div>
-        <div className='graphContainer'>
-          <div className='col m6 left'>
-           <div style={styles.graphBox}>
-              <LandingHeader title="Activity Overview"/>
-             <ActivityGraphView />
-           </div>
+        <div className='col m9 left'>
+          <div style={styles.mainDiv}>
+            <h5>Welcome, Joosang!</h5>
           </div>
-          <div className='col m6 right'>
-            <div style={styles.graphBox}>
-            <LandingHeader title="Goals"/>
-            <GoalsGraphView />
+          <div style={{flex:1}}>
+            <LandingHeader title="Your Interests"/>
+            <InterestBar />
+          </div>
+          <div className='graphContainer'>
+            <div className='col m6 left'>
+             <div style={styles.graphBox}>
+                <LandingHeader title="Activity Overview"/>
+               <ActivityGraphView />
+             </div>
+            </div>
+            <div className='col m6 right'>
+              <div style={styles.graphBox}>
+              <LandingHeader title="Goals"/>
+              <GoalsGraphView />
+              </div>
             </div>
           </div>
+          <div style={{flexGrow: 1, height: '100px'}}>
+            <LandingHeader title="Next Pending Task"/>
+            {
+              Store.activeTasks && Store.activeTasks.length > 0 && <TaskBox task={Store.activeTasks[0]}/>
+            }
+          </div>
+          <div style={{flex:1}}>
+            <LandingHeader title="Next Pending Job"/>
+            {
+              Store.newJobList.length > 0 && <RateIndividualJob job={Store.newJobList[0]} />
+            }
+            {
+              Store.newJobList.length === 0 && <div>No jobs to review. Add a parameter to view more jobs!</div>
+            }
+          </div>
         </div>
-        <div style={{flexGrow: 1, height: '100px'}}>
-          <LandingHeader title="Next Pending Task"/>
-          {
-            Store.activeTasks && Store.activeTasks.length > 0 && <TaskBox task={toJS(Store.activeTasks)[0]}/>
-          }
-        </div>
-        <div style={{flex:1}}>
-          <LandingHeader title="Next Pending Job"/>
-          Next Job
+        <div className='col m3 right'>
+          <MainRightSidebar />
         </div>
       </div>
     )
