@@ -9,11 +9,8 @@ import Store from './Store';
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
-    console.log('company row - click :', this.props.company);
+
     Store.company = this.props.company;
-    // Store.company.description = this.props.company.snippet;
-    // Store.company.location = this.props.company.formatted_location;
-    // Store.company.title = this.props.company.jobTitle;
 
   }
   render() {

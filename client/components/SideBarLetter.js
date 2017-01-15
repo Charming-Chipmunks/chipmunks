@@ -20,8 +20,6 @@ var classObject = 'funfun';
   }
 
   handleClick () {
-    console.log('sidebarletter handleclick');
-
     this.setState({hide: !this.state.hide});
   }
 
@@ -33,7 +31,6 @@ var classObject = 'funfun';
       classObject = 'hide';
     }
 
-    
     return (
       <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> 
       {this.props.letter}

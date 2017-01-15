@@ -254,6 +254,14 @@
   background-color: #ea555e ;
 }
 
+.leftSideBarResults{
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  color: lightgrey;
+  text-align: left;
+}
+
 .sideBarLetter{
   font-size: 24px;
   font-weight: 300;
@@ -441,6 +449,31 @@
   font-weight: 500;
 }
 
+
+/*
+ * for spell checker
+ */
+
+.curly-underline {
+    background: url('./assets/spell/underline.gif') bottom repeat-x;
+}
+
+/*
+ * Indeed Image Styling
+ */
+
+.indeedImage {
+  border: 0; 
+  vertical-align: middle;
+  width: 50px;
+}
+
+/*
+ *  Badge floating
+ */
+.badgeFloat {
+  display: inline-block;
+}
 
 .DayPicker-Day--selected {
   background-color: red; 

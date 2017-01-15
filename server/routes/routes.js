@@ -1,9 +1,10 @@
 //routes.js
-var express   = require('express');
-var router    = express.Router();
-var models    = require('../models/index');
-var utils     = require('./route-utils');
-var db = require('../models/index');
+var express         = require('express');
+var router          = express.Router();
+var models          = require('../models/index');
+var utils           = require('./route-utils');
+var db              = require('../models/index');
+var findIndeedJobs  = require('../models/initialize/findIndeedJobs');
 require('dotenv').config();
 
 
@@ -695,26 +696,21 @@ router.post('/parameter/:userId', function(req, res) {
         zip:          req.body.zip,
         radius:       req.body.radius
       }).then((parameter) => {
-          console.log('created new');
-          parameter.addUsers(req.params.userId);
-          res.status(200);
-          res.send(parameter);
-          // I need to send an indeed request if there isn't a parameter that exists.
+        console.log('created new');
+        parameter.addUsers(req.params.userId);
+        res.status(200);
+        res.send(parameter);
+        // I need to send an indeed request if there isn't a parameter that exists.
+        findIndeedJobs(parameter);
+        associateJobs(req.params.userId, parameter.id);
 
-          associateJobs(req.params.userId, parameter.id);
-
-        });
+      });
     } else {
       console.log('found one');
       parameter.addUsers(req.params.userId);
-// <<<<<<< d56465909835747ba3d03b1e71bc40809bec80e3
-//       res.status(404);
-//       res.json({parameter: 'exists'});
-// =======
       res.status(200);
       res.send(parameter);
       associateJobs(req.params.userId, parameter.id);
-// >>>>>>> Associate jobs with users on insertion of parameters
     }
   }).catch((err) => {
     console.error(err);
@@ -745,8 +741,37 @@ router.post('/users/:userId/parameter/:parameterId', function(req, res) {
 
 });
 
+// get a list of jobs for a parameter
+
+router.get('/ponme/:parameterId', function(req, res) {
+
+  if (!getUser(req)) {
+    return rejectUser(res);
+  }
+
+  models.JobParameter.findAll({
+    where: {
+      ParameterId: req.params.parameterId
+    }
+  }).then((parameter) => {
+    if (!parameter) {
+      res.status(404);
+      res.json({});     
+    } else {
+      console.log('*&&&&&&&&&**&*(&(&*(&(&*&*&&*(&(*(&&*(&&&(&*&*(&*(&*(&*(&*(&(*&(*&*((&*&*(&*( ');
+      res.json(parameter);
+    }
+  }).catch(err => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });    
+  });
+
+});
+
 //testing
 router.get('/test2/:userId', function(req, res) {
+
   if (!checkUser(req, req.params.userId)) {
     return rejectUser(res);
   }
