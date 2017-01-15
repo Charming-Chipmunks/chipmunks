@@ -21,6 +21,12 @@
   width: 100%;
 }
 
+.greyBorder {
+  border-width: 3px;
+  border-color: lightgrey;
+  border-style: solid
+}
+
 .container{
   width: 95% !important;
   margin: 20px 20px !important;
