@@ -10,52 +10,39 @@ import Store from './Store';
     this.handleClick.bind(this);
   }
 
+
+
   handleClick () {
     Store.selectedActivityBox = this.props.id;
-    this.props.onClick;
   }
 
   render () {
 
     if (Store.selectedActivityBox === this.props.id) {
-      console.log('choose this color: ', this.props.color);
       var styles = {
         background: {
-          backgroundColor: '#ffffff'
+          backgroundColor: '#ef9a9a'
         }
       };
     } else {
-      console.log('choose this color: ffffff');
       var styles = {
         background: {
-          backgroundColor: '#575757'
+          backgroundColor: 'white'
         }
       };
     }
 
-    // if (!this.state.selected) {
-    //   console.log('choose this color: ', this.props.color);
-    //   var styles = {
-    //     background: {
-    //       backgroundColor: this.props.color
-    //     }
-    //   };
-    // } else {
-    //   console.log('choose this color: ffffff');
-    //   var styles = {
-    //     background: {
-    //       backgroundColor: '#575757'
-    //     }
-    //   };
-    // }
-
-
     return ( 
         <div className="activityBox" onClick={this.handleClick.bind(this)} style={styles.background}>
-          <i className="material-icons">done</i>
+          <i className="material-icons">{this.props.icon}</i>
+          <div className="activityBoxName">{this.props.type}</div>
         </div>
     );
   }
+
+
+
+
 
 }
 

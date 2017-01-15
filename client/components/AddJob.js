@@ -3,10 +3,27 @@ import { observer } from 'mobx-react';
 import Store from './Store';
 import axios from 'axios';
 import { toJS } from 'mobx';
+//import Growl from 'Growl/growl.react';
+
 @observer class AddJob extends React.Component {
+
+
   constructor(props) {
     super(props);
+    //this.growler = null;
+
   }
+
+  // componentDidMount () {
+  //   Growl.setPosition('tr');
+  //   Growl.setMaxToShow(1);
+
+  //   this.growler = this.refs.growler;
+  // }
+
+  // growl () {
+  //   this.growler.addNotification(level, message);
+  // }
 
   change(e) {
     Store.newJob[e.target.name] = e.target.value;
@@ -86,7 +103,7 @@ import { toJS } from 'mobx';
               <div className="createJob" onClick={this.save}>Save Opportunity</div>
           </form>
         </div> 
-
+        {/*<Growl ref={"growler"} />*/}
       </div>
     );
   }

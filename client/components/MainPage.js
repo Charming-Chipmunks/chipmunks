@@ -44,6 +44,7 @@ import axios from 'axios';
       });
 
   }
+  
   componentWillMount() {
     this.getStats();
   }

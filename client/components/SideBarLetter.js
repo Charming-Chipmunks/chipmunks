@@ -14,7 +14,7 @@ var classObject = 'funfun';
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {hide: false};
+    this.state = {hide: true};
     // this.handleHover.bind(this);
 
   }
@@ -35,7 +35,11 @@ var classObject = 'funfun';
 
     
     return (
-      <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> {this.props.letter}
+      <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> 
+      {this.props.letter}
+        <div className="sideBarLetterOpportunities"> 
+        {this.props.list.length} Opportunities
+        </div>
         <ul className={`${classObject}`}>
           {this.props.list.map((company, index) => {
             company = toJS(company);

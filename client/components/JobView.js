@@ -25,7 +25,10 @@ import ActivityModal            from './ActivityModal';
     this.state                = { modalIsOpen: false };
     this.handleTaskComplete   = this.handleTaskComplete.bind(this);
     this.handleCloseJob       = this.handleCloseJob.bind(this);
+    this.handleEditClick      = this.handleEditClick.bind(this);
+    this.state                = {actionNum: -1};
   }
+
 
   // for modal
   openModal () {
@@ -37,6 +40,7 @@ import ActivityModal            from './ActivityModal';
   // for modal
   closeModal () {
     this.setState({modalIsOpen: false});
+    this.setState({actionNum: -1});
     
   }
 
@@ -51,10 +55,7 @@ import ActivityModal            from './ActivityModal';
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    console.log('jobviewWillReceiveProps ID', nextProps.params.id);
     this.getData(nextProps.params.id);
-    // THIS IS NOT FEEDING THE PROP PROPERLY
   }
 
   getData(id) {
@@ -74,6 +75,12 @@ import ActivityModal            from './ActivityModal';
       .catch(function(error) {
         console.log(error);
       });
+  }
+
+  handleEditClick (id) {
+   // console.log('action clicked:', id);
+    this.setState({actionNum: id});
+    this.openModal();
   }
 
   handleTaskComplete (id) {
@@ -194,7 +201,8 @@ import ActivityModal            from './ActivityModal';
               </div>
              </div>
               {jobActions.map((action, index) => {
-                return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)}/>);
+                return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)} 
+                                  edit={this.handleEditClick.bind(this, index)} />);
               })
             }
             </div>
@@ -211,7 +219,8 @@ import ActivityModal            from './ActivityModal';
                 style={modalStyles}
                 contentLabel="No Overlay Click Modal"> 
 
-          <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} > 
+          <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} 
+                          action={jobActions[this.state.actionNum]} selected={Store.selectedActivityBox}> 
             <h2>This is so meta</h2>
           </ActivityModal>
 
