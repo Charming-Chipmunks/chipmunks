@@ -14,7 +14,6 @@ import { observer } from 'mobx-react';
     e.stopPropagation();
   }
 
-
   render () {
     return (
       <Link to={'/companies/' + this.props.company.id} onClick={this.handleClick.bind(this)}>

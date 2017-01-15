@@ -14,6 +14,7 @@ import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
 import Modal                    from 'react-modal';
 import modalStyles              from './modalStyles';
 import ActivityModal            from './ActivityModal';
+import ContactModal             from './ContactModal'
 
 @observer class JobView extends Component {
   
@@ -22,26 +23,42 @@ import ActivityModal            from './ActivityModal';
     this.getData              = this.getData.bind(this);
     this.openModal            = this.openModal.bind(this);
     this.closeModal           = this.closeModal.bind(this);
-    this.state                = { modalIsOpen: false };
+    this.openContactModal     = this.openContactModal.bind(this);
+    this.closeContactModal    = this.closeContactModal.bind(this);
     this.handleTaskComplete   = this.handleTaskComplete.bind(this);
     this.handleCloseJob       = this.handleCloseJob.bind(this);
     this.handleEditClick      = this.handleEditClick.bind(this);
-    this.state                = {actionNum: -1};
+    this.state                = { 
+                                  actionNum: -1,
+                                  contactModalIsOpen: false,
+                                  modalIsOpen: false 
+                                };
   }
 
 
-  // for modal
+  // for Activity modal
   openModal () {
     this.setState({
       modalIsOpen: true
     });
   }
 
-  // for modal
+  // for Activity modal
   closeModal () {
-    this.setState({modalIsOpen: false});
-    this.setState({actionNum: -1});
-    
+    this.setState({
+                    modalIsOpen: false,
+                    actionNum: -1
+                  }); 
+  }
+
+  // for Contact Modal
+  openContactModal () {
+    this.setState({contactModalIsOpen: true});
+  }
+
+  // for Activity Modal
+  closeContactModal () {
+    this.setState({contactModalIsOpen: false});
   }
 
   filterForHistory(action) {
@@ -59,6 +76,7 @@ import ActivityModal            from './ActivityModal';
   }
 
   getData(id) {
+
     axios.get(`/actions/${Store.currentUserId}/${id}`)
       .then(function(response) {
         Store.jobActions = response.data;
@@ -68,8 +86,12 @@ import ActivityModal            from './ActivityModal';
         console.log(error);
       });
 
-    axios.get('/contacts/' + Store.currentUserId + '/' + this.id)
+     // console.log(Store.currentUserId + "  "this.id);
+
+    axios.get('/contacts/' + Store.currentUserId + '/' + id)
       .then(function(response) {
+
+        console.log('contacts for this job are:', response.data );
         Store.contacts = response.data;
       })
       .catch(function(error) {
@@ -144,7 +166,6 @@ import ActivityModal            from './ActivityModal';
     var thisJob = toJS(step[location]);
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
-    console.log('actions: ', jobActions);
 
     if (jobActions.length > 0 ) {
       var daysActive = moment(jobActions[0].createdAt).from(moment());
@@ -212,7 +233,22 @@ import ActivityModal            from './ActivityModal';
           <div className="closeJobButton" onClick={this.handleCloseJob.bind(this)}>Close Job</div>
         </IndexLink>
         <button onClick={this.openModal}>Log Activity</button>
+        <button onClick={this.openContactModal}>Add Contact</button>
 
+        {/* contact modal */}
+        <Modal  isOpen={this.state.contactModalIsOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={this.closeContactModal}
+                style={modalStyles}
+                contentLabel="No Overlay Click Modal"> 
+
+          <ContactModal onClick={this.closeContactModal.bind(this)} job={thisJob} 
+                        selected={Store.selectedActivityBox}> 
+            <h2>This is so meta</h2>
+          </ContactModal>
+          </Modal>
+
+        {/* activity modal */}
         <Modal  isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}

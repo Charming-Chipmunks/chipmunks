@@ -52,7 +52,7 @@ import JobDescription from './JobDescription';
 
 
   render() {
-    var data = new Date();
+
 
     //  I can build out here for the company list for chooseing like or not like
     return (<li>
@@ -62,6 +62,7 @@ import JobDescription from './JobDescription';
           <div className="favorJob" onClick={this.yes.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
           <div className="favorJob" onClick={this.no.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsdown.png"/></div>
         </div>
+        <span id="indeed_at"><a title="Job Search" href="https://www.indeed.com">jobs by <img className="indeedImage" src="https://www.indeed.com/p/jobsearch.gif" /></a></span>
       </div>
       </li>);
   }
