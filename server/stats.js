@@ -73,10 +73,9 @@ var findJobs = function(userId, cb, res) {
 var calculateStatsForJob = function(actionList, results) {
   // console.log(actionList);
   actionList.forEach(action => {
-    console.log('actiontype', action.type);
+    // console.log('actiontype', action.type);
     if (action.completedTime) {
       if (action.type === 'like') {
-        console.log('liked');
         results.like++;
       } else if (action.type === 'apply') {
         results.applied++;
@@ -122,8 +121,8 @@ var lastWeekStats = function(userId, res) {
 };
 
 
-var weekStats = function(userId, numOfWeeks, res) {
-  console.log('weekStatsRes', res);
+var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthlyRes) {
+  // console.log('weekStatsRes', res);
   var start = moment().startOf('week').subtract(7 * numOfWeeks, 'd').toDate();
   var end = numOfWeeks === 0 ? moment().toDate() : moment().startOf('week').subtract(7 * (numOfWeeks - 1), 'd').toDate();
   console.log(start);
@@ -146,7 +145,16 @@ var weekStats = function(userId, numOfWeeks, res) {
     actions = JSON.parse(JSON.stringify(actions));
     var results = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
     calculateStatsForJob(actions, results);
-    res.json(results);
+    if (res) {
+      res.json(results);
+    } else {
+      // console.log('!!!!!!!!!!!!!', results);
+      cb(results, multipleWeekStats);
+      if (multipleWeekStats.length === 4) {
+        console.log(multipleWeekStats);
+        monthlyRes.json(multipleWeekStats);
+      }
+    }
   }).catch(function(error) {
     console.log(error);
   });
@@ -160,10 +168,19 @@ var res = {
 
 // stats(1, res);
 var monthWeeklyStats = function(userId, res) {
-
+  var multipleWeekStats = [];
+  var cb = function(data, array) {
+    array.push(data);
+  };
+  for (let i = 3; i >= 0; i--) {
+    weekStats(userId, i, null, cb, multipleWeekStats, res);
+  }
+  // console.log('results', results);
 };
-
-
+// monthWeeklyStats(1, res);
+router.get('/stats/monthly/:userId', function(req, res) {
+  monthWeeklyStats(req.params.userId, res);
+});
 
 router.get('/stats/:userId', function(req, res) {
   console.log('Lifetime Stats');

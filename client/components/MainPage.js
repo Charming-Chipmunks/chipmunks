@@ -31,6 +31,18 @@ import axios from 'axios';
       .catch(function(error) {
         console.log(error);
       });
+    axios.get('/stats/monthly/' + Store.currentUserId)
+      .then(function(response) {
+        // console.log('monthly', response.data);
+        console.log('currently not updating monthly');
+        // Store.monthly = response.data;
+        var weekChart = document.getElementById('weekly').getContext('2d');
+        let weeklyChart = new Chart(weekChart, Store.monthBarChartStats);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
   }
   componentWillMount() {
     this.getStats();
@@ -41,7 +53,13 @@ import axios from 'axios';
     this.actions = Store.actions.slice();
     return (<div className='MainPage'>
       <div className="stats">
+      <div className='total'>
       <canvas id="myChart" width="400" height="200"> </canvas>
+      </div>
+      <div className='week'>
+      <br/>
+      <canvas id="weekly" width="400" height="200"> </canvas>
+      </div>
       <br/>
       Last week you sent {Store.lastWeekStats.sentEmail} emails, received {Store.lastWeekStats.receivedEmail} emails, and had {Store.lastWeekStats.phone} phone calls.
       <br/>

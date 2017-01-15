@@ -18,7 +18,7 @@ class Store {
   @observable actions = []; // all the actions for a person
   @observable company = {};
   @observable selectedActivityBox = -1;
-  @observable actionFilter= 4863;
+  @observable actionFilter = 4863;
   @observable jobActions = [];
   @observable hiddenCompanyLetters = [];
   @observable addActivity = {
@@ -29,7 +29,7 @@ class Store {
     completedTime: '',
     actionSource: 'user',
   };
-  
+
   @observable contacts = [{
     firstname: 'Sandy',
     lastname: 'Knox',
@@ -78,6 +78,155 @@ class Store {
   }
   @observable stats = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
   @observable lastWeekStats = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+  @observable monthly = [{
+    like: 10,
+    applied: 9,
+    interviewed: 1,
+    offered: 3,
+    sentEmail: 6,
+    phone: 2,
+    receivedEmail: 2
+  }, {
+    like: 5,
+    applied: 6,
+    interviewed: 5,
+    offered: 1,
+    sentEmail: 5,
+    phone: 3,
+    receivedEmail: 7
+  }, {
+    like: 7,
+    applied: 8,
+    interviewed: 3,
+    offered: 2,
+    sentEmail: 10,
+    phone: 20,
+    receivedEmail: 15
+  }, {
+    like: 9,
+    applied: 1,
+    interviewed: 1,
+    offered: 5,
+    sentEmail: 15,
+    phone: 2,
+    receivedEmail: 5
+  }];
+
+  @computed get monthBarChartStats() {
+    var like = [];
+    var applied = [];
+    var interviewed = [];
+    var sentEmail = [];
+    var phone = [];
+    var receivedEmail = [];
+    var offered = [];
+    for (var i = 0; i < this.monthly.length; i++) {
+      like.push(this.monthly[i].like);
+      applied.push(this.monthly[i].applied);
+      interviewed.push(this.monthly[i].interviewed);
+      sentEmail.push(this.monthly[i].sentEmail);
+      phone.push(this.monthly[i].phone);
+      receivedEmail.push(this.monthly[i].receivedEmail);
+      offered.push(this.monthly[i].offered);
+    }
+    //first feed array of likes
+    //then applied, interviewed, offered
+    var results = {
+      type: 'bar',
+      data: {
+        labels: ['A Long Time Ago', 'The Week Before', 'Last Week', 'This Week'],
+        datasets: [{
+            label: '# of likes',
+            data: like,
+            // fillColor :'yellow',
+            // strokeColor : 'yellow',
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+            ],
+            // borderColor: [
+            //   'rgba(255,99,132,1)',
+            // ],
+            // borderWidth: 1
+          }, {
+            label: '# applied',
+            data: applied,
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+          }, {
+            label: '# interviewed',
+            data: interviewed,
+            backgroundColor: [
+              'rgba(255, 206, 86, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1
+          }, {
+            label: '# emails Sent',
+            data: sentEmail,
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+            ],
+            borderWidth: 1
+          }, {
+            label: '# emails received',
+            data: receivedEmail,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+          }, {
+            label: '# phone calls',
+            data: phone,
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+          }, {
+            label: '# offers',
+            data: offered,
+            backgroundColor: [
+              'rgba(255, 206, 86, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 206, 86, 1)',
+            ],
+
+            borderWidth: 1
+          }
+
+        ],
+      },
+      options: {
+        resposive: false,
+        maintainAspectRatio: true,
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    };
+
+    return results;
+  }
   @computed get barChartStats() {
     var statsArray = [];
     statsArray.push(this.stats.like);
