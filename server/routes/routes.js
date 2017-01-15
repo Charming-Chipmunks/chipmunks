@@ -368,6 +368,7 @@ router.post('/actions/', function(req, res) {
   if (!checkUser(req, req.body.userId)) {
     return rejectUser(res);
   }
+  models.Actions.create({
     type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
     company:        req.body.company,
     description:    req.body.description, //text field with more description of the task / event
