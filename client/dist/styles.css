@@ -92,6 +92,13 @@
   width: 100%;
 }
 
+.addContactButton{
+  width: 100px;
+  height: 70px;
+  background-color: grey;
+  border-radius: 4px;
+}
+
 /*
  * Add Company
 */
