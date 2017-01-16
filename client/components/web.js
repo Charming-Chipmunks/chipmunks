@@ -26,6 +26,9 @@ import MainRightSidebar           from './MainRightSidebar';
     axios.get('/user')
       .then(function(response) {
         Store.currentUserId = response.data.id;
+        Store.userName = response.data.firstname + ' ' + response.data.lastname;
+        
+        console.log('user: ', Store.userName)
 
         // gets the list of "favored jobs"
         axios.get('/jobs/' + Store.currentUserId + '/favored')

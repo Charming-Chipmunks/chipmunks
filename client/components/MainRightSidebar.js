@@ -55,13 +55,14 @@ export default class MainRightSidebar extends React.Component {
       <div className='greyBorder'>
           <List>
             <Subheader>General</Subheader>
+            <ListItem primaryText={<Link style={{color:'black'}} to='/'>Home</Link>} />
             <ListItem primaryText={<Link style={{color:'black'}} to='/preferences'>Preferences</Link>} />
             <ListItem primaryText={<Link style={{color:'black'}} to='/activitiesMain'>Actions Home</Link>} />
-            <ListItem primaryText={<Link style={{color:'black'}} to='/activitiesMain'>Jobs Home</Link>} />
+            <ListItem primaryText={<Link style={{color:'black'}} to='/rateJobs'>Jobs Home</Link>} />
             <br />
             <Subheader>Statistics</Subheader>
             <ListItem primaryText="Actions"
-              initiallyOpen={true}
+              initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={[
                 <ListItem key={1} open={this.state.statsOpen} primaryText="Daily"/>,
@@ -70,7 +71,7 @@ export default class MainRightSidebar extends React.Component {
               ]}
             />
             <ListItem primaryText="Jobs" 
-              initiallyOpen={true}
+              initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={[
                 <ListItem key={1} primaryText="Daily"/>,

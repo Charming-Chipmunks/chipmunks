@@ -71,6 +71,7 @@
     "https": "^1.0.0",
     "install": "^0.8.4",
     "jquery": "^3.1.1",
+    "macos-tabs": "^1.2.0",
     "material-icons": "^0.1.0",
     "material-ui": "^0.16.6",
     "meetup-api": "^1.4.6",
