@@ -179,7 +179,7 @@ var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthly
     if (res) {
       res.json(results);
     } else {
-      console.log(monthlyRes);
+      // console.log(monthlyRes);
       // console.log('!!!!!!!!!!!!!', results);
       cb(results, multipleWeekStats);
       if (multipleWeekStats.length !== 4) {
