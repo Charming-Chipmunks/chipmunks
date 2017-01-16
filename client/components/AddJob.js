@@ -1,8 +1,12 @@
-import React from 'react';
-import { observer } from 'mobx-react';
-import Store from './Store';
-import axios from 'axios';
-import { toJS } from 'mobx';
+import React                    from 'react';
+import { observer }             from 'mobx-react';
+import Store                    from './Store';
+import axios                    from 'axios';
+import { toJS }                 from 'mobx';
+
+import TextField                from 'material-ui/TextField';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
+import Snackbar                 from 'material-ui/Snackbar';
 //import Growl from 'Growl/growl.react';
 
 @observer class AddJob extends React.Component {
@@ -10,26 +14,14 @@ import { toJS } from 'mobx';
 
   constructor(props) {
     super(props);
-    //this.growler = null;
-
   }
-
-  // componentDidMount () {
-  //   Growl.setPosition('tr');
-  //   Growl.setMaxToShow(1);
-
-  //   this.growler = this.refs.growler;
-  // }
-
-  // growl () {
-  //   this.growler.addNotification(level, message);
-  // }
 
   change(e) {
     Store.newJob[e.target.name] = e.target.value;
   }
   save(e) {
-    //e.preventDefault();
+    e.preventDefault();
+    
     Store.newJob.userid = Store.currentUserId;
     Store.newJob.id = Store.currentUserId;
     console.log('current Store.currentUserId :', Store.currentUserId);
@@ -103,7 +95,6 @@ import { toJS } from 'mobx';
               <div className="createJob" onClick={this.save}>Save Opportunity</div>
           </form>
         </div> 
-        {/*<Growl ref={"growler"} />*/}
       </div>
     );
   }

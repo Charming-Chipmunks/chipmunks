@@ -242,9 +242,7 @@ import ContactModal             from './ContactModal'
                 style={modalStyles}
                 contentLabel="No Overlay Click Modal"> 
 
-          <ContactModal onClick={this.closeContactModal.bind(this)} job={thisJob} 
-                        selected={Store.selectedActivityBox}> 
-            <h2>This is so meta</h2>
+          <ContactModal onClick={this.closeContactModal.bind(this)} job={thisJob}> 
           </ContactModal>
           </Modal>
 
@@ -257,7 +255,6 @@ import ContactModal             from './ContactModal'
 
           <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} 
                           action={jobActions[this.state.actionNum]} selected={Store.selectedActivityBox}> 
-            <h2>This is so meta</h2>
           </ActivityModal>
 
         </Modal>

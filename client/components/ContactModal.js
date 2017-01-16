@@ -16,6 +16,18 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.contact) {
+      Store.newContact.firstname = this.props.contact.firstname;
+      Store.newContact.lastname = this.props.contact.lastname;
+      Store.newContact.email = this.props.contact.email;
+      Store.newContact.mobilePhone = this.props.contact.mobilePhone;
+      Store.newContact.workPhone = this.props.contact.workPhone;
+      Store.newContact.title = this.props.contact.title;
+      // i would like to add a notes field for contacts 
+    }
+  }
+
   handleClick () {
 
     var obj = {

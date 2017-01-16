@@ -10,6 +10,7 @@ import Store              from './Store';
 import Param              from './Param';
 
 @observer class ShowParams extends React.Component {
+  
   constructor(props) {
     super(props);
     this.getParams = this.getParams.bind(this);
@@ -21,7 +22,6 @@ import Param              from './Param';
       keywords: '',
       location: ''
     };
-
   }
 
   getParams() {
@@ -41,6 +41,8 @@ import Param              from './Param';
   }
 
   saveParam(e) {
+    e.preventDefault();
+
     this.setState({spin: true});
     e.preventDefault();
     var that = this;
@@ -76,7 +78,7 @@ import Param              from './Param';
         });          
 
       // need to quert database to get the number of new jobs...
-    }, 1500);
+    }, 3000);
   }
 
   change(e) {
@@ -143,8 +145,8 @@ import Param              from './Param';
       </div>
     </MuiThemeProvider>
     <MuiThemeProvider>
-      <Snackbar open={this.state.snack}  message={`${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`} autoHideDuration={4000}
-                onRequestClose={this.handleRequestClose}/>
+      <Snackbar open={this.state.snack}  message={`${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`} 
+                autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
     </MuiThemeProvider>
     </div>
     );
