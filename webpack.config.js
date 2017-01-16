@@ -10,9 +10,26 @@ module.exports = {
     filename: './client/dist/bundle.js'
   },
 
+////////////////////////////////////////////////
+///////////// DON'T REMOVE THIS ////////////////
+////////////////////////////////////////////////
   // plugins: [
-  //   new webpack.HotModuleReplacementPlugin(),
+  //   new webpack.DefinePlugin({ // <-- Key to reducing React's size
+  //     'process.env': {
+  //       'NODE_ENV': JSON.stringify('production')
+  //     }
+  //   }),
+  //   new webpack.optimize.DedupePlugin(), // Dedupe similar code
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     compress: {
+  //       screw_ie8: true,
+  //       warnings: false
+  //     }
+  //   }), // Minify everything
+  //   new webpack.optimize.AggressiveMergingPlugin() // Merge chunks
   // ],
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
   module: {
     loaders: [{
@@ -24,7 +41,7 @@ module.exports = {
       loader: 'css-loader' // This are the loaders
     }]
   }
-    //***********  SAVE
+  //***********  SAVE
   //  rules: [
   //    { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
   //    { test: /\.css$/, exclude: /node_modules/, loader: 'css-loader' }
