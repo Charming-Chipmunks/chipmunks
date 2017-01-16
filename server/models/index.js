@@ -10,6 +10,7 @@ var db        = {};
 var sequelize = new Sequelize(config.name, config.username, config.password, {
   dialect: config.dialect,
   host: config.host,
+  port: config.port
   // logging: false,
 });
 
