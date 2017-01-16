@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    status: DataTypes.ENUM('new', 'favored', 'rejected', 'expired', 'unfavored', 'closed')
+    status: DataTypes.ENUM('new', 'favored', 'rejected', 'expired', 'unfavored', 'closed'),
+    progress: DataTypes.ENUM('liked', 'applied', 'phoneInterview', 'webInterview', 'personalInterview', 'accepted')
   }, {
     classMethods: {
       associate: function(models) {

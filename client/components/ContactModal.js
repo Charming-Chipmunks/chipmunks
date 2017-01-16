@@ -24,6 +24,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
       Store.newContact.mobilePhone = this.props.contact.mobilePhone;
       Store.newContact.workPhone = this.props.contact.workPhone;
       Store.newContact.title = this.props.contact.title;
+      Store.newContact.notes = this.props.contact.notes;
       // i would like to add a notes field for contacts 
     }
   }
@@ -42,23 +43,40 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
     // post if there is at least a 1st and last name
     if (Store.newContact.firstname !== '' && Store.newContact.lastname !== '') {
 
-      axios.post(`/contacts/${Store.currentUserId}/${this.props.job.id}`, obj)
-      .then(function(response) {
-        Store.contacts.push(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      if (!this.props.contact) {
+        axios.post(`/contacts/${Store.currentUserId}/${this.props.job.id}`, obj)
+        .then(function(response) {
+          Store.contacts.push(response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      } else {
+        // update the contact via Axios
+        axios.put(`/contacts/${Store.currentUserId}/${this.props.job.id}`, obj)
+        .then(function(response) {
+
+          Store.contacts.push(response.data);
+        
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      } 
+
+      Store.newContact.firstname = '';
+      Store.newContact.lastname = '';
+      Store.newContact.email = '';
+      Store.newContact.mobilePhone = '';
+      Store.newContact.workPhone = '';
+      Store.newContact.title = '';
+      
+      this.props.onClick();
+     
+    } else {
+      // send a snakcbar letting the la first and last name is needed
     } 
 
-    Store.newContact.firstname = '';
-    Store.newContact.lastname = '';
-    Store.newContact.email = '';
-    Store.newContact.mobilePhone = '';
-    Store.newContact.workPhone = '';
-    Store.newContact.title = '';
-    
-    this.props.onClick();
 
   }
 

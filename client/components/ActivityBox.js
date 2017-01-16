@@ -3,7 +3,7 @@ import React                        from 'react';
 import { observer }                 from 'mobx-react';
 import Store                        from './Store';
 import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
-import {red900, yellow500, blue500, grey300, grey900 } from 'material-ui/styles/colors';
+import { grey300, grey900 }         from 'material-ui/styles/colors';
 import FontIcon                     from 'material-ui/FontIcon';
 import Popover                      from 'material-ui/Popover';
 import Menu                         from 'material-ui/Menu';
@@ -21,8 +21,6 @@ import MenuItem                     from 'material-ui/MenuItem';
     this.state              = {open: false};
   }
 
-
-
   handleClick (e) {
     e.preventDefault();
     console.log('handling click?');
@@ -39,10 +37,13 @@ import MenuItem                     from 'material-ui/MenuItem';
   }
 
   selectItem (e) {
-    e.preventDefault();
+    //e.preventDefault();
     console.log('selected Item!!!!!!!!!!', e);
     // I can get a selected item here and now I will need to update info.
     // how do we keep rack of the interview type and  track that progress
+
+    Store.addActivity.type = e;
+    this.setState({open: false});
 
   }
 
@@ -66,6 +67,7 @@ import MenuItem                     from 'material-ui/MenuItem';
       fontSize: '40px'
     };
 
+    var interview = this.props.type;
 
     return ( 
         <div className="activityBox">
@@ -74,21 +76,22 @@ import MenuItem                     from 'material-ui/MenuItem';
          {/* <i className="material-icons">{this.props.icon}</i>*/}
           </MuiThemeProvider>
           <div className="activityBoxName">{this.props.type}</div>
-        <MuiThemeProvider>
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={this.handleRequestClose}>
-          <Menu desktop={true} >
-            <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "phone")} />
-            <MenuItem primaryText="Web" />
-            <MenuItem primaryText="In Person" />
-            <MenuItem primaryText="At Home Assignment" />
-          </Menu>
-        </Popover>
-        </MuiThemeProvider>
+        {this.props.type === 'Interview'  &&
+          <MuiThemeProvider>
+            <Popover
+              open={this.state.open}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleRequestClose}>
+              <Menu desktop={true} >
+                <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "phone")} />
+                <MenuItem primaryText="Web" onClick={this.selectItem.bind(this, "web")} />
+                <MenuItem primaryText="In Person" onClick={this.selectItem.bind(this, "inperson")} />
+                <MenuItem primaryText="At Home Assignment" onClick={this.selectItem.bind(this, "athomeassignment")} />
+              </Menu>
+            </Popover>
+          </MuiThemeProvider>}
         </div>
     );
   }
