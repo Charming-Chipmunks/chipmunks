@@ -157,7 +157,7 @@ class GoalsGraphView extends React.Component {
 
 export default class LandingPage extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
     componentWillMount() {

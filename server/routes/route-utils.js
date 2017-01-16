@@ -64,6 +64,7 @@ module.exports = {
             user.addActions(applyAction);
             job.addActions(applyAction);
             newActions.push(applyAction);
+            console.log('***** Apply Action', res);
             res.json(applyAction);
 
           }).catch((err) => {

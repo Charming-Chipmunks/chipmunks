@@ -12,8 +12,7 @@ import { toJS } from 'mobx';
   }
   filter(company) {
     var text = Store.filterText.text.toLowerCase();
-    // company = toJS(company);
-    // console.log(company);
+
     if (company.company.toLowerCase().includes(text)) {
       return true;
     }
@@ -29,9 +28,6 @@ import { toJS } from 'mobx';
     var list = Store.jobList.filter(this.filter);
 
     list = list.sort((a, b) => a['company'].localeCompare(b['company']));
-    // list = list.filter(company => company['company'] !== '');
-    // var list = Store.jobList;
-
 
     var previousLetter = 'A';
     var count = 0;
@@ -40,6 +36,7 @@ import { toJS } from 'mobx';
 
     list.forEach(company => {
       var firstLetter = company.company.slice(0, 1);
+      firstLetter = firstLetter.toUpperCase();
       if (firstLetter.match(/([0-9])/)) {
         if (obj['#'] === undefined) {
           obj['#'] = [];
@@ -61,7 +58,7 @@ import { toJS } from 'mobx';
 
     return (
       <div className="leftSideBar z-depth-3">
-        <h5 className="rateCompanyText"> {list.length} Open Opportunities</h5>
+        <h5 className="leftSideBarResults"> {list.length} Open Opportunities</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {
             return (<SideBarLetter list={letter} key={index} letter={keys[index]}/>);

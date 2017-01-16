@@ -30,7 +30,7 @@ import Contact      from './Contact';
         <div>
           {contacts.map((contact, index) => {
             // create a contact element here
-            return (<Contact contact={contact} key={index} />);
+            return (<Contact contact={contact} key={index} job={this.props.job} />);
           })}
         </div>
       </div>

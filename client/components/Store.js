@@ -30,6 +30,7 @@ class Store {
     scheduledTime: '',
     completedTime: '',
     actionSource: 'user',
+    notes: '',
   };
 
   @observable contacts = [{

@@ -29,10 +29,10 @@ import MainRightSidebar           from './MainRightSidebar';
         Store.userName = response.data.firstname + ' ' + response.data.lastname;
         
         console.log('user: ', Store.userName)
+
         // gets the list of "favored jobs"
         axios.get('/jobs/' + Store.currentUserId + '/favored')
           .then(function(response) {
-            console.log('got currentJobs');
             Store.jobList = response.data;
           })
           .catch(function(error) {
@@ -51,29 +51,20 @@ import MainRightSidebar           from './MainRightSidebar';
             console.log(error);
           });
 
-        // // GET ALL THE CONTACTS
-        // axios.get(`/contacts/${Store.currentUserId}/`)
-        //   .then(function(response) {
-        //     // console.log('actions3', response.data);
-        //     Store.actions = response.data;
-        //   })
-        //   .catch(function(error) {
-        //     console.log(error);
-        //   });``
+        // get parameters
+        axios.get('/parameter/' + Store.currentUserId)
+          .then(function(response) {
+            Store.params = response.data.Parameters;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+          
       })
       .catch(function(error) {
         console.log(error);
       });
 
-    // get parameters
-    axios.get('/parameter/' + Store.currentUserId)
-      .then(function(response) {
-        console.log('params data', response.data);
-        Store.params = response.data.Parameters;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 
   render() {
