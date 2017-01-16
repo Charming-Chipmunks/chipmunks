@@ -8,6 +8,7 @@ import Store                    from './Store';
 import TextField                from 'material-ui/TextField';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
+import Snackbar                 from 'material-ui/Snackbar';
 
 import 'react-day-picker/lib/style.css';
 
@@ -23,7 +24,11 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.saveDate = this.saveDate.bind(this);
-   // this.isDaySelected = this.isDaySelected.bind(this);
+    this.state = {
+      snack: false,
+      errorMessage: '',
+    };
+
   }
 
   componentWillMount() {
@@ -36,10 +41,14 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
   }
 
   saveDate (e, date) {
+    e.preventDefault();
+
     Store.addActivity.scheduledTime = date;
   }
 
-  handleClick () {
+  handleClick (e) {
+
+    e.preventDefault();
 
     Store.addActivity.company = this.props.job.company;
     Store.addActivity.actionSource = 'user';
@@ -80,6 +89,7 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       type: type,
       description:    Store.addActivity.description,
       scheduledTime:  Store.addActivity.scheduledTime,
+     // notes:          Store.addActivity.notes,
       // should also add a check box to complete activity on update
     };
 
@@ -100,22 +110,38 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       this.props.onClick();
     } else { 
       // will have to message that no task type selected.
+      var errorMessage = '';
+      if (Store.selectedActivityBox === -1) {
+        // create part of error for missing actiity type
+        errorMessage += `Please select an Activty Type`;
+        console.log('missing an actity type');
+      }
+
+      if (Store.addActivity.scheduledTime === '') {
+        console.log('store achedules time, ', Store.addActivity.scheduledTime );
+        if (Store.selectedActivityBox === -1) {
+          errorMessage = `Please select an Activty Type and a Scheduled Time`;
+        } else { 
+          errorMessage = `Please select a Scheduled Time`;
+        }
+      }
+    
+      this.setState({
+        errorMessage: errorMessage,
+        snack: true
+      });
     }
   }
 
   change(e) {
-    Store.addActivity.description = e.target.value;
+    Store.addActivity[e.target.name] = e.target.value;
   }
 
 
   render () {
-
-    console.log('Activity Modal Store:', Store.selectedActivityBox);
     
     return (
-      <MuiThemeProvider >
       <div> 
-        <header>Activity Log</header>
         <div className="modalSelectors">
           <div className="activityModalType">
             <div  className="activityTypeHeader"> 
@@ -128,26 +154,34 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
             </div>  
           </div>  
           <div>
-
             <DayPicker onDayClick={ this.saveDate } />
-          
           </div>
         </div>
         <form>
           <div className="row">
             <div className="input-field col s12">
-              <input type="text" name='descriptor' 
-                      onChange={this.change} 
-                      value={Store.addActivity.description}/>
-              <label className="active">Activty Description</label>
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Description" multiLine={true} fullWidth={true}
+                           name="descriptor" onChange={this.change} value={Store.addActivity.description}/>
+              </MuiThemeProvider> 
             </div>
           </div>
-              <TextField hintText="MultiLine with rows: 2 and rowsMax: 4"  multiLine={true}
-                          rows={2} rowsMax={4} />
+          <div className="row">
+            <div className="input-field col s12">  
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Notes" multiLine={true} fullWidth={true}
+                          rows={3} rowsMax={6} name="notes" onChange={this.change} value={Store.addActivity.notes}/>
+              </MuiThemeProvider>         
+            </div>
+          </div>
         </form>
         <div className="activityClose" onClick={this.handleClick.bind(this)}>Save</div>
+        <MuiThemeProvider>
+          <Snackbar open={this.state.snack}  message={`${this.state.errorMessage}`} autoHideDuration={4000}
+                    onRequestClose={this.handleRequestClose}/>
+        </MuiThemeProvider>
+
       </div>
-      </MuiThemeProvider>
     );
   }
 

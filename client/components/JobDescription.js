@@ -28,14 +28,20 @@ import { observer } from 'mobx-react';
       classObject = 'new badge red hide';
       console.log('show');    
     }
+         // console.log('conditional render url: ', this.props.job.url);
 
+    const hasUrl = this.props.job.url;
     return (
       <div className="rateCompanyInfoBox left">
         <h3 className="rateCompanyJob">{this.props.job.jobTitle} 
           <span className={`${classObject}`}></span>  
         </h3>
         <h5 className="rateCompanyName">{this.props.job.company}</h5>
-        <p className="rateCompanyText">{this.props.job.snippet}<a href={this.props.job.url} target="_blank">explore</a></p>
+        <p className="rateCompanyText">{this.props.job.snippet}
+          { hasUrl !== '' &&
+          <a href={this.props.job.url} target="_blank">explore</a>
+          }
+        </p>
       </div>
     );
   }
