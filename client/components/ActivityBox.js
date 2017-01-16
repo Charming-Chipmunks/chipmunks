@@ -58,7 +58,7 @@ import MenuItem                     from 'material-ui/MenuItem';
     if (Store.selectedActivityBox === this.props.id) {
       color = grey900;
     } else {
-      color = grey3x00;
+      color = grey300;
     }
 
     const iconStyles = {
