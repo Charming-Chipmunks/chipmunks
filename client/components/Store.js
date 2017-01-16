@@ -79,141 +79,224 @@ class Store {
     mobilePhone: '',
     workPhone: '',
   }
-  @observable stats = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
-  @observable lastWeekStats = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+  @observable stats = {
+    like: 0,
+    applied: 0,
+    phoneInterview: 0,
+    webInterview: 0,
+    personalInterview: 0,
+    sentEmail: 0,
+    phone: 0,
+    receivedEmail: 0,
+  };
+  @observable lastWeekStats = {
+    like: 0,
+    applied: 0,
+    phoneInterview: 0,
+    webInterview: 0,
+    personalInterview: 0,
+    sentEmail: 0,
+    phone: 0,
+    receivedEmail: 0,
+  };
   @observable monthly = [{
-    like: 10,
-    applied: 9,
-    interviewed: 1,
-    offered: 3,
-    sentEmail: 6,
-    phone: 2,
-    receivedEmail: 2
-  }, {
-    like: 5,
-    applied: 6,
-    interviewed: 5,
-    offered: 1,
+    like: 1,
+    applied: 2,
+    phoneInterview: 3,
+    webInterview: 7,
+    personalInterview: 2,
     sentEmail: 5,
+    phone: 3,
+    receivedEmail: 5
+  }, {
+    like: 2,
+    applied: 3,
+    phoneInterview: 3,
+    webInterview: 7,
+    personalInterview: 2,
+    sentEmail: 3,
     phone: 3,
     receivedEmail: 7
   }, {
-    like: 7,
-    applied: 8,
-    interviewed: 3,
-    offered: 2,
-    sentEmail: 10,
-    phone: 20,
-    receivedEmail: 15
+    like: 3,
+    applied: 4,
+    phoneInterview: 3,
+    webInterview: 7,
+    personalInterview: 2,
+    sentEmail: 5,
+    phone: 1,
+    receivedEmail: 3
   }, {
-    like: 9,
-    applied: 1,
-    interviewed: 1,
-    offered: 5,
-    sentEmail: 15,
-    phone: 2,
-    receivedEmail: 5
+    like: 4,
+    applied: 2,
+    phoneInterview: 3,
+    webInterview: 7,
+    personalInterview: 2,
+    sentEmail: 10,
+    phone: 6,
+    receivedEmail: 7
   }];
 
   @computed get monthBarChartStats() {
-    var like = [];
-    var applied = [];
-    var interviewed = [];
-    var sentEmail = [];
-    var phone = [];
-    var receivedEmail = [];
-    var offered = [];
+    // var like = [];
+    // var applied = [];
+    // var interviewed = [];
+    // var sentEmail = [];
+    // var phone = [];
+    // var receivedEmail = [];
+    // var offered = [];
+    // for (var i = 0; i < this.monthly.length; i++) {
+    //   like.push(this.monthly[i].like);
+    //   applied.push(this.monthly[i].applied);
+    //   interviewed.push(this.monthly[i].interviewed);
+    //   sentEmail.push(this.monthly[i].sentEmail);
+    //   phone.push(this.monthly[i].phone);
+    //   receivedEmail.push(this.monthly[i].receivedEmail);
+    //   offered.push(this.monthly[i].offered);
+    // }
+    var month = {
+      '3': [],
+      '2': [],
+      '1': [],
+      '0': [],
+    };
+    var createWeek = function(i) {
+      month[i].push(this.monthly[i].like);
+      month[i].push(this.monthly[i].applied);
+      month[i].push(this.monthly[i].phoneInterview);
+      month[i].push(this.monthly[i].webInterview);
+      month[i].push(this.monthly[i].personalInterview);
+      month[i].push(this.monthly[i].sentEmail);
+      month[i].push(this.monthly[i].receivedEmail);
+      month[i].push(this.monthly[i].phone);
+    }.bind(this);
+
     for (var i = 0; i < this.monthly.length; i++) {
-      like.push(this.monthly[i].like);
-      applied.push(this.monthly[i].applied);
-      interviewed.push(this.monthly[i].interviewed);
-      sentEmail.push(this.monthly[i].sentEmail);
-      phone.push(this.monthly[i].phone);
-      receivedEmail.push(this.monthly[i].receivedEmail);
-      offered.push(this.monthly[i].offered);
+      if (i === 0) {
+        createWeek(i);
+      }
+      if (i === 1) {
+        createWeek(i);
+      }
+      if (i === 2) {
+        createWeek(i);
+      }
+      if (i === 3) {
+        createWeek(i);
+      }
     }
+    // console.log('log', like.length);
     //first feed array of likes
     //then applied, interviewed, offered
     var results = {
-      type: 'bar',
+      type: 'horizontalBar',
       data: {
-        labels: ['A Long Time Ago', 'The Week Before', 'Last Week', 'This Week'],
+        labels: ['Liked', 'Applied', 'Phone Interviews', 'webInterviews', 'Personal Interviews', 'Emails Sent', 'Emails Received', '# of Phone calls'],
         datasets: [{
-          label: '# of likes',
-          data: like,
-            // fillColor :'yellow',
-            // strokeColor : 'yellow',
+          label: 'Week 4',
+          data: month[3],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+
           ],
+          // borderColor: [
+          //   'rgba(255,99,132,1)',
+          //   'rgba(54, 162, 235, 1)',
+          //   'rgba(255, 206, 86, 1)',
+          //   'rgba(75, 192, 192, 1)',
+          // ],
           borderColor: [
             'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+
           ],
           borderWidth: 1
         }, {
-          label: '# applied',
-          data: applied,
+          label: 'Week 3',
+          data: month[2],
           backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
             'rgba(54, 162, 235, 0.2)',
           ],
           borderColor: [
             'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
           ],
           borderWidth: 1
         }, {
-          label: '# interviewed',
-          data: interviewed,
+          label: 'Week 2',
+          data: month[1],
           backgroundColor: [
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
             'rgba(255, 206, 86, 0.2)',
           ],
           borderColor: [
             'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 206, 86, 1)',
           ],
           borderWidth: 1
         }, {
-          label: '# emails Sent',
-          data: sentEmail,
+          label: 'Week 1',
+          data: month[0],
           backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
             'rgba(75, 192, 192, 0.2)',
           ],
           borderColor: [
             'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)',
           ],
           borderWidth: 1
-        }, {
-          label: '# emails received',
-          data: receivedEmail,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)'
-          ],
-          borderWidth: 1
-        }, {
-          label: '# phone calls',
-          data: phone,
-          backgroundColor: [
-            'rgba(54, 162, 235, 0.2)',
-          ],
-          borderColor: [
-            'rgba(54, 162, 235, 1)',
-          ],
-          borderWidth: 1
-        }, {
-          label: '# offers',
-          data: offered,
-          backgroundColor: [
-            'rgba(255, 206, 86, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 206, 86, 1)',
-          ],
-
-          borderWidth: 1
-        }
-
-        ],
+        }, ],
       },
       options: {
         resposive: false,
@@ -234,27 +317,39 @@ class Store {
     var statsArray = [];
     statsArray.push(this.stats.like);
     statsArray.push(this.stats.applied);
-    statsArray.push(this.stats.interviewed);
-    statsArray.push(this.stats.offered);
+    statsArray.push(this.stats.phoneInterview);
+    statsArray.push(this.stats.webInterview);
+    statsArray.push(this.stats.personalInterview);
+    statsArray.push(this.stats.phone);
+    statsArray.push(this.stats.sentEmail);
+    statsArray.push(this.stats.receivedEmail);
     // statsArray.push(this.stats.phone);
     var results = {
       type: 'horizontalBar',
       data: {
-        labels: ['Liked', 'Applied', 'Interviewed', 'Offered'],
+        labels: ['Liked', 'Applied', 'Phone Interviews', 'Web Interviews', 'Personal Interviews', 'Emails Sent', 'Emails Received', '# of Phone calls'],
         datasets: [{
           label: '# of actions',
           data: statsArray,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(96, 96, 96, 0.2)',
             'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(50, 255, 255, 0.2)',
+            'rgba(0, 0, 0, 0.2)',
+            'rgba(255, 153, 51, 0.2)',
           ],
           borderColor: [
-            'rgba(255,99,132,1)',
             'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
+            'rgba(255,99,132,1)',
+            'rgba(96, 96, 96, 1)',
             'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(50, 255, 255, 1)',
+            'rgba(0, 0, 0, 1)',
+            'rgba(255, 153, 51, 1)',
           ],
           borderWidth: 1
         }],
