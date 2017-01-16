@@ -179,12 +179,16 @@ var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthly
     if (res) {
       res.json(results);
     } else {
+      console.log(monthlyRes);
       // console.log('!!!!!!!!!!!!!', results);
       cb(results, multipleWeekStats);
-      if (multipleWeekStats.length === 4) {
-        console.log(multipleWeekStats);
+      if (multipleWeekStats.length !== 4) {
+        weekStats(userId, numOfWeeks - 1, res, cb, multipleWeekStats, monthlyRes);
+      } else {
+        console.log('arraylength', multipleWeekStats.length);
         monthlyRes.json(multipleWeekStats);
       }
+
     }
   }).catch(function(error) {
     console.log(error);
@@ -203,9 +207,11 @@ var monthWeeklyStats = function(userId, res) {
   var cb = function(data, array) {
     array.push(data);
   };
-  for (let i = 3; i >= 0; i--) {
-    weekStats(userId, i, null, cb, multipleWeekStats, res);
-  }
+  var results = [];
+  // THIS IS NOT RETURNING IN ORDER.
+  // for (let i = 3; i >= 0; i--) {
+  weekStats(userId, 3, null, cb, multipleWeekStats, res);
+
   // console.log('results', results);
 };
 // monthWeeklyStats(1, res);
