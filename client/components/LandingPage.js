@@ -161,14 +161,16 @@ export default class LandingPage extends React.Component {
   }
 
     componentWillMount() {
-      axios.get(`/actions/${Store.currentUserId}`)
-      .then(function(response) {
-        Store.actions = response.data;
-        // console.log('filteredActions: ', filteredActions);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      if(Store.currentUserId){
+        axios.get(`/actions/${Store.currentUserId}`)
+        .then(function(response) {
+          Store.actions = response.data;
+          // console.log('filteredActions: ', filteredActions);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
     }
 
   render() {
@@ -195,7 +197,7 @@ export default class LandingPage extends React.Component {
       <div style={styles.landingContainer}>
         <div className='col m12 left'>
           <div style={styles.mainDiv}>
-            <h5>Welcome, Joosang!</h5>
+            <h5>Welcome, {Store.userName}!</h5>
           </div>
           <div style={{flex:1}}>
             <LandingHeader title="Your Interests"/>
