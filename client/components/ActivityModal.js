@@ -37,6 +37,14 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       Store.addActivity.scheduledTime = this.props.action.scheduledTime;
       Store.addActivity.description = this.props.action.description;
       Store.addActivity.company = this.props.action.company;
+      // need to set the activty type
+      typeArray.forEach((type, index) => {
+
+        if (this.props.action.type === type) {
+          Store.selectedActivityBox = index;
+        }
+      });
+      
     }
   }
 
@@ -62,19 +70,24 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       var type = activityArray[activityNum];
       type = type.toLowerCase();
 
+      console.log('curr userId for send to POST Actions:', Store.currentUserId);
+
       var obj = {
-        userId: Store.currentUserId,
-        jobId: this.props.job.id,
-        type: type,
-        description: Store.addActivity.description,
-        company: this.props.job.company,
-        actionSource: 'user',
+        userId:         Store.currentUserId,
+        jobId:          this.props.job.id,
+        type:           type,
+        description:    Store.addActivity.description,
+        notes:          Store.addActivity.notes,
+        company:        this.props.job.company,
+        actionSource:   'user',
         scheduledTime:  Store.addActivity.scheduledTime,
-        completedTime: null
+        completedTime:  null
       };
 
-    if (this.props.action !== undefined) {
+    if (this.props.id === -1) {
       // post if it is a new action 
+
+      console.log('new event');
       axios.post(`/actions`, obj)
       .then(function(response) {
         Store.jobActions.push(response.data);
@@ -85,18 +98,25 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       });
     } else {
      // put to update if it is an edit 
-    var putObj = {
-      type: type,
-      description:    Store.addActivity.description,
-      scheduledTime:  Store.addActivity.scheduledTime,
-     // notes:          Store.addActivity.notes,
-      // should also add a check box to complete activity on update
-    };
+     console.log('edited event.......');
+      var putObj = {
+        type:           type,
+        description:    Store.addActivity.description,
+        scheduledTime:  Store.addActivity.scheduledTime,
+        notes:          Store.addActivity.notes,
+        // should also add a check box to complete activity on update
+      };
 
-      axios.put(`/actions`, putObj)
-      .then(function(response) {
-        Store.jobActions.push(response.data);
+      var that = this;
 
+      axios.put(`/actions/${this.props.action.id}`, putObj)
+      .then((response) => {
+        console.log(Store.jobActions[that.props.id]);
+        //  ******** talk to Emm about updating 
+        Store.jobActions[that.props.id].notes = Store.addActivity.notes;
+        // Store.jobActions[that.props.id].description = Store.addActivity.description;
+        // Store.jobActions[that.props.id].scheduledTime = Store.addActivity.scheduledTime;
+        // Store.jobActions[that.props.id].type = type;
       })
       .catch(function(error) {
         console.log(error);
@@ -106,8 +126,9 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       Store.selectedActivityBox = -1;
       Store.addActivity.description = '';
       Store.addActivity.scheduledTime = '';
-
+      Store.addActivity.notes = '';
       this.props.onClick();
+    
     } else { 
       // will have to message that no task type selected.
       var errorMessage = '';
@@ -125,13 +146,13 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
           errorMessage = `Please select a Scheduled Time`;
         }
       }
-    
-      this.setState({
-        errorMessage: errorMessage,
-        snack: true
-      });
-    }
-  }
+    }    
+  this.setState({
+    errorMessage: errorMessage,
+    snack: true
+  });
+}
+
 
   change(e) {
     Store.addActivity[e.target.name] = e.target.value;
@@ -162,7 +183,7 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
             <div className="input-field col s12">
               <MuiThemeProvider >
                 <TextField floatingLabelText="Description" multiLine={true} fullWidth={true}
-                           name="descriptor" onChange={this.change} value={Store.addActivity.description}/>
+                           name="description" onChange={this.change} value={Store.addActivity.description}/>
               </MuiThemeProvider> 
             </div>
           </div>

@@ -352,11 +352,15 @@ router.get('/actions/:userId/:jobId', function(req, res) {
   });
 });
 
-router.put('/actions', function(req, res) {
 
+// Updates an action when a modal updates it
+router.put('/actions/:id', function(req, res) {
+
+  console.log('type: ', req.body.type);
   models.Action.update({ 
     type:           req.body.type,
     description:    req.body.description,
+    notes:          req.body.notes,
     scheduledTime:  req.body.scheduledTime,
     completedTime:  req.body.completedTime
   }, {
@@ -384,15 +388,15 @@ router.post('/actions/', function(req, res) {
   if (!checkUser(req, req.body.userId)) {
     return rejectUser(res);
   }
-  models.Actions.create({
+  models.Action.create({
     type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
     company:        req.body.company,
     description:    req.body.description, //text field with more description of the task / event
     actionSource:   req.body.actionSource, // tasks, user, reminder, company
     completedTime:  req.body.completedTime,
     scheduledTime:  req.body.scheduledTime,
-    contactId:      req.body.contactId
-
+    contactId:      req.body.contactId,
+    notes:          req.body.notes
   }).then((action) => {
 
     if (!action) {
@@ -485,7 +489,8 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
     email:        req.body.email,
     mobilePhone:  req.body.mobilePhone,
     workPhone:    req.body.workPhone,
-    title:        req.body.title
+    title:        req.body.title,
+    notes:        req.body.notes
   }).then((contacts) => {
     if (!contacts) {
       res.status(404);
@@ -521,6 +526,61 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 
 });
 
+
+
+// CONTACTS - PUT - UPDTAES ONE CONTACT IN THE DATABASE
+router.put('/contacts/:userId/:jobId', function(req, res) {
+  if (!checkUser(req, req.params.userId)) {
+    return rejectUser(res);
+  }
+
+  models.Contact.update({
+    firstname:    req.body.firstname,
+    lastname:     req.body.lastname,
+    email:        req.body.email,
+    mobilePhone:  req.body.mobilePhone,
+    workPhone:    req.body.workPhone,
+    title:        req.body.title,
+    notes:        req.body.notes
+  }, {
+    where: {
+      UserId: req.params.userId,
+      id: req.params.jobId
+    }
+  }).then((contacts) => {
+    if (!contacts) {
+      res.status(404);
+      res.json({});
+    } else {
+
+      // associate Job
+      models.Job.find({
+        where: {
+          id: req.params.jobId
+        }
+      }).then((job) => {
+        job.addContacts(contacts);
+      });
+
+      // associate User
+      models.User.find({
+        where: {
+          id: req.params.userId
+        }
+      }).then((user) => {
+        user.addContacts(contacts);
+      });
+
+      res.json(contacts);
+    }
+
+  }).catch((err) => {
+    console.error(err);
+    res.status(500);
+    res.json({ error: err });
+  });
+
+});
 
 // CONTACTS - GET A CONTACT and RELATED JOB INFO GIVEN CONTACT EMAIL AND USERID
 router.get('/contacts/jobs/:email/:userId', function(req, res) {
@@ -770,26 +830,26 @@ router.get('/ponme/:parameterId', function(req, res) {
 });
 
 //testing
-router.get('/test2/:userId', function(req, res) {
+// router.get('/test2/:userId', function(req, res) 
 
-  if (!checkUser(req, req.params.userId)) {
-    return rejectUser(res);
-  }
+//   if (!checkUser(req, req.params.userId)) {
+//     return rejectUser(res);
+//   }
 
-  models.User.findAll({
-    include: [models.Job]
-  }).then((parameter) => {
-    if (!parameter) {
-      res.status(404);
-      res.json({});
-    } else {
-      res.json(parameter);
-    }
-  }).catch((err) => {
-    console.error(err);
-    res.status(500);
-    res.json({ error: err });
-  });
-});
+//   models.User.findAll({
+//     include: [models.Job]
+//   }).then((parameter) => {
+//     if (!parameter) {
+//       res.status(404);
+//       res.json({});
+//     } else {
+//       res.json(parameter);
+//     }
+//   }).catch((err) => {
+//     console.error(err);
+//     res.status(500);
+//     res.json({ error: err });
+//   });
+// });
 
 module.exports = router;

@@ -244,7 +244,7 @@ import ContactModal             from './ContactModal'
 
           <ContactModal onClick={this.closeContactModal.bind(this)} job={thisJob}> 
           </ContactModal>
-          </Modal>
+        </Modal>
 
         {/* activity modal */}
         <Modal  isOpen={this.state.modalIsOpen}
@@ -253,8 +253,8 @@ import ContactModal             from './ContactModal'
                 style={modalStyles}
                 contentLabel="No Overlay Click Modal"> 
 
-          <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} 
-                          action={jobActions[this.state.actionNum]} selected={Store.selectedActivityBox}> 
+          <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} id={this.state.actionNum}
+                          action={jobActions[this.state.actionNum]} > 
           </ActivityModal>
 
         </Modal>

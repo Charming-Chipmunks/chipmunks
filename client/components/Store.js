@@ -78,6 +78,7 @@ class Store {
     email: '',
     mobilePhone: '',
     workPhone: '',
+    notes: '',
   }
   @observable stats = {
     like: 0,
