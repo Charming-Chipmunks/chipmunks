@@ -34,7 +34,16 @@ var findJobs = function(userId, cb, res) {
   }).then(function(jobs) {
     // GET ALL ACTIVE JOBS
     var list = JSON.parse(JSON.stringify(jobs));
-    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+    var actionList = {
+      like: 0,
+      applied: 0,
+      phoneInterview: 0,
+      webInterview: 0,
+      personalInterview: 0,
+      sentEmail: 0,
+      phone: 0,
+      receivedEmail: 0,
+    };
     var bigList = [];
     var size = 0;
     list.forEach((element, index) => {
@@ -74,15 +83,19 @@ var calculateStatsForJob = function(actionList, results) {
   // console.log(actionList);
   actionList.forEach(action => {
     // console.log('actiontype', action.type);
+
+
     if (action.completedTime) {
       if (action.type === 'like') {
         results.like++;
       } else if (action.type === 'apply') {
         results.applied++;
-      } else if (action.type === 'interview') {
-        results.interviewed++;
-      } else if (action.type === 'offer') {
-        results.offer++;
+      } else if (action.type === 'phoneInterview') {
+        results.phoneInterview++;
+      } else if (action.type === 'webInterview') {
+        results.webInterview++;
+      } else if (action.type === 'personalInterview') {
+        results.personalInterview++;
       } else if (action.type === 'phone') {
         results.phone++;
       } else if (action.type === 'sentEmail') {
@@ -111,7 +124,16 @@ var lastWeekStats = function(userId, res) {
     }
   }).then(function(actions) {
     console.log(JSON.parse(JSON.stringify(actions)));
-    var actionList = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+    var actionList = {
+      like: 0,
+      applied: 0,
+      phoneInterview: 0,
+      webInterview: 0,
+      personalInterview: 0,
+      sentEmail: 0,
+      phone: 0,
+      receivedEmail: 0,
+    };
     calculateStatsForJob(actions, actionList);
     res.json(actionList);
 
@@ -143,17 +165,30 @@ var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthly
     }
   }).then(function(actions) {
     actions = JSON.parse(JSON.stringify(actions));
-    var results = { like: 0, applied: 0, interviewed: 0, offered: 0, sentEmail: 0, phone: 0, receivedEmail: 0 };
+    var results = {
+      like: 0,
+      applied: 0,
+      phoneInterview: 0,
+      webInterview: 0,
+      personalInterview: 0,
+      sentEmail: 0,
+      phone: 0,
+      receivedEmail: 0,
+    };
     calculateStatsForJob(actions, results);
     if (res) {
       res.json(results);
     } else {
+      console.log(monthlyRes);
       // console.log('!!!!!!!!!!!!!', results);
       cb(results, multipleWeekStats);
-      if (multipleWeekStats.length === 4) {
-        console.log(multipleWeekStats);
+      if (multipleWeekStats.length !== 4) {
+        weekStats(userId, numOfWeeks - 1, res, cb, multipleWeekStats, monthlyRes);
+      } else {
+        console.log('arraylength', multipleWeekStats.length);
         monthlyRes.json(multipleWeekStats);
       }
+
     }
   }).catch(function(error) {
     console.log(error);
@@ -172,9 +207,11 @@ var monthWeeklyStats = function(userId, res) {
   var cb = function(data, array) {
     array.push(data);
   };
-  for (let i = 3; i >= 0; i--) {
-    weekStats(userId, i, null, cb, multipleWeekStats, res);
-  }
+  var results = [];
+  // THIS IS NOT RETURNING IN ORDER.
+  // for (let i = 3; i >= 0; i--) {
+  weekStats(userId, 3, null, cb, multipleWeekStats, res);
+
   // console.log('results', results);
 };
 // monthWeeklyStats(1, res);

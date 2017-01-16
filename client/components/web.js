@@ -27,8 +27,8 @@ import MainRightSidebar           from './MainRightSidebar';
       .then(function(response) {
         Store.currentUserId = response.data.id;
         Store.userName = response.data.firstname + ' ' + response.data.lastname;
-        
-        console.log('user: ', Store.userName)
+
+        console.log('user: ', Store.userName);
 
         // gets the list of "favored jobs"
         axios.get('/jobs/' + Store.currentUserId + '/favored')
@@ -59,7 +59,7 @@ import MainRightSidebar           from './MainRightSidebar';
           .catch(function(error) {
             console.log(error);
           });
-          
+
       })
       .catch(function(error) {
         console.log(error);

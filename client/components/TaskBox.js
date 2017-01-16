@@ -5,7 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 import Store from './Store';
 
-var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
+var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
 
 @observer class TaskBox extends React.Component {
 
@@ -39,11 +39,11 @@ var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow
 
     var place = -1;
     typeArray.forEach((item, index) => {
-       console.log('item in for each', item);
+      console.log('item in for each', item);
 
       if (item === this.props.task.type) {
         console.log('location', index);
-       place = index;
+        place = index;
       }
     });
 
@@ -71,11 +71,11 @@ var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow
       var dueDate = this.props.task.scheduledTime;
       dueDate = new Date(dueDate);
       var days = Math.abs(dueDate - currDate);
-      
+
       var oneDay = 1000 * 60 * 60 * 24;
       days = Math.floor(days / oneDay);
-      
-     
+
+
       if (days < 1) {
         dateMessage = 'Due Today';
         styles = { highlight: {border: '1px solid red'} };
@@ -83,12 +83,12 @@ var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow
         dateMessage = 'Due in 1 Day';
         styles = { highlight: { border: '1px solid yellow'} };
       } else {
-        dateMessage = `Due in ${days} days`; 
+        dateMessage = `Due in ${days} days`;
         styles = { highlight: { border: '1px solid yellow'} };
-      } 
+      }
     }
 
-var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up', 'Resume', 'Interview', 'Offer' ];
+    var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up', 'Resume', 'Interview', 'Offer' ];
 
     // sets icon
     var iconName = '';
@@ -111,7 +111,7 @@ var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up'
       iconName = 'assignment';
     } else if (this.props.task.type === 'email') {
       iconName = 'email';
-    } else if (this.props.task.type === 'phone' ||  this.props.task.type === 'call') {
+    } else if (this.props.task.type === 'phone' || this.props.task.type === 'call') {
       iconName = 'phone';
     } else if (this.props.task.type === 'offer') {
       iconName = 'stars';
@@ -145,7 +145,7 @@ var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up'
         </div>
       </div>
     );
-  } 
+  }
 }
 
 export default TaskBox;
