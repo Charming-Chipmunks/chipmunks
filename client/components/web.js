@@ -73,7 +73,10 @@ import MainRightSidebar           from './MainRightSidebar';
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper">
-            <IndexLink to="/"><img src="./assets/icons/callback.png" /></IndexLink>
+            <ul id="nav-mobile-left" className="left hide-on-med-and-down">
+              <li><IndexLink to="/"><img src="./assets/icons/callback.png" /></IndexLink></li>
+              <li><IndexLink to="/">Home</IndexLink></li>
+            </ul>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><SearchBar /></li>
               <li><Link to={'/preferences'}>Settings</Link></li>
