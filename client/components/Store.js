@@ -139,79 +139,79 @@ class Store {
       data: {
         labels: ['A Long Time Ago', 'The Week Before', 'Last Week', 'This Week'],
         datasets: [{
-            label: '# of likes',
-            data: like,
+          label: '# of likes',
+          data: like,
             // fillColor :'yellow',
             // strokeColor : 'yellow',
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-            ],
-            // borderColor: [
-            //   'rgba(255,99,132,1)',
-            // ],
-            // borderWidth: 1
-          }, {
-            label: '# applied',
-            data: applied,
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.2)',
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)',
-            ],
-            borderWidth: 1
-          }, {
-            label: '# interviewed',
-            data: interviewed,
-            backgroundColor: [
-              'rgba(255, 206, 86, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 206, 86, 1)',
-            ],
-            borderWidth: 1
-          }, {
-            label: '# emails Sent',
-            data: sentEmail,
-            backgroundColor: [
-              'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-              'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1
-          }, {
-            label: '# emails received',
-            data: receivedEmail,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)'
-            ],
-            borderWidth: 1
-          }, {
-            label: '# phone calls',
-            data: phone,
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.2)',
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)',
-            ],
-            borderWidth: 1
-          }, {
-            label: '# offers',
-            data: offered,
-            backgroundColor: [
-              'rgba(255, 206, 86, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 206, 86, 1)',
-            ],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+          ],
+          borderWidth: 1
+        }, {
+          label: '# applied',
+          data: applied,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+          ],
+          borderWidth: 1
+        }, {
+          label: '# interviewed',
+          data: interviewed,
+          backgroundColor: [
+            'rgba(255, 206, 86, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 206, 86, 1)',
+          ],
+          borderWidth: 1
+        }, {
+          label: '# emails Sent',
+          data: sentEmail,
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+          ],
+          borderWidth: 1
+        }, {
+          label: '# emails received',
+          data: receivedEmail,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 1
+        }, {
+          label: '# phone calls',
+          data: phone,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+          ],
+          borderWidth: 1
+        }, {
+          label: '# offers',
+          data: offered,
+          backgroundColor: [
+            'rgba(255, 206, 86, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 206, 86, 1)',
+          ],
 
-            borderWidth: 1
-          }
+          borderWidth: 1
+        }
 
         ],
       },
@@ -301,8 +301,8 @@ class Store {
       if (!action.completedTime) {
         ret.push(action);
       }
-    })
-    console.log('activeTasks: ', ret)
+    });
+    console.log('activeTasks: ', ret);
     return ret;
   }
 
@@ -314,11 +314,11 @@ class Store {
       var scheduled = moment(action.scheduledTime);
 
       var diff = scheduled.diff(today, 'days');
-      console.log('diff: ', diff)
+      console.log('diff: ', diff);
       if (!action.completedTime && diff === 0) {
         ret.push(action);
       }
-    })
+    });
 
     return ret;
   }
@@ -327,8 +327,8 @@ class Store {
     var ret = [];
 
     this.newJobList.forEach((job, index) => {
-      console.log('created:', job.createdAt)
-    }) 
+      console.log('created:', job.createdAt);
+    });
 
     return ret;
   }
