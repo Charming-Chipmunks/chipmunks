@@ -137,6 +137,7 @@ class GoalsGraphView extends React.Component {
       <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', margin: '5px'}}>
         <div>
           <div className='col m4 left'>
+            <button onClick={() => Store.userGoals.applications++}></button>
             <div>{Store.userGoals.applications}</div>
             Application Progress:
           </div>
