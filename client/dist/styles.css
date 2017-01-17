@@ -113,6 +113,26 @@
   flex: 1;
 }
 
+.columnA{
+  width: 10%;
+}
+
+.columnB{
+   width: 10%; 
+}
+
+.columnC{
+    width: 60%;
+}
+
+.columnD{
+    width: 10%;
+}
+
+.columnE{
+    width: 10%;
+}
+
 /*
  * Add Company
 */
@@ -243,8 +263,8 @@
 }
 
 .rateCompanyText{
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 400;
     letter-spacing: 1.2;
     margin-top: 2px;
     margin-bottom: 2px;
