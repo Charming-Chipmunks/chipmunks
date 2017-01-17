@@ -529,11 +529,12 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
 
 
 // CONTACTS - PUT - UPDTAES ONE CONTACT IN THE DATABASE
-router.put('/contacts/:userId/:jobId', function(req, res) {
+router.put('/contacts/:userId/:contactId/:jobId', function(req, res) {
   if (!checkUser(req, req.params.userId)) {
     return rejectUser(res);
   }
 
+  console.log('************************************** Joos Jones');
   models.Contact.update({
     firstname:    req.body.firstname,
     lastname:     req.body.lastname,
@@ -545,7 +546,7 @@ router.put('/contacts/:userId/:jobId', function(req, res) {
   }, {
     where: {
       UserId: req.params.userId,
-      id: req.params.jobId
+      id: req.params.contactId
     }
   }).then((contacts) => {
     if (!contacts) {

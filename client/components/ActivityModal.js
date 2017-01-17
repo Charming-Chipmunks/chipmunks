@@ -61,67 +61,64 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
     Store.addActivity.company = this.props.job.company;
     Store.addActivity.actionSource = 'user';
 
-    // do some error checking to make sure an action has been selected
-    if (Store.selectedActivityBox !== -1 && Store.addActivity.scheduledTime !== '') {
-
-      // error check for date before today?
+    // do some error checking to make sure an action has been selected  also check for a description
+    if (Store.selectedActivityBox !== -1 && 
+        Store.addActivity.scheduledTime !== '' && 
+        Store.addActivity.description !== '') {
 
       var activityNum = Store.selectedActivityBox;
-      var type = activityArray[activityNum];
-      type = type.toLowerCase();
+      var type = typeArray[activityNum];
 
-      console.log('curr userId for send to POST Actions:', Store.currentUserId);
+      if (this.props.id === -1) {
 
-      var obj = {
-        userId:         Store.currentUserId,
-        jobId:          this.props.job.id,
-        type:           type,
-        description:    Store.addActivity.description,
-        notes:          Store.addActivity.notes,
-        company:        this.props.job.company,
-        actionSource:   'user',
-        scheduledTime:  Store.addActivity.scheduledTime,
-        completedTime:  null
-      };
+        var obj = {
+          userId:         Store.currentUserId,
+          jobId:          this.props.job.id,
+          type:           type,
+          description:    Store.addActivity.description,
+          notes:          Store.addActivity.notes,
+          company:        this.props.job.company,
+          actionSource:   'user',
+          scheduledTime:  Store.addActivity.scheduledTime,
+          completedTime:  null
+        };
 
-    if (this.props.id === -1) {
-      // post if it is a new action 
+        axios.post(`/actions`, obj)
+        .then(function(response) {
+          Store.jobActions.push(response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
 
-      console.log('new event');
-      axios.post(`/actions`, obj)
-      .then(function(response) {
-        Store.jobActions.push(response.data);
+      } else {
 
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    } else {
-     // put to update if it is an edit 
-     console.log('edited event.......');
-      var putObj = {
-        type:           type,
-        description:    Store.addActivity.description,
-        scheduledTime:  Store.addActivity.scheduledTime,
-        notes:          Store.addActivity.notes,
-        // should also add a check box to complete activity on update
-      };
+        var putObj = {
+          type:           type,
+          description:    Store.addActivity.description,
+          scheduledTime:  Store.addActivity.scheduledTime,
+          notes:          Store.addActivity.notes,
+        };
 
-      var that = this;
+        var that = this;
 
-      axios.put(`/actions/${this.props.action.id}`, putObj)
-      .then((response) => {
-        console.log(Store.jobActions[that.props.id]);
-        //  ******** talk to Emm about updating 
-        Store.jobActions[that.props.id].notes = Store.addActivity.notes;
-        // Store.jobActions[that.props.id].description = Store.addActivity.description;
-        // Store.jobActions[that.props.id].scheduledTime = Store.addActivity.scheduledTime;
-        // Store.jobActions[that.props.id].type = type;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    }
+        axios.put(`/actions/${this.props.action.id}`, putObj)
+        .then((response) => {
+          console.log(Store.jobActions[that.props.id]);
+          
+          axios.get(`/actions/${Store.currentUserId}/${this.props.job.id}`)
+            .then(function(response) {
+              Store.jobActions = response.data;
+              console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      } // end if/else for Post / Put
 
       Store.selectedActivityBox = -1;
       Store.addActivity.description = '';
@@ -131,27 +128,13 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
     
     } else { 
       // will have to message that no task type selected.
-      var errorMessage = '';
-      if (Store.selectedActivityBox === -1) {
-        // create part of error for missing actiity type
-        errorMessage += `Please select an Activty Type`;
-        console.log('missing an actity type');
-      }
-
-      if (Store.addActivity.scheduledTime === '') {
-        console.log('store achedules time, ', Store.addActivity.scheduledTime );
-        if (Store.selectedActivityBox === -1) {
-          errorMessage = `Please select an Activty Type and a Scheduled Time`;
-        } else { 
-          errorMessage = `Please select a Scheduled Time`;
-        }
-      }
+      var errorMessage = 'Please include a task, date and description';
+      this.setState({
+        errorMessage: errorMessage,
+        snack: true
+      });
     }    
-  this.setState({
-    errorMessage: errorMessage,
-    snack: true
-  });
-}
+  }
 
 
   change(e) {
@@ -198,7 +181,7 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
         </form>
         <div className="activityClose" onClick={this.handleClick.bind(this)}>Save</div>
         <MuiThemeProvider>
-          <Snackbar open={this.state.snack}  message={`${this.state.errorMessage}`} autoHideDuration={4000}
+          <Snackbar open={this.state.snack}  message={`${this.state.errorMessage}`} autoHideDuration={2000}
                     onRequestClose={this.handleRequestClose}/>
         </MuiThemeProvider>
 

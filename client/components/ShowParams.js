@@ -1,13 +1,14 @@
-import React              from 'react';
-import { observer }       from 'mobx-react';
-import { toJS }           from 'mobx';
-import axios              from 'axios';
-import CircularProgress   from 'material-ui/CircularProgress';
-import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
-import Snackbar           from 'material-ui/Snackbar';
+import React                    from 'react';
+import { observer }             from 'mobx-react';
+import { toJS }                 from 'mobx';
+import axios                    from 'axios';
+import Snackbar                 from 'material-ui/Snackbar';
+import TextField                from 'material-ui/TextField';
+import CircularProgress         from 'material-ui/CircularProgress';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
-import Store              from './Store';
-import Param              from './Param';
+import Store                    from './Store';
+import Param                    from './Param';
 
 @observer class ShowParams extends React.Component {
   
@@ -112,29 +113,34 @@ import Param              from './Param';
         <div className="jobParameterForm">
           <form>
             <div className="row">
-              <div className="input-field col s6">
-                <input type="text" name='descriptor' list="parameters" onChange={this.change} value={Store.newParam.descriptor}/>
-                <label className="active">Job Description</label>
+              <div className="input-field col s12">
+                <MuiThemeProvider >
+                  <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="descriptor" 
+                              onChange={this.change} value={Store.newParam.descriptor} />
+                </MuiThemeProvider> 
               </div>
             </div>
+
             <div className="row">            
               <div className="input-field col s6">
-                <input id="city" type="text" className="validate" name="city" onChange={this.change} value={Store.newParam.city}/>
-                <label className="active">City</label>
+                <MuiThemeProvider >
+                  <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city" 
+                              onChange={this.change} value={Store.newParam.city} />
+                </MuiThemeProvider>
               </div>
               <div className="input-field col s6">
-                <input id="state" type="text" className="validate" name="state" onChange={this.change} value={Store.newParam.state}/>
-                <label className="active">State</label>
+                <MuiThemeProvider >
+                  <TextField floatingLabelText="State" multiLine={true} fullWidth={true} name="state" 
+                              onChange={this.change} value={Store.newParam.state} />
+                </MuiThemeProvider>                
               </div>
              </div>    
             <div className="row">            
               <div className="input-field col s6">
-                <input id="zip" type="text" className="validate" name="zip" onChange={this.change} value={Store.newParam.zip}/>
-                <label className="active">Zip</label>
-              </div>
-              <div className="input-field col s6">
-                <input id="radius" type="text" className="validate" name="radius" onChange={this.change} value={Store.newParam.radius}/>
-                <label className="active">Radius</label>
+                <MuiThemeProvider >
+                  <TextField floatingLabelText="Search Radius From City" multiLine={true} fullWidth={true} name="radius" 
+                            onChange={this.change} value={Store.newParam.radius} />
+                </MuiThemeProvider>
               </div>
              </div>                  
           </form>

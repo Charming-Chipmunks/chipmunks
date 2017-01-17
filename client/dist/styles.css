@@ -99,6 +99,20 @@
   border-radius: 4px;
 }
 
+
+.companyActionsBox {
+    border: 2px solid #b71c1c;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-content: space-around;
+    border-radius: 4px;
+}
+
+.companyAction {
+  flex: 1;
+}
+
 /*
  * Add Company
 */
