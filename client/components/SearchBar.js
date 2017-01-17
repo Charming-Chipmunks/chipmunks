@@ -10,7 +10,17 @@ import Store from './Store';
   }
 
   handleChange(e) {
+    // add a Store variable for is open then refernece it in the sidebar
+
+
     Store.filterText = { text: e.target.value };
+  
+    if (Store.filterText.text === '') {
+      Store.hideLeftSideBarCompany = true;
+    } else {
+      Store.hideLeftSideBarCompany = false;
+    }
+  
   }
 
   render() {

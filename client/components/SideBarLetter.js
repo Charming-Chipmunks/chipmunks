@@ -14,21 +14,37 @@ var classObject = 'funfun';
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {hide: true};
+    //this.state = {hide: true};
     // this.handleHover.bind(this);
+  }
 
+  componentWillMount() {
+    //this.setState({hide: Store.hideLeftSideBarCompany});
   }
 
   handleClick () {
-    this.setState({hide: !this.state.hide});
+    //this.setState({hide: !this.state.hide});
+    Store.hideLeftSideBarCompany = !Store.hideLeftSideBarCompany;
   }
 
   render () {
 
-    if (this.state.hide === false) {
-      classObject = '';
+    // if (this.state.hide === false) {
+    //   classObject = '';
+    // } else {
+    //   classObject = 'hide';
+    // }
+
+    var styles = {hidden: {display: 'none !important'}};
+
+    console.log('Is this hidden? ', Store.hideLeftSideBarCompany);
+
+    if (!Store.hideLeftSideBarCompany) {
+      styles = {hidden: {display: 'list-item'}};
+      console.log('in display LI');
     } else {
-      classObject = 'hide';
+      styles = {hidden: { display: 'none' }};
+      console.log('in hide LI');
     }
 
     return (
@@ -37,7 +53,7 @@ var classObject = 'funfun';
         <div className="sideBarLetterOpportunities"> 
         {this.props.list.length} Opportunities
         </div>
-        <ul className={`${classObject}`}>
+        <ul className="someClass" style={styles.hidden} >
           {this.props.list.map((company, index) => {
             company = toJS(company);
             return (<SideBarCompany company={company} key={index} />);

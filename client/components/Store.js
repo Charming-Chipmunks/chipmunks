@@ -24,6 +24,7 @@ class Store {
   @observable jobActions = [];
   @observable hiddenCompanyLetters = [];
   @observable viewingNewJobs = true;
+  @observable hideLeftSideBarCompany = true;
   @observable userGoals = {
     applications: 5,
     emails: 10,
