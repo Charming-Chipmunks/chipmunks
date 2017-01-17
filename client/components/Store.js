@@ -23,6 +23,7 @@ class Store {
   @observable actionFilter = 4863;
   @observable jobActions = [];
   @observable hiddenCompanyLetters = [];
+  @observable viewingNewJobs = true;
   @observable addActivity = {
     type: '',
     company: '',

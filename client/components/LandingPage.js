@@ -175,29 +175,15 @@ class GoalsGraphView extends React.Component {
 }
     //    <LinearProgress mode="determinate" value={this.state.completed} />
 
-
+@observer
 export default class LandingPage extends React.Component {
   constructor(props) {
     super(props);
-  }
 
-    componentWillMount() {
-      var that = this;
-      // if(Store.currentUserId){
-      //   axios.get(`/actions/${Store.currentUserId}`)
-      //   .then(function(response) {
-      //     Store.actions = response.data;
-      //     // console.log('filteredActions: ', filteredActions);
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
-      // }
-      setTimeout(() => {
-        console.log('after 5');
-        that.render();
-      }, 2000);
+    this.state = {
+      loaded: true
     }
+  }
 
   render() {
     var styles = {
@@ -218,53 +204,59 @@ export default class LandingPage extends React.Component {
 
     }
 
-    return (
-      <div style={styles.landingContainer}>
-        <div className='col m12 left'>
-          <div style={styles.mainDiv}>
-            <h5>Welcome, {Store.userName}!</h5>
-          </div>
-          <div style={{flex:1}}>
-            <LandingHeader title="Your Interests"/>
-            <InterestBar />
-          </div>
-          <div className='graphContainer'>
-            <div className='col m6 left'>
-             <div style={styles.graphBox}>
-                <LandingHeader title="Activity Overview"/>
-               <ActivityGraphView />
-             </div>
+    if (this.state.loaded) {
+      return (
+        <div style={styles.landingContainer}>
+          <div className='col m12 left'>
+            <div style={styles.mainDiv}>
+              <h5>Welcome, {Store.userName}!</h5>
             </div>
-            <div className='col m6 right'>
-              <div style={styles.graphBox}>
-              <LandingHeader title="Goals"/>
-              <GoalsGraphView />
+            <div style={{flex:1}}>
+              <LandingHeader title="Your Interests"/>
+              <InterestBar />
+            </div>
+            <div className='graphContainer'>
+              <div className='col m6 left'>
+               <div style={styles.graphBox}>
+                  <LandingHeader title="Activity Overview"/>
+                 <ActivityGraphView />
+               </div>
+              </div>
+              <div className='col m6 right'>
+                <div style={styles.graphBox}>
+                <LandingHeader title="Goals"/>
+                <GoalsGraphView />
+                </div>
               </div>
             </div>
-          </div>
-          <div style={{flexGrow: 1, height: '100px'}}>
-            <LandingHeader title="Next Pending Task"/>
-            {
-              Store.activeTasks && Store.activeTasks.length > 0 
-              && <TaskBox task={Store.activeTasks[0]}/>
-            }
-            {
-              Store.activeTasks && Store.activeTasks.length === 0 
-              && <div>No pending actions. Review jobs to generate!</div>
-            }
-          </div>
-          <div style={{flex:1}}>
-            <LandingHeader title="Next Pending Job"/>
-            {
-              Store.newJobList.length > 0 && <ul><RateIndividualJob key={Store.newJobList.length} job={Store.newJobList[0]} /></ul>
-            }
-            {
-              Store.newJobList.length === 0 && <div>No jobs to review. Add a parameter to view more jobs!</div>
-            }
+            <div style={{flexGrow: 1, height: '100px'}}>
+              <LandingHeader title="Next Pending Task"/>
+              {
+                Store.activeTasks && Store.activeTasks.length > 0 
+                && <TaskBox task={Store.activeTasks[0]}/>
+              }
+              {
+                Store.activeTasks && Store.activeTasks.length === 0 
+                && <div>No pending actions. Review jobs to generate!</div>
+              }
+            </div>
+            <div style={{flex:1}}>
+              <LandingHeader title="Next Pending Job"/>
+              {
+                Store.newJobList.length > 0 && <ul><RateIndividualJob key={Store.newJobList.length} job={Store.newJobList[0]} /></ul>
+              }
+              {
+                Store.newJobList.length === 0 && <div>No jobs to review. Add a parameter to view more jobs!</div>
+              }
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div>Still loading</div>
+      )
+    }
   }
 }
         // <div className='col m3 right'>

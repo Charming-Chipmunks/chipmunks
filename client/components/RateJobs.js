@@ -15,6 +15,7 @@ import Paginator from './Paginator';
     this.handleClick.bind(this);
     this.rightArrowClick.bind(this);
     this.leftArrowClick.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentWillMount() {
@@ -33,6 +34,11 @@ import Paginator from './Paginator';
     console.log('parent handle click');
   }
 
+  buttonClick() {
+    Store.viewingNewJobs = !Store.viewingNewJobs;
+    console.log('clicked')
+  }
+
   leftArrowClick() {
     this.setState({
       page: this.state.page - 1
@@ -47,7 +53,7 @@ import Paginator from './Paginator';
 
   render() {
 
-    var list = toJS(Store.newJobList);
+    var list = Store.viewingNewJobs? toJS(Store.newJobList): toJS(Store.jobList);
    // console.log(list.length);
     var displayList = list.slice(this.state.page, this.state.page + 10);
     if (list.length > 0) {
@@ -82,6 +88,11 @@ import Paginator from './Paginator';
 
       return (
         <div className="rateJobsList">
+          <button onClick={this.buttonClick}>
+          { 
+            Store.viewingNewJobs? <span>Show Active Jobs</span>: <span>Review New Jobs</span>
+          }
+          </button>
           <ul>
             {displayList.map((Job, index) => {
               Job = toJS(Job);
