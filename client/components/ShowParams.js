@@ -44,42 +44,51 @@ import Param                    from './Param';
   saveParam(e) {
     e.preventDefault();
 
-    this.setState({spin: true});
-    e.preventDefault();
-    var that = this;
-    var paramId;
+    if (Store.newParam.descriptor !== '' &&
+        Store.newParam.city !== '' &&
+        Store.newParam.state !== '' ) {
 
-    this.setState({
-      keywords: Store.newParam.descriptor,
-      location: Store.newParam.city
-    });
+      this.setState({spin: true});
+      e.preventDefault();
+      var that = this;
+      var paramId;
 
-    axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
-      .then(function(response) {
-        //console.log('returned from the server: ', response.data);
-        if (response.data) {
-          paramId = response.data.id;
-          Store.params.push(response.data);
-        }
-      }).catch(function(error) {
-        console.log(error);
+      this.setState({
+        keywords: Store.newParam.descriptor,
+        location: Store.newParam.city
       });
 
-    setTimeout(() => {
-      axios.get('/ponme/' + paramId)
-        .then((response) => {
-          this.setState({
-            spin: false,
-            numJobs: response.data.length,
-            snack: true
-          });
-        })
-        .catch(function(error) {
+      axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
+        .then(function(response) {
+          //console.log('returned from the server: ', response.data);
+          if (response.data) {
+            paramId = response.data.id;
+            Store.params.push(response.data);
+          }
+        }).catch(function(error) {
           console.log(error);
-        });          
+        });
 
-      // need to quert database to get the number of new jobs...
-    }, 3000);
+      setTimeout(() => {
+        axios.get('/ponme/' + paramId)
+          .then((response) => {
+            this.setState({
+              spin: false,
+              numJobs: response.data.length,
+              snack: true
+            });
+          })
+          .catch(function(error) {
+            console.log(error);
+          });          
+
+        // need to quert database to get the number of new jobs...
+      }, 3000);
+    } else {
+      // send in the toast
+      var errorMessage = 'Please include a job description, city and state';
+      
+    }
   }
 
   change(e) {
