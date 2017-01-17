@@ -33,9 +33,9 @@ import axios from 'axios';
       });
     axios.get('/stats/monthly/' + Store.currentUserId)
       .then(function(response) {
-        // console.log('monthly', response.data);
-        console.log('currently not updating monthly');
-        // Store.monthly = response.data;
+        // console.log('currently not updating monthly');
+        console.log('monthly', JSON.parse(JSON.stringify(response.data)));
+        Store.monthly = response.data;
         var weekChart = document.getElementById('weekly').getContext('2d');
         let weeklyChart = new Chart(weekChart, Store.monthBarChartStats);
       })
@@ -44,7 +44,7 @@ import axios from 'axios';
       });
 
   }
-  
+
   componentWillMount() {
     this.getStats();
   }

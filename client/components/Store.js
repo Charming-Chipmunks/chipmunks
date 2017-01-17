@@ -156,20 +156,20 @@ class Store {
     //   offered.push(this.monthly[i].offered);
     // }
     var month = {
-      '3': [],
-      '2': [],
       '1': [],
-      '0': [],
+      '2': [],
+      '3': [],
+      '4': [],
     };
     var createWeek = function(i) {
-      month[i].push(this.monthly[i].like);
-      month[i].push(this.monthly[i].applied);
-      month[i].push(this.monthly[i].phoneInterview);
-      month[i].push(this.monthly[i].webInterview);
-      month[i].push(this.monthly[i].personalInterview);
-      month[i].push(this.monthly[i].sentEmail);
-      month[i].push(this.monthly[i].receivedEmail);
-      month[i].push(this.monthly[i].phone);
+      month[i + 1].push(this.monthly[i].like);
+      month[i + 1].push(this.monthly[i].applied);
+      month[i + 1].push(this.monthly[i].phoneInterview);
+      month[i + 1].push(this.monthly[i].webInterview);
+      month[i + 1].push(this.monthly[i].personalInterview);
+      month[i + 1].push(this.monthly[i].sentEmail);
+      month[i + 1].push(this.monthly[i].receivedEmail);
+      month[i + 1].push(this.monthly[i].phone);
     }.bind(this);
 
     for (var i = 0; i < this.monthly.length; i++) {
@@ -194,8 +194,8 @@ class Store {
       data: {
         labels: ['Liked', 'Applied', 'Phone Interviews', 'webInterviews', 'Personal Interviews', 'Emails Sent', 'Emails Received', '# of Phone calls'],
         datasets: [{
-          label: 'Week 4',
-          data: month[3],
+          label: '3 Weeks Ago',
+          data: month[1],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 99, 132, 0.2)',
@@ -226,7 +226,7 @@ class Store {
           ],
           borderWidth: 1
         }, {
-          label: 'Week 3',
+          label: '2 Weeks Ago',
           data: month[2],
           backgroundColor: [
             'rgba(54, 162, 235, 0.2)',
@@ -250,8 +250,8 @@ class Store {
           ],
           borderWidth: 1
         }, {
-          label: 'Week 2',
-          data: month[1],
+          label: 'Last Week',
+          data: month[3],
           backgroundColor: [
             'rgba(255, 206, 86, 0.2)',
             'rgba(255, 206, 86, 0.2)',
@@ -274,8 +274,8 @@ class Store {
           ],
           borderWidth: 1
         }, {
-          label: 'Week 1',
-          data: month[0],
+          label: 'This Week',
+          data: month[4],
           backgroundColor: [
             'rgba(75, 192, 192, 0.2)',
             'rgba(75, 192, 192, 0.2)',
@@ -370,6 +370,23 @@ class Store {
 
     return results;
   }
+  @computed get filteredList() {
+    var context = this;
+    return this.jobList.filter(function(company) {
+      var text = context.filterText.text.toLowerCase();
+
+      if (company.company.toLowerCase().includes(text)) {
+        return true;
+      }
+      if (company.jobTitle.toLowerCase().includes(text)) {
+        return true;
+      }
+      if (company.snippet.toLowerCase().includes(text)) {
+        return true;
+      }
+    });
+  }
+
 
   @computed get filteredActions() {
     // var matchesFilter = new RegExp(this.filter, "i");
@@ -410,7 +427,7 @@ class Store {
       var scheduled = moment(action.scheduledTime);
 
       var diff = scheduled.diff(today, 'days');
-      console.log('diff: ', diff);
+      // console.log('diff: ', diff);
       if (!action.completedTime && diff === 0) {
         ret.push(action);
       }

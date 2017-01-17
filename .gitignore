@@ -48,5 +48,6 @@ dropphil.sql
 phil.sql
 resetphil
 savephil
+*.sql
 
 

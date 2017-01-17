@@ -34,8 +34,8 @@ export default class MainRightSidebar extends React.Component {
     if (item === 'statsOpen') {
       that.setState({
         statsOpen: !that.state.statsOpen
-      })
-      console.log('toggled', this.state.statsOpen)
+      });
+      console.log('toggled', this.state.statsOpen);
     }
   };
 
@@ -44,8 +44,8 @@ export default class MainRightSidebar extends React.Component {
     if (item === 'statsOpen') {
       that.setState({
         statsOpen: !that.state.statsOpen
-      })
-      console.log('toggled', this.state.statsOpen)
+      });
+      console.log('toggled', this.state.statsOpen);
     }
   };
 
@@ -55,28 +55,26 @@ export default class MainRightSidebar extends React.Component {
       <div className='greyBorder'>
           <List>
             <Subheader>General</Subheader>
-            <ListItem primaryText={<Link style={{color:'black'}} to='/'>Home</Link>} />
-            <ListItem primaryText={<Link style={{color:'black'}} to='/preferences'>Preferences</Link>} />
-            <ListItem primaryText={<Link style={{color:'black'}} to='/activitiesMain'>Actions Home</Link>} />
-            <ListItem primaryText={<Link style={{color:'black'}} to='/rateJobs'>Jobs Home</Link>} />
+            <Link to='/'><ListItem primaryText='Home' /> </Link>
+            <Link to='/preferences'><ListItem primaryText='Preferences' /> </Link>
+            <Link to='/activitiesMain'><ListItem primaryText='Actions Home' /> </Link>
+            <Link to='/rateJobs'><ListItem primaryText='Jobs Home' /></Link>
             <br />
             <Subheader>Statistics</Subheader>
             <ListItem primaryText="Actions"
               initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={[
-                <ListItem key={1} open={this.state.statsOpen} primaryText="Daily"/>,
-                <ListItem key={2} open={this.state.statsOpen} primaryText="Weekly"/>,
-                <ListItem key={3} open={this.state.statsOpen} primaryText="All Time"/>
+                <ListItem key={1} open={this.state.statsOpen} primaryText="This Month"/>,
+                <ListItem key={2} open={this.state.statsOpen} primaryText="All Time"/>
               ]}
             />
-            <ListItem primaryText="Jobs" 
+            <ListItem primaryText="Jobs"
               initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={[
-                <ListItem key={1} primaryText="Daily"/>,
-                <ListItem key={2} primaryText="Weekly"/>,
-                <ListItem key={3} primaryText="All Time"/>
+                <ListItem key={1} primaryTogglesNestedListaryText="This Month"/>,
+                <ListItem key={2} primaryText="All Time"/>
               ]}
             />
           </List>
@@ -84,6 +82,6 @@ export default class MainRightSidebar extends React.Component {
 
       </div>
       </MuiThemeProvider>
-    )
+    );
   }
 }

@@ -8,25 +8,11 @@ import { toJS } from 'mobx';
 @observer class CompanyList extends Component {
   constructor(props) {
     super(props);
-    this.filter = this.filter.bind();
   }
-  filter(company) {
-    var text = Store.filterText.text.toLowerCase();
 
-    if (company.company.toLowerCase().includes(text)) {
-      return true;
-    }
-    if (company.jobTitle.toLowerCase().includes(text)) {
-      return true;
-    }
-    if (company.snippet.toLowerCase().includes(text)) {
-      return true;
-    }
-  }
 
   render() {
-    var list = Store.jobList.filter(this.filter);
-
+    var list = Store.filteredList;
     list = list.sort((a, b) => a['company'].localeCompare(b['company']));
 
     var previousLetter = 'A';
@@ -61,7 +47,7 @@ import { toJS } from 'mobx';
         <h5 className="leftSideBarResults"> {list.length} Open Opportunities</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {
-            return (<SideBarLetter list={letter} key={index} letter={keys[index]}/>);
+            return (<SideBarLetter list={letter} key={index} letter={keys[index]} total ={list.length}/>);
           })
           }
         </ul>
