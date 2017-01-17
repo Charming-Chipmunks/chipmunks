@@ -316,6 +316,8 @@ var compareUserStats = function(userId, res) {
 };
 // compareUserStats(2);
 ////////////// Routes
+
+// THIS SHOULD REALLY BE REFACTORED INTO A CRONJOB FOR ALL USERS
 router.get('/stats/monthCompare/:userId', function(req, res) {
   compareUserStats(req.params.userId, res);
 });
