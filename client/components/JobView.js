@@ -199,6 +199,19 @@ import ContactModal             from './ContactModal'
               Interactions
               </div>
             </div>
+            <div className="companyActionsBox">
+              <div className="companyAction">
+                <button onClick={this.openModal}>Log Activity</button>
+              </div>
+              <div className="companyAction">
+                <button onClick={this.openContactModal}>Add Contact</button>
+              </div>
+              <div className="companyAction">
+                <IndexLink to="/">
+                  <div className="closeJobButton" onClick={this.handleCloseJob.bind(this)}>Close Job</div>
+                </IndexLink>
+              </div>
+            </div>
             <div className="companyTasks">
             <div className="taskBox">
               <div className="leftTaskIcons">
@@ -229,11 +242,6 @@ import ContactModal             from './ContactModal'
             </div>
           </div>
         </div>
-        <IndexLink to="/">
-          <div className="closeJobButton" onClick={this.handleCloseJob.bind(this)}>Close Job</div>
-        </IndexLink>
-        <button onClick={this.openModal}>Log Activity</button>
-        <button onClick={this.openContactModal}>Add Contact</button>
 
         {/* contact modal */}
         <Modal  isOpen={this.state.contactModalIsOpen}
