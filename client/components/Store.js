@@ -370,6 +370,23 @@ class Store {
 
     return results;
   }
+  @computed get filteredList() {
+    var context = this;
+    return this.jobList.filter(function(company) {
+      var text = context.filterText.text.toLowerCase();
+
+      if (company.company.toLowerCase().includes(text)) {
+        return true;
+      }
+      if (company.jobTitle.toLowerCase().includes(text)) {
+        return true;
+      }
+      if (company.snippet.toLowerCase().includes(text)) {
+        return true;
+      }
+    });
+  }
+
 
   @computed get filteredActions() {
     // var matchesFilter = new RegExp(this.filter, "i");
@@ -410,7 +427,7 @@ class Store {
       var scheduled = moment(action.scheduledTime);
 
       var diff = scheduled.diff(today, 'days');
-      console.log('diff: ', diff);
+      // console.log('diff: ', diff);
       if (!action.completedTime && diff === 0) {
         ret.push(action);
       }
