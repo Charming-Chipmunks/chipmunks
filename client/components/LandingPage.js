@@ -137,14 +137,24 @@ class GoalsGraphView extends React.Component {
       <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', margin: '5px'}}>
         <div>
           <div className='col m4 left'>
-            <button onClick={() => Store.userGoals.applications++}></button>
+            Jobs Added:
+          </div>
+          <div className='col m8 right' >
+            <div className='row'>
+              <LinearProgress mode="determinate" value={Store.userGoals.like/Store.userGoals.likeTotal*100} />
+              <span>{Store.userGoals.like}/{Store.userGoals.likeTotal} jobs liked</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className='col m4 left'>
             <div>{Store.userGoals.applications}</div>
             Application Progress:
           </div>
           <div className='col m8 right' >
             <div className='row'>
-              <LinearProgress mode="determinate" value={this.state.applicationsComplete/this.state.applicationsTotal*100} />
-              <span>{this.state.applicationsComplete}/{this.state.applicationsTotal} applications sent</span>
+              <LinearProgress mode="determinate" value={Store.userGoals.apply/Store.userGoals.applyTotal*100} />
+              <span>{Store.userGoals.apply}/{Store.userGoals.applyTotal} applications sent</span>
             </div>
           </div>
         </div>
@@ -154,8 +164,8 @@ class GoalsGraphView extends React.Component {
           </div>
           <div className='col m8 right'>
             <div className='row'>
-              <LinearProgress mode="determinate" value={this.state.emailsComplete/this.state.emailsTotal*100} />
-              <span>{this.state.emailsComplete}/{this.state.emailsTotal} emails sent</span>
+              <LinearProgress mode="determinate" value={Store.userGoals.email/Store.userGoals.emailTotal*100} />
+              <span>{Store.userGoals.email}/{Store.userGoals.emailTotal} emails sent</span>
             </div>
           </div>
         </div>
@@ -165,8 +175,8 @@ class GoalsGraphView extends React.Component {
           </div>
           <div className='col m8 right' >
             <div className='row'>
-              <LinearProgress mode="determinate" value={this.state.interviewPracticeComplete/this.state.interviewPracticeTotal*100} />
-              <span>{this.state.interviewPracticeComplete}/{this.state.interviewPracticeTotal} hours</span>
+              <LinearProgress mode="determinate" value={Store.userGoals.interview/Store.userGoals.interviewTotal*100} />
+              <span>{Store.userGoals.interview}/{Store.userGoals.interviewTotal} interviews scheduled</span>
             </div>
           </div>
         </div>

@@ -26,11 +26,16 @@ class Store {
   @observable viewingNewJobs = true;
   @observable hideLeftSideBarCompany = true;
   @observable userGoals = {
-    applications: 5,
-    emails: 10,
-    interviewPractice: 2,
-    jobsReviewed: 5
+    apply: 0,
+    applyTotal: 5,
+    email: 0,
+    emailTotal: 5,
+    interview: 0,
+    interviewTotal: 2,
+    like: 0,
+    likeTotal: 7
   }
+
   @observable addActivity = {
     type: '',
     company: '',
@@ -459,6 +464,11 @@ class Store {
     }) 
 
     return ret;
+  }
+
+  @computed get todaysProgress() {
+    var hist = this.actions.filter(e => e.completedTime);
+    console.log('hist');
   }
 }
 
