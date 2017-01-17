@@ -22,7 +22,7 @@ console.log('INIT ACTIONS');
 console.log('INIT ACTIONS');
 console.log('INIT ACTIONS');
 console.log('INIT ACTIONS');
- 
+
   db['User'].findAll({
     include: [db['Job']]
   }).then(users => {
@@ -33,16 +33,17 @@ console.log('INIT ACTIONS');
       users[k].Jobs.forEach((job) => {
         console.log('in actions loop');
 
-        db['UserJob'].find({
-          where: {
-            UserId:   users[k].id,
-            JobId:    job.id
-          }
-        }).then((userjob) => {
-          if (userjob.status === 'favored'){
-            console.log('yes');
-          }
-        });
+        //Commented out because it currently doesn't do anything
+        // db['UserJob'].find({
+        //   where: {
+        //     UserId:   users[k].id,
+        //     JobId:    job.id
+        //   }
+        // }).then((userjob) => {
+        //   if (userjob.status === 'favored'){
+        //     console.log('yes');
+        //   }
+        // })
 
       var date = new Date ();
 
@@ -101,7 +102,7 @@ console.log('INIT ACTIONS');
         console.error(err);
       });
     });
-      
+
   } // end of for loop
 
     }).catch(err => {
