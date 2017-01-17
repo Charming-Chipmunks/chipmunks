@@ -4,12 +4,13 @@
 module.exports = function(sequelize, DataTypes) {
   var Contact = sequelize.define('Contact', {
     firstname:    DataTypes.STRING,
-    lastname:     DataTypes.STRING, 
+    lastname:     DataTypes.STRING,
     email:        DataTypes.STRING,
     mobilePhone:  DataTypes.STRING,
     workPhone:    DataTypes.STRING,
     title:        DataTypes.STRING,
     notes:        DataTypes.TEXT,
+    displayName:  DataTypes.TEXT,
   }, {
     classMethods: {
       associate: function(models) {
