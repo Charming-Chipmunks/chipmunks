@@ -116,7 +116,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     } else if (this.props.task.type === 'learn') {
       iconName = 'computer';
     } else if (this.props.task.type === 'connections' || this.props.task.type === 'connect' ) {
-      iconName = 'contact_phone';
+      iconName = 'loop ';
     } else if (this.props.task.type === 'apply') {
       iconName = 'send';
     } else if (this.props.task.type === 'follow up') {
