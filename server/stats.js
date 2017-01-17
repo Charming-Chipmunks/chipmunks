@@ -2,7 +2,8 @@ var models = require('./models');
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
-var db = require('./models/index')
+var db = require('./models/index');
+var _ = require('lodash');
 
 userId = 1;
 
@@ -196,11 +197,11 @@ var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthly
   });
 };
 // weekStats(1, 0);
-var res = {
-  json: function(data) {
-    console.log(JSON.parse(JSON.stringify(data)));
-  }
-};
+// var res = {
+//   json: function(data) {
+//     console.log(JSON.parse(JSON.stringify(data)));
+//   }
+// };
 
 // stats(1, res);
 var monthWeeklyStats = function(userId, res) {
@@ -216,7 +217,7 @@ var monthWeeklyStats = function(userId, res) {
   // console.log('results', results);
 };
 //GOING TO CHECK ACTIONS GOING BACK 30 DAYS
-var allUserStats = function() {
+var compareUserStats = function(userId, res) {
   var start = moment().subtract(30, 'd').toDate();
   var end = moment().toDate();
   var userStats = [];
@@ -241,27 +242,26 @@ var allUserStats = function() {
         userObj.receivedEmail++;
       }
     }
-
   };
 
 
+
+
   db['Action'].findAll({
-    where: {
-      UserId: userId,
-      $and: [{
-        completedTime: {
-          $gt: start
-        }
-      }, {
-        completedTime: {
-          $lt: end
-        }
-      }]
-    }
-  })
+      where: {
+        $and: [{
+          completedTime: {
+            $gt: start
+          }
+        }, {
+          completedTime: {
+            $lt: end
+          }
+        }]
+      }
+    })
     .then(allActions => {
       allActions.forEach(action => {
-        console.log(action.UserId);
         userStats[action.UserId] = userStats[action.UserId] || {
           like: 0,
           applied: 0,
@@ -272,15 +272,53 @@ var allUserStats = function() {
           phone: 0,
           receivedEmail: 0,
         };
-        calcStatsFromAction (action, userStats[action.UserId]);
+        calcStatsFromAction(action, userStats[action.UserId]);
       });
       // done with assigning, need to calculate
       console.log(userStats);
-    });
-};
-allUserStats();
-////////////// Routes
+      var userStat = _.extend(userStats[userId]);
+      var total = {
+        like: 0,
+        applied: 0,
+        phoneInterview: 0,
+        webInterview: 0,
+        personalInterview: 0,
+        sentEmail: 0,
+        phone: 0,
+        receivedEmail: 0,
+      };
+      for (var i = 0; i < userStats.length; i++) {
 
+        var single = userStats[i];
+        if (single) {
+          console.log('single', single);
+          total.like += single.like;
+          total.applied += single.applied;
+          total.phoneInterview += single.phoneInterview;
+          total.webInterview += single.webInterview;
+          total.personalInterview += single.personalInterview;
+          total.sentEmail += single.sentEmail;
+          total.phone += single.phone;
+          total.receivedEmail += single.receivedEmail;
+        }
+      }
+      for (var key in total) {
+        total[key] /= userStats.length;
+      }
+      var average = total;
+      console.log('average', average);
+      console.log('userStat', userStat);
+      console.log('RES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSON');
+      var toSend = { average: average, user: userStat };
+      res.json(toSend);
+    });
+
+};
+// compareUserStats(2);
+////////////// Routes
+router.get('/stats/monthCompare/:userId', function(req, res) {
+  compareUserStats(req.params.userId, res);
+});
 
 router.get('/stats/monthly/:userId', function(req, res) {
   monthWeeklyStats(req.params.userId, res);
