@@ -5843,20 +5843,20 @@ var Store = (_class = function () {
       //   offered.push(this.monthly[i].offered);
       // }
       var month = {
-        '3': [],
-        '2': [],
         '1': [],
-        '0': []
+        '2': [],
+        '3': [],
+        '4': []
       };
       var createWeek = function (i) {
-        month[i].push(this.monthly[i].like);
-        month[i].push(this.monthly[i].applied);
-        month[i].push(this.monthly[i].phoneInterview);
-        month[i].push(this.monthly[i].webInterview);
-        month[i].push(this.monthly[i].personalInterview);
-        month[i].push(this.monthly[i].sentEmail);
-        month[i].push(this.monthly[i].receivedEmail);
-        month[i].push(this.monthly[i].phone);
+        month[i + 1].push(this.monthly[i].like);
+        month[i + 1].push(this.monthly[i].applied);
+        month[i + 1].push(this.monthly[i].phoneInterview);
+        month[i + 1].push(this.monthly[i].webInterview);
+        month[i + 1].push(this.monthly[i].personalInterview);
+        month[i + 1].push(this.monthly[i].sentEmail);
+        month[i + 1].push(this.monthly[i].receivedEmail);
+        month[i + 1].push(this.monthly[i].phone);
       }.bind(this);
 
       for (var i = 0; i < this.monthly.length; i++) {
@@ -5881,8 +5881,8 @@ var Store = (_class = function () {
         data: {
           labels: ['Liked', 'Applied', 'Phone Interviews', 'webInterviews', 'Personal Interviews', 'Emails Sent', 'Emails Received', '# of Phone calls'],
           datasets: [{
-            label: 'Week 4',
-            data: month[3],
+            label: '3 Weeks Ago',
+            data: month[1],
             backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)'],
             // borderColor: [
             //   'rgba(255,99,132,1)',
@@ -5893,20 +5893,20 @@ var Store = (_class = function () {
             borderColor: ['rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)'],
             borderWidth: 1
           }, {
-            label: 'Week 3',
+            label: '2 Weeks Ago',
             data: month[2],
             backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 0.2)'],
             borderColor: ['rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)'],
             borderWidth: 1
           }, {
-            label: 'Week 2',
-            data: month[1],
+            label: 'Last Week',
+            data: month[3],
             backgroundColor: ['rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 0.2)'],
             borderColor: ['rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)'],
             borderWidth: 1
           }, {
-            label: 'Week 1',
-            data: month[0],
+            label: 'This Week',
+            data: month[4],
             backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 0.2)'],
             borderColor: ['rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)'],
             borderWidth: 1
@@ -5968,6 +5968,24 @@ var Store = (_class = function () {
       return results;
     }
   }, {
+    key: 'filteredList',
+    get: function get() {
+      var context = this;
+      return this.jobList.filter(function (company) {
+        var text = context.filterText.text.toLowerCase();
+
+        if (company.company.toLowerCase().includes(text)) {
+          return true;
+        }
+        if (company.jobTitle.toLowerCase().includes(text)) {
+          return true;
+        }
+        if (company.snippet.toLowerCase().includes(text)) {
+          return true;
+        }
+      });
+    }
+  }, {
     key: 'filteredActions',
     get: function get() {
       var _this = this;
@@ -6013,7 +6031,7 @@ var Store = (_class = function () {
         var scheduled = __WEBPACK_IMPORTED_MODULE_1_moment___default()(action.scheduledTime);
 
         var diff = scheduled.diff(today, 'days');
-        console.log('diff: ', diff);
+        // console.log('diff: ', diff);
         if (!action.completedTime && diff === 0) {
           ret.push(action);
         }
@@ -6268,7 +6286,7 @@ var Store = (_class = function () {
       receivedEmail: 7
     }];
   }
-}), _applyDecoratedDescriptor(_class.prototype, 'monthBarChartStats', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'monthBarChartStats'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'barChartStats', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'barChartStats'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'filteredActions', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'filteredActions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pendingNumber', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'pendingNumber'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'activeTasks', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'activeTasks'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'todaysTasks', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'todaysTasks'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'todaysJobs', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'todaysJobs'), _class.prototype)), _class);
+}), _applyDecoratedDescriptor(_class.prototype, 'monthBarChartStats', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'monthBarChartStats'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'barChartStats', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'barChartStats'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'filteredList', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'filteredList'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'filteredActions', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'filteredActions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pendingNumber', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'pendingNumber'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'activeTasks', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'activeTasks'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'todaysTasks', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'todaysTasks'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'todaysJobs', [__WEBPACK_IMPORTED_MODULE_0_mobx__["computed"]], Object.getOwnPropertyDescriptor(_class.prototype, 'todaysJobs'), _class.prototype)), _class);
 
 
 var store = window.store = new Store();
