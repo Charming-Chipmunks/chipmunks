@@ -61,6 +61,8 @@ import LoginPage                  from './LoginPage'
             Store.actions = response.data;
             const { filteredActions } = Store;
             var result = filteredActions;
+            console.log('got actions?')
+            Store.getTodaysCompleted();
             // console.log('filteredActions: ', filteredActions);
           })
           .catch(function(error) {

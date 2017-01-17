@@ -1,5 +1,5 @@
 //MobX Store
-import { observable, computed, toJS } from 'mobx';
+import { observable, action, computed, toJS } from 'mobx';
 import moment from 'moment';
 class Store {
   constructor() {}
@@ -35,6 +35,7 @@ class Store {
     like: 0,
     likeTotal: 7
   }
+  @observable calculatedProgress = false;
 
   @observable addActivity = {
     type: '',
@@ -548,9 +549,28 @@ class Store {
     return ret;
   }
 
-  @computed get todaysProgress() {
-    var hist = this.actions.filter(e => e.completedTime);
-    console.log('hist');
+  // @computed get todaysProgress() {
+  //   var hist = this.actions.filter(e => e.completedTime);
+  //   console.log('hist');
+  // }
+
+  @action getTodaysCompleted() {
+    console.log('getTodaysCompleted')
+    var today = moment();
+    this.actions.forEach((action) => {
+      if (action.completedTime) {
+        var completed = moment(action.completedTime);
+        var diff = today.diff(completed, 'days');
+        console.log("completed diff:", diff)
+        if (diff === 0) {
+          console.log('action type:', action.type, this.userGoals[action.type])
+          if (this.userGoals[action.type] !== undefined){
+            console.log('added',)
+            this.userGoals[action.type]++;
+          }        
+        }
+      }
+    })
   }
 }
 
