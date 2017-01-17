@@ -4,7 +4,7 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Action = sequelize.define('Action', {
-    type:           DataTypes.ENUM('like','learn','connections', 'apply', 'follow up',  'interview',
+    type:           DataTypes.ENUM('like','learn','connections', 'apply', 'follow up', 'interview',
       'schedule', 'email', 'phone', 'offer', 'meetup','resume', 'phoneInterview', 'webInterview', 'personalInterview', 
       'sentEmail', 'receivedEmail' ), 
     // apply phoneInterview webInterview personalInterview sentEmail receivedEmail phone is my current list

@@ -10,41 +10,61 @@ import Menu                         from 'material-ui/Menu';
 import MenuItem                     from 'material-ui/MenuItem';
 
 
+var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'interview'];
+
 @observer class ActivityBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onChange           = this.onChange.bind(this);
-    this.handleClick        = this.handleClick.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.selectItem         = this.selectItem.bind(this);
-    this.state              = {open: false};
+    this.onChange                 = this.onChange.bind(this);
+    this.handleClick              = this.handleClick.bind(this);
+    this.handleRequestClose       = this.handleRequestClose.bind(this);
+    this.handleEmailRequestClose  = this.handleEmailRequestClose.bind(this);
+    this.selectItem               = this.selectItem.bind(this);
+    this.state                    = {open: false,
+                                      emailOpen: false};
   }
 
   handleClick (e) {
     e.preventDefault();
-    console.log('handling click?');
+
+    console.log('handling click?', e);
     Store.selectedActivityBox = this.props.id;
   
-    this.setState({
-      open: true,
-      anchorEl: e.currentTarget,
-    });
+    if (this.props.id === 5) {
+
+      this.setState({
+        open: true,
+        anchorEl: e.currentTarget,
+      });
+
+    } else if (this.props.id === 3) {
+      
+      this.setState({
+        emailOpen: true,
+        anchorEl: e.currentTarget,
+      });
+
+    } else {
+
+      Store.addActivity.type = activityType[this.props.id];
+    }
+
+
   }
 
   handleRequestClose () {  
     this.setState({ open: false });
   }
 
-  selectItem (e) {
-    //e.preventDefault();
-    console.log('selected Item!!!!!!!!!!', e);
-    // I can get a selected item here and now I will need to update info.
-    // how do we keep rack of the interview type and  track that progress
+  handleEmailRequestClose () {
+    this.setState({ emailOpen: false });
+  }
 
+  selectItem (e) {
+    
     Store.addActivity.type = e;
     this.setState({open: false});
-
   }
 
 
@@ -55,7 +75,7 @@ import MenuItem                     from 'material-ui/MenuItem';
 
   render () {
     var color;
-
+    console.log(Store.selectedActivityBox);
     if (Store.selectedActivityBox === this.props.id) {
       color = grey900;
     } else {
@@ -85,10 +105,25 @@ import MenuItem                     from 'material-ui/MenuItem';
               targetOrigin={{horizontal: 'left', vertical: 'top'}}
               onRequestClose={this.handleRequestClose}>
               <Menu desktop={true} >
-                <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "phone")} />
-                <MenuItem primaryText="Web" onClick={this.selectItem.bind(this, "web")} />
-                <MenuItem primaryText="In Person" onClick={this.selectItem.bind(this, "inperson")} />
-                <MenuItem primaryText="At Home Assignment" onClick={this.selectItem.bind(this, "athomeassignment")} />
+                <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "phoneInterview")} />
+                <MenuItem primaryText="Web" onClick={this.selectItem.bind(this, "webInterview")} />
+                <MenuItem primaryText="In Person" onClick={this.selectItem.bind(this, "personalInterview")} />
+
+              </Menu>
+            </Popover>
+          </MuiThemeProvider>}
+
+          {this.props.type === 'E-Mail'  &&
+          <MuiThemeProvider>
+            <Popover
+              open={this.state.emailOpen}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleEmailRequestClose}>
+              <Menu desktop={true} >
+                <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "sentEmail")} />
+                <MenuItem primaryText="Web" onClick={this.selectItem.bind(this, "receivedEmail")} />
               </Menu>
             </Popover>
           </MuiThemeProvider>}
