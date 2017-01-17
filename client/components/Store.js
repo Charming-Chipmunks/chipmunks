@@ -24,6 +24,12 @@ class Store {
   @observable jobActions = [];
   @observable hiddenCompanyLetters = [];
   @observable viewingNewJobs = true;
+  @observable userGoals = {
+    applications: 5,
+    emails: 10,
+    interviewPractice: 2,
+    jobsReviewed: 5
+  }
   @observable addActivity = {
     type: '',
     company: '',

@@ -27,6 +27,18 @@ import JobDescription from './JobDescription';
 
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'favored' })
       .then(function(response) {
+        // refresh user actions to include new actions
+        axios.get(`/actions/${Store.currentUserId}`)
+          .then(function(response) {
+            Store.actions = response.data;
+            const { filteredActions } = Store;
+            var result = filteredActions;
+            // console.log('filteredActions: ', filteredActions);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+
       }).catch(function(error) {
         console.log(error);
       });
@@ -58,10 +70,12 @@ import JobDescription from './JobDescription';
     return (<li>
       <div className="rateCompany">
         <JobDescription job={this.props.job}/>
+        { Store.viewingNewJobs &&
         <div className="rateCompanyAction right">
           <div className="favorJob" onClick={this.yes.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
           <div className="favorJob" onClick={this.no.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsdown.png"/></div>
         </div>
+        }
         <span id="indeed_at"><a title="Job Search" href="https://www.indeed.com">jobs by <img className="indeedImage" src="https://www.indeed.com/p/jobsearch.gif" /></a></span>
       </div>
       </li>);
