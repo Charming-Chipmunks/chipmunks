@@ -176,6 +176,8 @@ class GoalsGraphView extends React.Component {
 }
     //    <LinearProgress mode="determinate" value={this.state.completed} />
 
+
+// make sure this stays
 @observer
 export default class LandingPage extends React.Component {
   constructor(props) {
