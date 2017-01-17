@@ -42,7 +42,7 @@ console.log('INIT ACTIONS');
           if (userjob.status === 'favored'){
             console.log('yes');
           }
-        })
+        });
 
       var date = new Date ();
 

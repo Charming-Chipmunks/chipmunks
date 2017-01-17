@@ -123,29 +123,38 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
 
     return (
-      <div className="taskBox" style={styles.highligh}>
-        <div className="leftTaskIcons">
-          <div className="daysDue">
-            <h6 className="rateCompanyText">{dateMessage}</h6>
-          </div>
-          <div className="iconTask">
-            <i className="material-icons">{iconName}</i>
-          </div>
-        </div>
-        <div className="taskDescription">
-          <h5 className="rateCompanyText">{this.props.task.description}</h5>
-        </div>
-        <div className="rightTaskIcons">
-          <div className="doneTask">
-            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>done</i>
-          </div>
-          <div className="doneTask">
-            <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>edit</i>
-          </div>
-        </div>
-      </div>
+        <tr>
+          <td> {dateMessage} </td>
+          <td> <i className="material-icons">{iconName}</i> </td>
+          <td>{this.props.task.description}</td>
+          <td> <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>done</i></td>
+          <td> <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>edit</i></td>
+        </tr>
     );
   }
 }
 
 export default TaskBox;
+
+
+// <div className="taskBox" style={styles.highligh}>
+//         <div className="leftTaskIcons">
+//           <div className="daysDue">
+//             <h6 className="rateCompanyText">{dateMessage}</h6>
+//           </div>
+//           <div className="iconTask">
+//             <i className="material-icons">{iconName}</i>
+//           </div>
+//         </div>
+//         <div className="taskDescription">
+//           <h5 className="rateCompanyText"></h5>
+//         </div>
+//         <div className="rightTaskIcons">
+//           <div className="doneTask">
+           
+//           </div>
+//           <div className="doneTask">
+           
+//           </div>
+//         </div>
+//       </div>

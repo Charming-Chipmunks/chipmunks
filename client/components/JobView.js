@@ -212,38 +212,32 @@ import ContactModal             from './ContactModal'
                 </IndexLink>
               </div>
             </div>
-            <div className="companyTasks">
-            <div className="taskBox">
-              <div className="leftTaskIcons">
-                <div className="daysDue">
-                  <h6 className="rateCompanyText medium">Due</h6>
-                </div>
-                <div className="iconTask">
-                  <h6 className="rateCompanyText medium">Type</h6>
-                </div>
-              </div>
-              <div className="taskDescription">
-                <h6 className="rateCompanyText medium">Task Description</h6>
-              </div>
-              <div className="rightTaskIcons">
-                <div className="doneTask">
-                  <h6 className="rateCompanyText medium">Mark Complete</h6>
-                </div>
-                <div className="doneTask">
-                  <h6 className="rateCompanyText medium">Edit</h6>
-                </div>
-              </div>
-             </div>
-              {jobActions.map((action, index) => {
-                return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)} 
+
+            <table className="striped bordered">
+              <thead>
+                <tr>
+                  <th data-field="id" className="columnA">Due</th>
+                  <th data-field="name" className="columnB">Type</th>
+                  <th data-field="price" className="columnC">Description</th>
+                  <th data-field="name" className="columnD">Complete</th>
+                  <th data-field="price" className="columnE">Edit</th>                  
+                </tr>
+              </thead>
+
+              <tbody>   
+                
+                {jobActions.map((action, index) => {
+                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)} 
                                   edit={this.handleEditClick.bind(this, index)} />);
-              })
-            }
+                })
+                }
+              </tbody>
+              </table>
+            
             </div>
           </div>
-        </div>
 
-        {/* contact modal */}
+
         <Modal  isOpen={this.state.contactModalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeContactModal}
@@ -254,7 +248,6 @@ import ContactModal             from './ContactModal'
           </ContactModal>
         </Modal>
 
-        {/* activity modal */}
         <Modal  isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
