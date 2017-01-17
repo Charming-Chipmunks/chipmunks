@@ -187,7 +187,7 @@ var isLoggedIn = function(req, res, next) {
 //   res.redirect
 // });
 app.get('/logout', function(req, res) {
-  res.logout();
+  req.logout();
   res.redirect('/');
 });
 

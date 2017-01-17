@@ -68,23 +68,40 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
       dateMessage = 'Done';
       vis = { hide: { visibility: 'hidden'} };
     } else {
-      var dueDate = this.props.task.scheduledTime;
-      dueDate = new Date(dueDate);
-      var days = Math.abs(dueDate - currDate);
-
-      var oneDay = 1000 * 60 * 60 * 24;
-      days = Math.floor(days / oneDay);
-
-
-      if (days < 1) {
-        dateMessage = 'Due Today';
-        styles = { highlight: {border: '1px solid red'} };
+      // var dueDate = this.props.task.scheduledTime;
+      // dueDate = new Date(dueDate);
+      // var days = Math.abs(dueDate - currDate);
+      
+      // var oneDay = 1000 * 60 * 60 * 24;
+      // days = Math.floor(days / oneDay);
+      
+      // if (days < 1) {
+      //   dateMessage = 'Due Today';
+      //   styles = { highlight: {border: '1px solid red'} };
+      // } else if (days === 1) {
+      //   dateMessage = 'Due in 1 Day';
+      //   styles = { highlight: { border: '1px solid yellow'} };
+      // } else {
+      //   dateMessage = `Due in ${days} days`; 
+      //   styles = { highlight: { border: '1px solid yellow'} };
+      // } 
+      console.log(this.props.task.scheduledTime);
+      var days = Math.floor((new Date(this.props.task.scheduledTime).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
+      if (days < -1) {
+        dateMessage = 'Due ' + Math.abs(days) + ' days ago';
+        styles = { highlight: {border: '1px solid red', 'backgroundColor': 'pink'}};
+      } else if (days === -1) {
+        dateMessage = 'Due yesterday';
+        styles = { highlight: {border: '1px solid red', 'backgroundColor': 'pink'} };
+      } else if (days === 0) {
+        dateMessage = 'Due today';
+        styles = { highlight: {border: '1px solid yellow', 'backgroundColor': 'lightyellow'} };
       } else if (days === 1) {
-        dateMessage = 'Due in 1 Day';
-        styles = { highlight: { border: '1px solid yellow'} };
+        dateMessage = 'Due tomorrow';
+        styles = {highlight: {}};
       } else {
-        dateMessage = `Due in ${days} days`;
-        styles = { highlight: { border: '1px solid yellow'} };
+        dateMessage = 'Due in ' + days + ' days';
+        styles = {highlight: {}};
       }
     }
 

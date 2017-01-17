@@ -10,6 +10,7 @@
     "start-blind": "nodemon server/server.js 2>&1 | log/.predate.sh >> log/server.log & ",
     "stop": "killall -9 node",
     "tail": "tail -f log/server.log",
+    "remotedb": "echo 'Opening tunnel to remote database.  ^C to kill...' && ssh -nNT -L 3307:localhost:3306 root@jobz.mooo.com",
     "run-ios": "cd Phone && react-native run-ios"
   },
   "repository": {
