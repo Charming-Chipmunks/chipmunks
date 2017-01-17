@@ -221,7 +221,7 @@ export default class LandingPage extends React.Component {
     if (this.state.loaded) {
       return (
         <div style={styles.landingContainer}>
-          <div className='col m12 left'>
+          <div className='col m10 left'>
             <div style={styles.mainDiv}>
               <h5>Welcome, {Store.userName}!</h5>
             </div>
@@ -263,6 +263,9 @@ export default class LandingPage extends React.Component {
                 Store.newJobList.length === 0 && <div>No jobs to review. Add a parameter to view more jobs!</div>
               }
             </div>
+          </div>
+          <div className="col m2 right">
+            <MainRightSidebar />
           </div>
         </div>
       )
