@@ -9,6 +9,7 @@ import TextField                from 'material-ui/TextField';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 import Snackbar                 from 'material-ui/Snackbar';
+import moment from 'moment';
 
 import 'react-day-picker/lib/style.css';
 
@@ -39,12 +40,15 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       Store.addActivity.scheduledTime = this.props.action.scheduledTime;
       Store.addActivity.description = this.props.action.description;
       Store.addActivity.company = this.props.action.company;
+      Store.addActivity.notes = this.props.action.notes;
+      Store.addActivity.type = this.props.action.type;
       // need to set the activty type
       // *****  need to check on types
       console.log('date from db', typeof this.props.action.scheduledTime === 'string');
       //this.setState({selectedDay: this.props.action.scheduledTime});
       typeArray.forEach((type, index) => {
 
+        //  need to work on the selected activity types
         if (this.props.action.type === type) {
           Store.selectedActivityBox = index;
         }
@@ -59,6 +63,8 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
 
     var newDate = new Date(date);
     console.log('date picker date format:', date);
+    console.log(date.toString());
+    //console.log(moment(date).('YYYY-MM-DD HH:mm:SS'));
     console.log('date picker date format:', newDate);
     Store.addActivity.scheduledTime = date;
   }
@@ -117,12 +123,15 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
 
         axios.put(`/actions/${this.props.action.id}`, putObj)
         .then((response) => {
-          console.log(Store.jobActions[that.props.id]);
           
           axios.get(`/actions/${Store.currentUserId}/${this.props.job.id}`)
             .then(function(response) {
+              console.log('updating actions', response.data);
               Store.jobActions = response.data;
-              console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+              // this should set the jobActions to the returned list???
+              console.log(Store.jobActions);
+
+              //console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
             })
             .catch(function(error) {
               console.log(error);
