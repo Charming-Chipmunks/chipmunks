@@ -2,6 +2,7 @@ var models = require('./models');
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var db = require('./models/index')
 
 userId = 1;
 
@@ -214,7 +215,73 @@ var monthWeeklyStats = function(userId, res) {
 
   // console.log('results', results);
 };
-// monthWeeklyStats(1, res);
+//GOING TO CHECK ACTIONS GOING BACK 30 DAYS
+var allUserStats = function() {
+  var start = moment().subtract(30, 'd').toDate();
+  var end = moment().toDate();
+  var userStats = [];
+
+  var calcStatsFromAction = function(action, userObj) {
+    if (action.completedTime) {
+      if (action.type === 'like') {
+        userObj.like++;
+      } else if (action.type === 'apply') {
+        userObj.applied++;
+      } else if (action.type === 'phoneInterview') {
+        userObj.phoneInterview++;
+      } else if (action.type === 'webInterview') {
+        userObj.webInterview++;
+      } else if (action.type === 'personalInterview') {
+        userObj.personalInterview++;
+      } else if (action.type === 'phone') {
+        userObj.phone++;
+      } else if (action.type === 'sentEmail') {
+        userObj.sentEmail++;
+      } else if (action.type === 'receivedEmail') {
+        userObj.receivedEmail++;
+      }
+    }
+
+  };
+
+
+  db['Action'].findAll({
+    where: {
+      UserId: userId,
+      $and: [{
+        completedTime: {
+          $gt: start
+        }
+      }, {
+        completedTime: {
+          $lt: end
+        }
+      }]
+    }
+  })
+    .then(allActions => {
+      allActions.forEach(action => {
+        console.log(action.UserId);
+        userStats[action.UserId] = userStats[action.UserId] || {
+          like: 0,
+          applied: 0,
+          phoneInterview: 0,
+          webInterview: 0,
+          personalInterview: 0,
+          sentEmail: 0,
+          phone: 0,
+          receivedEmail: 0,
+        };
+        calcStatsFromAction (action, userStats[action.UserId]);
+      });
+      // done with assigning, need to calculate
+      console.log(userStats);
+    });
+};
+allUserStats();
+////////////// Routes
+
+
 router.get('/stats/monthly/:userId', function(req, res) {
   monthWeeklyStats(req.params.userId, res);
 });
