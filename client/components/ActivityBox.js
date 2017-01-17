@@ -27,30 +27,26 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
 
   handleClick (e) {
     e.preventDefault();
+    if (!this.props.disabled) {
+      console.log('handling click?', e);
+      Store.selectedActivityBox = this.props.id;
+    
+      if (this.props.id === 5) {
+        this.setState({
+          open: true,
+          anchorEl: e.currentTarget,
+        });
 
-    console.log('handling click?', e);
-    Store.selectedActivityBox = this.props.id;
-  
-    if (this.props.id === 5) {
-
-      this.setState({
-        open: true,
-        anchorEl: e.currentTarget,
-      });
-
-    } else if (this.props.id === 3) {
-      
-      this.setState({
-        emailOpen: true,
-        anchorEl: e.currentTarget,
-      });
-
-    } else {
-
-      Store.addActivity.type = activityType[this.props.id];
+      } else if (this.props.id === 3) {
+        
+        this.setState({
+          emailOpen: true,
+          anchorEl: e.currentTarget,
+        });
+      } else {
+        Store.addActivity.type = activityType[this.props.id];
+      }
     }
-
-
   }
 
   handleRequestClose () {  

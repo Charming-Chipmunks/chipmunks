@@ -54,7 +54,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
     if (Store.newContact.firstname !== '' && Store.newContact.lastname !== '') {
 
       if (!this.props.contact) {
-
+        // if this is a new contact,  create new contact and update the Store
         axios.post(`/contacts/${Store.currentUserId}/${this.props.job.id}`, obj)
         .then(function(response) {
           Store.contacts.push(response.data);
