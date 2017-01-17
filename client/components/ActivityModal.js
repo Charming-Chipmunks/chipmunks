@@ -34,7 +34,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
     this.state = {
       snack: false,
       errorMessage: '',
-      selectedDay: '',
+      selectedDay: new Date(),
       displayName: ''
     };
     this.isDaySelected = this.isDaySelected.bind(this);
@@ -50,7 +50,6 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
       Store.addActivity.notes = this.props.action.notes;
       Store.addActivity.type = this.props.action.type;
 
-    console.log('action type', this.props.action.type);
 
       if (this.props.action.type === 'connections') {
         Store.selectedActivityBox = 0;
@@ -92,6 +91,12 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
   saveDate (e, date) {
     e.preventDefault();
+
+    /*****
+    ******
+    *****  This is part of where the date needs to be fixed
+    *****
+    *****/
     this.setState({selectedDay: date});
     Store.addActivity.scheduledTime = date;
   }
@@ -111,9 +116,6 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
     if (Store.selectedActivityBox !== -1 && 
         Store.addActivity.scheduledTime !== '' && 
         Store.addActivity.description !== '') {
-
-      // this is where I need to capture the correct type
-      //var activityNum = Store.selectedActivityBox;
 
       var type = Store.addActivity.type;
 
