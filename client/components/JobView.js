@@ -112,7 +112,7 @@ import ContactModal             from './ContactModal'
     var updateAction = Store.jobActions[id];
 
     Store.actions.forEach((action, index) => {
-      if(action.id === updateAction.id) {
+      if (action.id === updateAction.id) {
         action.completedTime = new Date();
       }
     })

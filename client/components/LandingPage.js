@@ -137,6 +137,7 @@ class GoalsGraphView extends React.Component {
       <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', margin: '5px'}}>
         <div>
           <div className='col m4 left'>
+            <div>{Store.userGoals.applications}</div>
             Application Progress:
           </div>
           <div className='col m8 right' >
