@@ -109,8 +109,13 @@ import ContactModal             from './ContactModal'
     console.log('action id: ', id);
     // find the item in the Store, and mark it as complete.
     Store.jobActions[id].completedTime = new Date();
-    
     var updateAction = Store.jobActions[id];
+
+    Store.actions.forEach((action, index) => {
+      if (action.id === updateAction.id) {
+        action.completedTime = new Date();
+      }
+    })
     updateAction = toJS(updateAction);
     console.log('is this updated ?', updateAction);
   }

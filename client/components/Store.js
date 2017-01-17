@@ -23,6 +23,13 @@ class Store {
   @observable actionFilter = 4863;
   @observable jobActions = [];
   @observable hiddenCompanyLetters = [];
+  @observable viewingNewJobs = true;
+  @observable userGoals = {
+    applications: 5,
+    emails: 10,
+    interviewPractice: 2,
+    jobsReviewed: 5
+  }
   @observable addActivity = {
     type: '',
     company: '',
@@ -436,12 +443,19 @@ class Store {
     return ret;
   }
 
+  // unrated jobs created today
   @computed get todaysJobs() {
     var ret = [];
+    var today = moment();
 
     this.newJobList.forEach((job, index) => {
-      console.log('created:', job.createdAt);
-    });
+      var created = moment(job.createdAt);
+      var diff = created.diff(today, 'days');
+
+      if (diff === -1) {
+        ret.push(job);
+      }
+    }) 
 
     return ret;
   }
