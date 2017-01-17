@@ -54,7 +54,7 @@ class Store {
     state: 'Ca',
     zip: 94100,
     descriptor: '',
-    radius: 25
+    radius: '25'
   }
   @observable newTask = {
     actionSource: 'userInteraction',

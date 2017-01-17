@@ -49,6 +49,7 @@ import LoginPage                  from './LoginPage'
         .then(function(response) {
           // console.log('jobs/userid/favored response.data', response.data);
           Store.newJobList = response.data;
+          ///*******************  here is where I can get # of new jobs and updat the top
         })
         .catch(function(error) {
           console.log(error);

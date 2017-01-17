@@ -27,7 +27,9 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
     this.state = {
       snack: false,
       errorMessage: '',
+      selectedDay: ''
     };
+    this.isDaySelected = this.isDaySelected.bind(this);
 
   }
 
@@ -38,6 +40,9 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       Store.addActivity.description = this.props.action.description;
       Store.addActivity.company = this.props.action.company;
       // need to set the activty type
+      // *****  need to check on types
+      console.log('date from db', typeof this.props.action.scheduledTime === 'string');
+      //this.setState({selectedDay: this.props.action.scheduledTime});
       typeArray.forEach((type, index) => {
 
         if (this.props.action.type === type) {
@@ -50,8 +55,16 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
 
   saveDate (e, date) {
     e.preventDefault();
+    this.setState({selectedDay: date});
 
+    var newDate = new Date(date);
+    console.log('date picker date format:', date);
+    console.log('date picker date format:', newDate);
     Store.addActivity.scheduledTime = date;
+  }
+
+  isDaySelected(day) {
+    return DateUtils.isSameDay(day, this.state.selectedDay);
   }
 
   handleClick (e) {
@@ -158,7 +171,7 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
             </div>  
           </div>  
           <div>
-            <DayPicker onDayClick={ this.saveDate } />
+            <DayPicker onDayClick={ this.saveDate } selectedDays={ this.isDaySelected } />
           </div>
         </div>
         <form>
