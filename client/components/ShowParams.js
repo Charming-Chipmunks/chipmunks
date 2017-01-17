@@ -9,6 +9,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
 import Store                    from './Store';
 import Param                    from './Param';
+//import material                 from 'materialize-css';
 
 @observer class ShowParams extends React.Component {
   
@@ -21,7 +22,8 @@ import Param                    from './Param';
       snack: false,
       numJobs: 0,
       keywords: '',
-      location: ''
+      location: '',
+      message: ''
     };
   }
 
@@ -29,7 +31,7 @@ import Param                    from './Param';
     // console.log('getparms this', this);
     axios.get('/parameter/' + Store.currentUserId)
       .then(function(response) {
-        console.log('params data', response.data);
+        // console.log('params data', response.data);
         Store.params = response.data.Parameters;
       })
       .catch(function(error) {
@@ -44,49 +46,79 @@ import Param                    from './Param';
   saveParam(e) {
     e.preventDefault();
 
-    this.setState({spin: true});
-    e.preventDefault();
-    var that = this;
-    var paramId;
+    if (Store.newParam.descriptor !== '' &&
+        Store.newParam.city !== '' &&
+        Store.newParam.state !== '' ) {
 
-    this.setState({
-      keywords: Store.newParam.descriptor,
-      location: Store.newParam.city
-    });
+      this.setState({spin: true});
+      e.preventDefault();
+      var that = this;
+      var paramId;
 
-    axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
-      .then(function(response) {
-        //console.log('returned from the server: ', response.data);
-        if (response.data) {
-          paramId = response.data.id;
-          Store.params.push(response.data);
-        }
-      }).catch(function(error) {
-        console.log(error);
+      this.setState({
+        keywords: Store.newParam.descriptor,
+        location: Store.newParam.city
       });
 
-    setTimeout(() => {
-      axios.get('/ponme/' + paramId)
-        .then((response) => {
-          this.setState({
-            spin: false,
-            numJobs: response.data.length,
-            snack: true
-          });
-        })
-        .catch(function(error) {
-          console.log(error);
-        });          
 
-      // need to quert database to get the number of new jobs...
-    }, 3000);
-  }
+      // **********************   i ma have to re type cast the radius to a number by
+      // building up an object  
+      axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
+        .then(function(response) {
+          //console.log('returned from the server: ', response.data);
+          if (response.data) {
+            paramId = response.data.id;
+            Store.params.push(response.data);
+          }
+        }).catch(function(error) {
+          console.log(error);
+        });
+
+      setTimeout(() => {
+        axios.get('/ponme/' + paramId)
+          .then((response) => {
+
+            this.setState({
+              spin: false,
+              numJobs: response.data.length
+            });
+
+            console.log('in axios get paramsvfor num jobs');
+            this.setState({
+              message: `${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`});
+            
+            this.setState({
+              snack: true
+              });
+    
+          })
+          .catch(function(error) {
+            console.log(error);
+          });          
+
+        // need to quert database to get the number of new jobs...
+      }, 5000);
+
+    } else {
+
+      console.log('in error message jobs');
+      this.setState({ 
+        message: 'Please include a job description, city and state'});
+      this.setState({
+        snack: true });
+      }
+    }
+  
 
   change(e) {
 
     // for the spell check, need to put each word in a span
 
-    Store.newParam[e.target.name] = e.target.value;
+    if (typeof(e.target.value) === 'number') {
+      Store.newParam[e.target.name] = e.target.value.toString();   
+    } else {
+      Store.newParam[e.target.name] = e.target.value;
+    }
   }
 
   render() {
@@ -151,7 +183,7 @@ import Param                    from './Param';
       </div>
     </MuiThemeProvider>
     <MuiThemeProvider>
-      <Snackbar open={this.state.snack}  message={`${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`} 
+      <Snackbar open={this.state.snack}  message={this.state.message} 
                 autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
     </MuiThemeProvider>
     </div>

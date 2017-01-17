@@ -100,7 +100,7 @@ import Paginator from './Paginator';
             }
             )}
           </ul>
-        <div>
+        <div className="paginatorContainer">
           <ul className="pagination">
             <li className={leftArrow} onClick={this.leftArrowClick.bind(this)}><i className="material-icons">chevron_left</i></li>
             {pages}

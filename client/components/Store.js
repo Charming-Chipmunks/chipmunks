@@ -24,6 +24,7 @@ class Store {
   @observable jobActions = [];
   @observable hiddenCompanyLetters = [];
   @observable viewingNewJobs = true;
+  @observable hideLeftSideBarCompany = true;
   @observable userGoals = {
     applications: 5,
     emails: 10,
@@ -54,7 +55,7 @@ class Store {
     state: 'Ca',
     zip: 94100,
     descriptor: '',
-    radius: 25
+    radius: '25'
   }
   @observable newTask = {
     actionSource: 'userInteraction',
