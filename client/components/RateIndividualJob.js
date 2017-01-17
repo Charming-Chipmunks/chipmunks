@@ -44,7 +44,7 @@ import JobDescription from './JobDescription';
       });
     
     Store.jobList.push(this.props.job);
-
+    Store.userGoals.like++;
 
   }
 

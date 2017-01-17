@@ -109,11 +109,8 @@ import LoginPage                  from './LoginPage'
           <div className="col m2 left">
             <CompanyList />
           </div>
-          <div className="col m8">
+          <div className="col m10">
             {this.props.children}
-          </div>
-          <div className="col m2 left">
-            <MainRightSidebar />
           </div>
         </div>
       </div>

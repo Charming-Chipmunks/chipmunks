@@ -21,11 +21,10 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
 
   handleDoneClick () {
-
+    var that = this;
     axios.put(`/actions/${Store.currentUserId}/${this.props.task.id}`)
       .then(function(response) {
         console.log('task completed');
-        console.log('response', response.data);
       })
       .catch(function(error) {
         console.log(error);

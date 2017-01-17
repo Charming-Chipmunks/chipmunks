@@ -117,6 +117,10 @@ import ContactModal             from './ContactModal'
       }
     })
     updateAction = toJS(updateAction);
+    if(Store.userGoals[updateAction.type] !== undefined) {
+      console.log('+!!', Store.userGoals[updateAction.type])
+      Store.userGoals[updateAction.type]++;
+    }
     console.log('is this updated ?', updateAction);
   }
 
