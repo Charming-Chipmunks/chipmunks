@@ -6,6 +6,7 @@ logs
 .DS_Store
 
 **/*bundle.js
+**/login.js
 
 .env
 
