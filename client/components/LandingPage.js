@@ -68,6 +68,27 @@ class InterestBar extends React.Component {
 class ActivityGraphView extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      todaysJobs: 0
+    }
+  }
+
+  componentWillMount() {
+    var that = this;
+
+    axios.get('/jobs/' + Store.currentUserId + '/new')
+      .then(function(response) {
+        // console.log('jobs/userid/favored response.data', response.data);
+        Store.newJobList = response.data;
+        console.log('in')
+        that.setState({
+          newJobs: response.data.length
+        })
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
@@ -86,8 +107,8 @@ class ActivityGraphView extends React.Component {
           <div className='col m6 right'>{Store.todaysJobs.length}</div>
         </div>
         <div className='row'>
-          <div className='col m6 left'>Jobs with last activity > 10 days:</div>
-          <div className='col m6 right'>{Store.todaysJobs.length}</div>
+          <div className='col m6 left'>Total pending jobs:</div>
+          <div className='col m6 right'>{Store.newJobList.length}</div>
         </div>
       </div>
     )
@@ -161,16 +182,21 @@ export default class LandingPage extends React.Component {
   }
 
     componentWillMount() {
-      if(Store.currentUserId){
-        axios.get(`/actions/${Store.currentUserId}`)
-        .then(function(response) {
-          Store.actions = response.data;
-          // console.log('filteredActions: ', filteredActions);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      }
+      var that = this;
+      // if(Store.currentUserId){
+      //   axios.get(`/actions/${Store.currentUserId}`)
+      //   .then(function(response) {
+      //     Store.actions = response.data;
+      //     // console.log('filteredActions: ', filteredActions);
+      //   })
+      //   .catch(function(error) {
+      //     console.log(error);
+      //   });
+      // }
+      setTimeout(() => {
+        console.log('after 5');
+        that.render();
+      }, 2000);
     }
 
   render() {
@@ -192,7 +218,6 @@ export default class LandingPage extends React.Component {
 
     }
 
-    console.log('active tasks:', Store.activeTasks)
     return (
       <div style={styles.landingContainer}>
         <div className='col m12 left'>
@@ -231,7 +256,7 @@ export default class LandingPage extends React.Component {
           <div style={{flex:1}}>
             <LandingHeader title="Next Pending Job"/>
             {
-              Store.newJobList.length > 0 && <RateIndividualJob job={Store.newJobList[0]} />
+              Store.newJobList.length > 0 && <ul><RateIndividualJob key={Store.newJobList.length} job={Store.newJobList[0]} /></ul>
             }
             {
               Store.newJobList.length === 0 && <div>No jobs to review. Add a parameter to view more jobs!</div>

@@ -62,8 +62,43 @@
   flex: 1 100%;
 }
 
+/*
+Login Page
+*/
+.loginContainer{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
 
+.loginIcon {
+  height: 200px;
+  width: 200px;
+  margin: 20px;
+}
 
+.loginText{
+  font-size: 20px;
+  text-align: center;
+  width: 160px;
+  margin: 0px 35px 10px 35px;
+}
+
+.loginBanner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.googleBanner {
+  flex: 1;
+}
+
+.loginLink {
+  text-align: right;
+  font-size: 15px;
+  margin-top: 40px;
+}
 /*
  * JobView Page: ;
  */

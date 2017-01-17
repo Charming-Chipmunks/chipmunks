@@ -2,7 +2,10 @@
 import React                      from 'react';
 import ReactDOM                   from 'react-dom';
 import { observer }               from 'mobx-react';
-import { Link, IndexLink }        from 'react-router';
+import { 
+  Router, browserHistory,
+  Link, IndexLink 
+}                                 from 'react-router';
 import { toJS, observable }       from 'mobx';
 import axios                      from 'axios';
 
@@ -15,6 +18,8 @@ import CompanyList                from './CompanyList';
 import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
 import LandingPage                from './LandingPage';
 import MainRightSidebar           from './MainRightSidebar';
+// serve individually?
+import LoginPage                  from './LoginPage'
 
 
 @observer class Web extends React.Component {
@@ -38,6 +43,16 @@ import MainRightSidebar           from './MainRightSidebar';
           .catch(function(error) {
             console.log(error);
           });
+
+        // get new jobs
+        axios.get('/jobs/' + Store.currentUserId + '/new')
+        .then(function(response) {
+          // console.log('jobs/userid/favored response.data', response.data);
+          Store.newJobList = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
 
         // get a list of upcomiing actions IMPLEMET LATER
         axios.get(`/actions/${Store.currentUserId}`)
@@ -63,6 +78,7 @@ import MainRightSidebar           from './MainRightSidebar';
       })
       .catch(function(error) {
         console.log(error);
+        Router.push('login');
       });
 
   }
@@ -93,8 +109,7 @@ import MainRightSidebar           from './MainRightSidebar';
             <CompanyList />
           </div>
           <div className="col m8">
-            {false && <LandingPage />}
-            {true && this.props.children}
+            {this.props.children}
           </div>
           <div className="col m2 left">
             <MainRightSidebar />

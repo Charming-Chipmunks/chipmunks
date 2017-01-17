@@ -2,12 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    './client/components/webIndex.js'
-  ],
+  entry: {
+    bundle: './client/components/webIndex.js',
+    login: './client/components/RegisterLoginPage.js'
+  },
   output: {
     path: __dirname,
-    filename: './client/dist/bundle.js'
+    filename: './client/dist/[name].js'
   },
 
 ////////////////////////////////////////////////

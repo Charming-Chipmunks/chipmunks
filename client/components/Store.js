@@ -436,12 +436,19 @@ class Store {
     return ret;
   }
 
+  // unrated jobs created today
   @computed get todaysJobs() {
     var ret = [];
+    var today = moment();
 
     this.newJobList.forEach((job, index) => {
-      console.log('created:', job.createdAt);
-    });
+      var created = moment(job.createdAt);
+      var diff = created.diff(today, 'days');
+
+      if (diff === -1) {
+        ret.push(job);
+      }
+    }) 
 
     return ret;
   }
