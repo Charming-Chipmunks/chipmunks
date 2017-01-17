@@ -13,13 +13,19 @@ import moment from 'moment';
 
 import 'react-day-picker/lib/style.css';
 
-var activityArray = ['Call', 'Email', 'Apply', 'Connect', 'Meet-Up', 'Follow Up', 'Resume', 'Interview', 'Offer' ];
-var typeArray     = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
-var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop', 'reorder', 'bookmark', 'stars'];
+// these come out of the database
+var typeArray     = ['connections', 'follow up', 'phone', 'meetup', 'sentEmail', 'receivedEmail', 'apply',   
+                      'phoneInterview', 'webInterview', 'personalInterview'];
+// var diaplay names
+var diaplayNames = ['Connection', 'Follow Up', 'Phone Call', 'Meet Up', 'Sent Email', 'Received Email', 'Apply',   
+                      'Phone Interview', 'Web Interview', 'Personal Interview'];
+// display names on the activity modal
+var activityArray = ['Reach Out', 'Call', 'Meet Up', 'E-Mail', 'Apply', 'Interview'];
+// maps to icons on the activity modal
+var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
 
 @observer class ActivityModal extends React.Component {
-
 
   constructor(props) {
     super(props);
@@ -28,7 +34,8 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
     this.state = {
       snack: false,
       errorMessage: '',
-      selectedDay: ''
+      selectedDay: '',
+      displayName: ''
     };
     this.isDaySelected = this.isDaySelected.bind(this);
 
@@ -42,30 +49,50 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
       Store.addActivity.company = this.props.action.company;
       Store.addActivity.notes = this.props.action.notes;
       Store.addActivity.type = this.props.action.type;
-      // need to set the activty type
-      // *****  need to check on types
-      console.log('date from db', typeof this.props.action.scheduledTime === 'string');
-      //this.setState({selectedDay: this.props.action.scheduledTime});
-      typeArray.forEach((type, index) => {
 
-        //  need to work on the selected activity types
-        if (this.props.action.type === type) {
-          Store.selectedActivityBox = index;
-        }
-      });
-      
+    console.log('action type', this.props.action.type);
+
+      if (this.props.action.type === 'connections') {
+        Store.selectedActivityBox = 0;
+        this.setState({displayName: 'Connection'});
+      } else if (this.props.type === 'follow up') {
+        this.setState({displayName: 'Follow Up'});
+        Store.selectedActivityBox = 0;
+      } else if (this.props.action.type === 'phone') {
+        this.setState({displayName: 'Phone Call'});        
+        Store.selectedActivityBox = 1;
+      } else if (this.props.action.type === 'meetup') {
+        this.setState({displayName: 'Meet Up'});         
+        Store.selectedActivityBox = 2;
+      } else if (this.props.action.type === 'sentEmail') {
+        this.setState({displayName: 'Sent Email'});         
+        Store.selectedActivityBox = 3;
+      } else if (this.props.type === 'receivedEmail') {
+        this.setState({displayName: 'Received Email'}); 
+        Store.selectedActivityBox = 3;
+      } else if (this.props.action.type === 'apply') {
+        this.setState({displayName: 'Apply'});         
+        Store.selectedActivityBox = 4;
+      } else if (this.props.action.type === 'phoneInterview' ) {
+        this.setState({displayName: 'Phone Interview'}); 
+        Store.selectedActivityBox = 5;
+      } else if (this.props.action.type === 'webInterview' ) {
+        this.setState({displayName: 'Web Interview'});         
+        Store.selectedActivityBox = 5;        
+      } else if (this.props.action.type === 'personalInterview') {
+        this.setState({displayName: 'On Site Interview'});         
+        Store.selectedActivityBox = 5;
+      } else if (this.props.action.type === 'learn') {
+        this.setState({displayName: 'Learn'});         
+      } else if (this.props.action.type === 'offer') {
+        this.setState({displayName: 'Offer'});         
+      }
     }
   }
 
   saveDate (e, date) {
     e.preventDefault();
     this.setState({selectedDay: date});
-
-    var newDate = new Date(date);
-    console.log('date picker date format:', date);
-    console.log(date.toString());
-    //console.log(moment(date).('YYYY-MM-DD HH:mm:SS'));
-    console.log('date picker date format:', newDate);
     Store.addActivity.scheduledTime = date;
   }
 
@@ -85,8 +112,11 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
         Store.addActivity.scheduledTime !== '' && 
         Store.addActivity.description !== '') {
 
-      var activityNum = Store.selectedActivityBox;
-      var type = typeArray[activityNum];
+      // this is where I need to capture the correct type
+      //var activityNum = Store.selectedActivityBox;
+
+      var type = Store.addActivity.type;
+
 
       if (this.props.id === -1) {
 
@@ -126,12 +156,7 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
           
           axios.get(`/actions/${Store.currentUserId}/${this.props.job.id}`)
             .then(function(response) {
-              console.log('updating actions', response.data);
               Store.jobActions = response.data;
-              // this should set the jobActions to the returned list???
-              console.log(Store.jobActions);
-
-              //console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
             })
             .catch(function(error) {
               console.log(error);
@@ -166,12 +191,13 @@ var iconNameArray = ['phone', 'email', 'send', 'contact_phone', 'build', 'loop',
 
   render () {
     
+
     return (
       <div> 
         <div className="modalSelectors">
           <div className="activityModalType">
-            <div  className="activityTypeHeader"> 
-              <p>Activity Type</p>
+            <div className="activityTypeHeader"> 
+              <p>Activity Type: {this.state.displayName}</p>
             </div>
             <div className="activityModalIcons">
               {activityArray.map((activity, index) => {
