@@ -14,10 +14,10 @@ import moment from 'moment';
 import 'react-day-picker/lib/style.css';
 
 // these come out of the database
-var typeArray     = ['connections', 'follow up', 'phone', 'meetup', 'sentEmail', 'receivedEmail', 'apply',   
+var typeArray     = ['connections', 'follow up', 'phone', 'meetup', 'sentEmail', 'receivedEmail', 'apply',
                       'phoneInterview', 'webInterview', 'personalInterview'];
 // var diaplay names
-var diaplayNames = ['Connection', 'Follow Up', 'Phone Call', 'Meet Up', 'Sent Email', 'Received Email', 'Apply',   
+var diaplayNames = ['Connection', 'Follow Up', 'Phone Call', 'Meet Up', 'Sent Email', 'Received Email', 'Apply',
                       'Phone Interview', 'Web Interview', 'Personal Interview'];
 // display names on the activity modal
 var activityArray = ['Reach Out', 'Call', 'Meet Up', 'E-Mail', 'Apply', 'Interview'];
@@ -42,8 +42,8 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
   }
 
   componentWillMount() {
-    
-    if (this.props.action !== undefined) { 
+
+    if (this.props.action !== undefined) {
       Store.addActivity.scheduledTime = this.props.action.scheduledTime;
       Store.addActivity.description = this.props.action.description;
       Store.addActivity.company = this.props.action.company;
@@ -58,39 +58,40 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
         this.setState({displayName: 'Follow Up'});
         Store.selectedActivityBox = 0;
       } else if (this.props.action.type === 'phone') {
-        this.setState({displayName: 'Phone Call'});        
+        this.setState({displayName: 'Phone Call'});
         Store.selectedActivityBox = 1;
       } else if (this.props.action.type === 'meetup') {
-        this.setState({displayName: 'Meet Up'});         
+        this.setState({displayName: 'Meet Up'});
         Store.selectedActivityBox = 2;
       } else if (this.props.action.type === 'sentEmail') {
-        this.setState({displayName: 'Sent Email'});         
+        this.setState({displayName: 'Sent Email'});
         Store.selectedActivityBox = 3;
       } else if (this.props.type === 'receivedEmail') {
-        this.setState({displayName: 'Received Email'}); 
+        this.setState({displayName: 'Received Email'});
         Store.selectedActivityBox = 3;
       } else if (this.props.action.type === 'apply') {
-        this.setState({displayName: 'Apply'});         
+        this.setState({displayName: 'Apply'});
         Store.selectedActivityBox = 4;
       } else if (this.props.action.type === 'phoneInterview' ) {
-        this.setState({displayName: 'Phone Interview'}); 
+        this.setState({displayName: 'Phone Interview'});
         Store.selectedActivityBox = 5;
       } else if (this.props.action.type === 'webInterview' ) {
-        this.setState({displayName: 'Web Interview'});         
-        Store.selectedActivityBox = 5;        
+        this.setState({displayName: 'Web Interview'});
+        Store.selectedActivityBox = 5;
       } else if (this.props.action.type === 'personalInterview') {
-        this.setState({displayName: 'On Site Interview'});         
+        this.setState({displayName: 'On Site Interview'});
         Store.selectedActivityBox = 5;
       } else if (this.props.action.type === 'learn') {
-        this.setState({displayName: 'Learn'});         
+        this.setState({displayName: 'Learn'});
       } else if (this.props.action.type === 'offer') {
-        this.setState({displayName: 'Offer'});         
+        this.setState({displayName: 'Offer'});
       }
     }
   }
 
   saveDate (e, date) {
     e.preventDefault();
+    var formattedDate = moment(date).toISOString();
 
     /*****
     ******
@@ -98,7 +99,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
     *****
     *****/
     this.setState({selectedDay: date});
-    Store.addActivity.scheduledTime = date;
+    Store.addActivity.scheduledTime = formattedDate;
   }
 
   isDaySelected(day) {
@@ -113,8 +114,8 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
     Store.addActivity.actionSource = 'user';
 
     // do some error checking to make sure an action has been selected  also check for a description
-    if (Store.selectedActivityBox !== -1 && 
-        Store.addActivity.scheduledTime !== '' && 
+    if (Store.selectedActivityBox !== -1 &&
+        Store.addActivity.scheduledTime !== '' &&
         Store.addActivity.description !== '') {
 
       var type = Store.addActivity.type;
@@ -155,7 +156,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
         axios.put(`/actions/${this.props.action.id}`, putObj)
         .then((response) => {
-          
+
           axios.get(`/actions/${Store.currentUserId}/${this.props.job.id}`)
             .then(function(response) {
               Store.jobActions = response.data;
@@ -174,15 +175,15 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
       Store.addActivity.scheduledTime = '';
       Store.addActivity.notes = '';
       this.props.onClick();
-    
-    } else { 
+
+    } else {
       // will have to message that no task type selected.
       var errorMessage = 'Please include a task, date and description';
       this.setState({
         errorMessage: errorMessage,
         snack: true
       });
-    }    
+    }
   }
 
 
@@ -192,21 +193,21 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
 
   render () {
-    
+
 
     return (
-      <div> 
+      <div>
         <div className="modalSelectors">
           <div className="activityModalType">
-            <div className="activityTypeHeader"> 
+            <div className="activityTypeHeader">
               <p>Activity Type: {this.state.displayName}</p>
             </div>
             <div className="activityModalIcons">
               {activityArray.map((activity, index) => {
                 return (<ActivityBox type={activity} icon={iconNameArray[index]} key={index} id={index} />);
               })}
-            </div>  
-          </div>  
+            </div>
+          </div>
           <div>
             <DayPicker onDayClick={ this.saveDate } selectedDays={ this.isDaySelected } />
           </div>
@@ -217,15 +218,15 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
               <MuiThemeProvider >
                 <TextField floatingLabelText="Description" multiLine={true} fullWidth={true}
                            name="description" onChange={this.change} value={Store.addActivity.description}/>
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
           </div>
           <div className="row">
-            <div className="input-field col s12">  
+            <div className="input-field col s12">
               <MuiThemeProvider >
                 <TextField floatingLabelText="Notes" multiLine={true} fullWidth={true}
                           rows={3} rowsMax={6} name="notes" onChange={this.change} value={Store.addActivity.notes}/>
-              </MuiThemeProvider>         
+              </MuiThemeProvider>
             </div>
           </div>
         </form>

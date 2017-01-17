@@ -23,18 +23,19 @@ import axios from 'axios';
       .catch(function(error) {
         console.log(error);
       });
-    axios.get('/stats/lastWeek/' + Store.currentUserId)
-      .then(function(response) {
-        console.log('lastweek', response.data);
-        Store.lastWeekStats = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    //UNUSED
+    // axios.get('/stats/lastWeek/' + Store.currentUserId)
+    //   .then(function(response) {
+    //     console.log('lastweek', response.data);
+    //     Store.lastWeekStats = response.data;
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
     axios.get('/stats/monthly/' + Store.currentUserId)
       .then(function(response) {
         // console.log('currently not updating monthly');
-        console.log('monthly', JSON.parse(JSON.stringify(response.data)));
+        // console.log('monthly', JSON.parse(JSON.stringify(response.data)));
         Store.monthly = response.data;
         var weekChart = document.getElementById('weekly').getContext('2d');
         let weeklyChart = new Chart(weekChart, Store.monthBarChartStats);
@@ -42,6 +43,18 @@ import axios from 'axios';
       .catch(function(error) {
         console.log(error);
       });
+    axios.get('/stats/monthCompare/' + Store.currentUserId)
+      .then(function(response) {
+        // console.log('average', JSON.parse(JSON.stringify(response.data)));
+        Store.average = response.data;
+        var averageChart = document.getElementById('average').getContext('2d');
+        let averageChartjs = new Chart(averageChart, Store.averageStats);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+
 
   }
 
@@ -60,11 +73,15 @@ import axios from 'axios';
     return (<div className='MainPage'>
       <div className="stats">
       <div className='total'>
-      <canvas id="myChart" width="400" height="200"> </canvas>
+        <canvas id="myChart" width="400" height="200"> </canvas>
       </div>
-      <div className='week'>
       <br/>
-      <canvas id="weekly" width="400" height="200"> </canvas>
+      <div className='week'>
+        <canvas id="weekly" width="400" height="200"> </canvas>
+      </div>
+      <br/>
+      <div className='average'>
+        <canvas id="average" width="400" height="200"> </canvas>
       </div>
       <br/>
       Last week you sent {Store.lastWeekStats.sentEmail} emails, received {Store.lastWeekStats.receivedEmail} emails, and had {Store.lastWeekStats.phone} phone calls.

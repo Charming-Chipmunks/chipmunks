@@ -1,5 +1,5 @@
 //MobX Store
-import { observable, computed } from 'mobx';
+import { observable, computed, toJS } from 'mobx';
 import moment from 'moment';
 class Store {
   constructor() {}
@@ -220,12 +220,6 @@ class Store {
             'rgba(255, 99, 132, 0.2)',
 
           ],
-          // borderColor: [
-          //   'rgba(255,99,132,1)',
-          //   'rgba(54, 162, 235, 1)',
-          //   'rgba(255, 206, 86, 1)',
-          //   'rgba(75, 192, 192, 1)',
-          // ],
           borderColor: [
             'rgba(255,99,132,1)',
             'rgba(255,99,132,1)',
@@ -337,7 +331,7 @@ class Store {
     statsArray.push(this.stats.phone);
     statsArray.push(this.stats.sentEmail);
     statsArray.push(this.stats.receivedEmail);
-    // statsArray.push(this.stats.phone);
+
     var results = {
       type: 'horizontalBar',
       data: {
@@ -381,6 +375,94 @@ class Store {
       }
     };
 
+    return results;
+  }
+  @observable average = {};
+  @computed get averageStats() {
+    var convertToArray = function(stats) {
+      console.log(stats);
+      var resultArr = [];
+      resultArr.push(stats.like);
+      resultArr.push(stats.applied);
+      resultArr.push(stats.phoneInterview);
+      resultArr.push(stats.webInterview);
+      resultArr.push(stats.personalInterview);
+      resultArr.push(stats.sentEmail);
+      resultArr.push(stats.receivedEmail);
+      resultArr.push(stats.phone);
+      return resultArr;
+    };
+    var averageStats = convertToArray(this.average.average);
+    var userStats = convertToArray(this.average.user);
+    console.log(averageStats, userStats);
+    var results = {
+      type: 'horizontalBar',
+      data: {
+        labels: ['Liked', 'Applied', 'Phone Interviews', 'Web Interviews', 'Personal Interviews', 'Emails Sent', 'Emails Received', '# of Phone calls'],
+        datasets: [{
+          label: 'Average',
+          data: averageStats,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+
+          ],
+          borderWidth: 1
+        }, {
+          label: 'You',
+          data: userStats,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(54, 162, 235, 1)',
+          ],
+          borderWidth: 1
+        }, ],
+      },
+      options: {
+        resposive: false,
+        maintainAspectRatio: true,
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    };
     return results;
   }
   @computed get filteredList() {
@@ -461,7 +543,7 @@ class Store {
       if (diff === -1) {
         ret.push(job);
       }
-    }) 
+    })
 
     return ret;
   }

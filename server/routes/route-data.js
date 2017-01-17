@@ -7,9 +7,9 @@ module.exports = {
       `Liked the ${body.jobTitle} position at ${body.company},`,
       `Good choice, you're interested in working at ${body.company}`,
       `You favored the ${body.jobTitle} role at ${body.company}`,
-      `Liking the ${body.jobTitle} positon at ${body.company} is the first step!` 
+      `Liking the ${body.jobTitle} positon at ${body.company} is the first step!`
     ];
-      
+
     return likes[Math.floor(Math.random() * likes.length)];
   },
 
@@ -60,20 +60,23 @@ module.exports = {
 
 
   types: [
-    'like', 
-    'learn', 
-    'connections', 
-    'apply', 
-    'follow up',     
-    'interview',
-    'schedule', 
-    'email', 
-    'phone', 
-    'offer', 
-    'meetup', 
+    'like',
+    'learn',
+    'connections',
+    'apply',
+    'follow up',
+    'phoneInterview',
+    'webInterview',
+    'personalInterview',
+    'schedule',
+    'sentEmail',
+    'receivedEmail',
+    'phone',
+    'offer',
+    'meetup',
     'resume'
   ],
-  
+
   daysForLearning: 2,
 
   daysForApplication: 2
