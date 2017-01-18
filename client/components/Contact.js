@@ -52,7 +52,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
         <MuiThemeProvider>
           <Paper className="paper" zDepth={1}> 
             <div className="contactBox">
-              <div className="contactName"> 
+              <div className="contactName blue-color"> 
                 {this.props.contact.firstname} {this.props.contact.lastname} 
               </div>
              
