@@ -8,7 +8,7 @@ import Store        from './Store';
 import Contact      from './Contact';
 
 @observer class CompanyInfo extends React.Component {
-  
+
   constructor(props) {
     super(props);
   }
@@ -19,7 +19,7 @@ import Contact      from './Contact';
 
     var name = toJS(Store.company);
     var contacts = toJS(Store.contacts);
-    console.log('side bar modal ', Store.contacts);
+    // console.log('side bar modal ', Store.contacts);
 
     return (
       <div>

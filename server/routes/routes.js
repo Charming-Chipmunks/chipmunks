@@ -634,6 +634,7 @@ router.get('/contacts/jobs/:email/:userId', function(req, res) {
 
 // CONTACTS - GET A LIST OF ALL CONTACTS FOR A USER for a JOB
 router.get('/contacts/:userId/:jobId', function(req, res) {
+  console.log('findthecontact');
   if (!checkUser(req, req.params.userId)) {
     return rejectUser(res);
   }

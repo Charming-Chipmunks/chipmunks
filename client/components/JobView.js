@@ -19,7 +19,7 @@ import FontIcon                     from 'material-ui/FontIcon';
 import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
 
 @observer class JobView extends Component {
-  
+
   constructor(props) {
     super(props);
     this.getData              = this.getData.bind(this);
@@ -30,10 +30,10 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
     this.handleTaskComplete   = this.handleTaskComplete.bind(this);
     this.handleCloseJob       = this.handleCloseJob.bind(this);
     this.handleEditClick      = this.handleEditClick.bind(this);
-    this.state                = { 
+    this.state                = {
                                   actionNum: -1,
                                   contactModalIsOpen: false,
-                                  modalIsOpen: false 
+                                  modalIsOpen: false
                                 };
   }
 
@@ -50,7 +50,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
     this.setState({
                     modalIsOpen: false,
                     actionNum: -1
-                  }); 
+                  });
   }
 
   // for Contact Modal
@@ -82,7 +82,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
     axios.get(`/actions/${Store.currentUserId}/${id}`)
       .then(function(response) {
         Store.jobActions = response.data;
-        console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
+        // console.log('jobview actions results : ', response.data.map((action) => toJS(action)));
       })
       .catch(function(error) {
         console.log(error);
@@ -93,7 +93,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
     axios.get('/contacts/' + Store.currentUserId + '/' + id)
       .then(function(response) {
 
-        console.log('contacts for this job are:', response.data );
+        // console.log('contacts for this job are:', response.data );
         Store.contacts = response.data;
       })
       .catch(function(error) {
@@ -231,20 +231,20 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
                   <th data-field="name" className="columnB">Type</th>
                   <th data-field="price" className="columnC">Description</th>
                   <th data-field="name" className="columnD">Complete</th>
-                  <th data-field="price" className="columnE">Edit</th>                  
+                  <th data-field="price" className="columnE">Edit</th>
                 </tr>
               </thead>
 
-              <tbody>   
-                
+              <tbody>
+
                 {jobActions.map((action, index) => {
-                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)} 
+                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)}
                                   edit={this.handleEditClick.bind(this, index)} />);
                 })
                 }
               </tbody>
               </table>
-            
+
             </div>
           </div>
 
@@ -253,9 +253,9 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeContactModal}
                 style={modalStyles}
-                contentLabel="No Overlay Click Modal"> 
+                contentLabel="No Overlay Click Modal">
 
-          <ContactModal onClick={this.closeContactModal.bind(this)} job={thisJob}> 
+          <ContactModal onClick={this.closeContactModal.bind(this)} job={thisJob}>
           </ContactModal>
         </Modal>
 
@@ -263,10 +263,10 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
                 style={modalStyles}
-                contentLabel="No Overlay Click Modal"> 
+                contentLabel="No Overlay Click Modal">
 
           <ActivityModal onClick={this.closeModal.bind(this)} job={thisJob} id={this.state.actionNum}
-                          action={jobActions[this.state.actionNum]} > 
+                          action={jobActions[this.state.actionNum]} >
           </ActivityModal>
 
         </Modal>
