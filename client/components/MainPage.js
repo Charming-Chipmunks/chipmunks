@@ -54,6 +54,15 @@ import axios from 'axios';
         console.log(error);
       });
 
+    axios.get('/stats/jobStats/' + Store.currentUserId)
+      .then(function(response) {
+        Store.jobStats = response.data;
+        var jobStats = document.getElementById('jobStats').getContext('2d');
+        let jobStatsChart = new Chart(jobStats, Store.jobChart);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 
 
   }
@@ -77,11 +86,15 @@ import axios from 'axios';
       </div>
       <br/>
       <div className='week'>
-        <canvas id="weekly" width="400" height="200"> </canvas>
+        <canvas id="weekly" width="400" height="300"> </canvas>
       </div>
       <br/>
       <div className='average'>
         <canvas id="average" width="400" height="200"> </canvas>
+      </div>
+      <br/>
+      <div className='jobStats'>
+        <canvas id="jobStats" width="400" height="200"> </canvas>
       </div>
       <br/>
       Last week you sent {Store.lastWeekStats.sentEmail} emails, received {Store.lastWeekStats.receivedEmail} emails, and had {Store.lastWeekStats.phone} phone calls.
@@ -102,3 +115,4 @@ import axios from 'axios';
 }
 
 export default MainPage;
+

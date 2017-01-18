@@ -87,8 +87,8 @@ module.exports = {
 
   // apply, //phoneInterview, webInterview, personalInterviewed, offer, accepted
   changeProgress: function(action, userJob, userId, res) {
-    var progress = ['liked', 'apply', 'phoneInterview', 'webInterview', 'personalInterview', 'offer'];
-    console.log('firstindex', action.type, progress.indexOf(action.type), 'secondIndex', progress.indexOf(userJob.progress));
+    var progress = ['like', 'applied', 'phoneInterview', 'webInterview', 'personalInterview', 'offer'];
+    // console.log('firstindex', action.type, progress.indexOf(action.type), 'secondIndex', progress.indexOf(userJob.progress));
     if (progress.indexOf(action.type) > progress.indexOf(userJob.progress)) {
       userJob.progress = action.type; // NEED TO DO THIS A DIFFERENT WAY
       models.UserJob.update({progress: action.type}, {
