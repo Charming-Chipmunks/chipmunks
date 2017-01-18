@@ -2,6 +2,10 @@
 
 }
 
+.nav-wrapper {
+  background-color: #0277BD !important;
+}
+
 .overdue{
   color: red;
 }
@@ -10,7 +14,10 @@
   color: green;
 }
 
-
+.bold {
+  font-weight: bold;
+  font-size: 15px
+}
 /*
  * WEB.js css stylings
 */
@@ -22,32 +29,42 @@
 }
 
 .greyBorder {
-  border-width: 3px;
+  margin-top: 20px;
+  border-width: 1px;
   border-color: lightgrey;
   border-style: solid
 }
 
 .container{
   width: 95% !important;
-  margin: 20px 20px !important;
+  justify-content: center;
+  padding: 20px;
 }
 
 /* Landing Page Commponents whooooo */
+.landingHeader {
+  font-size: 20px;
+  border-bottom: solid;
+  border-color: #F44336;
+  border-width: 2px;
+  margin: 10px;
+}
+
 .interestBar {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  height: 175px;
 }
 
-.interestBarItem {
-  width: 100px;
-  height: 100px;
+.barItem {
+  width: 110px;
+  height: 110px;
   margin: 10px;
-  background-color: lightgrey;
-  color: white;
-  border-radius: 10px;
+  padding-top: 10px;
   text-align: center;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  box-shadow: 2px 2px lightgrey;
 }
 
 .graphContainer {
@@ -56,6 +73,7 @@
   display: flex;
   flex-flow: row;
   justify-content: space-around;
+  margin: 10px;
 }
 
 .graphBox {
@@ -263,7 +281,7 @@ Login Page
 */
 .rateCompany{
   border-radius: 3px;
-  border: 2px solid #c62828;
+  border: 2px solid darkgrey;
   width: 100%;
   display: inline-flex;
   flex-direction: row;
@@ -344,7 +362,7 @@ Login Page
  * Sidebar Classes
  */
 .sideLetters{
-  background-color: #ea555e ;
+  background-color: #0277BD ;
 }
 
 .leftSideBarResults{
