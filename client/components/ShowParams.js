@@ -12,7 +12,7 @@ import Param                    from './Param';
 //import material                 from 'materialize-css';
 
 @observer class ShowParams extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.getParams = this.getParams.bind(this);
@@ -62,7 +62,7 @@ import Param                    from './Param';
 
 
       // **********************   i ma have to re type cast the radius to a number by
-      // building up an object  
+      // building up an object
       axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
         .then(function(response) {
           //console.log('returned from the server: ', response.data);
@@ -83,39 +83,39 @@ import Param                    from './Param';
               numJobs: response.data.length
             });
 
-            console.log('in axios get paramsvfor num jobs');
+            // console.log('in axios get paramsvfor num jobs');
             this.setState({
               message: `${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`});
-            
+
             this.setState({
               snack: true
               });
-    
+
           })
           .catch(function(error) {
             console.log(error);
-          });          
+          });
 
         // need to quert database to get the number of new jobs...
       }, 5000);
 
     } else {
 
-      console.log('in error message jobs');
-      this.setState({ 
+      // console.log('in error message jobs');
+      this.setState({
         message: 'Please include a job description, city and state'});
       this.setState({
         snack: true });
       }
     }
-  
+
 
   change(e) {
 
     // for the spell check, need to put each word in a span
 
     if (typeof(e.target.value) === 'number') {
-      Store.newParam[e.target.name] = e.target.value.toString();   
+      Store.newParam[e.target.name] = e.target.value.toString();
     } else {
       Store.newParam[e.target.name] = e.target.value;
     }
@@ -147,34 +147,34 @@ import Param                    from './Param';
             <div className="row">
               <div className="input-field col s12">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="descriptor" 
+                  <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="descriptor"
                               onChange={this.change} value={Store.newParam.descriptor} />
-                </MuiThemeProvider> 
+                </MuiThemeProvider>
               </div>
             </div>
 
-            <div className="row">            
+            <div className="row">
               <div className="input-field col s6">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city" 
+                  <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city"
                               onChange={this.change} value={Store.newParam.city} />
                 </MuiThemeProvider>
               </div>
               <div className="input-field col s6">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="State" multiLine={true} fullWidth={true} name="state" 
+                  <TextField floatingLabelText="State" multiLine={true} fullWidth={true} name="state"
                               onChange={this.change} value={Store.newParam.state} />
-                </MuiThemeProvider>                
+                </MuiThemeProvider>
               </div>
-             </div>    
-            <div className="row">            
+             </div>
+            <div className="row">
               <div className="input-field col s6">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="Search Radius From City" multiLine={true} fullWidth={true} name="radius" 
+                  <TextField floatingLabelText="Search Radius From City" multiLine={true} fullWidth={true} name="radius"
                             onChange={this.change} value={Store.newParam.radius} />
                 </MuiThemeProvider>
               </div>
-             </div>                  
+             </div>
           </form>
         </div>
         <div className="submitNewParamButton" onClick={this.saveParam.bind(this)}>
@@ -183,7 +183,7 @@ import Param                    from './Param';
       </div>
     </MuiThemeProvider>
     <MuiThemeProvider>
-      <Snackbar open={this.state.snack}  message={this.state.message} 
+      <Snackbar open={this.state.snack}  message={this.state.message}
                 autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
     </MuiThemeProvider>
     </div>

@@ -28,14 +28,14 @@ import RaisedButton from 'material-ui/RaisedButton';
   save(e) {
     e.preventDefault();
 
-    console.log(Store);
+    // console.log(Store);
     if(Store.newJob.company !== '' && Store.newJob.jobTitle !== '' ) {
-    
+
       Store.newJob.userid = Store.currentUserId;
       Store.newJob.id = Store.currentUserId;
-      console.log('current Store.currentUserId :', Store.currentUserId);
+      // console.log('current Store.currentUserId :', Store.currentUserId);
 
-      console.log(toJS(Store.newJob));
+      // console.log(toJS(Store.newJob));
       axios.post('/job', toJS(Store.newJob))
         .then(function(response) {
           console.log('send save response');
@@ -74,75 +74,75 @@ import RaisedButton from 'material-ui/RaisedButton';
           <div className="row">
             <div className="input-field col s12">
               <MuiThemeProvider >
-                <TextField floatingLabelText="Company" multiLine={true} fullWidth={true} name="company" 
+                <TextField floatingLabelText="Company" multiLine={true} fullWidth={true} name="company"
                             onChange={this.change} value={Store.newJob.company} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
               <MuiThemeProvider >
-                <TextField floatingLabelText="Job Title" multiLine={true} fullWidth={true} name="jobTitle" 
+                <TextField floatingLabelText="Job Title" multiLine={true} fullWidth={true} name="jobTitle"
                             onChange={this.change} value={Store.newJob.jobTitle} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
               <MuiThemeProvider >
-                <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="snippet" 
+                <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="snippet"
                             rows={3} rowsMax={8} onChange={this.change} value={Store.newJob.snippet} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
               <MuiThemeProvider >
-                <TextField floatingLabelText="Website" multiLine={true} fullWidth={true} name="url" 
+                <TextField floatingLabelText="Website" multiLine={true} fullWidth={true} name="url"
                             onChange={this.change} value={Store.newJob.url} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
               <MuiThemeProvider >
-                <TextField floatingLabelText="Address" multiLine={true} fullWidth={true} name="address" 
+                <TextField floatingLabelText="Address" multiLine={true} fullWidth={true} name="address"
                             onChange={this.change} value={Store.newJob.address} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
-          </div>         
+          </div>
 
           <div className="row">
             <div className="input-field col s6">
               <MuiThemeProvider >
-                <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city" 
+                <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city"
                             onChange={this.change} value={Store.newJob.city} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
-          </div> 
+          </div>
 
           <div className="row">
             <div className="input-field col s6">
               <MuiThemeProvider >
-                <TextField floatingLabelText="City" fullWidth={true} name="state" 
+                <TextField floatingLabelText="City" fullWidth={true} name="state"
                             onChange={this.change} value={Store.newJob.state} />
-              </MuiThemeProvider> 
+              </MuiThemeProvider>
             </div>
-          </div> 
+          </div>
 
           <MuiThemeProvider>
             <RaisedButton label="Save" primary={true} style={style} onClick={this.save}></RaisedButton>
           </MuiThemeProvider>
         </form>
         <MuiThemeProvider>
-          <Snackbar open={this.state.snack}  message={this.state.message} 
+          <Snackbar open={this.state.snack}  message={this.state.message}
               autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
         </MuiThemeProvider>
-      </div> 
+      </div>
     );
   }
 }

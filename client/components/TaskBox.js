@@ -39,12 +39,12 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
   }
 
   handleEditClick () {
- 
+
       var place = -1;
       typeArray.forEach((item, index) => {
 
         if (item === this.props.task.type) {
-          console.log('location', index);
+          // console.log('location', index);
           place = index;
         }
       });
@@ -71,8 +71,8 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
       editIcon = 'loop';
       completeIcon = '';
     } else {
-      
-      console.log(this.props.task.scheduledTime);
+
+      // console.log(this.props.task.scheduledTime);
       var days = Math.floor((new Date(this.props.task.scheduledTime).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
       if (days < -1) {
         dateMessage = Math.abs(days) + ' days ago';
@@ -98,34 +98,34 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
     var actionType= ['like','learn','connections', 'apply', 'follow up', 'interview',
-      'schedule', 'email', 'phone', 'offer', 'meetup','resume', 'phoneInterview', 'webInterview', 'personalInterview', 
+      'schedule', 'email', 'phone', 'offer', 'meetup','resume', 'phoneInterview', 'webInterview', 'personalInterview',
       'sentEmail', 'receivedEmail'];
-    
+
     var iconNames = ['thumb_up', 'computer', 'loop', 'send', 'loop', 'stars', 'loop', 'email', 'phone', 'stars', 'loop',
                     'reorder', 'stars', 'stars', 'stars', 'email', 'email'];
 
     var position = actionType.indexOf(this.props.task.type);
-    
+
     var iconName = iconNames[position];
 
-    console.log('task type:', iconName);
+    // console.log('task type:', iconName);
 
     return (
         <tr>
-          <td> 
-            {dateMessage} 
+          <td>
+            {dateMessage}
           </td>
           <td>
             <MuiThemeProvider>
               <FontIcon className="material-icons" color={color}>{iconName}
               </FontIcon>
             </MuiThemeProvider>
-          </td>  
+          </td>
           <td>{this.props.task.description}</td>
-          <td> 
+          <td>
             <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</i>
           </td>
-          <td> 
+          <td>
             <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i></td>
         </tr>
     );

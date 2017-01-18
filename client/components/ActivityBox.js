@@ -28,9 +28,9 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
   handleClick (e) {
     e.preventDefault();
     if (!this.props.disabled) {
-      console.log('handling click?', e);
+      // console.log('handling click?', e);
       Store.selectedActivityBox = this.props.id;
-    
+
       if (this.props.id === 5) {
         this.setState({
           open: true,
@@ -38,7 +38,7 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
         });
 
       } else if (this.props.id === 3) {
-        
+
         this.setState({
           emailOpen: true,
           anchorEl: e.currentTarget,
@@ -49,7 +49,7 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
     }
   }
 
-  handleRequestClose () {  
+  handleRequestClose () {
     this.setState({ open: false });
   }
 
@@ -58,7 +58,7 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
   }
 
   selectItem (e) {
-    
+
     Store.addActivity.type = e;
     this.setState({open: false});
   }
@@ -66,12 +66,12 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
 
   onChange (e, item, index) {
     e.preventDefault();
-    console.log('menu item select: ', e, item, index);
+    // console.log('menu item select: ', e, item, index);
   }
 
   render () {
     var color;
-    console.log(Store.selectedActivityBox);
+    // console.log(Store.selectedActivityBox);
     if (Store.selectedActivityBox === this.props.id) {
       color = grey900;
     } else {
@@ -85,7 +85,7 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
 
     var interview = this.props.type;
 
-    return ( 
+    return (
         <div className="activityBox">
           <MuiThemeProvider>
             <FontIcon className="material-icons" color={color} onClick={this.handleClick.bind(this)}>{this.props.icon}</FontIcon>

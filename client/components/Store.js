@@ -439,7 +439,7 @@ class Store {
   @observable average = {};
   @computed get averageStats() {
     var convertToArray = function(stats) {
-      console.log(stats);
+      // console.log(stats);
       var resultArr = [];
       resultArr.push(stats.like);
       resultArr.push(stats.applied);
@@ -453,7 +453,7 @@ class Store {
     };
     var averageStats = convertToArray(this.average.average);
     var userStats = convertToArray(this.average.user);
-    console.log(averageStats, userStats);
+    // console.log(averageStats, userStats);
     var results = {
       type: 'horizontalBar',
       data: {
@@ -608,7 +608,7 @@ class Store {
   }
 
   @action getTodaysCompleted() {
-    console.log('getTodaysCompleted');
+    // console.log('getTodaysCompleted');
     var today = moment();
     this.actions.forEach((action) => {
       if (action.completedTime) {
@@ -618,7 +618,7 @@ class Store {
         if (diff === 0) {
           // console.log('action type:', action.type, this.userGoals[action.type]);
           if (this.userGoals[action.type] !== undefined) {
-            console.log('added');
+            // console.log('added');
             this.userGoals[action.type]++;
           }
         }

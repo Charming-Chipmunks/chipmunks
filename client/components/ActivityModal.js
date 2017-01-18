@@ -52,14 +52,14 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
       Store.addActivity.scheduledTime = this.props.action.scheduledTime;
       var tempDate = moment(Store.addActivity.scheduledTime).toDate();
-      console.log('tempdate', tempDate);
+      // console.log('tempdate', tempDate);
       this.setState({selectedDay: tempDate});
       Store.addActivity.description = this.props.action.description;
       Store.addActivity.company = this.props.action.company;
       Store.addActivity.notes = this.props.action.notes;
       Store.addActivity.type = this.props.action.type;
 
-      console.log('modal action type ', this.props.action.type);
+      // console.log('modal action type ', this.props.action.type);
       if (this.props.action.type === 'connections') {
         Store.selectedActivityBox = 0;
         this.setState({displayName: 'Connection'});
@@ -68,12 +68,12 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
         this.setState({displayName: 'Follow Up'});
         Store.selectedActivityBox = 0;
-      
+
       } else if (this.props.action.type === 'phone') {
 
         this.setState({displayName: 'Phone Call'});
         Store.selectedActivityBox = 1;
-      
+
       } else if (this.props.action.type === 'meetup') {
 
         this.setState({displayName: 'Meet Up'});
@@ -86,29 +86,29 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
         this.setState({displayName: 'Received Email'});
         Store.selectedActivityBox = 3;
-      
+
       } else if (this.props.action.type === 'apply') {
 
         this.setState({displayName: 'Apply'});
         Store.selectedActivityBox = 4;
-      
+
       } else if (this.props.action.type === 'phoneInterview' ) {
 
         this.setState({displayName: 'Phone Interview'});
         Store.selectedActivityBox = 5;
-     
+
       } else if (this.props.action.type === 'webInterview' ) {
         this.setState({displayName: 'Web Interview'});
         Store.selectedActivityBox = 5;
-     
+
       } else if (this.props.action.type === 'personalInterview') {
-      
+
         this.setState({displayName: 'On Site Interview'});
         Store.selectedActivityBox = 5;
-     
+
       } else if (this.props.action.type === 'learn') {
         this.setState({displayName: 'Learn'});
-     
+
       } else if (this.props.action.type === 'offer') {
         this.setState({displayName: 'Offer'});
       }
@@ -160,7 +160,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
             completedTime:  null
           };
 
-          console.log('posting to axios');
+          // console.log('posting to axios');
           axios.post(`/actions`, obj)
           .then(function(response) {
             Store.jobActions.push(response.data);
@@ -179,7 +179,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           };
 
           var that = this;
-          console.log('putting to axios');
+          // console.log('putting to axios');
           axios.put(`/actions/${this.props.action.id}`, putObj)
           .then((response) => {
 
@@ -200,7 +200,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
         Store.addActivity.description = '';
         Store.addActivity.scheduledTime = '';
         Store.addActivity.notes = '';
-       
+
 
       } else {
         // will have to message that no task type selected.
@@ -210,8 +210,8 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           snack: true
         });
       }
-    } 
-    
+    }
+
     this.props.onClick();
   }
 
@@ -238,7 +238,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
             </div>
             <div className="activityModalIcons">
               {activityArray.map((activity, index) => {
-                return (<ActivityBox type={activity} icon={iconNameArray[index]} key={index} 
+                return (<ActivityBox type={activity} icon={iconNameArray[index]} key={index}
                                       id={index} disabled={this.state.completed}/>);
               })}
             </div>

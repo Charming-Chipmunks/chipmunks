@@ -5,6 +5,7 @@ import Store from './Store';
 import { toJS } from 'mobx';
 import RateIndividualJob from './RateIndividualJob';
 import Paginator from './Paginator';
+import $ from 'jquery';
 
 @observer class RateJobs extends React.Component {
   constructor(props) {
@@ -28,15 +29,21 @@ import Paginator from './Paginator';
         console.log(error);
       });
   }
+  mouseEnter() {
+    $('html,body').css('cursor', 'pointer');
+  }
+  mouseLeave() {
+    $('html,body').css('cursor', 'default');
+  }
 
   handleClick(number) {
-    this.setState({page: number});
-    console.log('parent handle click');
+    this.setState({ page: number });
+    // console.log('parent handle click');
   }
 
   buttonClick() {
     Store.viewingNewJobs = !Store.viewingNewJobs;
-    console.log('clicked')
+    // console.log('clicked');
   }
 
   leftArrowClick() {
@@ -53,8 +60,8 @@ import Paginator from './Paginator';
 
   render() {
 
-    var list = Store.viewingNewJobs? toJS(Store.newJobList): toJS(Store.jobList);
-   // console.log(list.length);
+    var list = Store.viewingNewJobs ? toJS(Store.newJobList) : toJS(Store.jobList);
+    // console.log(list.length);
     var displayList = list.slice(this.state.page, this.state.page + 10);
     if (list.length > 0) {
 
@@ -66,7 +73,7 @@ import Paginator from './Paginator';
       }
 
       var loopNum = paginationNum + 5;
-      for (let i = paginationNum; i < loopNum; i++ ) {
+      for (let i = paginationNum; i < loopNum; i++) {
         pages.push(<Paginator number={i} key={i} current={this.state.page} total={list.length} handleClick={this.handleClick.bind(this, i)}/>);
       }
 
@@ -78,19 +85,19 @@ import Paginator from './Paginator';
       }
 
       var rightArrow = '';
-      if (list.length < 50 || this.state.page * 10 + 50 > list.length ) {
-        rightArrow  = 'disabled';
-        console.log('right arrow 1st case length: ', list.length);
+      if (list.length < 50 || this.state.page * 10 + 50 > list.length) {
+        rightArrow = 'disabled';
+        // console.log('right arrow 1st case length: ', list.length);
       } else {
-        console.log('right arrow 2nd case length: ', list.length);
+        // console.log('right arrow 2nd case length: ', list.length);
         rightArrow = 'active';
       }
 
       return (
         <div className="rateJobsList">
           <button onClick={this.buttonClick}>
-          { 
-            Store.viewingNewJobs? <span>Show Active Jobs</span>: <span>Review New Jobs</span>
+          {
+            Store.viewingNewJobs ? <span>Show Active Jobs</span> : <span>Review New Jobs</span>
           }
           </button>
           <ul>
@@ -102,9 +109,9 @@ import Paginator from './Paginator';
           </ul>
         <div className="paginatorContainer">
           <ul className="pagination">
-            <li className={leftArrow} onClick={this.leftArrowClick.bind(this)}><i className="material-icons">chevron_left</i></li>
+            <li className={leftArrow} onClick={this.leftArrowClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} ><i className="material-icons">chevron_left</i></li>
             {pages}
-            <li className={rightArrow} onClick={this.rightArrowClick.bind(this)}><i className="material-icons">chevron_right</i></li>
+            <li className={rightArrow} onClick={this.rightArrowClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}><i className="material-icons">chevron_right</i></li>
           </ul>
         </div>
       </div>

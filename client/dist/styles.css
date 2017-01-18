@@ -184,7 +184,7 @@ Login Page
 }
 
 .columnB{
-   width: 10%; 
+   width: 10%;
 }
 
 .columnC{
@@ -408,7 +408,7 @@ Login Page
 }
 
 /*
- *  Contact Card info 
+ *  Contact Card info
  */
 
  .rightsideBarCompanyName {
@@ -611,7 +611,7 @@ Login Page
  */
 
 .indeedImage {
-  border: 0; 
+  border: 0;
   vertical-align: middle;
   width: 50px;
 }
@@ -624,7 +624,7 @@ Login Page
 }
 
 .DayPicker-Day--selected {
-  background-color: red; 
+  background-color: red;
 }
 
 .DayPicker {
@@ -777,4 +777,8 @@ Login Page
 
 .graphBox {
  flex: 1 100%;
+}
+
+.stats {
+    text-align: center;
 }

@@ -15,7 +15,7 @@ import mobx from 'mobx';
 
     axios.delete('/parameter/' + this.props.param.id + '/user/' + Store.currentUserId)
       .then(function(response) {
-        console.log('deleted param: ', response);
+        // console.log('deleted param: ', response);
         axios.get('/parameter/' + Store.currentUserId)
           .then(function(response) {
             // console.log('params data', response.data);

@@ -17,10 +17,10 @@ import axios from 'axios';
   }
   save(e) {
     e.preventDefault();
-    console.log('test', '/contacts/' + Store.currentUserId + '/' + this.props.id);
+    // console.log('test', '/contacts/' + Store.currentUserId + '/' + this.props.id);
     axios.post('/contacts/' + Store.currentUserId + '/' + this.props.id, toJS(Store.newContact))
       .then(function(response) {
-        console.log(response);
+        // console.log(response);
         Store.contacts.push(response.data);
       }).catch(function(error) {
         console.log(error);

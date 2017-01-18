@@ -12,29 +12,18 @@ export default class ActivityGraphView extends React.Component {
 
     this.state = {
       todaysJobs: 0
-    }
+    };
   }
 
   componentWillMount() {
     var that = this;
 
-    axios.get('/jobs/' + Store.currentUserId + '/new')
-      .then(function(response) {
-        // console.log('jobs/userid/favored response.data', response.data);
-        Store.newJobList = response.data;
-        console.log('in')
-        that.setState({
-          newJobs: response.data.length
-        })
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+
   }
 
   render() {
-    return(
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent:'center', margin: '5px'}}>
+    return (
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: '5px'}}>
         <div className='row'>
           <div className='col m6 left'>Actions due today:</div>
           <div className='col m6 right'>{Store.todaysTasks.length}</div>
@@ -52,6 +41,6 @@ export default class ActivityGraphView extends React.Component {
           <div className='col m6 right'>{Store.newJobList.length}</div>
         </div>
       </div>
-    )
+    );
   }
 }
