@@ -7,8 +7,8 @@ import { toJS }                 from 'mobx';
 import TextField                from 'material-ui/TextField';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 import Snackbar                 from 'material-ui/Snackbar';
-import RaisedButton from 'material-ui/RaisedButton';
-//import Growl from 'Growl/growl.react';
+import FlatButton               from 'material-ui/FlatButton';
+
 
 @observer class AddJob extends React.Component {
 
@@ -65,7 +65,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
     const style = {
       margin: 12,
-      backgroundColor: 'red'
+      backgroundColor: '#0277BD'
     };
 
     return (
@@ -135,7 +135,7 @@ import RaisedButton from 'material-ui/RaisedButton';
           </div>
 
           <MuiThemeProvider>
-            <RaisedButton label="Save" primary={true} style={style} onClick={this.save}></RaisedButton>
+            <FlatButton label="Save" primary={true} style={style} onClick={this.save}></FlatButton>
           </MuiThemeProvider>
         </form>
         <MuiThemeProvider>

@@ -6,6 +6,7 @@ import Snackbar                 from 'material-ui/Snackbar';
 import TextField                from 'material-ui/TextField';
 import CircularProgress         from 'material-ui/CircularProgress';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
+import FlatButton               from 'material-ui/FlatButton';
 
 import Store                    from './Store';
 import Param                    from './Param';
@@ -120,8 +121,16 @@ import InterestBar              from  './InterestBar';
     }
   }
 
+
   render() {
-    // console.log('paramlength', Store.params.length);
+   
+  
+    const style = {
+      margin: 12,
+      backgroundColor: '#0277BD'
+    };
+
+
     var spinner = this.state.spin;
 
     var params = Store.params.slice();
@@ -175,10 +184,12 @@ import InterestBar              from  './InterestBar';
              </div>
           </form>
         </div>
-        <div className="submitNewParamButton" onClick={this.saveParam.bind(this)}>
-          Save Job Preferences
-        </div>
+
       </div>
+    </MuiThemeProvider>
+
+    <MuiThemeProvider>
+      <FlatButton label="Save" primary={true} style={style} onClick={this.saveParam}></FlatButton>
     </MuiThemeProvider>
     <MuiThemeProvider>
       <Snackbar open={this.state.snack}  message={this.state.message}
