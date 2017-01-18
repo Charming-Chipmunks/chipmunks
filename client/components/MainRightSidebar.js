@@ -36,7 +36,7 @@ export default class MainRightSidebar extends React.Component {
       that.setState({
         statsOpen: !that.state.statsOpen
       });
-      console.log('toggled', this.state.statsOpen);
+      // console.log('toggled', this.state.statsOpen);
     }
   };
 
@@ -46,7 +46,7 @@ export default class MainRightSidebar extends React.Component {
       that.setState({
         statsOpen: !that.state.statsOpen
       });
-      console.log('toggled', this.state.statsOpen);
+      // console.log('toggled', this.state.statsOpen);
     }
   };
 

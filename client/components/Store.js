@@ -453,7 +453,7 @@ class Store {
     };
     var averageStats = convertToArray(this.average.average);
     var userStats = convertToArray(this.average.user);
-    console.log(averageStats, userStats);
+    // console.log(averageStats, userStats);
     var results = {
       type: 'horizontalBar',
       data: {

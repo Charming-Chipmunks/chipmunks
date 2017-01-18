@@ -44,7 +44,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
       typeArray.forEach((item, index) => {
 
         if (item === this.props.task.type) {
-          console.log('location', index);
+          // console.log('location', index);
           place = index;
         }
       });

@@ -14,7 +14,7 @@ import JobDescription from './JobDescription';
   }
 
   removeFromList() {
-    console.log('removing job id: ', this.props.id);
+    // console.log('removing job id: ', this.props.id);
     Store.newJobList.splice(this.props.id, 1);
   }
 
@@ -23,7 +23,7 @@ import JobDescription from './JobDescription';
     this.removeFromList();
     var id = this.props.job.id;
     // tell the DB to set as favored
-    console.log('sent to DB tp add actions:', this.props.job.company);
+    // console.log('sent to DB tp add actions:', this.props.job.company);
 
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'favored' })
       .then(function(response) {
@@ -42,7 +42,7 @@ import JobDescription from './JobDescription';
       }).catch(function(error) {
         console.log(error);
       });
-    
+
     Store.jobList.push(this.props.job);
     Store.userGoals.like++;
 
@@ -55,8 +55,8 @@ import JobDescription from './JobDescription';
 
     // tell thr DB to set as rejected
     axios.put('/users/' + Store.currentUserId + '/jobs/' + id, { status: 'rejected' })
-      .then(function(response) { 
-        console.log('in NO :', response);
+      .then(function(response) {
+        // console.log('in NO :', response);
       }).catch(function(error) {
         console.log(error);
       });

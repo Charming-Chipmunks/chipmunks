@@ -38,7 +38,7 @@ import $ from 'jquery';
 
   handleClick(number) {
     this.setState({ page: number });
-    console.log('parent handle click');
+    // console.log('parent handle click');
   }
 
   buttonClick() {

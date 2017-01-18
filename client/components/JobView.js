@@ -1,66 +1,66 @@
-import React, { Component }     from 'react';
-import { toJS }                 from 'mobx';
-import { observer }             from 'mobx-react';
-import moment                   from 'moment';
-import { IndexLink }            from 'react-router';
+import React, { Component } from 'react';
+import { toJS } from 'mobx';
+import { observer } from 'mobx-react';
+import moment from 'moment';
+import { IndexLink } from 'react-router';
 
-import Store                    from './Store';
-import HistoryItem              from './HistoryItem';
-import JobContacts              from './JobContacts';
-import axios                    from 'axios';
-import JobDescription           from './JobDescription';
-import TaskBox                  from './TaskBox';
-import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
-import Modal                    from 'react-modal';
-import modalStyles              from './modalStyles';
-import ActivityModal            from './ActivityModal';
-import ContactModal             from './ContactModal'
-import FontIcon                     from 'material-ui/FontIcon';
-import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
+import Store from './Store';
+import HistoryItem from './HistoryItem';
+import JobContacts from './JobContacts';
+import axios from 'axios';
+import JobDescription from './JobDescription';
+import TaskBox from './TaskBox';
+import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
+import Modal from 'react-modal';
+import modalStyles from './modalStyles';
+import ActivityModal from './ActivityModal';
+import ContactModal from './ContactModal';
+import FontIcon from 'material-ui/FontIcon';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 @observer class JobView extends Component {
 
   constructor(props) {
     super(props);
-    this.getData              = this.getData.bind(this);
-    this.openModal            = this.openModal.bind(this);
-    this.closeModal           = this.closeModal.bind(this);
-    this.openContactModal     = this.openContactModal.bind(this);
-    this.closeContactModal    = this.closeContactModal.bind(this);
-    this.handleTaskComplete   = this.handleTaskComplete.bind(this);
-    this.handleCloseJob       = this.handleCloseJob.bind(this);
-    this.handleEditClick      = this.handleEditClick.bind(this);
-    this.state                = {
-                                  actionNum: -1,
-                                  contactModalIsOpen: false,
-                                  modalIsOpen: false
-                                };
+    this.getData = this.getData.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openContactModal = this.openContactModal.bind(this);
+    this.closeContactModal = this.closeContactModal.bind(this);
+    this.handleTaskComplete = this.handleTaskComplete.bind(this);
+    this.handleCloseJob = this.handleCloseJob.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.state = {
+      actionNum: -1,
+      contactModalIsOpen: false,
+      modalIsOpen: false
+    };
   }
 
 
   // for Activity modal
-  openModal () {
+  openModal() {
     this.setState({
       modalIsOpen: true
     });
   }
 
   // for Activity modal
-  closeModal () {
+  closeModal() {
     this.setState({
-                    modalIsOpen: false,
-                    actionNum: -1
-                  });
+      modalIsOpen: false,
+      actionNum: -1
+    });
   }
 
   // for Contact Modal
-  openContactModal () {
-    this.setState({contactModalIsOpen: true});
+  openContactModal() {
+    this.setState({ contactModalIsOpen: true });
   }
 
   // for Activity Modal
-  closeContactModal () {
-    this.setState({contactModalIsOpen: false});
+  closeContactModal() {
+    this.setState({ contactModalIsOpen: false });
   }
 
   filterForHistory(action) {
@@ -88,7 +88,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
         console.log(error);
       });
 
-     // console.log(Store.currentUserId + "  "this.id);
+    // console.log(Store.currentUserId + "  "this.id);
 
     axios.get('/contacts/' + Store.currentUserId + '/' + id)
       .then(function(response) {
@@ -101,14 +101,14 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
       });
   }
 
-  handleEditClick (id) {
-   // console.log('action clicked:', id);
-    this.setState({actionNum: id});
+  handleEditClick(id) {
+    // console.log('action clicked:', id);
+    this.setState({ actionNum: id });
     this.openModal();
   }
 
-  handleTaskComplete (id) {
-    console.log('action id: ', id);
+  handleTaskComplete(id) {
+    // console.log('action id: ', id);
     // find the item in the Store, and mark it as complete.
     Store.jobActions[id].completedTime = new Date();
     var updateAction = Store.jobActions[id];
@@ -117,20 +117,20 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
       if (action.id === updateAction.id) {
         action.completedTime = new Date();
       }
-    })
+    });
     updateAction = toJS(updateAction);
-    if(Store.userGoals[updateAction.type] !== undefined) {
-      console.log('+!!', Store.userGoals[updateAction.type])
+    if (Store.userGoals[updateAction.type] !== undefined) {
+      console.log('+!!', Store.userGoals[updateAction.type]);
       Store.userGoals[updateAction.type]++;
     }
     console.log('is this updated ?', updateAction);
   }
 
-  handleCloseJob () {
+  handleCloseJob() {
 
     axios.put(`/users/${Store.currentUserId}/jobs/${this.props.params.id}`, { status: 'closed' })
       .then(function(response) {
-       // success
+        // success
       })
       .catch(function(error) {
         console.log(error);
@@ -144,7 +144,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
       if (job.id === Number(this.props.params.id)) {
         location = index;
         var removedElement = Store.jobList.splice(location, 1);
-        console.log('removed elements', removedElement.length);
+        // console.log('removed elements', removedElement.length);
       }
     });
 
@@ -155,7 +155,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
     actionsToFilter.forEach((action, index) => {
       if (action.JobId === Number(this.props.params.id)) {
         var removedElement = Store.actions.splice(index, 1);
-        console.log(`removed element from ${action.JobId} ${action.description} ${removedElement.length}`);
+        // console.log(`removed element from ${action.JobId} ${action.description} ${removedElement.length}`);
       }
     });
   }
@@ -178,7 +178,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
 
-    if (jobActions.length > 0 ) {
+    if (jobActions.length > 0) {
       var daysActive = moment(jobActions[0].createdAt).from(moment());
       var lastInteraction = moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
       var numInteractions = jobActions.length;
@@ -249,7 +249,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
           </div>
 
 
-        <Modal  isOpen={this.state.contactModalIsOpen}
+        <Modal isOpen={this.state.contactModalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeContactModal}
                 style={modalStyles}
@@ -259,7 +259,7 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
           </ContactModal>
         </Modal>
 
-        <Modal  isOpen={this.state.modalIsOpen}
+        <Modal isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
                 style={modalStyles}
@@ -276,4 +276,3 @@ import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
 }
 
 export default JobView;
-

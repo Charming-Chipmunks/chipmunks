@@ -43,7 +43,7 @@ import Store from './Store';
     this.props.action.completedTime = newTime;
     axios.put('/actions/' + this.props.action.UserId + '/' + this.props.action.id)
       .then(function(response) {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(function(error) {
         console.log(error);
