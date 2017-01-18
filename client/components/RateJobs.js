@@ -36,7 +36,7 @@ import Paginator from './Paginator';
 
   buttonClick() {
     Store.viewingNewJobs = !Store.viewingNewJobs;
-    console.log('clicked')
+    // console.log('clicked');
   }
 
   leftArrowClick() {
@@ -53,7 +53,7 @@ import Paginator from './Paginator';
 
   render() {
 
-    var list = Store.viewingNewJobs? toJS(Store.newJobList): toJS(Store.jobList);
+    var list = Store.viewingNewJobs ? toJS(Store.newJobList) : toJS(Store.jobList);
    // console.log(list.length);
     var displayList = list.slice(this.state.page, this.state.page + 10);
     if (list.length > 0) {
@@ -79,7 +79,7 @@ import Paginator from './Paginator';
 
       var rightArrow = '';
       if (list.length < 50 || this.state.page * 10 + 50 > list.length ) {
-        rightArrow  = 'disabled';
+        rightArrow = 'disabled';
         // console.log('right arrow 1st case length: ', list.length);
       } else {
         // console.log('right arrow 2nd case length: ', list.length);
@@ -90,7 +90,7 @@ import Paginator from './Paginator';
         <div className="rateJobsList">
           <button onClick={this.buttonClick}>
           {
-            Store.viewingNewJobs? <span>Show Active Jobs</span>: <span>Review New Jobs</span>
+            Store.viewingNewJobs ? <span>Show Active Jobs</span> : <span>Review New Jobs</span>
           }
           </button>
           <ul>
