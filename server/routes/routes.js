@@ -9,12 +9,6 @@ require('dotenv').config();
 
 
 
-
-// this is the initialize file
-//var initialize = require('../models/initialize');
-
-//AUTH
-
 var checkUser = function(req, user) {
   if (process.env.DISABLE_AUTH) {
     console.warn('AUTH DISABLED.  DEFAULTING TO USER 1');
@@ -778,6 +772,14 @@ router.post('/parameter/:userId', function(req, res) {
         res.send(parameter);
         // I need to send an indeed request if there isn't a parameter that exists.
         findIndeedJobs(parameter);
+        console.log(`*********
+                      *********
+                      ************************************************
+                      *********
+                      *********
+                      *********
+                      ******
+                      ***************************************************`);
         associateJobs(req.params.userId, parameter.id);
 
       });

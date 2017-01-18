@@ -38,7 +38,6 @@ import FlatButton               from 'material-ui/FlatButton';
       // console.log(toJS(Store.newJob));
       axios.post('/job', toJS(Store.newJob))
         .then(function(response) {
-          console.log('send save response');
           Store.jobList.push(response.data);
         })
         .catch(function(error) {

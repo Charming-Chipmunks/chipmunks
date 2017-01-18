@@ -3,6 +3,7 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import { IndexLink } from 'react-router';
+import ReactDOM from 'react-dom';
 
 import Store from './Store';
 import HistoryItem from './HistoryItem';
@@ -75,6 +76,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
   componentWillReceiveProps(nextProps) {
     this.getData(nextProps.params.id);
+  }
+
+  componentDidUpdate() {
+
+    ReactDOM.findDOMNode(this).scrollTop = 0;
+
   }
 
   getData(id) {
@@ -186,7 +193,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
     return (
       <div>
-
+      <a name="anchor" />
         <div className="col m3 right">
           <div className="contactsSideBar">
             <CompanyInfoRightSideBar job={thisJob}/>

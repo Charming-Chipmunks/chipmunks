@@ -89,7 +89,7 @@ export default class LandingPage extends React.Component {
             <div style={styles.mainDiv}>
               <h5>Welcome, {Store.userName}!</h5>
             </div>
-            <div style={{height: '160px'}}>
+            <div>
               <div className='landingHeader'>Your Interests</div>
               <InterestBar />
             </div>

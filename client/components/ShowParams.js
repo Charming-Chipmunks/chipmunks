@@ -83,7 +83,7 @@ import InterestBar              from  './InterestBar';
               numJobs: response.data.length
             });
 
-
+            console.log('added Jobz:', response.data.length);
             this.setState({
               message: `${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`});
 

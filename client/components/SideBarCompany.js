@@ -12,17 +12,19 @@ import { observer } from 'mobx-react';
   }
 
   handleClick (e) {
-    e.stopPropagation();
+   // e.stopPropagation();
   }
 
   render () {
     return (
+      <a href="anchor">
       <Link to={'/companies/' + this.props.company.id} onClick={this.handleClick.bind(this)}>
-        <li className="sideBarCompany">
+        <li className="sideBarCompany"> 
          <div className="sideBarCompanyName">{this.props.company.company}</div>
-         <div className="sideBarCompanyJobTitle">{this.props.company.jobTitle}</div>
+         <div className="sideBarCompanyJobTitle">{this.props.company.jobTitle}</div> 
         </li>
       </Link>
+      </a>
     );
   }
 }

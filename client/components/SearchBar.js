@@ -20,7 +20,6 @@ import Store from './Store';
     } else {
       Store.hideLeftSideBarCompany = false;
     }
-  
   }
 
   render() {

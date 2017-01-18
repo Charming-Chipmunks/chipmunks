@@ -60,9 +60,7 @@
 }
 
 .interestBar {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
+
 }
 
 .barItem {
@@ -752,7 +750,6 @@ Login Page
  display: flex;
  flex-flow: row wrap;
  justify-content: flex-start;
- height: 175px;
 }
 
 .interestBarItem {
