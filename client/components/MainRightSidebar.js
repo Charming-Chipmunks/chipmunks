@@ -7,6 +7,7 @@ import { Link, IndexLink } from 'react-router';
 // material ui
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
@@ -52,7 +53,8 @@ export default class MainRightSidebar extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-      <div className='greyBorder'>
+      <Paper zDepth={2}>
+        <div className='greyBorder'>
           <List>
             <Subheader>General</Subheader>
             <Link to='/'><ListItem primaryText='Home' /> </Link>
@@ -78,9 +80,8 @@ export default class MainRightSidebar extends React.Component {
               ]}
             />
           </List>
-
-
-      </div>
+        </div>
+      </Paper>
       </MuiThemeProvider>
     );
   }

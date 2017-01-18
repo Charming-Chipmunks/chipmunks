@@ -8,6 +8,8 @@ import axios from 'axios';
 import TaskBox from './TaskBox';
 import MainRightSidebar from './MainRightSidebar'
 import RateIndividualJob from './RateIndividualJob'
+import Paper from 'material-ui/Paper';
+
 
 //Graph Views
 import $ from 'jquery';
@@ -18,8 +20,9 @@ var icons = {
   badge: 'https://cdn1.iconfinder.com/data/icons/flat-education-icons-2/512/121-128.png'
 }
 // test
+
 @observer
-class LandingHeader extends React.Component {
+class GraphHeader extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -56,8 +59,8 @@ class InterestBar extends React.Component {
       <div className='interestBar'>
         {
           Store.params.map((e, i) => (
-            <div key={i} className='interestBarItem'>
-              <div className='centered'>{e.descriptor}</div>
+            <div key={i} className='barItem'>
+              <div className='centered bold'>{e.descriptor}</div>
               <div className='centered'>{e.city}, {e.state}</div>
             </div>
           ))
@@ -122,16 +125,6 @@ class ActivityGraphView extends React.Component {
 class GoalsGraphView extends React.Component {
   constructor() {
     super();
-
-    this.state = {
-      applicationsComplete: 2,
-      applicationsTotal: 5,
-      emailsComplete: 1,
-      emailsTotal: 10,
-      interviewPracticeComplete: 2,
-      interviewPracticeTotal: 3,
-      completed: 30
-    }
   }
 
   render() {
@@ -177,13 +170,13 @@ class GoalsGraphView extends React.Component {
           </div>
           <div className='col m7'>
             <div className='row'>
-              <LinearProgress mode="determinate" value={Store.userGoals.email/Store.userGoals.emailTotal*100} />
-              <span>{Store.userGoals.email}/{Store.userGoals.emailTotal} emails sent</span>
+              <LinearProgress mode="determinate" value={Store.userGoals.sentEmail/Store.userGoals.sentEmailTotal*100} />
+              <span>{Store.userGoals.sentEmail}/{Store.userGoals.sentEmailTotal} emails sent</span>
             </div>
           </div>
           <div className='col m2'>
             {
-              Store.userGoals.email/Store.userGoals.emailTotal >= 1 && <img className='badgeIcon' src={icons.badge}></img>
+              Store.userGoals.sentEmail/Store.userGoals.sentEmailTotal >= 1 && <img className='badgeIcon' src={icons.badge}></img>
             }
           </div>
         </div>
@@ -234,7 +227,6 @@ export default class LandingPage extends React.Component {
         flexGrow:1, flexDirection: 'column', align: 'center'
       },
       graphBox: {
-        borderWidth: '5px', borderColor: 'lightgrey', borderStyle: 'solid',
         padding: '0px',
         display: 'flex', flexDirection: 'column' , flex: '1 100%'
       }
@@ -243,31 +235,40 @@ export default class LandingPage extends React.Component {
 
     if (this.state.loaded) {
       return (
+      <MuiThemeProvider>
         <div style={styles.landingContainer}>
           <div className='col m10 left'>
+          <div style={{flex: 1, flexDirection: 'column'}}>
             <div style={styles.mainDiv}>
               <h5>Welcome, {Store.userName}!</h5>
             </div>
-            <div style={{flex:1}}>
-              <LandingHeader title="Your Interests"/>
+            <div style={{height: '160px'}}>
+              <div className='landingHeader'>Your Interests</div>
               <InterestBar />
             </div>
-            <div className='graphContainer'>
-              <div className='col m6 left'>
-               <div style={styles.graphBox}>
-                  <LandingHeader title="Activity Overview"/>
-                 <ActivityGraphView />
-               </div>
-              </div>
-              <div className='col m6 right'>
-                <div style={styles.graphBox}>
-                <LandingHeader title="Goals"/>
-                <GoalsGraphView />
+            <div style={{flex:1}}>
+              <div className='landingHeader'>To Do</div>
+              <div className='graphContainer'>
+                <div className='col m6 left'>
+                <Paper zDepth={2}>
+                  <div style={styles.graphBox}>
+                    <GraphHeader color="#0277BD" title="Activity Overview"/>
+                    <ActivityGraphView />
+                  </div>
+                </Paper>
+                </div>
+                <div className='col m6 right'>
+                  <Paper zDepth={2}>
+                    <div style={styles.graphBox}>
+                    <GraphHeader color="#0277BD" title="Daily Goals"/>
+                    <GoalsGraphView />
+                    </div>
+                  </Paper>
                 </div>
               </div>
             </div>
             <div style={{flexGrow: 1, height: '100px'}}>
-              <LandingHeader title="Next Pending Task"/>
+              <div className='landingHeader'>Next Pending Task</div>
               {
                 Store.activeTasks && Store.activeTasks.length > 0 
                 && <table>
@@ -280,7 +281,7 @@ export default class LandingPage extends React.Component {
               }
             </div>
             <div style={{flex:1}}>
-              <LandingHeader title="Next Pending Job"/>
+              <div className='landingHeader'>Next Pending Job</div>
               {
                 Store.newJobList.length > 0 && <ul><RateIndividualJob key={Store.newJobList.length} job={Store.newJobList[0]} /></ul>
               }
@@ -289,10 +290,12 @@ export default class LandingPage extends React.Component {
               }
             </div>
           </div>
+          </div>
           <div className="col m2 right">
             <MainRightSidebar />
           </div>
         </div>
+      </MuiThemeProvider>
       )
     } else {
       return (

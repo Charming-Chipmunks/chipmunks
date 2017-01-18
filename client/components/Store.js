@@ -28,8 +28,8 @@ class Store {
   @observable userGoals = {
     apply: 0,
     applyTotal: 5,
-    email: 0,
-    emailTotal: 5,
+    sentEmail: 0,
+    sentEmailTotal: 5,
     interview: 0,
     interviewTotal: 2,
     like: 0,
@@ -541,18 +541,13 @@ class Store {
       var created = moment(job.createdAt);
       var diff = created.diff(today, 'days');
 
-      if (diff === -1) {
+      if (diff === 0) {
         ret.push(job);
       }
     })
 
     return ret;
   }
-
-  // @computed get todaysProgress() {
-  //   var hist = this.actions.filter(e => e.completedTime);
-  //   console.log('hist');
-  // }
 
   @action getTodaysCompleted() {
     console.log('getTodaysCompleted')
