@@ -16,6 +16,9 @@ import $ from 'jquery';
 import LinearProgress from 'material-ui/LinearProgress';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+//components
+import InterestBar from './InterestBar'
+
 var icons = {
   badge: 'https://cdn1.iconfinder.com/data/icons/flat-education-icons-2/512/121-128.png'
 }
@@ -41,30 +44,6 @@ class GraphHeader extends React.Component {
     return(
       <div style={styles.container}>
         <span style={styles.headerText}>{this.props.title}</span>
-      </div>
-    )
-  }
-}
-
-@observer
-class InterestBar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    var test = [1,2,3,4];
-
-    return(
-      <div className='interestBar'>
-        {
-          Store.params.map((e, i) => (
-            <div key={i} className='barItem'>
-              <div className='centered bold'>{e.descriptor}</div>
-              <div className='centered'>{e.city}, {e.state}</div>
-            </div>
-          ))
-        }
       </div>
     )
   }
