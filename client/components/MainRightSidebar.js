@@ -75,8 +75,7 @@ export default class MainRightSidebar extends React.Component {
               initiallyOpen={false}
               primaryTogglesNestedList={true}
               nestedItems={[
-                <ListItem key={1} primaryText="This Month"/>,
-                <ListItem key={2} primaryText="All Time"/>
+                <ListItem key={1} primaryText="All Time"/>
               ]}
             />
           </List>
