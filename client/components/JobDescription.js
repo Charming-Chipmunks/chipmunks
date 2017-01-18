@@ -36,7 +36,7 @@ import { observer } from 'mobx-react';
         <h3 className="rateCompanyJob">{this.props.job.jobTitle}...
           <span className={`${classObject}`}></span>
         </h3>
-        <h5 className="rateCompanyName">{this.props.job.company}</h5>
+        { this.props.rateView && <h5 className="rateCompanyName">{this.props.job.company}</h5>}
         <p className="rateCompanyText">{this.props.job.snippet}
           { hasUrl !== '' &&
           <a href={this.props.job.url} target="_blank">explore</a>

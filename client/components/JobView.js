@@ -198,14 +198,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
             
             <div className="companyContactInfo">
               <div className="rightsideBarCompanyName">
-                {thisJob.company}
-              </div>
-              <div className="rateCompanyName">
-                {thisJob.city}, {thisJob.state}
+                {thisJob.company  }  
+                <span className="rateCompanyName">
+                  {thisJob.city}, {thisJob.state}
+                </span>
               </div>
             </div>
             
-            <JobDescription job={thisJob}/>
+            <JobDescription job={thisJob}  rateView={false}/>
             
             <div className="companyStats">
               <div className="companyStatsBox">
