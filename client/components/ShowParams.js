@@ -6,10 +6,12 @@ import Snackbar                 from 'material-ui/Snackbar';
 import TextField                from 'material-ui/TextField';
 import CircularProgress         from 'material-ui/CircularProgress';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
+import FlatButton               from 'material-ui/FlatButton';
 
 import Store                    from './Store';
 import Param                    from './Param';
-//import material                 from 'materialize-css';
+import InterestBar              from  './InterestBar';
+
 
 @observer class ShowParams extends React.Component {
 
@@ -28,10 +30,8 @@ import Param                    from './Param';
   }
 
   getParams() {
-    // console.log('getparms this', this);
     axios.get('/parameter/' + Store.currentUserId)
       .then(function(response) {
-        // console.log('params data', response.data);
         Store.params = response.data.Parameters;
       })
       .catch(function(error) {
@@ -40,10 +40,13 @@ import Param                    from './Param';
   }
 
   componentWillMount() {
+
     this.getParams();
+  
   }
 
   saveParam(e) {
+  
     e.preventDefault();
 
     if (Store.newParam.descriptor !== '' &&
@@ -60,12 +63,9 @@ import Param                    from './Param';
         location: Store.newParam.city
       });
 
-
-      // **********************   i ma have to re type cast the radius to a number by
-      // building up an object
       axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
         .then(function(response) {
-          //console.log('returned from the server: ', response.data);
+         
           if (response.data) {
             paramId = response.data.id;
             Store.params.push(response.data);
@@ -83,7 +83,7 @@ import Param                    from './Param';
               numJobs: response.data.length
             });
 
-            // console.log('in axios get paramsvfor num jobs');
+
             this.setState({
               message: `${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`});
 
@@ -96,8 +96,8 @@ import Param                    from './Param';
             console.log(error);
           });
 
-        // need to quert database to get the number of new jobs...
-      }, 5000);
+  
+        }, 5000);
 
     } else {
 
@@ -121,8 +121,16 @@ import Param                    from './Param';
     }
   }
 
+
   render() {
-    // console.log('paramlength', Store.params.length);
+   
+  
+    const style = {
+      margin: 12,
+      backgroundColor: '#0277BD'
+    };
+
+
     var spinner = this.state.spin;
 
     var params = Store.params.slice();
@@ -130,18 +138,17 @@ import Param                    from './Param';
       <div>
       <MuiThemeProvider >
         <div className="params">
-          <div className="paramListTitle"> Saved Parameters
-          </div>
-          <div className="currentParameters">
-            {Store.params.length && params.map((param, index) => {
-              param = toJS(param);
-              // console.log(param);
-              return <Param className="paramBox" param={param} key={index}/>;
-            })}
+        <div className='landingHeader'>
+          Your Interests
         </div>
+        <InterestBar />
+ 
          {this.state.spin && <CircularProgress />}
-        <div className="paramListTitle"> Create a New Job Search
-         </div>
+        
+        <div className='landingHeader'>
+          New Search Criteria
+        </div>
+
         <div className="jobParameterForm">
           <form>
             <div className="row">
@@ -177,10 +184,12 @@ import Param                    from './Param';
              </div>
           </form>
         </div>
-        <div className="submitNewParamButton" onClick={this.saveParam.bind(this)}>
-          Save Job Preferences
-        </div>
+
       </div>
+    </MuiThemeProvider>
+
+    <MuiThemeProvider>
+      <FlatButton label="Save" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.saveParam}></FlatButton>
     </MuiThemeProvider>
     <MuiThemeProvider>
       <Snackbar open={this.state.snack}  message={this.state.message}

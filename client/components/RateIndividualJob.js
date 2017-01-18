@@ -69,7 +69,7 @@ import JobDescription from './JobDescription';
     //  I can build out here for the company list for chooseing like or not like
     return (<li>
       <div className="rateCompany">
-        <JobDescription job={this.props.job}/>
+        <JobDescription job={this.props.job} rateView={true}/>
         { Store.viewingNewJobs &&
         <div className="rateCompanyAction right">
           <div className="favorJob" onClick={this.yes.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
