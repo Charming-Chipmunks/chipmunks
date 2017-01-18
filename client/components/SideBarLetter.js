@@ -22,19 +22,19 @@ var classObject = 'funfun';
   }
 
   render () {
-
     var styles = {hidden: {display: 'none !important'}};
 
     if (!Store.hideLeftSideBarCompany) {
       styles = {hidden: {display: 'list-item'}};
     } else {
       styles = {hidden: { display: 'none' }};
+    // console.log('Is this hidden? ', Store.hideLeftSideBarCompany);
     }
 
     return (
-      <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> 
+      <li className="sideBarLetter" onClick={this.handleClick.bind(this)}>
       {this.props.letter}
-        <div className="sideBarLetterOpportunities"> 
+        <div className="sideBarLetterOpportunities">
         {this.props.list.length} Opportunities
         </div>
         <ul className="someClass" style={styles.hidden} >

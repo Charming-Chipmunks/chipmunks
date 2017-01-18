@@ -569,7 +569,7 @@ class Store {
         ret.push(action);
       }
     });
-    console.log('activeTasks: ', ret);
+    // console.log('activeTasks: ', ret);
     return ret;
   }
 
@@ -602,28 +602,28 @@ class Store {
       if (diff === 0) {
         ret.push(job);
       }
-    })
+    });
 
     return ret;
   }
 
   @action getTodaysCompleted() {
-    console.log('getTodaysCompleted')
+    console.log('getTodaysCompleted');
     var today = moment();
     this.actions.forEach((action) => {
       if (action.completedTime) {
         var completed = moment(action.completedTime);
         var diff = today.diff(completed, 'days');
-        console.log("completed diff:", diff)
+        // console.log("completed diff:", diff);
         if (diff === 0) {
-          console.log('action type:', action.type, this.userGoals[action.type])
-          if (this.userGoals[action.type] !== undefined){
-            console.log('added',)
+          // console.log('action type:', action.type, this.userGoals[action.type]);
+          if (this.userGoals[action.type] !== undefined) {
+            console.log('added');
             this.userGoals[action.type]++;
-          }        
+          }
         }
       }
-    })
+    });
   }
 }
 

@@ -1,25 +1,27 @@
 // entry point for web app
-import React                      from 'react';
-import ReactDOM                   from 'react-dom';
-import { observer }               from 'mobx-react';
-import { 
-  Router, browserHistory,
-  Link, IndexLink 
-}                                 from 'react-router';
-import { toJS, observable }       from 'mobx';
-import axios                      from 'axios';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { observer } from 'mobx-react';
+import {
+  Router,
+  browserHistory,
+  Link,
+  IndexLink
+} from 'react-router';
+import { toJS, observable } from 'mobx';
+import axios from 'axios';
 
 // locally defined
-import Store                      from './Store';
-import JobView                    from './JobView';
-import SearchBar                  from './SearchBar';
-import ShowParams                 from './ShowParams';
-import CompanyList                from './CompanyList';
-import CompanyInfoRightSideBar    from './CompanyInfoRightSideBar';
-import LandingPage                from './LandingPage';
-import MainRightSidebar           from './MainRightSidebar';
+import Store from './Store';
+import JobView from './JobView';
+import SearchBar from './SearchBar';
+import ShowParams from './ShowParams';
+import CompanyList from './CompanyList';
+import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
+import LandingPage from './LandingPage';
+import MainRightSidebar from './MainRightSidebar';
 // serve individually?
-import LoginPage                  from './LoginPage'
+import LoginPage from './LoginPage'
 
 
 @observer class Web extends React.Component {
@@ -28,11 +30,11 @@ import LoginPage                  from './LoginPage'
   }
 
   componentWillMount() {
+    var context = this;
     axios.get('/user')
       .then(function(response) {
         Store.currentUserId = response.data.id;
         Store.userName = response.data.firstname + ' ' + response.data.lastname;
-
         console.log('user: ', Store.userName);
 
         // gets the list of "favored jobs"
@@ -46,14 +48,14 @@ import LoginPage                  from './LoginPage'
 
         // get new jobs
         axios.get('/jobs/' + Store.currentUserId + '/new')
-        .then(function(response) {
-          // console.log('jobs/userid/favored response.data', response.data);
-          Store.newJobList = response.data;
-          ///*******************  here is where I can get # of new jobs and updat the top
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+          .then(function(response) {
+            // console.log('jobs/userid/favored response.data', response.data);
+            Store.newJobList = response.data;
+            ///*******************  here is where I can get # of new jobs and updat the top
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
 
         // get a list of upcomiing actions IMPLEMET LATER
         axios.get(`/actions/${Store.currentUserId}`)
@@ -61,7 +63,7 @@ import LoginPage                  from './LoginPage'
             Store.actions = response.data;
             const { filteredActions } = Store;
             var result = filteredActions;
-            console.log('got actions?')
+            console.log('got actions?');
             Store.getTodaysCompleted();
             // console.log('filteredActions: ', filteredActions);
           })
@@ -77,6 +79,7 @@ import LoginPage                  from './LoginPage'
           .catch(function(error) {
             console.log(error);
           });
+        setTimeout(context.getStats, 500);
 
       })
       .catch(function(error) {
@@ -85,6 +88,51 @@ import LoginPage                  from './LoginPage'
       });
 
   }
+  getStats() {
+    setTimeout(() => {
+      axios.get('/stats/' + Store.currentUserId)
+        .then(function(response) {
+          console.log('totalstats', toJS(response.data));
+          Store.stats = response.data;
+          Store.barChartStats;
+        })
+        .catch(function(error) {
+          console.log('didnt get total');
+          console.log(error);
+        });
+
+      axios.get('/stats/monthly/' + Store.currentUserId)
+        .then(function(response) {
+          // console.log('currently not updating monthly');
+          console.log('got monthly');
+          Store.monthly = response.data;
+          Store.monthBarChartStats;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      axios.get('/stats/monthCompare/' + Store.currentUserId)
+        .then(function(response) {
+          console.log('got monthcompare');
+          Store.average = response.data;
+          Store.averageChart;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      axios.get('/stats/jobStats/' + Store.currentUserId)
+        .then(function(response) {
+          console.log('got jobstats');
+          Store.jobStats = response.data;
+
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }, 2000);
+  }
+
 
   render() {
     return (
