@@ -22,18 +22,12 @@ import Contact      from './Contact';
     // console.log('side bar modal ', Store.contacts);
 
     return (
-      <div>
-        <div className="companyContactInfo">
-          <div className="rightsideBarCompanyName">{this.props.job.company}</div>
-          <div className="rateCompanyName">{this.props.job.city}, {this.props.job.state}</div>
-        </div>
         <div>
           {contacts.map((contact, index) => {
             // create a contact element here
             return (<Contact contact={contact} key={index} job={this.props.job} />);
           })}
         </div>
-      </div>
     );
   }
 }

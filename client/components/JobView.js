@@ -195,7 +195,18 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
         <div className="col m9 left">
           <div className='jobView'>
+            
+            <div className="companyContactInfo">
+              <div className="rightsideBarCompanyName">
+                {thisJob.company}
+              </div>
+              <div className="rateCompanyName">
+                {thisJob.city}, {thisJob.state}
+              </div>
+            </div>
+            
             <JobDescription job={thisJob}/>
+            
             <div className="companyStats">
               <div className="companyStatsBox">
               Last Interaction<br/>
