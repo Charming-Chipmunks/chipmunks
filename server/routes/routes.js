@@ -1,10 +1,10 @@
 //routes.js
-var express         = require('express');
-var router          = express.Router();
-var models          = require('../models/index');
-var utils           = require('./route-utils');
-var db              = require('../models/index');
-var findIndeedJobs  = require('../models/initialize/findIndeedJobs');
+var express = require('express');
+var router = express.Router();
+var models = require('../models/index');
+var utils = require('./route-utils');
+var db = require('../models/index');
+var findIndeedJobs = require('../models/initialize/findIndeedJobs');
 require('dotenv').config();
 
 
@@ -188,17 +188,17 @@ router.post('/job', function(req, res) {
   }
 
   models.Job.create({
-    jobTitle:   req.body.jobTitle,
-    company:    req.body.company,
-    url:        req.body.url,
-    address:    req.body.address,
-    city:       req.body.city,
-    state:      req.body.state,
+    jobTitle: req.body.jobTitle,
+    company: req.body.company,
+    url: req.body.url,
+    address: req.body.address,
+    city: req.body.city,
+    state: req.body.state,
     formatted_location: req.body.city + ', ' + req.body.state,
-    snippet:    req.body.snippet,
-    source:     req.body.source,
-    origin:     req.body.origin , //'indeed', 'dice', user, etc.
-    jobkey:     req.body.userid + ':' + new Date(),
+    snippet: req.body.snippet,
+    source: req.body.source,
+    origin: req.body.origin, //'indeed', 'dice', user, etc.
+    jobkey: req.body.userid + ':' + new Date(),
     //expires:    DataTypes.DATE,
     //latitude:   DataTypes.FLOAT,  // i think we need decimal for lat / long
     //longitude:  DataTypes.FLOAT
@@ -212,7 +212,7 @@ router.post('/job', function(req, res) {
           id: req.body.id
         }
       }).then(user => {
-        user.addJobs(job, {status: 'favored', createdAt: new Date(), updatedAt: new Date() } );
+        user.addJobs(job, { status: 'favored', createdAt: new Date(), updatedAt: new Date() });
         // create new actions
         // adding a new job will add the initial actions (review company. look for comtacts,  )
         // when do I send the updated actions to the user?
@@ -257,16 +257,16 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
             where: {
               id: req.params.jobId
             }
-          }).then( job => {
+          }).then(job => {
             console.log('****** ADD ACTIONS  ******', job.company);
             utils.addActionsToNewJob(user, job, job, req, res);
             //res.json(job);
           });
         });
-      } else if(req.body.status === 'rejected') {
-        res.json({status: 'rejected'});
+      } else if (req.body.status === 'rejected') {
+        res.json({ status: 'rejected' });
       } else if (req.body.status === 'unfavored') {
-        res.json({status: 'unfavored'});
+        res.json({ status: 'unfavored' });
       }
     }
   }).catch((err) => {
@@ -299,7 +299,7 @@ router.get('/actions/:userId', function(req, res) {
           UserId: req.params.userId,
           status: 'favored'
         }
-      }).then(function (userJobs) {
+      }).then(function(userJobs) {
         var results = [];
         if (!userJobs) {
           // this may be that there are no user favored jobs
@@ -308,9 +308,9 @@ router.get('/actions/:userId', function(req, res) {
         } else {
 
           userJobs.forEach((uj) => {
-            actions.forEach((action, index) =>{
+            actions.forEach((action, index) => {
               if (uj.JobId === action.JobId) {
-                results.push(action);  
+                results.push(action);
               }
             });
           });
@@ -319,7 +319,7 @@ router.get('/actions/:userId', function(req, res) {
         }
       });
 
-     // res.json(results);
+      // res.json(results);
     }
   }).catch((err) => {
     console.error(err);
@@ -357,12 +357,12 @@ router.get('/actions/:userId/:jobId', function(req, res) {
 router.put('/actions/:id', function(req, res) {
 
   console.log('type: ', req.body.type);
-  models.Action.update({ 
-    type:           req.body.type,
-    description:    req.body.description,
-    notes:          req.body.notes,
-    scheduledTime:  req.body.scheduledTime,
-    completedTime:  req.body.completedTime
+  models.Action.update({
+    type: req.body.type,
+    description: req.body.description,
+    notes: req.body.notes,
+    scheduledTime: req.body.scheduledTime,
+    completedTime: req.body.completedTime
   }, {
     where: {
       id: req.params.id,
@@ -389,14 +389,14 @@ router.post('/actions/', function(req, res) {
     return rejectUser(res);
   }
   models.Action.create({
-    type:           req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
-    company:        req.body.company,
-    description:    req.body.description, //text field with more description of the task / event
-    actionSource:   req.body.actionSource, // tasks, user, reminder, company
-    completedTime:  req.body.completedTime,
-    scheduledTime:  req.body.scheduledTime,
-    contactId:      req.body.contactId,
-    notes:          req.body.notes
+    type: req.body.type, // email, phone, inteview, meetup, resume, apply, learn, connections,  - matches wth the iconmaybe enum
+    company: req.body.company,
+    description: req.body.description, //text field with more description of the task / event
+    actionSource: req.body.actionSource, // tasks, user, reminder, company
+    completedTime: req.body.completedTime,
+    scheduledTime: req.body.scheduledTime,
+    contactId: req.body.contactId,
+    notes: req.body.notes
   }).then((action) => {
 
     if (!action) {
@@ -453,8 +453,8 @@ router.put('/actions/:userId/:actionId', function(req, res) {
     return rejectUser(res);
   }
 
-  models.Action.update({ 
-    completedTime: new Date() 
+  models.Action.update({
+    completedTime: new Date()
   }, {
     where: {
       UserId: req.params.userId,
@@ -462,12 +462,26 @@ router.put('/actions/:userId/:actionId', function(req, res) {
     },
   }).then(function(action) {
     if (!action) {
+      console.log('actionNotFound');
       res.status(404);
       res.json({});
     } else {
+
+      models.Action.findById(req.params.actionId).then(function(actionFound) {
+        models.UserJob.find({
+          where: {
+            UserId: userId,
+            JobId: actionFound.JobId
+          }
+        }).then(function(userJob) {
+          console.log('userjob', JSON.parse(JSON.stringify(userJob)));
+          utils.changeProgress(actionFound, userJob, req.params.userId, res);
+          // res.json(actionFound);
+        });
+      });
       // here I need to check and see what the completed action was and add items to the DB as necessary
       utils.processAction(req.params.actionId, req.params.userId);
-      res.json(action);
+      // find job by action.jobId, userId
     }
   }).catch((err) => {
     console.error(err);
@@ -484,13 +498,13 @@ router.post('/contacts/:userId/:jobId', function(req, res) {
   }
 
   models.Contact.create({
-    firstname:    req.body.firstname,
-    lastname:     req.body.lastname,
-    email:        req.body.email,
-    mobilePhone:  req.body.mobilePhone,
-    workPhone:    req.body.workPhone,
-    title:        req.body.title,
-    notes:        req.body.notes
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    mobilePhone: req.body.mobilePhone,
+    workPhone: req.body.workPhone,
+    title: req.body.title,
+    notes: req.body.notes
   }).then((contacts) => {
     if (!contacts) {
       res.status(404);
@@ -536,13 +550,13 @@ router.put('/contacts/:userId/:contactId/:jobId', function(req, res) {
 
   console.log('************************************** Joos Jones');
   models.Contact.update({
-    firstname:    req.body.firstname,
-    lastname:     req.body.lastname,
-    email:        req.body.email,
-    mobilePhone:  req.body.mobilePhone,
-    workPhone:    req.body.workPhone,
-    title:        req.body.title,
-    notes:        req.body.notes
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    mobilePhone: req.body.mobilePhone,
+    workPhone: req.body.workPhone,
+    title: req.body.title,
+    notes: req.body.notes
   }, {
     where: {
       UserId: req.params.userId,
@@ -585,7 +599,7 @@ router.put('/contacts/:userId/:contactId/:jobId', function(req, res) {
 
 // CONTACTS - GET A CONTACT and RELATED JOB INFO GIVEN CONTACT EMAIL AND USERID
 router.get('/contacts/jobs/:email/:userId', function(req, res) {
-  
+
   if (!checkUser(req, req.params.userId)) {
     return rejectUser(res);
   }
@@ -606,7 +620,7 @@ router.get('/contacts/jobs/:email/:userId', function(req, res) {
           id: contact.JobId
         }
       }).then(job => {
-        res.json({job: job,contact: contact});
+        res.json({ job: job, contact: contact });
 
       });
     }
@@ -701,31 +715,31 @@ router.delete('/parameter/:parameterId/user/:userId', function(req, res) {
 
 
 router.post('/parameter/:userId', function(req, res) {
-  
+
   var associateJobs = function(userId, parameterId) {
     db['User'].find({
       where: {
         id: userId
       }
-    }).then (user => {
+    }).then(user => {
       db['Parameter'].find({
         where: {
           id: parameterId
         },
-        include: [ db['Job'] ]
-      }).then( job => {
-      // this gets the Jobs associated with the parameter
+        include: [db['Job']]
+      }).then(job => {
+        // this gets the Jobs associated with the parameter
         // console.log('found these jobs for you', job.Jobs);
         job.Jobs.forEach((item, index) => {
           db['UserJob'].find({
             where: {
               UserId: userId,
-              JobId:  item.id
+              JobId: item.id
             }
           }).then(foundLink => {
             if (!foundLink) {
               // this is working!
-              user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
+              user.addJobs(item.id, { status: 'new', createdAt: new Date(), updatedAt: new Date() });
             }
           });
         });
@@ -742,20 +756,20 @@ router.post('/parameter/:userId', function(req, res) {
 
   models.Parameter.find({
     where: {
-      descriptor:   req.body.descriptor,
-      city:         req.body.city,
-      state:        req.body.state,
-      zip:          req.body.zip,
-      radius:       req.body.radius
+      descriptor: req.body.descriptor,
+      city: req.body.city,
+      state: req.body.state,
+      zip: req.body.zip,
+      radius: req.body.radius
     }
   }).then(parameter => {
     if (!parameter) {
       models.Parameter.create({
-        descriptor:   req.body.descriptor,
-        city:         req.body.city,
-        state:        req.body.state,
-        zip:          req.body.zip,
-        radius:       req.body.radius
+        descriptor: req.body.descriptor,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        radius: req.body.radius
       }).then((parameter) => {
         console.log('created new');
         parameter.addUsers(req.params.userId);
@@ -817,7 +831,7 @@ router.get('/ponme/:parameterId', function(req, res) {
   }).then((parameter) => {
     if (!parameter) {
       res.status(404);
-      res.json({});     
+      res.json({});
     } else {
       console.log('*&&&&&&&&&**&*(&(&*(&(&*&*&&*(&(*(&&*(&&&(&*&*(&*(&*(&*(&*(&(*&(*&*((&*&*(&*( ');
       res.json(parameter);
@@ -825,13 +839,13 @@ router.get('/ponme/:parameterId', function(req, res) {
   }).catch(err => {
     console.error(err);
     res.status(500);
-    res.json({ error: err });    
+    res.json({ error: err });
   });
 
 });
 
 //testing
-// router.get('/test2/:userId', function(req, res) 
+// router.get('/test2/:userId', function(req, res)
 
 //   if (!checkUser(req, req.params.userId)) {
 //     return rejectUser(res);
