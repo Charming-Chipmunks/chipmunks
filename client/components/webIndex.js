@@ -7,9 +7,10 @@ import JobView from './JobView';
 import Web from './web';
 import RateJobs from './RateJobs';
 import AddJob from './AddJob';
-import LandingPage from './LandingPage'
-import LoginPage from './LoginPage'
-
+import LandingPage from './LandingPage';
+import LoginPage from './LoginPage';
+import JobStats from './JobStats';
+import ActionStats from './ActionStats';
 
 ReactDOM.render(
   <Router history = {browserHistory}>
@@ -17,10 +18,13 @@ ReactDOM.render(
       <IndexRoute component={LandingPage}> </IndexRoute>
         <Route path='/login' name='login' component={LoginPage}></Route>
         <Route path='/activitiesMain' name='activitiesMain' component={MainPage}></Route>
+        <Route path='/jobStats' name='jobstats' component={JobStats}> </Route>
         <Route path="/preferences" name="preferences" component={ShowParams}> </Route>
         <Route path='/companies/:id' name='companies' component={JobView}> </Route>
         <Route path='/rateJobs' name='rateJobs' component={RateJobs}> </Route>
         <Route path='/addJob' name='addJob' component={AddJob}> </Route>
+        <Route path='/actionStats' name='actionStats' component={ActionStats}> </Route>
+
     </Route>
   </Router>
 , document.getElementById('web'));

@@ -306,16 +306,28 @@ var compareUserStats = function(userId, res) {
         total[key] /= userStats.length;
       }
       var average = total;
-      console.log('average', average);
-      console.log('userStat', userStat);
-      console.log('RES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSONRES.JSON');
       var toSend = { average: average, user: userStat };
       res.json(toSend);
     });
-
 };
+var JobStatsByUser = function(userId, res) {
+  var results = { 'like': 0, 'applied': 0, 'phoneInterview': 0, 'webInterview': 0, 'personalInterview': 0, 'offer': 0 };
+  models.UserJob.findAll({ where: { UserId: userId } })
+    .then(userJobs => {
+      userJobs.forEach(userJob => {
+        results[userJob.progress]++;
+      });
+      res.json(results);
+    });
+};
+
+// JobStatsByUser(1)
 // compareUserStats(2);
 ////////////// Routes
+router.get('/stats/jobStats/:userId', function(req, res) {
+  JobStatsByUser(req.params.userId, res);
+});
+
 
 // THIS SHOULD REALLY BE REFACTORED INTO A CRONJOB FOR ALL USERS
 router.get('/stats/monthCompare/:userId', function(req, res) {

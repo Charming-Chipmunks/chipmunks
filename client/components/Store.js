@@ -152,6 +152,64 @@ class Store {
     receivedEmail: 7
   }];
 
+  @observable jobStats = {};
+  @computed get jobChart() {
+    var data = [];
+    data.push(this.jobStats.like);
+    data.push(this.jobStats.applied);
+    data.push(this.jobStats.phoneInterview);
+    data.push(this.jobStats.webInterview);
+    data.push(this.jobStats.personalInterview);
+    data.push(this.jobStats.sentEmail);
+    data.push(this.jobStats.receivedEmail);
+    data.push(this.jobStats.phone);
+
+
+    var results = {
+      type: 'horizontalBar',
+      data: {
+        labels: ['Liked', 'Applied', 'Phone Interviews', 'Web Interviews', 'Personal Interviews', 'Emails Sent', 'Emails Received', '# of Phone calls'],
+        datasets: [{
+          label: '# of actions',
+          data: data,
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(96, 96, 96, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(50, 255, 255, 0.2)',
+            'rgba(0, 0, 0, 0.2)',
+            'rgba(255, 153, 51, 0.2)',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+            'rgba(255,99,132,1)',
+            'rgba(96, 96, 96, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(50, 255, 255, 1)',
+            'rgba(0, 0, 0, 1)',
+            'rgba(255, 153, 51, 1)',
+          ],
+          borderWidth: 1
+        }],
+      },
+      options: {
+        resposive: false,
+        maintainAspectRatio: true,
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    };
+    return results;
+  }
+
   @computed get monthBarChartStats() {
     // var like = [];
     // var applied = [];
@@ -511,7 +569,7 @@ class Store {
         ret.push(action);
       }
     });
-    console.log('activeTasks: ', ret);
+    // console.log('activeTasks: ', ret);
     return ret;
   }
 
@@ -544,28 +602,28 @@ class Store {
       if (diff === 0) {
         ret.push(job);
       }
-    })
+    });
 
     return ret;
   }
 
   @action getTodaysCompleted() {
-    console.log('getTodaysCompleted')
+    console.log('getTodaysCompleted');
     var today = moment();
     this.actions.forEach((action) => {
       if (action.completedTime) {
         var completed = moment(action.completedTime);
         var diff = today.diff(completed, 'days');
-        console.log("completed diff:", diff)
+        // console.log("completed diff:", diff);
         if (diff === 0) {
-          console.log('action type:', action.type, this.userGoals[action.type])
-          if (this.userGoals[action.type] !== undefined){
-            console.log('added',)
+          // console.log('action type:', action.type, this.userGoals[action.type]);
+          if (this.userGoals[action.type] !== undefined) {
+            console.log('added');
             this.userGoals[action.type]++;
-          }        
+          }
         }
       }
-    })
+    });
   }
 }
 
