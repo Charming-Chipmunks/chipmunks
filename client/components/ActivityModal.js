@@ -136,7 +136,6 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
     // make sure its editable
     if (!this.state.completed) {
-      console.log('is this complete?');
       // do some error checking to make sure an action has been selected  also check for a description
       if (Store.selectedActivityBox !== -1 &&
           Store.addActivity.scheduledTime !== '' &&

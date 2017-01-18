@@ -43,7 +43,7 @@ import { toJS } from 'mobx';
     }
 
     return (
-      <div className="leftSideBar z-depth-3">
+      <div className="leftSideBar z-depth-3 radius">
         <h5 className="leftSideBarResults"> {list.length} Open Opportunities</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {

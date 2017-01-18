@@ -15,6 +15,8 @@ import Modal                    from 'react-modal';
 import modalStyles              from './modalStyles';
 import ActivityModal            from './ActivityModal';
 import ContactModal             from './ContactModal'
+import FontIcon                     from 'material-ui/FontIcon';
+import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
 
 @observer class JobView extends Component {
   

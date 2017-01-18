@@ -5,6 +5,10 @@ import moment from 'moment';
 import axios from 'axios';
 import Store from './Store';
 
+import FontIcon                     from 'material-ui/FontIcon';
+import MuiThemeProvider             from 'material-ui/styles/MuiThemeProvider';
+
+
 var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
 
 @observer class TaskBox extends React.Component {
@@ -58,6 +62,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     var styles = {};
     var editIcon = 'edit';
     var completeIcon = 'done';
+    var color = 'black';
 
     // sets proper date
     //console.log()
@@ -70,19 +75,22 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
       console.log(this.props.task.scheduledTime);
       var days = Math.floor((new Date(this.props.task.scheduledTime).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
       if (days < -1) {
-        dateMessage = 'Due ' + Math.abs(days) + ' days ago';
+        dateMessage = Math.abs(days) + ' days ago';
         styles = { highlight: {border: '1px solid red', 'backgroundColor': 'pink'}};
+        color = 'red';
       } else if (days === -1) {
-        dateMessage = 'Due yesterday';
+        dateMessage = 'Yesterday';
         styles = { highlight: {border: '1px solid red', 'backgroundColor': 'pink'} };
+        color = 'red';
       } else if (days === 0) {
-        dateMessage = 'Due today';
+        dateMessage = 'Today';
         styles = { highlight: {border: '1px solid yellow', 'backgroundColor': 'lightyellow'} };
+        color = 'yellow';
       } else if (days === 1) {
-        dateMessage = 'Due tomorrow';
+        dateMessage = 'Tomorrow';
         styles = {highlight: {}};
       } else {
-        dateMessage = 'Due in ' + days + ' days';
+        dateMessage = days + ' days';
         styles = {highlight: {}};
       }
     }
@@ -104,11 +112,21 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     return (
         <tr>
-          <td> {dateMessage} </td>
-          <td> <i className="material-icons">{iconName}</i> </td>
+          <td> 
+            {dateMessage} 
+          </td>
+          <td>
+            <MuiThemeProvider>
+              <FontIcon className="material-icons" color={color}>{iconName}
+              </FontIcon>
+            </MuiThemeProvider>
+          </td>  
           <td>{this.props.task.description}</td>
-          <td> <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</i></td>
-          <td> <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i></td>
+          <td> 
+            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</i>
+          </td>
+          <td> 
+            <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i></td>
         </tr>
     );
   }

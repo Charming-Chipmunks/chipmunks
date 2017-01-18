@@ -7,6 +7,7 @@ import { toJS }                 from 'mobx';
 import TextField                from 'material-ui/TextField';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 import Snackbar                 from 'material-ui/Snackbar';
+import RaisedButton from 'material-ui/RaisedButton';
 //import Growl from 'Growl/growl.react';
 
 @observer class AddJob extends React.Component {
@@ -14,6 +15,11 @@ import Snackbar                 from 'material-ui/Snackbar';
 
   constructor(props) {
     super(props);
+    this.change = this.change.bind(this);
+    this.save = this.save.bind(this);
+    this.state = {message: '',
+
+                  snack: false };
   }
 
   change(e) {
@@ -21,83 +27,125 @@ import Snackbar                 from 'material-ui/Snackbar';
   }
   save(e) {
     e.preventDefault();
+
+    console.log(Store);
+    if(Store.newJob.company !== '' && Store.newJob.jobTitle !== '' ) {
     
-    Store.newJob.userid = Store.currentUserId;
-    Store.newJob.id = Store.currentUserId;
-    console.log('current Store.currentUserId :', Store.currentUserId);
+      Store.newJob.userid = Store.currentUserId;
+      Store.newJob.id = Store.currentUserId;
+      console.log('current Store.currentUserId :', Store.currentUserId);
 
-    console.log(toJS(Store.newJob));
-    axios.post('/job', toJS(Store.newJob))
-      .then(function(response) {
-        console.log('send save response');
-        Store.jobList.push(response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      console.log(toJS(Store.newJob));
+      axios.post('/job', toJS(Store.newJob))
+        .then(function(response) {
+          console.log('send save response');
+          Store.jobList.push(response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
 
-    Store.newJob.company = '';
-    Store.newJob.jobTitle = '';
-    Store.newJob.snippet = '';
-    Store.newJob.url = '';
-    Store.newJob.address = '';
-    Store.newJob.city = '';
-    Store.newJob.state = '';
+      Store.newJob.company = '';
+      Store.newJob.jobTitle = '';
+      Store.newJob.snippet = '';
+      Store.newJob.url = '';
+      Store.newJob.address = '';
+      Store.newJob.city = '';
+      Store.newJob.state = '';
+    } else {
+
+      this.setState({ message: 'Both company and description required',
+                      snack: true
+                    });
+    }
 
   }
 
   render() {
 
+    const style = {
+      margin: 12,
+      backgroundColor: 'red'
+    };
+
     return (
       <div className="addJob">
-        <div className="row">
-          <form className="col s12">
-            <div className="row">
-              <div className="input-field col s6">
-                <input id="company" type="text" className="validate" name="company" onChange={this.change} value={Store.newJob.company}/>
-                <label className="active">Company</label>
-              </div>
-              <div className="input-field col s6">
-                <input id="title" type="text" className="validate" name='jobTitle' onChange={this.change} value={Store.newJob.jobTitle}/>
-                <label className="active">Job Title</label>
-              </div>
+        <form>
+          <div className="row">
+            <div className="input-field col s12">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Company" multiLine={true} fullWidth={true} name="company" 
+                            onChange={this.change} value={Store.newJob.company} />
+              </MuiThemeProvider> 
             </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input id="url" type="text" className="validate" name='snippet' onChange={this.change} value={Store.newJob.snippet}/>
-                <label className="active">Job Description</label>
-              </div>
-            </div>         
-            <div className="row">
-              <div className="input-field col s12">
-                <input id="url" type="text" className="validate" name='url' onChange={this.change} value={Store.newJob.url}/>
-                <label className="active">Company Website</label>
-              </div>
+          </div>
+
+          <div className="row">
+            <div className="input-field col s12">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Job Title" multiLine={true} fullWidth={true} name="jobTitle" 
+                            onChange={this.change} value={Store.newJob.jobTitle} />
+              </MuiThemeProvider> 
             </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <input id="address" type="text" className="validate" name='address' onChange={this.change} value={Store.newJob.address}/>
-                <label className="active">Address</label>
-              </div>
+          </div>
+
+          <div className="row">
+            <div className="input-field col s12">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="snippet" 
+                            rows={3} rowsMax={8} onChange={this.change} value={Store.newJob.snippet} />
+              </MuiThemeProvider> 
             </div>
-            <div className="row">            
-              <div className="input-field col s6">
-                <input id="city" type="text" className="validate" name="city" onChange={this.change} value={Store.newJob.city}/>
-                <label className="active">City</label>
-              </div>
-              <div className="input-field col s6">
-                <input id="state" type="text" className="validate" name='state' onChange={this.change} value={Store.newJob.state}/>
-                <label className="active">State</label>
-              </div>
+          </div>
+
+          <div className="row">
+            <div className="input-field col s12">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Website" multiLine={true} fullWidth={true} name="url" 
+                            onChange={this.change} value={Store.newJob.url} />
+              </MuiThemeProvider> 
             </div>
-            <div className="row">  
+          </div>
+
+          <div className="row">
+            <div className="input-field col s12">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="Address" multiLine={true} fullWidth={true} name="address" 
+                            onChange={this.change} value={Store.newJob.address} />
+              </MuiThemeProvider> 
             </div>
-              <div className="createJob" onClick={this.save}>Save Opportunity</div>
-          </form>
-        </div> 
-      </div>
+          </div>         
+
+          <div className="row">
+            <div className="input-field col s6">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city" 
+                            onChange={this.change} value={Store.newJob.city} />
+              </MuiThemeProvider> 
+            </div>
+          </div> 
+
+          <div className="row">
+            <div className="input-field col s6">
+              <MuiThemeProvider >
+                <TextField floatingLabelText="City" fullWidth={true} name="state" 
+                            onChange={this.change} value={Store.newJob.state} />
+              </MuiThemeProvider> 
+            </div>
+          </div> 
+
+          <MuiThemeProvider>
+            <RaisedButton label="Save" primary={true} style={style} onClick={this.save}></RaisedButton>
+          </MuiThemeProvider>
+        </form>
+        <MuiThemeProvider>
+          <Snackbar open={this.state.snack}  message={this.state.message} 
+              autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+        </MuiThemeProvider>
+      </div> 
     );
   }
 }
 
 export default AddJob;
+    //          <div className="createJob" onClick={this.save}>Save Opportunity</div>

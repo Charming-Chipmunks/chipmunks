@@ -6,6 +6,10 @@
   background-color: #0277BD !important;
 }
 
+.radius{
+  border-radius: 3px;
+}
+
 .overdue{
   color: red;
 }
@@ -18,6 +22,11 @@
   font-weight: bold;
   font-size: 15px
 }
+
+.blue-color {
+  background-color: #0277BD;
+}
+
 /*
  * WEB.js css stylings
 */
@@ -195,7 +204,6 @@ Login Page
 */
 
 .addJob{
-  display: flex;
   width: 100%;
 }
 
@@ -360,14 +368,18 @@ Login Page
  * Sidebar Classes
  */
 .sideLetters{
-  background-color: #0277BD ;
+
+  background-color: #0277BD !important;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+
 }
 
 .leftSideBarResults{
   font-size: 14px;
-  font-weight: 300;
-  font-style: italic;
-  color: lightgrey;
+  font-weight: 400;
+  padding-top: 5px;
+  margin-left: 5px;
   text-align: left;
 }
 
@@ -447,7 +459,6 @@ Login Page
 .sideBarCompanyJobTitle{
   font-size: 10px;
   font-weight: 300;
-  font-style: italic;
   color: white;
 }
 
