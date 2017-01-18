@@ -17,10 +17,10 @@ import { observer } from 'mobx-react';
     var pageAttributes = '';
 
     if (this.props.number === this.props.current) {
-      console.log('in equals');
+      // console.log('in equals');
       pageAttributes = 'paginator active';
     } else if (this.props.number > this.props.total / 10) {
-      console.log('in unequals');
+      // console.log('in unequals');
       pageAttributes = 'paginator disabled';
     } else {
       pageAttributes = 'paginator';

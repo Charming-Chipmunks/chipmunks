@@ -8,7 +8,6 @@ import axios from 'axios';
 @observer class ActionStats extends React.Component {
   constructor(props) {
     super(props);
-    console.log('jobstats const');
   }
   componentDidMount() {
 
@@ -37,7 +36,7 @@ import axios from 'axios';
       </div>
       <br/>
       <div className='average'>
-      Average vs You
+      Average vs You for the last 30 days
         <canvas id="average" width="400" height="200"> </canvas>
       </div>
       <br/>

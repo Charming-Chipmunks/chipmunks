@@ -21,7 +21,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 import LandingPage from './LandingPage';
 import MainRightSidebar from './MainRightSidebar';
 // serve individually?
-import LoginPage from './LoginPage'
+import LoginPage from './LoginPage';
 
 
 @observer class Web extends React.Component {
@@ -35,7 +35,7 @@ import LoginPage from './LoginPage'
       .then(function(response) {
         Store.currentUserId = response.data.id;
         Store.userName = response.data.firstname + ' ' + response.data.lastname;
-        console.log('user: ', Store.userName);
+        // console.log('user: ', Store.userName);
 
         // gets the list of "favored jobs"
         axios.get('/jobs/' + Store.currentUserId + '/favored')
@@ -45,6 +45,7 @@ import LoginPage from './LoginPage'
           .catch(function(error) {
             console.log(error);
           });
+
 
         // get new jobs
         axios.get('/jobs/' + Store.currentUserId + '/new')
@@ -63,7 +64,7 @@ import LoginPage from './LoginPage'
             Store.actions = response.data;
             const { filteredActions } = Store;
             var result = filteredActions;
-            console.log('got actions?');
+            // console.log('got actions?');
             Store.getTodaysCompleted();
             // console.log('filteredActions: ', filteredActions);
           })
@@ -79,7 +80,7 @@ import LoginPage from './LoginPage'
           .catch(function(error) {
             console.log(error);
           });
-        setTimeout(context.getStats, 500);
+        setTimeout(context.getStats, 200);
 
       })
       .catch(function(error) {
@@ -92,21 +93,20 @@ import LoginPage from './LoginPage'
     setTimeout(() => {
       axios.get('/stats/' + Store.currentUserId)
         .then(function(response) {
-          console.log('totalstats', toJS(response.data));
+          // console.log('totalstats', toJS(response.data));
           Store.stats = response.data;
-          Store.barChartStats;
         })
         .catch(function(error) {
-          console.log('didnt get total');
+          // console.log('didnt get total');
           console.log(error);
         });
 
       axios.get('/stats/monthly/' + Store.currentUserId)
         .then(function(response) {
           // console.log('currently not updating monthly');
-          console.log('got monthly');
+          // console.log('got monthly');
           Store.monthly = response.data;
-          Store.monthBarChartStats;
+          // Store.monthBarChartStats;
         })
         .catch(function(error) {
           console.log(error);
@@ -114,18 +114,17 @@ import LoginPage from './LoginPage'
 
       axios.get('/stats/monthCompare/' + Store.currentUserId)
         .then(function(response) {
-          console.log('got monthcompare');
+          // console.log('got monthcompare');
           Store.average = response.data;
-          Store.averageChart;
+          // Store.averageChart;
         })
         .catch(function(error) {
           console.log(error);
         });
       axios.get('/stats/jobStats/' + Store.currentUserId)
         .then(function(response) {
-          console.log('got jobstats');
+          // console.log('got jobstats');
           Store.jobStats = response.data;
-
         })
         .catch(function(error) {
           console.log(error);

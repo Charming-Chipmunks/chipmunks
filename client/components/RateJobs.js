@@ -80,16 +80,16 @@ import Paginator from './Paginator';
       var rightArrow = '';
       if (list.length < 50 || this.state.page * 10 + 50 > list.length ) {
         rightArrow  = 'disabled';
-        console.log('right arrow 1st case length: ', list.length);
+        // console.log('right arrow 1st case length: ', list.length);
       } else {
-        console.log('right arrow 2nd case length: ', list.length);
+        // console.log('right arrow 2nd case length: ', list.length);
         rightArrow = 'active';
       }
 
       return (
         <div className="rateJobsList">
           <button onClick={this.buttonClick}>
-          { 
+          {
             Store.viewingNewJobs? <span>Show Active Jobs</span>: <span>Review New Jobs</span>
           }
           </button>

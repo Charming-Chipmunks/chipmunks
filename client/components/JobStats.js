@@ -10,7 +10,6 @@ import axios from 'axios';
 @observer class JobStats extends React.Component {
   constructor(props) {
     super(props);
-    console.log('jobstats const');
   }
   componentDidMount() {
 
