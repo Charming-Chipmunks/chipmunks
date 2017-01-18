@@ -14,12 +14,6 @@ var classObject = 'funfun';
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    //this.state = {hide: true};
-    // this.handleHover.bind(this);
-  }
-
-  componentWillMount() {
-    //this.setState({hide: Store.hideLeftSideBarCompany});
   }
 
   handleClick () {
@@ -29,22 +23,12 @@ var classObject = 'funfun';
 
   render () {
 
-    // if (this.state.hide === false) {
-    //   classObject = '';
-    // } else {
-    //   classObject = 'hide';
-    // }
-
     var styles = {hidden: {display: 'none !important'}};
-
-    console.log('Is this hidden? ', Store.hideLeftSideBarCompany);
 
     if (!Store.hideLeftSideBarCompany) {
       styles = {hidden: {display: 'list-item'}};
-      console.log('in display LI');
     } else {
       styles = {hidden: { display: 'none' }};
-      console.log('in hide LI');
     }
 
     return (
@@ -64,5 +48,5 @@ var classObject = 'funfun';
   }
 
 }
-//  <li className="sideBarLetter" onClick={this.handleClick.bind(this)}> {this.props.letter}
+
 export default SideBarLetter;

@@ -89,18 +89,18 @@ import LoginPage                  from './LoginPage'
   render() {
     return (
       <div id="mainApp">
-      <div className="navbar-fixed">
+      <div className="navbar-fixed blue-color">
         <nav>
-          <div className="nav-wrapper">
+          <div className="nav-wrapper blue-color">
             <ul id="nav-mobile-left" className="left hide-on-med-and-down">
               <li><IndexLink to="/"><img src="./assets/icons/callback.png" /></IndexLink></li>
               <li><IndexLink to="/">Home</IndexLink></li>
             </ul>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><SearchBar /></li>
-              <li><Link to={'/preferences'}>Settings</Link></li>
-              <li><Link to={'/rateJobs'}>Rate new jobs</Link></li>
+              <li><Link to={'/rateJobs'}>Rate New Jobs</Link></li>
               <li><Link to={'/addJob'}>Add Job</Link></li>
+              <li><Link to={'/preferences'}>Settings</Link></li>
             </ul>
           </div>
         </nav>

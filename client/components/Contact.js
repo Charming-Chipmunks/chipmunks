@@ -1,9 +1,12 @@
-import React from 'react';
-import { observer } from 'mobx-react';
+import React                    from 'react';
+import { observer }             from 'mobx-react';
 
 import Modal                    from 'react-modal';
 import modalStyles              from './modalStyles';
 import ContactModal             from './ContactModal';
+import Paper                    from 'material-ui/Paper';
+import FontIcon                 from 'material-ui/FontIcon';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
 @observer class Contact extends React.Component {
 
@@ -31,13 +34,48 @@ import ContactModal             from './ContactModal';
 
   render() {
     
+    const style = {
+      height: 120,
+      width: '100%',
+      margin: 10,
+      display: 'inline-block',
+    };
+
+   const iconStyles = {
+      marginLeft: 5,
+      fontSize: '12px'
+    };
+
+
     return (
       <div className="sideBarContact" onClick={this.handleclick}>
-        <div className="contactName"> {this.props.contact.firstname + ' ' + this.props.contact.lastname} </div>
-        <a href={'https://mail.google.com/mail/?view=cm&fs=1&to=' + this.props.contact.email}> <i className="material-icons">email</i> </a>
-        <i className="material-icons">stay_current_portrait</i><div className="contactPhoneNumber">{this.props.contact.mobilePhone}</div>
-        <i className="material-icons">phone</i><div className="contactPhoneNumber"> {this.props.contact.workPhone}</div>
-      
+        <MuiThemeProvider>
+          <Paper className="paper" zDepth={1}> 
+            <div className="contactBox">
+              <div className="contactName"> 
+                {this.props.contact.firstname} {this.props.contact.lastname} 
+              </div>
+             
+              <div className="contactEmail"> 
+                <FontIcon className="material-icons" style={iconStyles}> {'email'}</FontIcon>
+                { this.props.contact.email }
+              </div>
+
+              <div className="contactEmail">
+                <FontIcon className="material-icons" style={iconStyles}> {'phone'}</FontIcon>
+                {this.props.contact.mobilePhone}
+              </div>
+
+
+              <div className="contactEmail">
+                <FontIcon className="material-icons" style={iconStyles}> {'phone'}</FontIcon>
+                  {this.props.contact.workPhone}
+              </div> 
+
+            </div>         
+          </Paper>
+        </MuiThemeProvider>
+
         {/* contact modal */}
         <Modal  isOpen={this.state.contactModalIsOpen}
                 onAfterOpen={this.afterOpenModal}

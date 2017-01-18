@@ -118,8 +118,8 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
               targetOrigin={{horizontal: 'left', vertical: 'top'}}
               onRequestClose={this.handleEmailRequestClose}>
               <Menu desktop={true} >
-                <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "sentEmail")} />
-                <MenuItem primaryText="Web" onClick={this.selectItem.bind(this, "receivedEmail")} />
+                <MenuItem primaryText="Sent Email" onClick={this.selectItem.bind(this, "sentEmail")} />
+                <MenuItem primaryText="Received Email" onClick={this.selectItem.bind(this, "receivedEmail")} />
               </Menu>
             </Popover>
           </MuiThemeProvider>}

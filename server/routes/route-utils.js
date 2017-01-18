@@ -65,6 +65,7 @@ module.exports = {
             job.addActions(applyAction);
             newActions.push(applyAction);
             console.log('***** Apply Action', res);
+           // *********  have a small issue here about this may be the second time the response is sent
             res.json(applyAction);
 
           }).catch((err) => {

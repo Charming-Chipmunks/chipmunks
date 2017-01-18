@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Store from './Store';
 import { observer } from 'mobx-react';
+
 @observer class SideBarCompany extends React.Component {
 
   constructor(props) {
