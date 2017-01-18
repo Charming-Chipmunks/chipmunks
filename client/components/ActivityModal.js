@@ -136,7 +136,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
     // make sure its editable
     if (!this.state.completed) {
-
+      console.log('is this complete?');
       // do some error checking to make sure an action has been selected  also check for a description
       if (Store.selectedActivityBox !== -1 &&
           Store.addActivity.scheduledTime !== '' &&
@@ -161,6 +161,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
             completedTime:  null
           };
 
+          console.log('posting to axios');
           axios.post(`/actions`, obj)
           .then(function(response) {
             Store.jobActions.push(response.data);
@@ -179,7 +180,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           };
 
           var that = this;
-
+          console.log('putting to axios');
           axios.put(`/actions/${this.props.action.id}`, putObj)
           .then((response) => {
 
@@ -210,9 +211,9 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           snack: true
         });
       }
-    } else {
-      this.props.onClick();
-    }
+    } 
+    
+    this.props.onClick();
   }
 
 

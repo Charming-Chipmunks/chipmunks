@@ -186,7 +186,7 @@ import ContactModal             from './ContactModal'
       <div>
 
         <div className="col m3 right">
-          <div className="hello">
+          <div className="contactsSideBar">
             <CompanyInfoRightSideBar job={thisJob}/>
           </div>
         </div>

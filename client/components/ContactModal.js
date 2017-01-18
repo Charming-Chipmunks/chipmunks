@@ -34,7 +34,6 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
         this.props.contact.notes = '';
       }
       Store.newContact.notes        = this.props.contact.notes;
-      // i would like to add a notes field for contacts 
     }
   }
 
@@ -150,8 +149,8 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
             </form>
           </div>
-          <div className="submitNewParamButton" onClick={this.handleClick.bind(this)}>
-            Save Job Preferences
+          <div className="submitNewContactButton" onClick={this.handleClick.bind(this)}>
+            Save Contact
           </div>
 
         <MuiThemeProvider>

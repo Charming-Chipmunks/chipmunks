@@ -24,9 +24,8 @@ import Contact      from './Contact';
     return (
       <div>
         <div className="companyContactInfo">
-          <div className="rateCompanyJob">{this.props.job.company}</div>
-          <div className="rateCompanyName">{this.props.job.city}</div>
-          <div className="rateCompanyName">{this.props.job.state}</div>
+          <div className="rightsideBarCompanyName">{this.props.job.company}</div>
+          <div className="rateCompanyName">{this.props.job.city}, {this.props.job.state}</div>
         </div>
         <div>
           {contacts.map((contact, index) => {
