@@ -189,7 +189,7 @@ import InterestBar              from  './InterestBar';
     </MuiThemeProvider>
 
     <MuiThemeProvider>
-      <FlatButton label="Save" primary={true} style={style} onClick={this.saveParam}></FlatButton>
+      <FlatButton label="Save" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.saveParam}></FlatButton>
     </MuiThemeProvider>
     <MuiThemeProvider>
       <Snackbar open={this.state.snack}  message={this.state.message}

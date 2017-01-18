@@ -70,6 +70,10 @@ import FlatButton               from 'material-ui/FlatButton';
 
     return (
       <div className="addJob">
+        <div className='landingHeader'>
+          Add a Job
+        </div>
+
         <form>
           <div className="row">
             <div className="input-field col s12">
@@ -135,7 +139,7 @@ import FlatButton               from 'material-ui/FlatButton';
           </div>
 
           <MuiThemeProvider>
-            <FlatButton label="Save" primary={true} style={style} onClick={this.save}></FlatButton>
+            <FlatButton label="Save" primary={true} style={style}  labelStyle={{color: 'white'}} onClick={this.save}></FlatButton>
           </MuiThemeProvider>
         </form>
         <MuiThemeProvider>
