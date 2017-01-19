@@ -1,36 +1,37 @@
-import React, { Component } from 'react';
-import { toJS } from 'mobx';
-import { observer } from 'mobx-react';
-import moment from 'moment';
-import { IndexLink } from 'react-router';
-import ReactDOM from 'react-dom';
+import axios                    from 'axios';
+import React, { Component }     from 'react';
+import { toJS }                 from 'mobx';
+import moment                   from 'moment';
+import ReactDOM                 from 'react-dom';
+import { observer }             from 'mobx-react';
+import Modal                    from 'react-modal';
+import { IndexLink }            from 'react-router';
+import FontIcon                 from 'material-ui/FontIcon';
+import FlatButton               from 'material-ui/FlatButton';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
-import Store from './Store';
-import HistoryItem from './HistoryItem';
-import JobContacts from './JobContacts';
-import axios from 'axios';
-import JobDescription from './JobDescription';
-import TaskBox from './TaskBox';
-import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
-import Modal from 'react-modal';
-import modalStyles from './modalStyles';
-import ActivityModal from './ActivityModal';
-import ContactModal from './ContactModal';
-import FontIcon from 'material-ui/FontIcon';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Store                    from './Store';
+import TaskBox                  from './TaskBox';
+import HistoryItem              from './HistoryItem';
+import modalStyles              from './modalStyles';
+import JobContacts              from './JobContacts';
+import ContactModal             from './ContactModal';
+import ActivityModal            from './ActivityModal';
+import JobDescription           from './JobDescription';
+import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
 
 @observer class JobView extends Component {
 
   constructor(props) {
     super(props);
-    this.getData = this.getData.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.openContactModal = this.openContactModal.bind(this);
-    this.closeContactModal = this.closeContactModal.bind(this);
-    this.handleTaskComplete = this.handleTaskComplete.bind(this);
-    this.handleCloseJob = this.handleCloseJob.bind(this);
-    this.handleEditClick = this.handleEditClick.bind(this);
+    this.getData                = this.getData.bind(this);
+    this.openModal              = this.openModal.bind(this);
+    this.closeModal             = this.closeModal.bind(this);
+    this.handleCloseJob         = this.handleCloseJob.bind(this);
+    this.handleEditClick        = this.handleEditClick.bind(this);
+    this.openContactModal       = this.openContactModal.bind(this);
+    this.closeContactModal      = this.closeContactModal.bind(this);
+    this.handleTaskComplete     = this.handleTaskComplete.bind(this);
     this.state = {
       actionNum: -1,
       contactModalIsOpen: false,
@@ -191,6 +192,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
       var numInteractions = jobActions.length;
     }
 
+    const style = {
+      margin: 12,
+      width: '110px !important',
+      backgroundColor: '#0277BD',
+      flex: 1
+    };
+
+
     return (
       <div>
       <a name="anchor" />
@@ -202,7 +211,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
         <div className="col m9 left">
           <div className='jobView'>
-            
+            <div className='landingHeader'>
+              Job Info
+            </div>
             <div className="companyContactInfo">
               <div className="rightsideBarCompanyName">
                 {thisJob.company  }  
@@ -214,34 +225,43 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
             
             <JobDescription job={thisJob}  rateView={false}/>
             
+            <div className='landingHeader'>
+              Info and Actions
+            </div>
+            
             <div className="companyStats">
-              <div className="companyStatsBox">
-              Last Interaction<br/>
-              {lastInteraction}
+              <div className="barItemJobView">
+                {lastInteraction}<br/>
+                <p className="jobViewStatsBox">Last Interaction</p>
               </div>
-              <div className="companyStatsBox">
-              Opened<br/>
-              {daysActive}
+              <div className="barItemJobView">
+
+                {daysActive}<br/>
+                <p className="jobViewStatsBox">Opened</p>
               </div>
-              <div className="companyStatsBox">
-              {numInteractions}<br/>
-              Interactions
+              <div className="barItemJobView">
+                {numInteractions}<br/>
+                <p className="jobViewStatsBox">Interactions</p>
               </div>
             </div>
             <div className="companyActionsBox">
-              <div className="companyAction">
-                <button onClick={this.openModal}>Log Activity</button>
-              </div>
-              <div className="companyAction">
-                <button onClick={this.openContactModal}>Add Contact</button>
-              </div>
-              <div className="companyAction">
-                <IndexLink to="/">
-                  <div className="closeJobButton" onClick={this.handleCloseJob.bind(this)}>Close Job</div>
-                </IndexLink>
-              </div>
-            </div>
 
+                <MuiThemeProvider>
+                  <FlatButton label="Add Activity" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.openModal}></FlatButton>
+                </MuiThemeProvider>
+
+                <MuiThemeProvider>
+                  <FlatButton label="Add Contact" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.openContactModal}></FlatButton>
+                </MuiThemeProvider>
+
+                <IndexLink to="/">
+                  <MuiThemeProvider>
+                    <FlatButton label="Close Job" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.handleCloseJob.bind(this)}></FlatButton>
+                  </MuiThemeProvider>
+
+                </IndexLink>
+
+            </div>
             <table className="striped bordered">
               <thead>
                 <tr>
@@ -265,8 +285,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
             </div>
           </div>
-
-
         <Modal isOpen={this.state.contactModalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeContactModal}
@@ -294,3 +312,5 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 }
 
 export default JobView;
+                
+

@@ -24,8 +24,9 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
   // need a way to get an new group of items from the database and reconsitiue based on DONE status.
 
 
-  handleDoneClick () {
+  handleDoneClick (e) {
 
+    e.preventDefault();
     if (this.props.task.completedTime === null) {
       var that = this;
       axios.put(`/actions/${Store.currentUserId}/${this.props.task.id}`)
@@ -38,10 +39,11 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     }
   }
 
-  handleEditClick () {
-
-      var place = -1;
-      typeArray.forEach((item, index) => {
+  handleEditClick (e) {
+    
+    e.preventDefault();
+    var place = -1;
+    typeArray.forEach((item, index) => {
 
         if (item === this.props.task.type) {
           // console.log('location', index);

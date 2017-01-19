@@ -229,12 +229,16 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
       closeCommand = 'Close';
     }
 
+    var position = typeArray.indexOf(Store.addActivity.type);
+
+    var activityName = diaplayNames[position];
+
     return (
       <div>
         <div className="modalSelectors">
           <div className="activityModalType">
             <div className="activityTypeHeader">
-              <p>Activity Type: <span className="medium">{this.state.displayName} </span></p>
+              <p>Activity Type: <span className="medium">{activityName}</span></p>
             </div>
             <div className="activityModalIcons">
               {activityArray.map((activity, index) => {
