@@ -175,7 +175,7 @@ var isLoggedIn = function(req, res, next) {
     });
   } else {
     console.log('fail');
-    res.redirect('/auth/google');
+    res.redirect('/login');
     
   }
   // if( req.cookie.idToken && google.isValid(req.cookie.idToken)) {
@@ -184,8 +184,9 @@ var isLoggedIn = function(req, res, next) {
 };
 
 // app.get('/login', function(req, res) {
-//   res.redirect
+//   res.redirect('/login.html')
 // });
+
 app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
@@ -208,10 +209,26 @@ app.get('/auth/google/callback', function(req, res, next) {
     failureRedirect: '/auth/google'
   })
 );
+app.get('/login', function(req, res) {
+  console.log('got loign');
+  res.sendFile(path.resolve(__dirname, '../client/dist/login.html'))
+})
+
+app.get('/login.js', function(req, res) {
+  console.log('got loign');
+  res.sendFile(path.resolve(__dirname, '../client/dist/login.js'))
+})
+
+app.get('/styles.css', function(req, res) {
+  console.log('got loign');
+  res.sendFile(path.resolve(__dirname, '../client/dist/styles.css'))
+})
 
 ////
 app.use(isLoggedIn, express.static(path.resolve(__dirname, '../client/dist')));
 // app.use(express.static(path.resolve(__dirname, '../client/dist')));
+
+//
 
 //DEVELOPMENT CONVENIENCES
 app.get('/staging', function(req, res) {
