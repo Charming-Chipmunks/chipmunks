@@ -5,11 +5,8 @@ import Store from './Store';
 import { toJS } from 'mobx';
 import RateIndividualJob from './RateIndividualJob';
 import Paginator from './Paginator';
-<<<<<<< HEAD
 import $ from 'jquery';
-=======
 import SearchBarJobStatus from './SearchBarJobStatus';
->>>>>>> finished job search bar
 
 @observer class RateJobs extends React.Component {
   constructor(props) {
@@ -69,16 +66,10 @@ import SearchBarJobStatus from './SearchBarJobStatus';
   //   Store.filterJobStatus = { status: e.target.value };
   
   // }
-
-<<<<<<< HEAD
-    var list = Store.viewingNewJobs ? toJS(Store.newJobList) : toJS(Store.jobList);
-    // console.log(list.length);
-=======
   render() {
     console.log('filtered: ', toJS(Store.filteredJobsByStatus))
     var list = Store.viewingNewJobs? toJS(Store.newJobList): toJS(Store.filteredJobsByStatus);
    // console.log(list.length);
->>>>>>> finished job search bar
     var displayList = list.slice(this.state.page, this.state.page + 10);
     if (list.length >= 0) {
 
