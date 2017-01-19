@@ -31,13 +31,13 @@ import { observer } from 'mobx-react';
     const hasUrl = this.props.job.url;
     return (
       <div className="rateCompanyInfoBox left">
-        <h3 className="rateCompanyJob">{this.props.job.jobTitle}...
+        <h3 className="rateCompanyJob">{this.props.job.jobTitle}
           <span className={`${classObject}`}></span>
         </h3>
-        { this.props.rateView && <div><p className="rateCompanyName">{this.props.job.company}...{this.props.job.city}, {this.props.job.state}</p> </div> }
+        { this.props.rateView && <div><p className="rateCompanyName">{this.props.job.company + "    " + this.props.job.city}, {this.props.job.state}</p> </div> }
         <p className="rateCompanyText">{this.props.job.snippet}
           { hasUrl !== '' &&
-          <a href={this.props.job.url} target="_blank">explore</a>
+          <a href={this.props.job.url} target="_blank" style={{marginLeft: '5px'}}>explore</a>
           }
         </p>
       </div>

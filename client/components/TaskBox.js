@@ -117,6 +117,13 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     // console.log('task type:', iconName);
 
+    var iconStyle = {
+      padding: '5px',
+      fontSize: '30px',
+      backgroundColor: 'red',
+      borderRadius: '10px'
+    };
+
     return (
       <tr>
           <td>
@@ -124,7 +131,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
           </td>
           <td>
             <MuiThemeProvider>
-              <FontIcon className="material-icons" color={color}>{iconName}
+              <FontIcon className="material-icons" color={color} style={iconStyle}>{iconName}
               </FontIcon>
             </MuiThemeProvider>
           </td>

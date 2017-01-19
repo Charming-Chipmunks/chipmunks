@@ -96,14 +96,15 @@ import InterestBar              from  './InterestBar';
             console.log(error);
           });
 
-
-        }, 5000);
+          Store.newParam.descriptor = '';
+  
+        }, 10000);
 
     } else {
 
       // console.log('in error message jobs');
       this.setState({
-        message: 'Please include a job description, city and state'});
+        message: 'please include a job description, city and state'});
       this.setState({
         snack: true });
       }
@@ -154,7 +155,7 @@ import InterestBar              from  './InterestBar';
             <div className="row">
               <div className="input-field col s12">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="Job Description" multiLine={true} fullWidth={true} name="descriptor"
+                  <TextField floatingLabelText="job title, keywords or company name" multiLine={true} fullWidth={true} name="descriptor"
                               onChange={this.change} value={Store.newParam.descriptor} />
                 </MuiThemeProvider>
               </div>
@@ -163,13 +164,13 @@ import InterestBar              from  './InterestBar';
             <div className="row">
               <div className="input-field col s6">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="City" multiLine={true} fullWidth={true} name="city"
+                  <TextField floatingLabelText="city" multiLine={true} fullWidth={true} name="city"
                               onChange={this.change} value={Store.newParam.city} />
                 </MuiThemeProvider>
               </div>
               <div className="input-field col s6">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="State" multiLine={true} fullWidth={true} name="state"
+                  <TextField floatingLabelText="state" multiLine={true} fullWidth={true} name="state"
                               onChange={this.change} value={Store.newParam.state} />
                 </MuiThemeProvider>
               </div>
@@ -177,7 +178,7 @@ import InterestBar              from  './InterestBar';
             <div className="row">
               <div className="input-field col s6">
                 <MuiThemeProvider >
-                  <TextField floatingLabelText="Search Radius From City" multiLine={true} fullWidth={true} name="radius"
+                  <TextField floatingLabelText="search radius" multiLine={true} fullWidth={true} name="radius"
                             onChange={this.change} value={Store.newParam.radius} />
                 </MuiThemeProvider>
               </div>

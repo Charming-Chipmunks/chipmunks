@@ -148,7 +148,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
                 </MuiThemeProvider>
 
             </form>
-           <div className="activityClose" onClick={this.handleClick.bind(this)}>Close</div>
+           <div className="activityClose" onClick={this.handleClick.bind(this)}>Save</div>
           </div>
 
         <MuiThemeProvider>

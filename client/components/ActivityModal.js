@@ -197,12 +197,6 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           });
         } // end if/else for Post / Put
 
-        Store.selectedActivityBox = -1;
-        Store.addActivity.description = '';
-        Store.addActivity.scheduledTime = '';
-        Store.addActivity.notes = '';
-
-
       } else {
         // will have to message that no task type selected.
         var errorMessage = 'Please include a task, date and description';
@@ -212,6 +206,10 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
         });
       }
     }
+        Store.selectedActivityBox = -1;
+        Store.addActivity.description = '';
+        Store.addActivity.scheduledTime = '';
+        Store.addActivity.notes = '';
 
     this.props.onClick();
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { toJS } from 'mobx';
+import { Link } from 'react-router'
 import { observer } from 'mobx-react';
 
 import Store from './Store';
@@ -36,6 +37,15 @@ export default class InterestBar extends React.Component {
   render() {
     return (
       <div className='interestBar'>
+
+        {Store.params.length === 0 &&
+          <Link to={'/preferences'}><div key={1} className='barItem' style={{border: '1px solid red'}}>
+              <div className='centered bold'>No Interests Set</div>
+              <div className='centered'>{this.props.message}</div>
+            </div>
+          </Link>  
+        }  
+
         {
           Store.params.map((e, i) => (
             <div key={i} className='barItem'>

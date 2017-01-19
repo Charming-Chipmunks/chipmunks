@@ -2,10 +2,6 @@
 
 var db = require('../index');
 
-/*  ASSOCIATE JOBS WORKING -
-  1/5 = 3 PM
-  This is working 100% fine.  to make sure it runs in the cron job,  uncomment lies 10 and 38
- */
 
 module.exports = function() {
 
@@ -34,7 +30,7 @@ module.exports = function() {
            }).then(foundLink => {
             if (!foundLink) {
               // this is working!
-              user.addJobs(item.id, {status: status[Math.floor(Math.random() * 3)], createdAt: new Date(), updatedAt: new Date() } );
+              user.addJobs(item.id, {status: 'new', createdAt: new Date(), updatedAt: new Date() } );
             }
            });
           });
