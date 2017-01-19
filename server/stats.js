@@ -63,7 +63,7 @@ var findJobs = function(userId, cb, res) {
         }
       }).then(function(jobActionList) {
         //array of arrays of actions
-        console.log(jobActionList);
+        // console.log(jobActionList);
         jobActionList = (JSON.parse(JSON.stringify(jobActionList)));
         cb(jobActionList, actionList);
         size++;
@@ -125,7 +125,7 @@ var lastWeekStats = function(userId, res) {
       }
     }
   }).then(function(actions) {
-    console.log(JSON.parse(JSON.stringify(actions)));
+    // console.log(JSON.parse(JSON.stringify(actions)));
     var actionList = {
       like: 0,
       applied: 0,
@@ -146,11 +146,8 @@ var lastWeekStats = function(userId, res) {
 
 
 var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthlyRes) {
-  // console.log('weekStatsRes', res);
   var start = moment().startOf('week').subtract(7 * numOfWeeks, 'd').toDate();
   var end = numOfWeeks === 0 ? moment().toDate() : moment().startOf('week').subtract(7 * (numOfWeeks - 1), 'd').toDate();
-  console.log(start);
-  console.log(end);
 
   models.Action.findAll({
     where: {
@@ -181,8 +178,6 @@ var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthly
     if (res) {
       res.json(results);
     } else {
-      // console.log(monthlyRes);
-      // console.log('!!!!!!!!!!!!!', results);
       cb(results, multipleWeekStats);
       if (multipleWeekStats.length !== 4) {
         weekStats(userId, numOfWeeks - 1, res, cb, multipleWeekStats, monthlyRes);
@@ -196,10 +191,10 @@ var weekStats = function(userId, numOfWeeks, res, cb, multipleWeekStats, monthly
     console.log(error);
   });
 };
-// weekStats(1, 0);
+// DEBUGGING TOOL
 // var res = {
 //   json: function(data) {
-//     console.log(JSON.parse(JSON.stringify(data)));
+//     console.log('DEBUGGING TO CONSOLE', JSON.parse(JSON.stringify(data)));
 //   }
 // };
 
@@ -210,13 +205,12 @@ var monthWeeklyStats = function(userId, res) {
     array.push(data);
   };
   var results = [];
-  // THIS IS NOT RETURNING IN ORDER.
+  // This may not be returning in order. i don't remember. I should push it into array[i] and return the array when the length is full.
   // for (let i = 3; i >= 0; i--) {
   weekStats(userId, 3, null, cb, multipleWeekStats, res);
-
-  // console.log('results', results);
 };
-//GOING TO CHECK ACTIONS GOING BACK 30 DAYS
+
+//CHECK ACTIONS GOING BACK 30 DAYS
 var compareUserStats = function(userId, res) {
   var start = moment().subtract(30, 'd').toDate();
   var end = moment().toDate();
@@ -248,18 +242,18 @@ var compareUserStats = function(userId, res) {
 
 
   db['Action'].findAll({
-      where: {
-        $and: [{
-          completedTime: {
-            $gt: start
-          }
-        }, {
-          completedTime: {
-            $lt: end
-          }
-        }]
-      }
-    })
+    where: {
+      $and: [{
+        completedTime: {
+          $gt: start
+        }
+      }, {
+        completedTime: {
+          $lt: end
+        }
+      }]
+    }
+  })
     .then(allActions => {
       allActions.forEach(action => {
         userStats[action.UserId] = userStats[action.UserId] || {
@@ -321,13 +315,12 @@ var JobStatsByUser = function(userId, res) {
     });
 };
 
-// JobStatsByUser(1)
-// compareUserStats(2);
 ////////////// Routes
+//TODO: Link these all together to be able to send in 1 request
+
 router.get('/stats/jobStats/:userId', function(req, res) {
   JobStatsByUser(req.params.userId, res);
 });
-
 
 // THIS SHOULD REALLY BE REFACTORED INTO A CRONJOB FOR ALL USERS
 router.get('/stats/monthCompare/:userId', function(req, res) {

@@ -1,5 +1,5 @@
 // route-utils.js
-'use strict'
+'use strict';
 
 var models = require('../models/index');
 var descriptions = require('./route-data');
@@ -85,7 +85,7 @@ module.exports = {
     });
   },
 
-  // apply, //phoneInterview, webInterview, personalInterviewed, offer, accepted
+  // On action completion, check if progress needs to be moved forward.
   changeProgress: function(action, userJob, userId, res) {
     console.log('changingProgress');
     var progress = [null, 'like', 'apply', 'phoneInterview', 'webInterview', 'personalInterview', 'offer'];

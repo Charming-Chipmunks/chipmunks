@@ -36,8 +36,8 @@ var app = express();
 
 //CORS
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
@@ -128,14 +128,14 @@ var isLoggedIn = function(req, res, next) {
   //MOBILE
   //console.log('credentials', req.get('credentials'));
   if (req.get('credentials')) {
-          var addUserToSession = function(userId) {
-            req.session = req.session || {};
-            req.session.exponent = {};
-            req.session.exponent.user = userId;
-          }
+    var addUserToSession = function(userId) {
+      req.session = req.session || {};
+      req.session.exponent = {};
+      req.session.exponent.user = userId;
+    };
     // addUserToSession(1);
     // return next();
-    
+
     request('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + req.get('credentials'), (err, response, body) => {
       console.log('GOOGLE ID', JSON.parse(response.body).sub);
       var profile = JSON.parse(response.body);
@@ -176,7 +176,7 @@ var isLoggedIn = function(req, res, next) {
   } else {
     console.log('fail');
     res.redirect('/login');
-    
+
   }
   // if( req.cookie.idToken && google.isValid(req.cookie.idToken)) {
   //   return next();
@@ -198,12 +198,11 @@ app.get('/auth/google',
 
 
 app.get('/auth/google/callback', function(req, res, next) {
-    console.log('callback');
-    console.log('callback');
-    console.log('callback');
-    return next();
-
-  },
+  console.log('callback');
+  console.log('callback');
+  console.log('callback');
+  return next();
+},
   passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/auth/google'
@@ -211,18 +210,18 @@ app.get('/auth/google/callback', function(req, res, next) {
 );
 app.get('/login', function(req, res) {
   console.log('got loign');
-  res.sendFile(path.resolve(__dirname, '../client/dist/login.html'))
-})
+  res.sendFile(path.resolve(__dirname, '../client/dist/login.html'));
+});
 
 app.get('/login.js', function(req, res) {
   console.log('got loign');
-  res.sendFile(path.resolve(__dirname, '../client/dist/login.js'))
-})
+  res.sendFile(path.resolve(__dirname, '../client/dist/login.js'));
+});
 
 app.get('/styles.css', function(req, res) {
   console.log('got loign');
-  res.sendFile(path.resolve(__dirname, '../client/dist/styles.css'))
-})
+  res.sendFile(path.resolve(__dirname, '../client/dist/styles.css'));
+});
 
 ////
 app.use(isLoggedIn, express.static(path.resolve(__dirname, '../client/dist')));
