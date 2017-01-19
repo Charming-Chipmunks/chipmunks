@@ -546,22 +546,20 @@ class Store {
     var context = this;
     var ret = context.jobList.filter(function(company) {
       var text = context.filterJobStatus.status.toLowerCase();
-      if (text === ''){
-        console.log('company passed:', toJS(company));
+      if (text === '') {
+        // console.log('company passed:', toJS(company));
         return true;
       }
 
       if (company.UserJob.status.toLowerCase().includes(text)) {
-        console.log('company passed: ', toJS(company));
+        // console.log('company passed: ', toJS(company));
         return true;
-      }
-
-      else {
+      } else {
         return false;
       }
-    })
+    });
 
-    console.log('ret: ', ret)
+    // console.log('ret: ', ret);
     return ret;
       // if (company.jobTitle.toLowerCase().includes(text)) {
       //   return true;
