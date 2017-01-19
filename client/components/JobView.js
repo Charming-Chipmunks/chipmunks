@@ -256,9 +256,8 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
             </div>
             <div className="companyContactInfo">
               <div className="rightsideBarCompanyName">
-                {thisJob.company}
-                <span className="rateCompanyName">
-                  {thisJob.city}, {thisJob.state}
+                {thisJob.company}    
+                <span className="rateCompanyName">{"    " + thisJob.city}, {thisJob.state}
                 </span>
               </div>
             </div>
