@@ -186,6 +186,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
             axios.get(`/actions/${Store.currentUserId}/${this.props.job.id}`)
               .then(function(response) {
                 Store.jobActions = response.data;
+                console.log(toJS(Store.jobActions));
               })
               .catch(function(error) {
                 console.log(error);

@@ -24,23 +24,20 @@ import TaskBox from './TaskBox';
     this.openModal();
   }
 
-  handleTaskComplete(id) {
-    // console.log('action id: ', id);
-    // find the item in the Store, and mark it as complete.
-    Store.actions[id].completedTime = new Date();
-    var updateAction = Store.actions[id];
-
+  handleTaskComplete(actionId) {
+    // console.log('action id: ', actionId);
+    var updateAction;
     Store.actions.forEach((action, index) => {
-      if (action.id === updateAction.id) {
+      if (action.id === actionId) {
+        updateAction = action;
         action.completedTime = new Date();
       }
     });
     updateAction = toJS(updateAction);
     if (Store.userGoals[updateAction.type] !== undefined) {
-      console.log('+!!', Store.userGoals[updateAction.type]);
+      // console.log('+!!', Store.userGoals[updateAction.type]);
       Store.userGoals[updateAction.type]++;
     }
-    console.log('is this updated ?', updateAction);
   }
 
   componentWillReceiveProps() {
@@ -68,7 +65,7 @@ import TaskBox from './TaskBox';
               </thead>
               <tbody>
                 {actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? -1 : 1).map((action, index) => {
-                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)} edit={this.handleEditClick.bind(this, index)} />);
+                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this)} edit={this.handleEditClick.bind(this, index)} />);
                 })
                 }
               </tbody>

@@ -115,23 +115,36 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     this.openModal();
   }
 
-  handleTaskComplete(id) {
-    // console.log('action id: ', id);
+  handleTaskComplete(actionId) {
+    // console.log('action id: ', actionId);
     // find the item in the Store, and mark it as complete.
-    Store.jobActions[id].completedTime = new Date();
-    var updateAction = Store.jobActions[id];
 
+    // console.log(toJS(Store.jobActions[id]));
+    var updateAction;
+    // console.log(toJS(Store.jobActions));
+    for (var i = Store.jobActions.length - 1; i >= 0; i--) {
+      // console.log(typeof actionId, typeof Store.jobActions[i].id);
+      // console.log(Store.jobActions[i].id, actionId);
+      if (Store.jobActions[i].id === actionId) {
+        // console.log('found');
+        Store.jobActions[i].completedTime = new Date();
+        updateAction = Store.jobActions[i];
+      }
+    }
+    //UPDATE ACTION
+    // var updateAction = Store.jobActions[id];
+    // console.log('updateactionid', updateAction.id);
     Store.actions.forEach((action, index) => {
-      if (action.id === updateAction.id) {
+      if (action.id === actionId) {
+        console.log(actionId);
         action.completedTime = new Date();
       }
     });
     updateAction = toJS(updateAction);
     if (Store.userGoals[updateAction.type] !== undefined) {
-      console.log('+!!', Store.userGoals[updateAction.type]);
+      // console.log('+!!', Store.userGoals[updateAction.type]);
       Store.userGoals[updateAction.type]++;
     }
-    console.log('is this updated ?', updateAction);
   }
 
   handleCloseJob() {
@@ -208,6 +221,15 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 
       var numInteractions = jobActions.length;
     }
+    var incomplete = jobActions.filter(function(action) {
+      return !action.completedTime;
+    });
+    var complete = jobActions.filter(function(action) {
+      return action.completedTime;
+    });
+    incomplete.sort((a, b) => a.scheduledTime < b.scheduledTime ? -1 : 1);
+    complete.sort((a, b) => a.completedTime > b.completedTime ? -1 : 1);
+    jobActions = incomplete.concat(complete);
 
     const style = {
       margin: 12,
@@ -294,7 +316,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
               <tbody>
 
                 {jobActions.map((action, index) => {
-                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this, index)}
+                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this)}
                                   edit={this.handleEditClick.bind(this, index)} />);
                 })
                 }
