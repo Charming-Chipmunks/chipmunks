@@ -21,14 +21,12 @@ import { observer } from 'mobx-react';
 
     var classObject = '';
 
-    if (days < 3) {
+    if (days < 5) {
       classObject = 'new badge red';
-      // console.log('show');
     } else {
       classObject = 'new badge red hide';
-      // console.log('show');
     }
-         // console.log('conditional render url: ', this.props.job.url);
+
 
     const hasUrl = this.props.job.url;
     return (
@@ -36,7 +34,7 @@ import { observer } from 'mobx-react';
         <h3 className="rateCompanyJob">{this.props.job.jobTitle}...
           <span className={`${classObject}`}></span>
         </h3>
-        { this.props.rateView && <h5 className="rateCompanyName">{this.props.job.company}</h5>}
+        { this.props.rateView && <div><p className="rateCompanyName">{this.props.job.company}...{this.props.job.city}, {this.props.job.state}</p> </div> }
         <p className="rateCompanyText">{this.props.job.snippet}
           { hasUrl !== '' &&
           <a href={this.props.job.url} target="_blank">explore</a>
