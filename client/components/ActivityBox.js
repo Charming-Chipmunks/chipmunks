@@ -28,9 +28,12 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
   handleClick (e) {
     e.preventDefault();
     if (!this.props.disabled) {
+
+
       // console.log('handling click?', e);
       Store.selectedActivityBox = this.props.id;
 
+      console.log('click click');
       if (this.props.id === 5) {
         this.setState({
           open: true,
@@ -49,27 +52,41 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
     }
   }
 
-  handleRequestClose () {
-    this.setState({ open: false });
+  handleRequestClose (e) {
+
+    console.log('close interview');
+    this.setState({open: false });
   }
 
-  handleEmailRequestClose () {
-    this.setState({ emailOpen: false });
+  handleEmailRequestClose (e) {
+
+    console.log('close email  !!!!!!');
+    this.setState({emailOpen: false});
   }
 
   selectItem (e) {
 
     Store.addActivity.type = e;
-    this.setState({open: false});
+
+    if (e === 'sentEmail' || e === 'receivedEmail' ) {
+      this.setState({emailOpen: false});
+    }
+
+    if (e === 'phoneInterview' || e === 'webInterview' || e === 'personalInterview') {
+      this.setState({open: false});      
+    }
+
   }
 
 
   onChange (e, item, index) {
+
     e.preventDefault();
-    // console.log('menu item select: ', e, item, index);
+
   }
 
   render () {
+    
     var color;
     // console.log(Store.selectedActivityBox);
     if (Store.selectedActivityBox === this.props.id) {
@@ -80,26 +97,43 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
 
     const iconStyles = {
       marginLeft: 12,
-      fontSize: '40px'
+      fontSize: '48px'
     };
 
     var interview = this.props.type;
 
     return (
-        <div className="activityBox">
+        <div className="activityBox" onClick={this.handleClick.bind(this)}>
           <MuiThemeProvider>
-            <FontIcon className="material-icons" color={color} onClick={this.handleClick.bind(this)}>{this.props.icon}</FontIcon>
+            <FontIcon className="material-icons" style={iconStyles} color={color} >{this.props.icon}</FontIcon>
          {/* <i className="material-icons">{this.props.icon}</i>*/}
           </MuiThemeProvider>
           <div className="activityBoxName">{this.props.type}</div>
+          
+
+          {this.props.type === 'E-Mail'  &&
+          <MuiThemeProvider>
+            <Popover
+              open={this.state.emailOpen}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}>
+              <Menu desktop={true} >
+                <MenuItem primaryText="Sent Email" onClick={this.selectItem.bind(this, "sentEmail")} />
+                <MenuItem primaryText="Received Email" onClick={this.selectItem.bind(this, "receivedEmail")} />
+              </Menu>
+            </Popover>
+          </MuiThemeProvider>}
+
+
+
         {this.props.type === 'Interview'  &&
           <MuiThemeProvider>
             <Popover
               open={this.state.open}
               anchorEl={this.state.anchorEl}
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              onRequestClose={this.handleRequestClose}>
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}>
               <Menu desktop={true} >
                 <MenuItem primaryText="Phone" onClick={this.selectItem.bind(this, "phoneInterview")} />
                 <MenuItem primaryText="Web" onClick={this.selectItem.bind(this, "webInterview")} />
@@ -109,20 +143,7 @@ var activityType = ['connections', 'phone', 'meetup', 'email', 'apply', 'intervi
             </Popover>
           </MuiThemeProvider>}
 
-          {this.props.type === 'E-Mail'  &&
-          <MuiThemeProvider>
-            <Popover
-              open={this.state.emailOpen}
-              anchorEl={this.state.anchorEl}
-              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              onRequestClose={this.handleEmailRequestClose}>
-              <Menu desktop={true} >
-                <MenuItem primaryText="Sent Email" onClick={this.selectItem.bind(this, "sentEmail")} />
-                <MenuItem primaryText="Received Email" onClick={this.selectItem.bind(this, "receivedEmail")} />
-              </Menu>
-            </Popover>
-          </MuiThemeProvider>}
+ 
         </div>
     );
   }
