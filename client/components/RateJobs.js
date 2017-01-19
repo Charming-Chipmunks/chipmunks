@@ -5,7 +5,11 @@ import Store from './Store';
 import { toJS } from 'mobx';
 import RateIndividualJob from './RateIndividualJob';
 import Paginator from './Paginator';
+<<<<<<< HEAD
 import $ from 'jquery';
+=======
+import SearchBarJobStatus from './SearchBarJobStatus';
+>>>>>>> finished job search bar
 
 @observer class RateJobs extends React.Component {
   constructor(props) {
@@ -58,12 +62,25 @@ import $ from 'jquery';
     });
   }
 
-  render() {
+  // handleStatusChange(e) {
+  //   // add a Store variable for is open then refernece it in the sidebar
 
+  //   console.log('changed', e.target.value)
+  //   Store.filterJobStatus = { status: e.target.value };
+  
+  // }
+
+<<<<<<< HEAD
     var list = Store.viewingNewJobs ? toJS(Store.newJobList) : toJS(Store.jobList);
     // console.log(list.length);
+=======
+  render() {
+    console.log('filtered: ', toJS(Store.filteredJobsByStatus))
+    var list = Store.viewingNewJobs? toJS(Store.newJobList): toJS(Store.filteredJobsByStatus);
+   // console.log(list.length);
+>>>>>>> finished job search bar
     var displayList = list.slice(this.state.page, this.state.page + 10);
-    if (list.length > 0) {
+    if (list.length >= 0) {
 
       var pages = [];
 
@@ -95,11 +112,14 @@ import $ from 'jquery';
 
       return (
         <div className="rateJobsList">
-          <button onClick={this.buttonClick}>
-          {
-            Store.viewingNewJobs ? <span>Show Active Jobs</span> : <span>Review New Jobs</span>
+          <div style={{display: 'flex'}}>
+          <SearchBarJobStatus />
+          </div>
+          <div className='landingHeader'>
+          { 
+            Store.viewingNewJobs? <span>Jobs To Review</span>: <span>Your Active Jobs</span>
           }
-          </button>
+          </div>
           <ul>
             {displayList.map((Job, index) => {
               Job = toJS(Job);

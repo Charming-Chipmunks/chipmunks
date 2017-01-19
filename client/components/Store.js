@@ -17,6 +17,7 @@ class Store {
   @observable jobList = []; // jobs that are favored
   @observable newJobList = []; // jobs that need to be rated
   @observable filterText = { text: '' };
+  @observable filterJobStatus = { status: '' };
   @observable actions = []; // all the actions for a person
   @observable company = {};
   @observable selectedActivityBox = -1;
@@ -539,6 +540,35 @@ class Store {
         return true;
       }
     });
+  }
+
+  @computed get filteredJobsByStatus() {
+    var context = this;
+    var ret = context.jobList.filter(function(company) {
+      var text = context.filterJobStatus.status.toLowerCase();
+      if (text === ''){
+        console.log('company passed:', toJS(company));
+        return true;
+      }
+
+      if (company.UserJob.status.toLowerCase().includes(text)) {
+        console.log('company passed: ', toJS(company));
+        return true;
+      }
+
+      else {
+        return false;
+      }
+    })
+
+    console.log('ret: ', ret)
+    return ret;
+      // if (company.jobTitle.toLowerCase().includes(text)) {
+      //   return true;
+      // }
+      // if (company.snippet.toLowerCase().includes(text)) {
+      //   return true;
+      // }
   }
 
 
