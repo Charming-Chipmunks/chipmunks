@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import Chart from 'chart.js';
 import axios from 'axios';
 import TaskBox from './TaskBox';
-
+//Actions Home
 @observer class MainPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,18 +14,12 @@ import TaskBox from './TaskBox';
     this.handleTaskComplete = this.handleTaskComplete.bind(this);
   }
 
-  componentDidMount() {
-
-    // this.getStats();
-  }
   handleEditClick(id) {
-    // console.log('action clicked:', id);
     this.setState({ actionNum: id });
     this.openModal();
   }
 
   handleTaskComplete(actionId) {
-    // console.log('action id: ', actionId);
     var updateAction;
     Store.actions.forEach((action, index) => {
       if (action.id === actionId) {
@@ -35,16 +29,9 @@ import TaskBox from './TaskBox';
     });
     updateAction = toJS(updateAction);
     if (Store.userGoals[updateAction.type] !== undefined) {
-      // console.log('+!!', Store.userGoals[updateAction.type]);
       Store.userGoals[updateAction.type]++;
     }
   }
-
-  componentWillReceiveProps() {
-    // this takes the actions from the estore
-    this.actions = Store.actions.slice();
-  }
-
 
   render() {
     var actions = Store.actions;
@@ -75,18 +62,3 @@ import TaskBox from './TaskBox';
 }
 
 export default MainPage;
-
-// UNUSED
-// return (<div className='MainPage'>
-//    <div className='actionList'>
-//    You have {Store.pendingNumber} pending actions
-// {
-//   this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {
-//     action = toJS(action);
-//     if (!action.completedTime) {
-//       return <HistoryItem action={action} key={index} displayCompany={true}/>;
-//     }
-//   })
-// }
-//      </div>
-//      </div>);

@@ -35,8 +35,6 @@ import LoginPage from './LoginPage';
       .then(function(response) {
         Store.currentUserId = response.data.id;
         Store.userName = response.data.firstname + ' ' + response.data.lastname;
-        // console.log('user: ', Store.userName);
-
         // gets the list of "favored jobs"
         axios.get('/jobs/' + Store.currentUserId + '/favored')
           .then(function(response) {
@@ -50,7 +48,6 @@ import LoginPage from './LoginPage';
         // get new jobs
         axios.get('/jobs/' + Store.currentUserId + '/new')
           .then(function(response) {
-            // console.log('jobs/userid/favored response.data', response.data);
             Store.newJobList = response.data;
             ///*******************  here is where I can get # of new jobs and updat the top
           })
@@ -64,9 +61,7 @@ import LoginPage from './LoginPage';
             Store.actions = response.data;
             const { filteredActions } = Store;
             var result = filteredActions;
-            // console.log('got actions?');
             Store.getTodaysCompleted();
-            // console.log('filteredActions: ', filteredActions);
           })
           .catch(function(error) {
             console.log(error);
@@ -80,7 +75,7 @@ import LoginPage from './LoginPage';
           .catch(function(error) {
             console.log(error);
           });
-        setTimeout(context.getStats, 200);
+        context.getStats();
 
       })
       .catch(function(error) {
@@ -92,20 +87,15 @@ import LoginPage from './LoginPage';
     setTimeout(() => {
       axios.get('/stats/' + Store.currentUserId)
         .then(function(response) {
-          // console.log('totalstats', toJS(response.data));
           Store.stats = response.data;
         })
         .catch(function(error) {
-          // console.log('didnt get total');
           console.log(error);
         });
 
       axios.get('/stats/monthly/' + Store.currentUserId)
         .then(function(response) {
-          // console.log('currently not updating monthly');
-          // console.log('got monthly');
           Store.monthly = response.data;
-          // Store.monthBarChartStats;
         })
         .catch(function(error) {
           console.log(error);
@@ -113,22 +103,19 @@ import LoginPage from './LoginPage';
 
       axios.get('/stats/monthCompare/' + Store.currentUserId)
         .then(function(response) {
-          // console.log('got monthcompare');
           Store.average = response.data;
-          // Store.averageChart;
         })
         .catch(function(error) {
           console.log(error);
         });
       axios.get('/stats/jobStats/' + Store.currentUserId)
         .then(function(response) {
-          // console.log('got jobstats');
           Store.jobStats = response.data;
         })
         .catch(function(error) {
           console.log(error);
         });
-    }, 2000);
+    }, 1000);
   }
 
 

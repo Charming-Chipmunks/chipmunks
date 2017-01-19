@@ -11,15 +11,15 @@ export default class SearchBarJobStatus extends React.Component {
 
   buttonClick() {
     Store.viewingNewJobs = !Store.viewingNewJobs;
-    console.log('clicked')
+    console.log('clicked');
   }
 
   handleStatusChange(e) {
     // add a Store variable for is open then refernece it in the sidebar
 
-    console.log('changed', e.target.value)
+    console.log('changed', e.target.value);
     Store.filterJobStatus = { status: e.target.value };
-  
+
   }
 
   render() {
@@ -27,8 +27,8 @@ export default class SearchBarJobStatus extends React.Component {
       <div className='searchContainer'>
         <div className='buttonContainer'>
           <button onClick={this.buttonClick}>
-            { 
-              Store.viewingNewJobs? <span>Show Active Jobs</span>: <span>Review New Jobs</span>
+            {
+              Store.viewingNewJobs ? <span>Show Active Jobs</span> : <span>Review New Jobs</span>
             }
           </button>
         </div>
@@ -36,11 +36,11 @@ export default class SearchBarJobStatus extends React.Component {
           <div style={{display: 'flex', alignItems: 'center'}}>
           <span>Filter by progress:</span>
           <form>
-            <input style={{width: '400px', marginLeft:'20px'}} type="text" placeholder='Enter job status (e.g. "interview", "apply")' onChange={this.handleStatusChange.bind(this)} value={Store.filterJobStatus.status} />
+            <input style={{width: '400px', marginLeft: '20px'}} type="text" placeholder='Enter job status (e.g. "interview", "apply")' onChange={this.handleStatusChange.bind(this)} value={Store.filterJobStatus.status} />
           </form>
           </div>
         }
       </div>
-    )
+    );
   }
 }

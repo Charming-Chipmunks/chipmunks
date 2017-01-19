@@ -555,7 +555,6 @@ router.put('/contacts/:userId/:contactId/:jobId', function(req, res) {
     return rejectUser(res);
   }
 
-  console.log('************************************** Joos Jones');
   models.Contact.update({
     firstname: req.body.firstname,
     lastname: req.body.lastname,

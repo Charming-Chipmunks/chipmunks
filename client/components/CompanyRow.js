@@ -8,14 +8,12 @@ import Store from './Store';
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
+
   handleClick() {
-
     Store.company = this.props.company;
-
   }
-  render() {
 
-    //console.log('Company Row - the key is: ', this.props.position);
+  render() {
     return (<li onClick={this.handleClick}>
       <Link to={`companies/${this.props.company.id}/${this.props.position}`}>
       {this.props.company.company}

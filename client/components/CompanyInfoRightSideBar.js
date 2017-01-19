@@ -19,7 +19,6 @@ import Contact      from './Contact';
 
     var name = toJS(Store.company);
     var contacts = toJS(Store.contacts);
-    // console.log('side bar modal ', Store.contacts);
 
     return (
         <div>

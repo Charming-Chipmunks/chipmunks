@@ -32,21 +32,21 @@ export default class MainRightSidebar extends React.Component {
 
   handleToggle = (item) => {
     var that = this;
+
     if (item === 'statsOpen') {
       that.setState({
         statsOpen: !that.state.statsOpen
       });
-      // console.log('toggled', this.state.statsOpen);
     }
   };
 
   handleNestedListToggle = (item) => {
     var that = this;
+
     if (item === 'statsOpen') {
       that.setState({
         statsOpen: !that.state.statsOpen
       });
-      // console.log('toggled', this.state.statsOpen);
     }
   };
 

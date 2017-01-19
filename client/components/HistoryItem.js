@@ -33,30 +33,23 @@ import Store from './Store';
     };
   }
   markCompleted() {
-    // console.log(this.props.action);
-    //TODO: update database
-    // var newTime = new Date().toISOString().slice(0, 19).replace(/T/, ' ');
     var newTime = moment();
-    // console.log(newTime);
     var that = this;
     this.forceUpdate();
     this.props.action.completedTime = newTime;
     axios.put('/actions/' + this.props.action.UserId + '/' + this.props.action.id)
       .then(function(response) {
-        // console.log(response.data);
       })
       .catch(function(error) {
         console.log(error);
       });
 
     Store.actions.forEach((action, index) => {
-      // console.log(action.id);
       if (this.props.action.id === action.id) {
         action.completedTime = moment();
       }
     });
     Store.jobActions.forEach((action, index) => {
-      // console.log(action.id);
       if (this.props.action.id === action.id) {
         action.completedTime = moment();
       }

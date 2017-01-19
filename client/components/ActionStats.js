@@ -30,11 +30,13 @@ import axios from 'axios';
         <canvas id="myChart" width="400" height="200"> </canvas>
       </div>
       <br/>
+
       <div className='week'>
       1 Month Weekly
         <canvas id="weekly" width="400" height="300"> </canvas>
       </div>
       <br/>
+
       <div className='average'>
       Average vs You for the last 30 days
         <canvas id="average" width="400" height="200"> </canvas>

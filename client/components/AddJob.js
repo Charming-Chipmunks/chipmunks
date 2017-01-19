@@ -17,9 +17,7 @@ import FlatButton               from 'material-ui/FlatButton';
     super(props);
     this.change = this.change.bind(this);
     this.save = this.save.bind(this);
-    this.state = {message: '',
-
-                  snack: false };
+    this.state = {message: '', snack: false };
   }
 
   change(e) {
@@ -29,7 +27,7 @@ import FlatButton               from 'material-ui/FlatButton';
     e.preventDefault();
 
     // console.log(Store);
-    if(Store.newJob.company !== '' && Store.newJob.jobTitle !== '' ) {
+    if (Store.newJob.company !== '' && Store.newJob.jobTitle !== '' ) {
 
       Store.newJob.userid = Store.currentUserId;
       Store.newJob.id = Store.currentUserId;
@@ -53,9 +51,7 @@ import FlatButton               from 'material-ui/FlatButton';
       Store.newJob.state = '';
     } else {
 
-      this.setState({ message: 'Both company and description required',
-                      snack: true
-                    });
+      this.setState({ message: 'Both company and description required', snack: true });
     }
 
   }
@@ -126,23 +122,23 @@ import FlatButton               from 'material-ui/FlatButton';
                             onChange={this.change} value={Store.newJob.city} />
               </MuiThemeProvider>
             </div>
-          </div>
 
-          <div className="row">
+
+
             <div className="input-field col s6">
               <MuiThemeProvider >
-                <TextField floatingLabelText="City" fullWidth={true} name="state"
+                <TextField floatingLabelText="State" fullWidth={true} name="state"
                             onChange={this.change} value={Store.newJob.state} />
               </MuiThemeProvider>
             </div>
           </div>
 
           <MuiThemeProvider>
-            <FlatButton label="Save" primary={true} style={style}  labelStyle={{color: 'white'}} onClick={this.save}></FlatButton>
+            <FlatButton label="Save" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.save}></FlatButton>
           </MuiThemeProvider>
         </form>
         <MuiThemeProvider>
-          <Snackbar open={this.state.snack}  message={this.state.message}
+          <Snackbar open={this.state.snack} message={this.state.message}
               autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
         </MuiThemeProvider>
       </div>

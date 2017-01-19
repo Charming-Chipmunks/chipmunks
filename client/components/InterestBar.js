@@ -7,21 +7,16 @@ import Store from './Store';
 
 @observer
 export default class InterestBar extends React.Component {
-  
-  constructor(props) {
 
+  constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-
   }
 
   handleClick (param) {
-
-    // remove the param from the user's 
-    console.log('click on X', param.id);
-
+    // remove the param from the user's
+    // console.log('click on X', param.id);
     //e.preventDefault();
-
     axios.delete('/parameter/' + param.id + '/user/' + Store.currentUserId)
       .then(function(response) {
         // console.log('deleted param: ', response);
@@ -39,9 +34,7 @@ export default class InterestBar extends React.Component {
   }
 
   render() {
-
-    return(
-    
+    return (
       <div className='interestBar'>
         {
           Store.params.map((e, i) => (

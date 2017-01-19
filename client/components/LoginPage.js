@@ -35,6 +35,6 @@ export default class LoginPage extends React.Component {
           <div><a href='http://localhost:3000/auth/google'>Login with Google to start your search! ></a></div>
         </div>
       </div>
-    )
+    );
   }
 }
