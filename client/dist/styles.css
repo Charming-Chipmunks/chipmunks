@@ -28,6 +28,14 @@
   background-color: #0277BD;
 }
 
+
+.jobViewStatsBox {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
 /*
  * WEB.js css stylings
 */
@@ -68,6 +76,18 @@
   position: relative;
   width: 110px;
   height: 110px;
+  margin: 10px;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  box-shadow: 2px 2px lightgrey;
+}
+
+.barItemJobView {
+  flex: 1;
+  width: 110px;
+  height: 70px;
   margin: 10px;
   padding-top: 10px;
   text-align: center;
@@ -176,7 +196,6 @@ Login Page
 
 
 .companyActionsBox {
-    border: 2px solid #b71c1c;
     width: 100%;
     display: inline-flex;
     flex-direction: row;
@@ -321,7 +340,7 @@ Login Page
 }
 
 .rateCompanyJob{
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
   font-style: italic;
   margin-top: 3px;
@@ -329,14 +348,14 @@ Login Page
 }
 
 .rateCompanyName{
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 600;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
 .rateCompanyText{
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     letter-spacing: 1.2;
     margin-top: 2px;

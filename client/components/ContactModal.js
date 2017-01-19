@@ -148,9 +148,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
                 </MuiThemeProvider>
 
             </form>
-          </div>
-          <div className="submitNewContactButton" onClick={this.handleClick.bind(this)}>
-            Save Contact
+           <div className="activityClose" onClick={this.handleClick.bind(this)}>Close</div>
           </div>
 
         <MuiThemeProvider>
@@ -164,3 +162,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 }
 
 export default ContactModal;
+
+          // <div className="submitNewContactButton" onClick={this.handleClick.bind(this)}>
+          //   Save Contact
+          // </div>
