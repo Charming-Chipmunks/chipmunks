@@ -5,15 +5,39 @@ import HistoryItem from './HistoryItem';
 import { observer } from 'mobx-react';
 import Chart from 'chart.js';
 import axios from 'axios';
+import TaskBox from './TaskBox';
 
 @observer class MainPage extends React.Component {
   constructor(props) {
     super(props);
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleTaskComplete = this.handleTaskComplete.bind(this);
   }
 
   componentDidMount() {
 
     // this.getStats();
+  }
+  handleEditClick(id) {
+    // console.log('action clicked:', id);
+    this.setState({ actionNum: id });
+    this.openModal();
+  }
+
+  handleTaskComplete(actionId) {
+    // console.log('action id: ', actionId);
+    var updateAction;
+    Store.actions.forEach((action, index) => {
+      if (action.id === actionId) {
+        updateAction = action;
+        action.completedTime = new Date();
+      }
+    });
+    updateAction = toJS(updateAction);
+    if (Store.userGoals[updateAction.type] !== undefined) {
+      // console.log('+!!', Store.userGoals[updateAction.type]);
+      Store.userGoals[updateAction.type]++;
+    }
   }
 
   componentWillReceiveProps() {
@@ -23,21 +47,46 @@ import axios from 'axios';
 
 
   render() {
-    this.actions = Store.actions.slice();
-    return (<div className='MainPage'>
-      <div className='actionList'>
-      You have {Store.pendingNumber} pending actions
-      {this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {
-        action = toJS(action);
-        if (!action.completedTime) {
-          return <HistoryItem action={action} key={index} displayCompany={true}/>;
-        }
-      })}
-        </div>
-        </div>)
+    var actions = Store.actions;
+    var filterForTask = function(action) {
+      return !action.completedTime;
+    };
+    actions = actions.filter(filterForTask);
+    return (
+      <table className="striped bordered">
+              <thead>
+                <tr>
+                  <th data-field="id" className="columnA">Due</th>
+                  <th data-field="name" className="columnB">Type</th>
+                  <th data-field="price" className="columnC">Description</th>
+                  <th data-field="name" className="columnD">Complete</th>
+                  <th data-field="price" className="columnE">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? -1 : 1).map((action, index) => {
+                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this)} edit={this.handleEditClick.bind(this, index)} />);
+                })
+                }
+              </tbody>
+              </table>
+    );
   }
 }
 
 export default MainPage;
 
-// actionList unused
+// UNUSED
+// return (<div className='MainPage'>
+//    <div className='actionList'>
+//    You have {Store.pendingNumber} pending actions
+// {
+//   this.actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? 1 : 0).map((action, index) => {
+//     action = toJS(action);
+//     if (!action.completedTime) {
+//       return <HistoryItem action={action} key={index} displayCompany={true}/>;
+//     }
+//   })
+// }
+//      </div>
+//      </div>);
