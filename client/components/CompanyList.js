@@ -13,13 +13,12 @@ import { toJS } from 'mobx';
 
   render() {
     var list = Store.filteredList;
-    list = list.sort((a, b) => a['company'].localeCompare(b['company']));
-
     var previousLetter = 'A';
     var count = 0;
     var obj = {};
     var names = [];
 
+    list = list.sort((a, b) => a['company'].localeCompare(b['company']));
     list.forEach(company => {
       var firstLetter = company.company.slice(0, 1);
       firstLetter = firstLetter.toUpperCase();
@@ -37,6 +36,7 @@ import { toJS } from 'mobx';
     });
 
     var keys = Object.keys(obj);
+
     keys.sort();
     for (let i = 0; i < keys.length; i++) {
       names.push(obj[keys[i]]);

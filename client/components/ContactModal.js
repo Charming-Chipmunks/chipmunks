@@ -152,7 +152,7 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
           </div>
 
         <MuiThemeProvider>
-          <Snackbar open={this.state.snack}  message={`${this.state.errorMessage}`} autoHideDuration={2000}
+          <Snackbar open={this.state.snack} message={`${this.state.errorMessage}`} autoHideDuration={2000}
                   onRequestClose={this.handleRequestClose}/>
         </MuiThemeProvider>
       </div>

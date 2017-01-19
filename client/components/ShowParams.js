@@ -42,11 +42,11 @@ import InterestBar              from  './InterestBar';
   componentWillMount() {
 
     this.getParams();
-  
+
   }
 
   saveParam(e) {
-  
+
     e.preventDefault();
 
     if (Store.newParam.descriptor !== '' &&
@@ -65,7 +65,7 @@ import InterestBar              from  './InterestBar';
 
       axios.post('/parameter/' + Store.currentUserId, toJS(Store.newParam))
         .then(function(response) {
-         
+
           if (response.data) {
             paramId = response.data.id;
             Store.params.push(response.data);
@@ -96,7 +96,7 @@ import InterestBar              from  './InterestBar';
             console.log(error);
           });
 
-  
+
         }, 5000);
 
     } else {
@@ -123,8 +123,8 @@ import InterestBar              from  './InterestBar';
 
 
   render() {
-   
-  
+
+
     const style = {
       margin: 12,
       backgroundColor: '#0277BD'
@@ -142,9 +142,9 @@ import InterestBar              from  './InterestBar';
           Your Interests
         </div>
         <InterestBar close={true} />
- 
+
          {this.state.spin && <CircularProgress />}
-        
+
         <div className='landingHeader'>
           New Search Criteria
         </div>
@@ -192,7 +192,7 @@ import InterestBar              from  './InterestBar';
       <FlatButton label="Save" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.saveParam}></FlatButton>
     </MuiThemeProvider>
     <MuiThemeProvider>
-      <Snackbar open={this.state.snack}  message={this.state.message}
+      <Snackbar open={this.state.snack} message={this.state.message}
                 autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
     </MuiThemeProvider>
     </div>

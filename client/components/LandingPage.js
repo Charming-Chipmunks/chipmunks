@@ -13,23 +13,23 @@ import LinearProgress from 'material-ui/LinearProgress';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 //components
-import InterestBar from './InterestBar'
-import ActivityGraphView from './ActivityGraphView'
-import GoalsGraphView from './GoalsGraphView'
-import MainRightSidebar from './MainRightSidebar'
-import RateIndividualJob from './RateIndividualJob'
+import InterestBar from './InterestBar';
+import ActivityGraphView from './ActivityGraphView';
+import GoalsGraphView from './GoalsGraphView';
+import MainRightSidebar from './MainRightSidebar';
+import RateIndividualJob from './RateIndividualJob';
 import TaskBox from './TaskBox';
 import HistoryItem from './HistoryItem';
 
 var icons = {
   badge: 'https://cdn1.iconfinder.com/data/icons/flat-education-icons-2/512/121-128.png'
-}
+};
 // test
 
 @observer
 class GraphHeader extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -42,12 +42,12 @@ class GraphHeader extends React.Component {
         fontSize: '15px',
         color: 'white'
       }
-    }
-    return(
+    };
+    return (
       <div style={styles.container}>
         <span style={styles.headerText}>{this.props.title}</span>
       </div>
-    )
+    );
   }
 }
 
@@ -59,7 +59,7 @@ export default class LandingPage extends React.Component {
 
     this.state = {
       loaded: true
-    }
+    };
   }
 
   render() {
@@ -71,14 +71,13 @@ export default class LandingPage extends React.Component {
         height: '100%'
       },
       graphDiv: {
-        flexGrow:1, flexDirection: 'column', align: 'center'
+        flexGrow: 1, flexDirection: 'column', align: 'center'
       },
       graphBox: {
         padding: '0px',
-        display: 'flex', flexDirection: 'column' , flex: '1 100%'
+        display: 'flex', flexDirection: 'column', flex: '1 100%'
       }
-
-    }
+    };
 
     if (this.state.loaded) {
       return (
@@ -93,7 +92,7 @@ export default class LandingPage extends React.Component {
               <div className='landingHeader'>Your Interests</div>
               <InterestBar close={false} />
             </div>
-            <div style={{flex:1}}>
+            <div style={{flex: 1}}>
               <div className='landingHeader'>To Do</div>
               <div className='graphContainer'>
                 <div className='col m6 left'>
@@ -117,17 +116,17 @@ export default class LandingPage extends React.Component {
             <div style={{flexGrow: 1, height: '100px'}}>
               <div className='landingHeader'>Next Pending Task</div>
               {
-                Store.activeTasks && Store.activeTasks.length > 0 
+                Store.activeTasks && Store.activeTasks.length > 0
                 && <table>
                   <tbody><TaskBox task={Store.activeTasks[0]}/>
                   </tbody></table>
               }
               {
-                Store.activeTasks && Store.activeTasks.length === 0 
+                Store.activeTasks && Store.activeTasks.length === 0
                 && <div>No pending actions. Review jobs to generate!</div>
               }
             </div>
-            <div style={{flex:1}}>
+            <div style={{flex: 1}}>
               <div className='landingHeader'>Next Pending Job</div>
               {
                 Store.newJobList.length > 0 && <ul><RateIndividualJob key={Store.newJobList.length} job={Store.newJobList[0]} /></ul>
@@ -143,11 +142,11 @@ export default class LandingPage extends React.Component {
           </div>
         </div>
       </MuiThemeProvider>
-      )
+      );
     } else {
       return (
         <div>Still loading</div>
-      )
+      );
     }
   }
 }
