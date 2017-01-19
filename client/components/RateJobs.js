@@ -64,18 +64,18 @@ import SearchBarJobStatus from './SearchBarJobStatus';
 
   //   console.log('changed', e.target.value)
   //   Store.filterJobStatus = { status: e.target.value };
-  
+
   // }
   render() {
-    console.log('filtered: ', toJS(Store.filteredJobsByStatus))
-    var list = Store.viewingNewJobs? toJS(Store.newJobList): toJS(Store.filteredJobsByStatus);
+    // console.log('filtered: ', toJS(Store.filteredJobsByStatus));
+    var list = Store.viewingNewJobs ? toJS(Store.newJobList) : toJS(Store.filteredJobsByStatus);
    // console.log(list.length);
     var displayList = list.slice(this.state.page, this.state.page + 10);
     if (list.length >= 0) {
 
       var pages = [];
 
-      var paginationNum = 0; 
+      var paginationNum = 0;
       if (this.state.page > 4) {
         paginationNum = this.state.page - 5;
       }
@@ -107,7 +107,7 @@ import SearchBarJobStatus from './SearchBarJobStatus';
           <SearchBarJobStatus />
           </div>
           <div className='landingHeader'>
-          { 
+          {
             Store.viewingNewJobs? <span>Jobs To Review</span>: <span>Your Active Jobs</span>
           }
           </div>
