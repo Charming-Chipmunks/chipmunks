@@ -75,7 +75,7 @@ import SearchBarJobStatus from './SearchBarJobStatus';
 
       var pages = [];
 
-      var paginationNum = 0;
+      var paginationNum = 0; 
       if (this.state.page > 4) {
         paginationNum = this.state.page - 5;
       }
