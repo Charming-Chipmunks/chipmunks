@@ -197,10 +197,10 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           });
         } // end if/else for Post / Put
 
-        Store.selectedActivityBox = -1;
-        Store.addActivity.description = '';
-        Store.addActivity.scheduledTime = '';
-        Store.addActivity.notes = '';
+        // Store.selectedActivityBox = -1;
+        // Store.addActivity.description = '';
+        // Store.addActivity.scheduledTime = '';
+        // Store.addActivity.notes = '';
 
 
       } else {
@@ -212,6 +212,10 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
         });
       }
     }
+        Store.selectedActivityBox = -1;
+        Store.addActivity.description = '';
+        Store.addActivity.scheduledTime = '';
+        Store.addActivity.notes = '';
 
     this.props.onClick();
   }
