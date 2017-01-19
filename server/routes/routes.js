@@ -8,6 +8,7 @@ var findIndeedJobs = require('../models/initialize/findIndeedJobs');
 require('dotenv').config();
 
 
+var cron = require('../models/initialize/initCron');
 
 var checkUser = function(req, user) {
   if (process.env.DISABLE_AUTH) {

@@ -11,8 +11,10 @@ var db      = require('../index');
 
 module.exports = function () {
  
+
   db['Parameter'].findAll().then((parameters) => {
     parameters.forEach((parameter) => {
+      console.log('running cron');
       crawlOneParameter(parameter);
     });
   }).catch((err) => {
