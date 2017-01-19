@@ -85,7 +85,6 @@ import LoginPage from './LoginPage';
       })
       .catch(function(error) {
         console.log(error);
-        Router.push('login');
       });
 
   }

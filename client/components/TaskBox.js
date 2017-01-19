@@ -17,6 +17,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     super(props);
     this.handleDoneClick = this.handleDoneClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
+    // console.log(this.props.task.scheduledTime);
 
   }
 

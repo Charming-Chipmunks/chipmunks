@@ -1,37 +1,37 @@
-import axios                    from 'axios';
-import React, { Component }     from 'react';
-import { toJS }                 from 'mobx';
-import moment                   from 'moment';
-import ReactDOM                 from 'react-dom';
-import { observer }             from 'mobx-react';
-import Modal                    from 'react-modal';
-import { IndexLink }            from 'react-router';
-import FontIcon                 from 'material-ui/FontIcon';
-import FlatButton               from 'material-ui/FlatButton';
-import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
+import axios from 'axios';
+import React, { Component } from 'react';
+import { toJS } from 'mobx';
+import moment from 'moment';
+import ReactDOM from 'react-dom';
+import { observer } from 'mobx-react';
+import Modal from 'react-modal';
+import { IndexLink } from 'react-router';
+import FontIcon from 'material-ui/FontIcon';
+import FlatButton from 'material-ui/FlatButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Store                    from './Store';
-import TaskBox                  from './TaskBox';
-import HistoryItem              from './HistoryItem';
-import modalStyles              from './modalStyles';
-import JobContacts              from './JobContacts';
-import ContactModal             from './ContactModal';
-import ActivityModal            from './ActivityModal';
-import JobDescription           from './JobDescription';
-import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
+import Store from './Store';
+import TaskBox from './TaskBox';
+import HistoryItem from './HistoryItem';
+import modalStyles from './modalStyles';
+import JobContacts from './JobContacts';
+import ContactModal from './ContactModal';
+import ActivityModal from './ActivityModal';
+import JobDescription from './JobDescription';
+import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 
 @observer class JobView extends Component {
 
   constructor(props) {
     super(props);
-    this.getData                = this.getData.bind(this);
-    this.openModal              = this.openModal.bind(this);
-    this.closeModal             = this.closeModal.bind(this);
-    this.handleCloseJob         = this.handleCloseJob.bind(this);
-    this.handleEditClick        = this.handleEditClick.bind(this);
-    this.openContactModal       = this.openContactModal.bind(this);
-    this.closeContactModal      = this.closeContactModal.bind(this);
-    this.handleTaskComplete     = this.handleTaskComplete.bind(this);
+    this.getData = this.getData.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleCloseJob = this.handleCloseJob.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.openContactModal = this.openContactModal.bind(this);
+    this.closeContactModal = this.closeContactModal.bind(this);
+    this.handleTaskComplete = this.handleTaskComplete.bind(this);
     this.state = {
       actionNum: -1,
       contactModalIsOpen: false,
@@ -187,8 +187,25 @@ import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
     jobActions = toJS(jobActions);
 
     if (jobActions.length > 0) {
-      var daysActive = moment(jobActions[0].createdAt).from(moment());
-      var lastInteraction = moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
+      // var daysActive = moment(jobActions[0].createdAt).from(moment());
+      var loop = function() {
+        var firstTime = jobActions[0].createdAt;
+        var lastTime = jobActions[0].updatedAt;
+        for (var i = 1; i < jobActions.length; i++) {
+          if (moment(lastTime).isBefore(jobActions[i].updatedAt)) {
+            lastTime = jobActions[i].updatedAt;
+          }
+          if (moment(jobActions[i].createdAt).isBefore(firstTime)) {
+            firstTime = jobActions[i].createdAt;
+          }
+        }
+        return [firstTime, lastTime];
+      };
+      var times = loop();
+      var daysActive = moment(times[0]).from(moment());
+      var lastInteraction = moment(times[1]).from(moment());
+      // moment(jobActions[jobActions.length - 1].updatedAt).from(moment());
+
       var numInteractions = jobActions.length;
     }
 
@@ -211,24 +228,25 @@ import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
 
         <div className="col m9 left">
           <div className='jobView'>
+
             <div className='landingHeader'>
               Job Info
             </div>
             <div className="companyContactInfo">
               <div className="rightsideBarCompanyName">
-                {thisJob.company  }  
+                {thisJob.company}
                 <span className="rateCompanyName">
                   {thisJob.city}, {thisJob.state}
                 </span>
               </div>
             </div>
-            
-            <JobDescription job={thisJob}  rateView={false}/>
-            
+
+            <JobDescription job={thisJob} rateView={false}/>
+
             <div className='landingHeader'>
               Info and Actions
             </div>
-            
+
             <div className="companyStats">
               <div className="barItemJobView">
                 {lastInteraction}<br/>
@@ -312,5 +330,3 @@ import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
 }
 
 export default JobView;
-                
-
