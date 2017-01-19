@@ -141,7 +141,7 @@ import InterestBar              from  './InterestBar';
         <div className='landingHeader'>
           Your Interests
         </div>
-        <InterestBar />
+        <InterestBar close={true} />
  
          {this.state.spin && <CircularProgress />}
         
