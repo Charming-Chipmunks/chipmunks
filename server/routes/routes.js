@@ -230,6 +230,20 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
   if (!checkUser(req, req.params.userId)) {
     return rejectUser(res);
   }
+  // Changing UserJob progress to like
+  if (req.body.status === 'favored') {
+    console.log('updating progress');
+    console.log('like');
+    models.UserJob.update({progress: 'like'}, {
+      where: {
+        UserId: req.params.userId,
+        JobId: req.params.jobId
+      }}).then(function(result) {
+        console.log(JSON.parse(JSON.stringify(result)));
+      })
+    .catch(error => console.log(error));
+  }
+  console.log('updating status');
   models.UserJob.update({ status: req.body.status }, {
     where: {
       UserId: req.params.userId,
@@ -252,9 +266,8 @@ router.put('/users/:userId/jobs/:jobId', function(req, res) {
               id: req.params.jobId
             }
           }).then(job => {
-            console.log('****** ADD ACTIONS  ******', job.company);
             utils.addActionsToNewJob(user, job, job, req, res);
-            //res.json(job);
+            res.json(job);
           });
         });
       } else if (req.body.status === 'rejected') {
