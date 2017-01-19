@@ -126,12 +126,12 @@ import FlatButton               from 'material-ui/FlatButton';
                             onChange={this.change} value={Store.newJob.city} />
               </MuiThemeProvider>
             </div>
-          </div>
 
-          <div className="row">
+
+
             <div className="input-field col s6">
               <MuiThemeProvider >
-                <TextField floatingLabelText="City" fullWidth={true} name="state"
+                <TextField floatingLabelText="State" fullWidth={true} name="state"
                             onChange={this.change} value={Store.newJob.state} />
               </MuiThemeProvider>
             </div>
