@@ -133,7 +133,7 @@ import LoginPage from './LoginPage';
               <li><SearchBar /></li>
               <li><Link to={'/rateJobs'}>Rate New Jobs</Link></li>
               <li><Link to={'/addJob'}>Add Job</Link></li>
-              <li><Link to={'/preferences'}>Settings</Link></li>
+              <li><Link to={'/preferences'}>Create Job Search</Link></li>
             </ul>
           </div>
         </nav>

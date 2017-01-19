@@ -90,7 +90,7 @@ export default class LandingPage extends React.Component {
             </div>
             <div>
               <div className='landingHeader'>Your Interests</div>
-              <InterestBar close={false} />
+              <InterestBar close={false} message={'click to add'} />
             </div>
             <div style={{flex: 1}}>
               <div className='landingHeader'>To Do</div>

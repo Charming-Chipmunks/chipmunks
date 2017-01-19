@@ -22,7 +22,7 @@ import Contact      from './Contact';
 
     return (
         <div>
-          {contacts.map((contact, index) => {
+          { contacts.length > 0 && contacts.map((contact, index) => {
             // create a contact element here
             return (<Contact contact={contact} key={index} job={this.props.job} />);
           })}
