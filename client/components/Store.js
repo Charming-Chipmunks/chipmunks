@@ -551,8 +551,10 @@ class Store {
         return true;
       }
 
+
       if (company.UserJob.status.toLowerCase().includes(text)) {
         // console.log('company passed: ', toJS(company));
+
         return true;
       } else {
         return false;
