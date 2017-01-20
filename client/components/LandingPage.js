@@ -62,17 +62,6 @@ export default class LandingPage extends React.Component {
     };
   }
 
-  componentWillMount() {
-  
-    // get parameters
-    axios.get('/parameter/' + Store.currentUserId)
-      .then(function(response) {
-        Store.params = response.data.Parameters;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
 
   render() {
     var styles = {
