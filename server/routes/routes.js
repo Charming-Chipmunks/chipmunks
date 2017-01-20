@@ -404,7 +404,7 @@ router.post('/actions/', function(req, res) {
     completedTime: req.body.completedTime,
     scheduledTime: req.body.scheduledTime,
     contactId: req.body.contactId,
-    notes: req.body.notes
+    notes: req.body.notes || ''
   }).then((action) => {
 
     if (!action) {
