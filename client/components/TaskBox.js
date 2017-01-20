@@ -4,6 +4,7 @@ import { observer }    from 'mobx-react';
 import moment          from 'moment';
 import axios           from 'axios';
 import { Link } from 'react-router';
+import $ from 'jquery';
 
 import Store           from './Store';
 import activityTypes   from './ActivityTypes';
@@ -65,6 +66,13 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
   }
 
+  mouseEnter () {
+    $('html,body').css('cursor', 'pointer');
+  }
+  mouseLeave () {
+    $('html,body').css('cursor', 'default');
+  }
+
   render() {
 
     var currDate = new Date();
@@ -75,27 +83,27 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     var completeIcon = 'done';
     var color = 'grey900';
 
-    
+
     if (this.props.task.completedTime !== null) {
-    
+
       dateMessage = 'Done';
       editIcon = 'loop';
       completeIcon = '';
-    
+
     } else {
 
       console.log('overdue');
 
-      var iconStyle = { 
+      var iconStyle = {
         padding: '5px',
         fontSize: '30px',
         backgroundColor: 'red',
         borderRadius: '10px'
       };
-    
-      
+
+
       var days = Math.floor((new Date(this.props.task.scheduledTime).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
-      
+
       if (days < -1) {
         dateMessage = Math.abs(days) + ' days ago';
         //styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
@@ -105,13 +113,13 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
         iconStyle.color = 'white';
 
       } else if (days === -1) {
-        
-        dateMessage = 'Yesterday'; 
+
+        dateMessage = 'Yesterday';
         iconStyle.backgroundColor = 'red';
         iconStyle.color = 'white';
-      
+
       } else if (days === 0) {
-      
+
               iconStyle.backgroundColor = '';
         dateMessage = 'Today';
 
@@ -130,7 +138,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     var iconName = activityTypes.iconNames[position];
 
-  
+
 
     var isComplete = this.props.task.completedTime !== '';
 
@@ -142,14 +150,14 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
           </td>
         <td>
           <MuiThemeProvider>
-            <FontIcon className="material-icons" color={color} style={iconStyle}>{iconName}
+            <FontIcon className="material-icons" color={color} style={iconStyle} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}>{iconName}
             </FontIcon>
           </MuiThemeProvider>
         </td>
 
           {
-            this.props.isActionsView && 
-            <td> 
+            this.props.isActionsView &&
+            <td>
               <Link to={'/companies/' + this.props.task.JobId} >
 
                 {this.props.task.company}
@@ -170,21 +178,21 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
           { isComplete &&
             <MuiThemeProvider >
               <IconButton>
-                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleDoneClick.bind(this)}>
+                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleDoneClick.bind(this)}onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}>
                   {completeIcon}
                 </FontIcon>
               </IconButton>
-            </MuiThemeProvider>    }          
+            </MuiThemeProvider>    }
 
         </td>
 
         <td>
-     
+
             <MuiThemeProvider >
               <IconButton>
-                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleEditClick.bind(this)} >{editIcon}</FontIcon>
+                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleEditClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}>{editIcon}</FontIcon>
               </IconButton>
-            </MuiThemeProvider>    
+            </MuiThemeProvider>
 
         </td>
       </tr>

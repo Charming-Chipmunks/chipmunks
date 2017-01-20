@@ -3,7 +3,7 @@ import React          from 'react';
 import Link           from 'react-router';
 import { toJS }       from 'mobx';
 import { observer }   from 'mobx-react';
-
+import $ from 'jquery';
 import Store          from './Store';
 import SideBarCompany from './SideBarCompany';
 
@@ -21,6 +21,13 @@ var classObject = 'funfun';
     Store.hideLeftSideBarCompany = !Store.hideLeftSideBarCompany;
   }
 
+  mouseEnter () {
+    $('html,body').css('cursor', 'pointer');
+  }
+  mouseLeave () {
+    $('html,body').css('cursor', 'default');
+  }
+
   render () {
     var styles = {hidden: {display: 'none !important'}};
 
@@ -32,7 +39,7 @@ var classObject = 'funfun';
     }
 
     return (
-      <li className="sideBarLetter" onClick={this.handleClick.bind(this)}>
+      <li className="sideBarLetter" onClick={this.handleClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}>
       {this.props.letter}
         <div className="sideBarLetterOpportunities">
         {this.props.list.length} Opportunities
