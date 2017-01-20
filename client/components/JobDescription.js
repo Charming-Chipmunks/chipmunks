@@ -27,8 +27,9 @@ import { observer } from 'mobx-react';
       classObject = 'new badge red hide';
     }
 
-
     const hasUrl = this.props.job.url;
+
+    console.log('JD url: ', this.props.job.url);
     return (
       <div className="rateCompanyInfoBox left">
         <h3 className="rateCompanyJob">{this.props.job.jobTitle}

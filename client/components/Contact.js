@@ -11,11 +11,13 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 @observer class Contact extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.openContactModal = this.openContactModal.bind(this);
     this.closeContactModal = this.closeContactModal.bind(this);
     this.handleclick = this.handleclick.bind(this);
     this.state = {contactModalIsOpen: false};
+  
   }
 
   // for Contact Modal
@@ -55,24 +57,33 @@ import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
           <Paper className="paper" zDepth={1}>
             <div className="contactBox">
               <div className="contactName blue-color">
-                {this.props.contact.firstname} {this.props.contact.lastname}
+                <div>
+                  {this.props.contact.firstname} {this.props.contact.lastname}
+                </div>
+                {  this.props.contact.title !== '' &&
+                <div className="contactTitle blue-color">
+                  {this.props.contact.title}
+                </div> }
               </div>
 
+              {  this.props.contact.email !== '' &&
               <div className="contactEmail">
                 <FontIcon className="material-icons" style={iconStyles}> {'email'}</FontIcon>
                 { this.props.contact.email }
-              </div>
+              </div> }
 
+             { this.props.contact.mobilePhone !== '' &&
               <div className="contactEmail">
                 <FontIcon className="material-icons" style={iconStyles}> {'phone'}</FontIcon>
                 {this.props.contact.mobilePhone}
-              </div>
+              </div> }
 
 
-              <div className="contactEmail">
+              {  this.props.contact.workPhone !== '' &&
+                <div className="contactEmail">
                 <FontIcon className="material-icons" style={iconStyles}> {'phone'}</FontIcon>
                   {this.props.contact.workPhone}
-              </div>
+              </div> }
 
             </div>
           </Paper>

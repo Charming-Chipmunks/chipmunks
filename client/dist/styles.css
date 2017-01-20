@@ -503,10 +503,18 @@ Login Page
 
 
 .contactName{
-    padding: 5px;
+    padding: 10px;
     color: white;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+.contactTitle{
+    padding: 5px;
+    font-style: italic;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .contactPhoneNumber{
@@ -529,7 +537,6 @@ Login Page
 }
 
 .paper {
-  height: 110px;
   width: 100%;
   margin: 10px;
   display: inline-block;
