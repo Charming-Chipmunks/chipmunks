@@ -23,18 +23,17 @@ import MuiThemeProvider       from 'material-ui/styles/MuiThemeProvider';
     this.handleDoneClick = this.handleDoneClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
 
-
   }
 
 
   handleDoneClick(e) {
+
     e.preventDefault();
-    // console.log('task.id', this.props.task.id);
+    
     if (this.props.task.completedTime === null) {
       var that = this;
       axios.put(`/actions/${Store.currentUserId}/${this.props.task.id}`)
         .then(function(response) {
-          // console.log(that.props.task.id);
           that.props.complete(that.props.task.id);
         })
         .catch(function(error) {
@@ -51,7 +50,6 @@ import MuiThemeProvider       from 'material-ui/styles/MuiThemeProvider';
     activityTypes.taskBoxTypeArray.forEach((item, index) => {
 
       if (item === this.props.task.type) {
-        // console.log('location', index);
         place = index;
       }
     });
@@ -86,8 +84,6 @@ import MuiThemeProvider       from 'material-ui/styles/MuiThemeProvider';
       completeIcon = '';
 
     } else {
-
-      console.log('overdue');
 
       var iconStyle = {
         padding: '5px',
@@ -133,8 +129,6 @@ import MuiThemeProvider       from 'material-ui/styles/MuiThemeProvider';
     var position = activityTypes.actionType.indexOf(this.props.task.type);
 
     var iconName = activityTypes.iconNames[position];
-
-
 
     var isComplete = this.props.task.completedTime !== '';
 

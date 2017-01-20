@@ -9,7 +9,9 @@ import $ from 'jquery';
 import SearchBarJobStatus from './SearchBarJobStatus';
 
 @observer class RateJobs extends React.Component {
+  
   constructor(props) {
+  
     super(props);
     this.state = {
       page: 0
@@ -30,9 +32,11 @@ import SearchBarJobStatus from './SearchBarJobStatus';
         console.log(error);
       });
   }
+
   mouseEnter() {
     $('html,body').css('cursor', 'pointer');
   }
+  
   mouseLeave() {
     $('html,body').css('cursor', 'default');
   }
@@ -59,18 +63,13 @@ import SearchBarJobStatus from './SearchBarJobStatus';
     });
   }
 
-  // handleStatusChange(e) {
-  //   // add a Store variable for is open then refernece it in the sidebar
 
-  //   console.log('changed', e.target.value)
-  //   Store.filterJobStatus = { status: e.target.value };
-
-  // }
   render() {
-    // console.log('filtered: ', toJS(Store.filteredJobsByStatus));
+
     var list = Store.viewingNewJobs ? toJS(Store.newJobList) : toJS(Store.filteredJobsByStatus);
-   // console.log(list.length);
+
     var displayList = list.slice(this.state.page, this.state.page + 10);
+    
     if (list.length >= 0) {
 
       var pages = [];
@@ -94,11 +93,13 @@ import SearchBarJobStatus from './SearchBarJobStatus';
 
       var rightArrow = '';
       if (list.length < 50 || this.state.page * 10 + 50 > list.length) {
+
         rightArrow = 'disabledArrow';
-        // console.log('right arrow 1st case length: ', list.length);
+
       } else {
-        // console.log('right arrow 2nd case length: ', list.length);
+
         rightArrow = 'activeArrow';
+
       }
 
       return (

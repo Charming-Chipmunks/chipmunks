@@ -9,9 +9,14 @@ import SideBarLetter        from './SideBarLetter';
 
 
 @observer class CompanyList extends Component {
+
   constructor(props) {
+
     super(props);
+
   }
+
+
 
   render() {
 
