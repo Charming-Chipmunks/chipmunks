@@ -3,6 +3,7 @@ import React           from 'react';
 import { observer }    from 'mobx-react';
 import moment          from 'moment';
 import axios           from 'axios';
+import { Link } from 'react-router';
 
 import Store           from './Store';
 import activityTypes   from './ActivityTypes';
@@ -133,40 +134,60 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     var isComplete = this.props.task.completedTime !== '';
 
+
     return (
       <tr>
           <td>
             {dateMessage}
           </td>
-          <td>
-            <MuiThemeProvider>
-              <FontIcon className="material-icons" color={color} style={iconStyle}>{iconName}
-              </FontIcon>
-            </MuiThemeProvider>
-          </td>
-          <td>{this.props.task.description}</td>
-          <td>
+        <td>
+          <MuiThemeProvider>
+            <FontIcon className="material-icons" color={color} style={iconStyle}>{iconName}
+            </FontIcon>
+          </MuiThemeProvider>
+        </td>
 
-            { isComplete &&
-              <MuiThemeProvider >
-                <IconButton>
-                  <FontIcon className="material-icons" style={iconStyle} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</FontIcon>
-                </IconButton>
-              </MuiThemeProvider>    }          
+          {
+            this.props.isActionsView && 
+            <td> 
+              <Link to={'/companies/' + this.props.task.JobId} >
 
-          </td>
-          <td>
-       
-              <MuiThemeProvider >
-                <IconButton>
-                  <FontIcon className="material-icons" style={iconStyle} onClick={this.handleEditClick.bind(this)} >{editIcon}</FontIcon>
-                </IconButton>
-              </MuiThemeProvider>    
+                {this.props.task.company}
+              </Link>
 
-            {/*<i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i>*/}
+            </td>
+          }
 
-          </td>
-        </tr>
+        <td>
+
+        {this.props.task.description}
+
+        </td>
+
+
+        <td>
+
+          { isComplete &&
+            <MuiThemeProvider >
+              <IconButton>
+                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleDoneClick.bind(this)}>
+                  {completeIcon}
+                </FontIcon>
+              </IconButton>
+            </MuiThemeProvider>    }          
+
+        </td>
+
+        <td>
+     
+            <MuiThemeProvider >
+              <IconButton>
+                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleEditClick.bind(this)} >{editIcon}</FontIcon>
+              </IconButton>
+            </MuiThemeProvider>    
+
+        </td>
+      </tr>
     );
   }
 }

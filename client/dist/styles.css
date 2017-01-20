@@ -204,6 +204,12 @@ Login Page
   border-radius: 4px;
 }
 
+.contactHeader{
+  font-size: 16px;
+  font-weight: 400;
+  
+}
+
 
 .companyActionsBox {
     width: 100%;

@@ -55,17 +55,8 @@ export default class MainRightSidebar extends React.Component {
       <MuiThemeProvider>
       <Paper zDepth={2}>
         <div className='greyBorder'>
-          <List>
-            <Subheader>General</Subheader>
-            <Link to='/'><ListItem primaryText='Home' /> </Link>
-            <Link to='/preferences'><ListItem primaryText='Preferences' /> </Link>
-            <Link to='/activitiesMain'><ListItem primaryText='Actions Home' /> </Link>
-            <Link to='/rateJobs'><ListItem primaryText='Jobs Home' /></Link>
-            <br />
-            <Subheader>Statistics</Subheader>
-            <Link to='/actionStats'><ListItem primaryText="Actions"/></Link>
-            <Link to='/jobStats'> <ListItem primaryText="Jobs" /> </Link>
-          </List>
+
+        
         </div>
       </Paper>
       </MuiThemeProvider>

@@ -39,20 +39,25 @@ import TaskBox from './TaskBox';
       return !action.completedTime;
     };
     actions = actions.filter(filterForTask);
+
+    console.log(actions);
+
     return (
+
       <table className="striped bordered">
               <thead>
                 <tr>
-                  <th data-field="id" className="columnA">Due</th>
-                  <th data-field="name" className="columnB">Type</th>
-                  <th data-field="price" className="columnC">Description</th>
-                  <th data-field="name" className="columnD">Complete</th>
-                  <th data-field="price" className="columnE">Edit</th>
+                  <th className="columnA">Due</th>
+                  <th className="columnB">Type</th>
+                  <th className="columnB">Company</th>
+                  <th className="columnC">Description</th>
+                  <th className="columnD">Complete</th>
+                  <th className="columnE">Edit</th>
                 </tr>
               </thead>
               <tbody>
                 {actions.sort((a, b) => a.scheduledTime < b.scheduledTime ? -1 : 1).map((action, index) => {
-                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this)} edit={this.handleEditClick.bind(this, index)} />);
+                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this)} isActionsView={true} edit={this.handleEditClick.bind(this, index)} />);
                 })
                 }
               </tbody>
