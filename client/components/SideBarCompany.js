@@ -12,7 +12,7 @@ import { observer } from 'mobx-react';
   }
 
   handleClick (e) {
-   // e.stopPropagation();
+    e.stopPropagation();
   }
 
   render () {
