@@ -5,11 +5,12 @@ import { observer } from 'mobx-react';
 @observer class JobDescription extends React.Component {
 
   constructor(props) {
+
     super(props);
+  
   }
 
   render() {
-    // console.log('job info: ', this.props.job);
 
     var today = new Date();
     var dateAdded = this.props.job.updatedAt;

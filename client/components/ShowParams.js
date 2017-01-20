@@ -83,7 +83,7 @@ import InterestBar              from  './InterestBar';
               numJobs: response.data.length
             });
 
-            console.log('added Jobz:', response.data.length);
+
             this.setState({
               message: `${this.state.numJobs} jobs for ${this.state.keywords} in ${this.state.location} added to your job lists.`});
 
@@ -102,7 +102,6 @@ import InterestBar              from  './InterestBar';
 
     } else {
 
-      // console.log('in error message jobs');
       this.setState({
         message: 'please include a job description, city and state'});
       this.setState({

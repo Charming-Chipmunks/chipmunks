@@ -14,16 +14,27 @@ export default class InterestBar extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentWillMount() {
+  
+    // get parameters
+    axios.get('/parameter/' + Store.currentUserId)
+      .then(function(response) {
+        Store.params = response.data.Parameters;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
+
   handleClick (param) {
-    // remove the param from the user's
-    // console.log('click on X', param.id);
-    //e.preventDefault();
+
     axios.delete('/parameter/' + param.id + '/user/' + Store.currentUserId)
       .then(function(response) {
-        // console.log('deleted param: ', response);
+
         axios.get('/parameter/' + Store.currentUserId)
           .then(function(response) {
-            console.log('params data', response.data);
+  
             Store.params = response.data.Parameters;
           })
           .catch(function(error) {
@@ -34,7 +45,10 @@ export default class InterestBar extends React.Component {
       });
   }
 
+
+
   render() {
+
     return (
       <div className='interestBar'>
 

@@ -16,7 +16,7 @@ import CompanyInfoRightSideBar  from './CompanyInfoRightSideBar';
 import LandingPage              from './LandingPage';
 import MainRightSidebar         from './MainRightSidebar';
 import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
-// serve individually?
+
 import LoginPage                from './LoginPage';
 
 
@@ -26,12 +26,14 @@ import LoginPage                from './LoginPage';
   }
 
   componentWillMount() {
+
     var context = this;
+    
     axios.get('/user')
       .then(function(response) {
         Store.currentUserId = response.data.id;
-        Store.userName = response.data.googleName; //response. + ' ' + response.data.lastname;
-        // gets the list of "favored jobs"
+        Store.userName = response.data.googleName; 
+
         axios.get('/jobs/' + Store.currentUserId + '/favored')
           .then(function(response) {
             Store.jobList = response.data;
@@ -45,7 +47,6 @@ import LoginPage                from './LoginPage';
         axios.get('/jobs/' + Store.currentUserId + '/new')
           .then(function(response) {
             Store.newJobList = response.data;
-            ///*******************  here is where I can get # of new jobs and updat the top
           })
           .catch(function(error) {
             console.log(error);
@@ -71,6 +72,7 @@ import LoginPage                from './LoginPage';
           .catch(function(error) {
             console.log(error);
           });
+
         context.getStats();
 
       })
