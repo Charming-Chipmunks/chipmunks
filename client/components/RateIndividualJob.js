@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import axios from 'axios';
 import Store from './Store';
 import JobDescription from './JobDescription';
+import $ from 'jquery';
 
 @observer class RateIndividualJob extends React.Component {
 
@@ -62,18 +63,23 @@ import JobDescription from './JobDescription';
       });
   }
 
+  mouseEnter () {
+    $('html,body').css('cursor', 'pointer');
+  }
+  mouseLeave () {
+    $('html,body').css('cursor', 'default');
+  }
+
 
   render() {
-
-
     //  I can build out here for the company list for chooseing like or not like
     return (<li>
       <div className="rateCompany">
         <JobDescription job={this.props.job} rateView={true} location={true}/>
         { Store.viewingNewJobs &&
         <div className="rateCompanyAction right">
-          <div className="favorJob" onClick={this.yes.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
-          <div className="favorJob" onClick={this.no.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsdown.png"/></div>
+          <div className="favorJob" onClick={this.yes.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}><img className="rankingThunbs" src="./assets/icons/thumbsup.png"/></div>
+          <div className="favorJob" onClick={this.no.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} ><img className="rankingThunbs" src="./assets/icons/thumbsdown.png"/></div>
         </div>
         }
         <span id="indeed_at"><a title="Job Search" href="https://www.indeed.com">jobs by <img className="indeedImage" src="https://www.indeed.com/p/jobsearch.gif" /></a></span>
