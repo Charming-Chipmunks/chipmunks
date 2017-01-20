@@ -225,17 +225,16 @@ app.get('/styles.css', function(req, res) {
 });
 
 app.get('/bundle.js', function(req, res) {
-  console.log('sending bundle');
-  fs.access(path.resolve(__dirname, '../client/dist/bundle.js.gz'), function(err, data) {
-    if (err) {
-      console.log('sending unzipped bundle');
-      res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js'));
-    } else {
-      console.log('sending zipped bundle');
-      res.set('Content-Encoding', 'gzip');
-      res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js.gz'));
-    }
-  })
+  // fs.access(path.resolve(__dirname, '../client/dist/bundle.js.gz'), function(err, data) {
+  if (process.env.ZIP) {
+    console.log('sending zipped bundle');
+    res.set('Content-Encoding', 'gzip');
+    res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js.gz'));
+  } else {
+    console.log('sending unzipped bundle');
+    res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js'));
+  }
+  // })
 });
 
 ////
