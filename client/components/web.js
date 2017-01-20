@@ -30,7 +30,7 @@ import LoginPage                from './LoginPage';
     axios.get('/user')
       .then(function(response) {
         Store.currentUserId = response.data.id;
-        Store.userName = response.data.firstname + ' ' + response.data.lastname;
+        Store.userName = response.data.googleName; //response. + ' ' + response.data.lastname;
         // gets the list of "favored jobs"
         axios.get('/jobs/' + Store.currentUserId + '/favored')
           .then(function(response) {
