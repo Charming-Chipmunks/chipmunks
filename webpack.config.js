@@ -1,8 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 var CompressionPlugin = require("compression-webpack-plugin");
+require('dotenv').config();
 
-module.exports = {
+var obj = {
   entry: {
     bundle: './client/components/webIndex.js',
     login: './client/components/RegisterLoginPage.js'
@@ -11,11 +12,27 @@ module.exports = {
     path: __dirname,
     filename: './client/dist/[name].js'
   },
+  module: {
+    loaders: [{
+      test: /\.js?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader'
+    }, {
+      test: /\.css?$/,
+      loader: 'css-loader' // This are the loaders
+    }]
+  }
+  //***********  SAVE
+  //  rules: [
+  //    { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+  //    { test: /\.css$/, exclude: /node_modules/, loader: 'css-loader' }
+  //  ]
 
-////////////////////////////////////////////////
-///////////// DON'T REMOVE THIS ////////////////
-////////////////////////////////////////////////
-  plugins: [
+};
+console.log(process.env.ZIP);
+if (process.env.ZIP) {
+  obj.plugins = obj.plugins || [];
+  obj.plugins = obj.plugins.concat([
    new CompressionPlugin({
      asset: "[path].gz[query]",
      algorithm: "gzip",
@@ -35,24 +52,9 @@ module.exports = {
      }
    }), // Minify everything
    new webpack.optimize.AggressiveMergingPlugin() // Merge chunks
- ],
-////////////////////////////////////////////////
-////////////////////////////////////////////////
+ ]);
+}
 
-  module: {
-    loaders: [{
-      test: /\.js?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }, {
-      test: /\.css?$/,
-      loader: 'css-loader' // This are the loaders
-    }]
-  }
-  //***********  SAVE
-  //  rules: [
-  //    { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
-  //    { test: /\.css$/, exclude: /node_modules/, loader: 'css-loader' }
-  //  ]
+console.log(obj.plugins);
 
-};
+module.exports = obj;

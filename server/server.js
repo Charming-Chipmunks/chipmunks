@@ -3,6 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var routes = require('./routes/routes');
 var stats = require('./stats');
+var fs = require('fs');
 
 
 // var webpack = require('webpack');
@@ -223,10 +224,18 @@ app.get('/styles.css', function(req, res) {
   res.sendFile(path.resolve(__dirname, '../client/dist/styles.css'));
 });
 
-app.get('/bundle.js.gz', function(req, res) {
+app.get('/bundle.js', function(req, res) {
   console.log('sending bundle');
-  res.set('Content-Encoding', 'gzip');
-  res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js.gz'));
+  fs.access(path.resolve(__dirname, '../client/dist/bundle.js.gz'), function(err, data) {
+    if (err) {
+      console.log('sending unzipped bundle');
+      res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js'));
+    } else {
+      console.log('sending zipped bundle');
+      res.set('Content-Encoding', 'gzip');
+      res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js.gz'));
+    }
+  })
 });
 
 ////
