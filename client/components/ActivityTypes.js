@@ -3,6 +3,18 @@
 
 module.exports = {
 
+  taskBoxtypeArray: [
+    'phone', 
+    'email', 
+    'apply', 
+    'connections', 
+    'meetup', 
+    'follow up', 
+    'resume', 
+    'interview', 
+    'offer'
+  ],
+
   // these come out of the database
   typeArray : [
     'connections', 
@@ -17,6 +29,19 @@ module.exports = {
     'personalInterview'
   ],
   
+  taskBoxTypeArray: [
+    'phone', 
+    'email', 
+    'apply', 
+    'connections', 
+    'meetup', 
+    'follow up', 
+    'resume', 
+    'interview', 
+    'offer'
+  ],
+
+
   // var diaplay names
   displayNames : [
     'Connection', 

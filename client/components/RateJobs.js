@@ -87,18 +87,18 @@ import SearchBarJobStatus from './SearchBarJobStatus';
 
       var leftArrow = '';
       if (this.state.page === 0) {
-        leftArrow = 'disabled';
+        leftArrow = 'disabledArrow';
       } else {
-        leftArrow = 'active';
+        leftArrow = 'activeArrow';
       }
 
       var rightArrow = '';
       if (list.length < 50 || this.state.page * 10 + 50 > list.length) {
-        rightArrow = 'disabled';
+        rightArrow = 'disabledArrow';
         // console.log('right arrow 1st case length: ', list.length);
       } else {
         // console.log('right arrow 2nd case length: ', list.length);
-        rightArrow = 'active';
+        rightArrow = 'activeArrow';
       }
 
       return (
@@ -120,9 +120,15 @@ import SearchBarJobStatus from './SearchBarJobStatus';
           </ul>
         <div className="paginatorContainer">
           <ul className="pagination">
-            <li className={leftArrow} onClick={this.leftArrowClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} ><i className="material-icons">chevron_left</i></li>
+            <li className={leftArrow} onClick={this.leftArrowClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} 
+                onMouseLeave={this.mouseLeave.bind(this)} >
+              <i className="material-icons">chevron_left</i>
+            </li>
             {pages}
-            <li className={rightArrow} onClick={this.rightArrowClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}><i className="material-icons">chevron_right</i></li>
+            <li className={rightArrow} onClick={this.rightArrowClick.bind(this)} onMouseEnter={this.mouseEnter.bind(this)} 
+                onMouseLeave={this.mouseLeave.bind(this)}>
+                <i className="material-icons">chevron_right</i>
+            </li>
           </ul>
         </div>
       </div>

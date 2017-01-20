@@ -24,7 +24,7 @@ import 'react-day-picker/lib/style.css';
     this.state = {
       snack: false,
       errorMessage: '',
-      selectedDay: new Date(),
+      selectedDay: '',
       displayName: '',
       completed: false
     };
