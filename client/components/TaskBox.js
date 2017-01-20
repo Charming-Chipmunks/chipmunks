@@ -106,7 +106,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
       if (days < -1) {
         dateMessage = Math.abs(days) + ' days ago';
-        //styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
+
         color = 'grey50';
 
         iconStyle.backgroundColor = 'red';
@@ -119,17 +119,18 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
         iconStyle.color = 'white';
 
       } else if (days === 0) {
+      
+        delete iconStyle.backgroundColor;
 
-              iconStyle.backgroundColor = '';
         dateMessage = 'Today';
 
       } else if (days === 1) {
         dateMessage = 'Tomorrow';
 
-        iconStyle.backgroundColor = '';
+        delete iconStyle.backgroundColor;
       } else {
         dateMessage = days + ' days';
-        iconStyle.backgroundColor = '';
+        delete iconStyle.backgroundColor;
       }
     }
 

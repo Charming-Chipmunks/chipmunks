@@ -7,6 +7,7 @@ import Chart from 'chart.js';
 import axios from 'axios';
 import TaskBox from './TaskBox';
 //Actions Home
+
 @observer class MainPage extends React.Component {
   constructor(props) {
     super(props);
@@ -43,8 +44,12 @@ import TaskBox from './TaskBox';
     console.log(actions);
 
     return (
-
-      <table className="striped bordered">
+      <div>
+        <div className='landingHeader'>
+          Upcoming Actions Due
+        </div>
+        
+        <table className="striped bordered">
               <thead>
                 <tr>
                   <th className="columnA">Due</th>
@@ -62,6 +67,8 @@ import TaskBox from './TaskBox';
                 }
               </tbody>
               </table>
+      </div>
+
     );
   }
 }
