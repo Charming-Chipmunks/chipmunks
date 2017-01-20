@@ -10,6 +10,7 @@ import activityTypes   from './ActivityTypes';
 
 import FontIcon         from 'material-ui/FontIcon';
 import IconButton       from 'material-ui/IconButton';
+import {grey50, grey900 }         from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
@@ -71,36 +72,55 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     var styles = {};
     var editIcon = 'edit';
     var completeIcon = 'done';
-    var color = 'black';
+    var color = 'grey900';
 
-    // sets proper date
-    //console.log()
+    
     if (this.props.task.completedTime !== null) {
+    
       dateMessage = 'Done';
       editIcon = 'loop';
       completeIcon = '';
+    
     } else {
 
-      // console.log(this.props.task.scheduledTime);
+      console.log('overdue');
+
+      var iconStyle = { 
+        padding: '5px',
+        fontSize: '30px',
+        backgroundColor: 'red',
+        borderRadius: '10px'
+      };
+    
+      
       var days = Math.floor((new Date(this.props.task.scheduledTime).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
+      
       if (days < -1) {
         dateMessage = Math.abs(days) + ' days ago';
-        styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
-        color = 'red';
+        //styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
+        color = 'grey50';
+
+        iconStyle.backgroundColor = 'red';
+        iconStyle.color = 'white';
+
       } else if (days === -1) {
-        dateMessage = 'Yesterday';
-        styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
-        color = 'red';
+        
+        dateMessage = 'Yesterday'; 
+        iconStyle.backgroundColor = 'red';
+        iconStyle.color = 'white';
+      
       } else if (days === 0) {
+      
+              iconStyle.backgroundColor = '';
         dateMessage = 'Today';
-        styles = { highlight: { border: '1px solid yellow', 'backgroundColor': 'lightyellow' } };
-        color = 'yellow';
+
       } else if (days === 1) {
         dateMessage = 'Tomorrow';
-        styles = { highlight: {} };
+
+        iconStyle.backgroundColor = '';
       } else {
         dateMessage = days + ' days';
-        styles = { highlight: {} };
+        iconStyle.backgroundColor = '';
       }
     }
 
@@ -109,12 +129,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     var iconName = activityTypes.iconNames[position];
 
-    var iconStyle = {
-      padding: '5px',
-      fontSize: '30px',
-      backgroundColor: 'red',
-      borderRadius: '10px'
-    };
+  
 
     var isComplete = this.props.task.completedTime !== '';
 
