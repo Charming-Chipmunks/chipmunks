@@ -198,6 +198,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     var thisJob = toJS(step[location]);
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
+    console.log(jobActions);
 
     if (jobActions.length > 0) {
       // var daysActive = moment(jobActions[0].createdAt).from(moment());

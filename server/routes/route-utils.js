@@ -26,7 +26,8 @@ module.exports = {
       company: body.company,
       description: descriptions.likes(body),
       scheduledTime: date,
-      completedTime: date
+      completedTime: date,
+      notes: '',
     }).then(function(likeAction) {
       user.addActions(likeAction);
       job.addActions(likeAction);
@@ -37,7 +38,8 @@ module.exports = {
         company: body.company,
         description: descriptions.study(body),
         scheduledTime: date.setDate(date.getDate() + descriptions.daysForLearning),
-        completedTime: null
+        completedTime: null,
+        notes: '',
       }).then(function(learnAction) {
         user.addActions(learnAction);
         job.addActions(learnAction);
@@ -48,7 +50,8 @@ module.exports = {
           company: body.company,
           description: descriptions.connections(body),
           scheduledTime: date,
-          completedTime: null
+          completedTime: null,
+          notes: '',
         }).then(function(connectAction) {
           user.addActions(connectAction);
           job.addActions(connectAction);
@@ -59,13 +62,14 @@ module.exports = {
             company: body.company,
             description: descriptions.apply(body),
             scheduledTime: date.setDate(date.getDate() + descriptions.daysForApplication),
-            completedTime: null
+            completedTime: null,
+            notes: '',
           }).then(function(applyAction) {
             user.addActions(applyAction);
             job.addActions(applyAction);
             newActions.push(applyAction);
             console.log('***** Apply Action', res);
-           // *********  have a small issue here about this may be the second time the response is sent
+
             res.json(applyAction);
 
           }).catch((err) => {

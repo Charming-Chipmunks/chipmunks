@@ -1,11 +1,15 @@
 // TaskBox.js
-import React from 'react';
-import { observer } from 'mobx-react';
-import moment from 'moment';
-import axios from 'axios';
-import Store from './Store';
+import React           from 'react';
+import { observer }    from 'mobx-react';
+import moment          from 'moment';
+import axios           from 'axios';
 
-import FontIcon from 'material-ui/FontIcon';
+import Store           from './Store';
+import activityTypes   from './ActivityTypes';
+
+
+import FontIcon         from 'material-ui/FontIcon';
+import IconButton       from 'material-ui/IconButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
@@ -101,21 +105,9 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     }
 
 
-    var iconNameArray = ['build', 'phone', 'loop', 'email', 'send', 'stars'];
-    var actionType = ['like', 'learn', 'connections', 'apply', 'follow up', 'interview',
-      'schedule', 'email', 'phone', 'offer', 'meetup', 'resume', 'phoneInterview', 'webInterview', 'personalInterview',
-      'sentEmail', 'receivedEmail'
-    ];
+    var position = activityTypes.actionType.indexOf(this.props.task.type);
 
-    var iconNames = ['thumb_up', 'computer', 'loop', 'send', 'loop', 'stars', 'loop', 'email', 'phone', 'stars', 'loop',
-      'reorder', 'stars', 'stars', 'stars', 'email', 'email'
-    ];
-
-    var position = actionType.indexOf(this.props.task.type);
-
-    var iconName = iconNames[position];
-
-    // console.log('task type:', iconName);
+    var iconName = activityTypes.iconNames[position];
 
     var iconStyle = {
       padding: '5px',
@@ -123,6 +115,8 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
       backgroundColor: 'red',
       borderRadius: '10px'
     };
+
+    var isComplete = this.props.task.completedTime !== '';
 
     return (
       <tr>
@@ -137,10 +131,26 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
           </td>
           <td>{this.props.task.description}</td>
           <td>
-            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</i>
+
+            { isComplete &&
+              <MuiThemeProvider >
+                <IconButton>
+                  <FontIcon className="material-icons" style={iconStyle} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</FontIcon>
+                </IconButton>
+              </MuiThemeProvider>    }          
+
           </td>
           <td>
-            <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i></td>
+       
+              <MuiThemeProvider >
+                <IconButton>
+                  <FontIcon className="material-icons" style={iconStyle} onClick={this.handleEditClick.bind(this)} >{editIcon}</FontIcon>
+                </IconButton>
+              </MuiThemeProvider>    
+
+            {/*<i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i>*/}
+
+          </td>
         </tr>
     );
   }
