@@ -304,7 +304,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
                   <FlatButton label="Add Contact" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.openContactModal}></FlatButton>
                 </MuiThemeProvider>
 
-                <MuiThemeProvider>
+{/*                <MuiThemeProvider>
                 <DropDownMenu
                   value={this.state.value}
                   onChange={this.handleChange}
@@ -315,14 +315,14 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
                   <MenuItem onClick={this.selectItem.bind(this, 'closed')} primaryText="No Reply" />
                   <MenuItem onClick={this.selectItem.bind(this, 'expired')} primaryText="Job Posting Expired" />
                 </DropDownMenu>
-                  </MuiThemeProvider>    
+                  </MuiThemeProvider> */}   
 
-{/*                <IndexLink to="/">
+                <IndexLink to="/">
                   <MuiThemeProvider>
                     <FlatButton label="Close Job" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.handleCloseJob.bind(this)}></FlatButton>
                   </MuiThemeProvider>
 
-                </IndexLink>*/}
+                </IndexLink>
 
             </div>
             <table className="striped bordered">

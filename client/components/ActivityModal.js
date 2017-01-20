@@ -24,7 +24,7 @@ import 'react-day-picker/lib/style.css';
     this.state = {
       snack: false,
       errorMessage: '',
-      selectedDay: new Date(),
+      selectedDay: '',
       displayName: '',
       completed: false
     };
@@ -115,7 +115,7 @@ import 'react-day-picker/lib/style.css';
       var formattedDate = moment(date).toISOString();
 
       this.setState({selectedDay: date});
-      // time zone questions
+     
       Store.addActivity.scheduledTime = formattedDate;
     }
   }
@@ -136,8 +136,6 @@ import 'react-day-picker/lib/style.css';
           Store.addActivity.scheduledTime !== '' &&
           Store.addActivity.description !== '') {
 
-        //console.log('undefined');
-
         var type = Store.addActivity.type;
         Store.addActivity.company = this.props.job.company;
         Store.addActivity.actionSource = 'user';
@@ -157,7 +155,6 @@ import 'react-day-picker/lib/style.css';
             completedTime:  null
           };
 
-          // console.log('posting to axios');
           axios.post(`/actions`, obj)
           .then(function(response) {
             Store.jobActions.push(response.data);
@@ -176,7 +173,7 @@ import 'react-day-picker/lib/style.css';
           };
 
           var that = this;
-          // console.log('putting to axios');
+
           axios.put(`/actions/${this.props.action.id}`, putObj)
           .then((response) => {
 
@@ -202,7 +199,7 @@ import 'react-day-picker/lib/style.css';
         this.props.onClick();
 
       } else {
-        // will have to message that no task type selected.
+
 
         console.log('undefined');
         
@@ -215,10 +212,6 @@ import 'react-day-picker/lib/style.css';
     } else {
        this.props.onClick();
     }
-        // Store.selectedActivityBox = -1;
-        // Store.addActivity.description = '';
-        // Store.addActivity.scheduledTime = '';
-        // Store.addActivity.notes = '';
 
   }
 

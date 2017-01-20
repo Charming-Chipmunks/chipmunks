@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import { Link } from 'react-router';
 import Store from './Store';
 import $ from 'jquery';
+
+
 @observer class CompanyRow extends React.Component {
   constructor(props) {
     super(props);

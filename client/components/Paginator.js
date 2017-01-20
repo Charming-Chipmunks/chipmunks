@@ -23,7 +23,7 @@ import $ from 'jquery';
 
     if (this.props.number === this.props.current) {
       // console.log('in equals');
-      pageAttributes = 'paginator active';
+      pageAttributes = 'paginator activePage';
     } else if (this.props.number > this.props.total / 10) {
       // console.log('in unequals');
       pageAttributes = 'paginator disabled';
@@ -32,7 +32,10 @@ import $ from 'jquery';
     }
 
     return (
-        <li className={pageAttributes} onMouseEnter={this.mouseEnter.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} onClick={this.handleClick.bind(this)}> {this.props.number + 1 }</li>
+        <li className={pageAttributes} onMouseEnter={this.mouseEnter.bind(this)} 
+        onMouseLeave={this.mouseLeave.bind(this)} onClick={this.handleClick.bind(this)}> 
+        {this.props.number + 1 }
+        </li>
     );
   }
 

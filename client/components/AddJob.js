@@ -14,26 +14,31 @@ import FlatButton               from 'material-ui/FlatButton';
 
 
   constructor(props) {
+
     super(props);
     this.change = this.change.bind(this);
     this.save = this.save.bind(this);
     this.state = {message: '', snack: false };
+
   }
 
   change(e) {
+
     Store.newJob[e.target.name] = e.target.value;
+
   }
+
   save(e) {
+
     e.preventDefault();
 
-    // console.log(Store);
     if (Store.newJob.company !== '' && Store.newJob.jobTitle !== '' ) {
 
       Store.newJob.userid = Store.currentUserId;
       Store.newJob.id = Store.currentUserId;
-      // console.log('current Store.currentUserId :', Store.currentUserId);
+      var website = 'http://' + Store.newJob.url;
+      Store.newJob.url = website;
 
-      // console.log(toJS(Store.newJob));
       axios.post('/job', toJS(Store.newJob))
         .then(function(response) {
           Store.jobList.push(response.data);

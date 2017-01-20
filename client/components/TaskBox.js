@@ -9,14 +9,12 @@ import $ from 'jquery';
 import Store           from './Store';
 import activityTypes   from './ActivityTypes';
 
+import FontIcon               from 'material-ui/FontIcon';
+import IconButton             from 'material-ui/IconButton';
+import {grey50, grey900 }     from 'material-ui/styles/colors';
+import MuiThemeProvider       from 'material-ui/styles/MuiThemeProvider';
 
-import FontIcon         from 'material-ui/FontIcon';
-import IconButton       from 'material-ui/IconButton';
-import {grey50, grey900 }         from 'material-ui/styles/colors';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-
-var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up', 'resume', 'interview', 'offer'];
 
 @observer class TaskBox extends React.Component {
 
@@ -24,12 +22,9 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     super(props);
     this.handleDoneClick = this.handleDoneClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
-    // console.log(this.props.task.scheduledTime);
+
 
   }
-
-  //  probable can accomplish the below based on some math with the date and a component will mount
-  // need a way to get an new group of items from the database and reconsitiue based on DONE status.
 
 
   handleDoneClick(e) {
@@ -53,7 +48,7 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
 
     e.preventDefault();
     var place = -1;
-    typeArray.forEach((item, index) => {
+    activityTypes.taskBoxTypeArray.forEach((item, index) => {
 
       if (item === this.props.task.type) {
         // console.log('location', index);
