@@ -8,7 +8,9 @@ import Modal from 'react-modal';
 import { IndexLink } from 'react-router';
 import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MenuItem from 'material-ui/MenuItem';
 
 import Store from './Store';
 import TaskBox from './TaskBox';
@@ -32,6 +34,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     this.openContactModal = this.openContactModal.bind(this);
     this.closeContactModal = this.closeContactModal.bind(this);
     this.handleTaskComplete = this.handleTaskComplete.bind(this);
+    this.selectItem = this.selectItem.bind(this);
     this.state = {
       actionNum: -1,
       contactModalIsOpen: false,
@@ -83,6 +86,10 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
 
     ReactDOM.findDOMNode(this).scrollTop = 0;
 
+  }
+
+  selectItem () {
+    console.log('this');
   }
 
   getData(id) {
@@ -297,12 +304,25 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
                   <FlatButton label="Add Contact" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.openContactModal}></FlatButton>
                 </MuiThemeProvider>
 
-                <IndexLink to="/">
+                <MuiThemeProvider>
+                <DropDownMenu
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                  style={style}
+                  autoWidth={false} >
+                  
+                  <MenuItem onClick={this.selectItem.bind(this, 'rejected')} primaryText="No Interest" />
+                  <MenuItem onClick={this.selectItem.bind(this, 'closed')} primaryText="No Reply" />
+                  <MenuItem onClick={this.selectItem.bind(this, 'expired')} primaryText="Job Posting Expired" />
+                </DropDownMenu>
+                  </MuiThemeProvider>    
+
+{/*                <IndexLink to="/">
                   <MuiThemeProvider>
                     <FlatButton label="Close Job" primary={true} style={style} labelStyle={{color: 'white'}} onClick={this.handleCloseJob.bind(this)}></FlatButton>
                   </MuiThemeProvider>
 
-                </IndexLink>
+                </IndexLink>*/}
 
             </div>
             <table className="striped bordered">
