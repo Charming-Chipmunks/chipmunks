@@ -6,6 +6,8 @@ logs
 .DS_Store
 
 **/*bundle.js
+**/*.gz
+
 client/dist/login.js
 
 .env

@@ -223,6 +223,12 @@ app.get('/styles.css', function(req, res) {
   res.sendFile(path.resolve(__dirname, '../client/dist/styles.css'));
 });
 
+app.get('/bundle.js.gz', function(req, res) {
+  console.log('sending bundle');
+  res.set('Content-Encoding', 'gzip');
+  res.sendFile(path.resolve(__dirname, '../client/dist/bundle.js.gz'));
+});
+
 ////
 app.use(isLoggedIn, express.static(path.resolve(__dirname, '../client/dist')));
 // app.use(express.static(path.resolve(__dirname, '../client/dist')));
