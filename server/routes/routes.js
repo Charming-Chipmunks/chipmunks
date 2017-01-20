@@ -484,7 +484,7 @@ router.put('/actions/:userId/:actionId', function(req, res) {
         }).then(function(userJob) {
           console.log('userjob', JSON.parse(JSON.stringify(userJob)));
           utils.changeProgress(actionFound, userJob, req.params.userId, res);
-          res.json(actionFound);
+          // res.json(actionFound);
         });
       });
       // here I need to check and see what the completed action was and add items to the DB as necessary
