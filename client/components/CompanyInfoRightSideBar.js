@@ -13,8 +13,6 @@ import Contact      from './Contact';
     super(props);
   }
 
-
-
   render() {
 
     var name = toJS(Store.company);
@@ -22,10 +20,12 @@ import Contact      from './Contact';
 
     return (
         <div>
+
           { contacts.length > 0 && contacts.map((contact, index) => {
-            // create a contact element here
+            
             return (<Contact contact={contact} key={index} job={this.props.job} />);
           })}
+        
         </div>
     );
   }

@@ -83,7 +83,7 @@ export default class LandingPage extends React.Component {
       return (
       <MuiThemeProvider>
         <div style={styles.landingContainer}>
-          <div className='col m10 left'>
+          <div className='col m12 left'>
           <div style={{flex: 1, flexDirection: 'column'}}>
             <div style={styles.mainDiv}>
               <h5>Welcome, {Store.userName}!</h5>
@@ -137,9 +137,9 @@ export default class LandingPage extends React.Component {
             </div>
           </div>
           </div>
-          <div className="col m2 right">
-            <MainRightSidebar />
-          </div>
+  {/*        <div className="col m2 right">
+        
+          </div>*/}
         </div>
       </MuiThemeProvider>
       );

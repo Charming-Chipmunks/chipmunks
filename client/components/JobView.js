@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios                from 'axios';
 import React, { Component } from 'react';
-import { toJS } from 'mobx';
-import moment from 'moment';
-import ReactDOM from 'react-dom';
-import { observer } from 'mobx-react';
+import { toJS }             from 'mobx';
+import moment               from 'moment';
+import ReactDOM             from 'react-dom';
+import { observer }         from 'mobx-react';
 import Modal from 'react-modal';
 import { IndexLink } from 'react-router';
 import FontIcon from 'material-ui/FontIcon';
@@ -198,6 +198,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
     var thisJob = toJS(step[location]);
     var jobActions = Store.jobActions.slice();
     jobActions = toJS(jobActions);
+    console.log(jobActions);
 
     if (jobActions.length > 0) {
       // var daysActive = moment(jobActions[0].createdAt).from(moment());
@@ -244,6 +245,9 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
       <a name="anchor" />
         <div className="col m3 right">
           <div className="contactsSideBar">
+            <div className="contactHeader">
+              Contacts
+            </div>
             <CompanyInfoRightSideBar job={thisJob}/>
           </div>
         </div>
@@ -315,7 +319,7 @@ import CompanyInfoRightSideBar from './CompanyInfoRightSideBar';
               <tbody>
 
                 {jobActions.map((action, index) => {
-                  return ( <TaskBox task={action} key={index} complete={this.handleTaskComplete.bind(this)}
+                  return ( <TaskBox task={action} key={index} isActionsView={false} complete={this.handleTaskComplete.bind(this)}
                                   edit={this.handleEditClick.bind(this, index)} />);
                 })
                 }

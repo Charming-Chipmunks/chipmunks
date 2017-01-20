@@ -2,16 +2,104 @@
 
 
 module.exports = {
+
   // these come out of the database
-  typeArray : ['connections', 'follow up', 'phone', 'meetup', 'sentEmail', 'receivedEmail', 'apply',
-                      'phoneInterview', 'webInterview', 'personalInterview'];
+  typeArray : [
+    'connections', 
+    'follow up', 
+    'phone', 
+    'meetup', 
+    'sentEmail', 
+    'receivedEmail', 
+    'apply',
+    'phoneInterview', 
+    'webInterview', 
+    'personalInterview'
+  ],
+  
   // var diaplay names
-  diaplayNames : ['Connection', 'Follow Up', 'Phone Call', 'Meet Up', 'Sent Email', 'Received Email', 'Apply',
-                      'Phone Interview', 'Web Interview', 'Personal Interview'];
+  displayNames : [
+    'Connection', 
+    'Follow Up', 
+    'Phone Call', 
+    'Meet Up', 
+    'Sent Email', 
+    'Received Email', 
+    'Apply',
+    'Phone Interview', 
+    'Web Interview', 
+    'Personal Interview'
+  ],
+
   // display names on the activity modal
-  activityArray: ['Reach Out', 'Call', 'Meet Up', 'E-Mail', 'Apply', 'Interview'];
+  activityArray: [
+    'Reach Out', 
+    'Call', 
+    'Meet Up', 
+    'E-Mail', 
+    'Apply', 
+    'Interview'
+  ],
 
   // maps to icons on the activity modal
-  iconNameArray:['build', 'phone', 'loop', 'email', 'send',  'stars'];
+  iconNameArray: [
+    'build', 
+    'phone', 
+    'loop', 
+    'email', 
+    'send',  
+    'stars'
+  ],
+// var iconNameArray = ['build', 'phone', 'loop', 'email', 'send', 'stars'];
 
-}
+  activityType: [
+    'connections', 
+    'phone', 
+    'meetup', 
+    'email', 
+    'apply', 
+    'interview'
+  ],
+
+  actionType: [
+    'like', 
+    'learn', 
+    'connections', 
+    'apply', 
+    'follow up', 
+    'interview',
+    'schedule', 
+    'email', 
+    'phone', 
+    'offer', 
+    'meetup', 
+    'resume', 
+    'phoneInterview', 
+    'webInterview', 
+    'personalInterview',
+    'sentEmail', 
+    'receivedEmail'
+    ],
+
+    iconNames: [
+      'thumb_up', 
+      'computer', 
+      'loop', 
+      'send', 
+      'loop', 
+      'stars', 
+      'loop', 
+      'email', 
+      'phone', 
+      'stars', 
+      'loop',
+      'reorder', 
+      'stars', 
+      'stars', 
+      'stars', 
+      'email', 
+      'email'
+    ]
+
+};
+

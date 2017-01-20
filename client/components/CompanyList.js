@@ -1,17 +1,20 @@
+import { toJS }             from 'mobx';
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import Store from './Store';
-import CompanyRow from './CompanyRow';
-import SideBarLetter from './SideBarLetter';
-import { toJS } from 'mobx';
+import { observer }         from 'mobx-react';
+
+import Store                from './Store';
+import SearchBar            from './SearchBar';
+import CompanyRow           from './CompanyRow';
+import SideBarLetter        from './SideBarLetter';
+
 
 @observer class CompanyList extends Component {
   constructor(props) {
     super(props);
   }
 
-
   render() {
+
     var list = Store.filteredList;
     var previousLetter = 'A';
     var count = 0;
@@ -44,7 +47,8 @@ import { toJS } from 'mobx';
 
     return (
       <div className="leftSideBar z-depth-3 radius">
-        <h5 className="leftSideBarResults"> {list.length} Open Opportunities</h5>
+        <SearchBar />
+        <h5 className="leftSideBarResults"> {list.length} Jobs</h5>
         <ul id="slide" className="sideLetters">
           {names.map((letter, index) => {
             return (<SideBarLetter list={letter} key={index} letter={keys[index]} total ={list.length}/>);

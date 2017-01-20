@@ -1,11 +1,17 @@
 // TaskBox.js
-import React from 'react';
-import { observer } from 'mobx-react';
-import moment from 'moment';
-import axios from 'axios';
-import Store from './Store';
+import React           from 'react';
+import { observer }    from 'mobx-react';
+import moment          from 'moment';
+import axios           from 'axios';
+import { Link } from 'react-router';
 
-import FontIcon from 'material-ui/FontIcon';
+import Store           from './Store';
+import activityTypes   from './ActivityTypes';
+
+
+import FontIcon         from 'material-ui/FontIcon';
+import IconButton       from 'material-ui/IconButton';
+import {grey50, grey900 }         from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
@@ -67,81 +73,121 @@ var typeArray = ['phone', 'email', 'apply', 'connections', 'meetup', 'follow up'
     var styles = {};
     var editIcon = 'edit';
     var completeIcon = 'done';
-    var color = 'black';
+    var color = 'grey900';
 
-    // sets proper date
-    //console.log()
+    
     if (this.props.task.completedTime !== null) {
+    
       dateMessage = 'Done';
       editIcon = 'loop';
       completeIcon = '';
+    
     } else {
 
-      // console.log(this.props.task.scheduledTime);
+      console.log('overdue');
+
+      var iconStyle = { 
+        padding: '5px',
+        fontSize: '30px',
+        backgroundColor: 'red',
+        borderRadius: '10px'
+      };
+    
+      
       var days = Math.floor((new Date(this.props.task.scheduledTime).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
+      
       if (days < -1) {
         dateMessage = Math.abs(days) + ' days ago';
-        styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
-        color = 'red';
+        //styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
+        color = 'grey50';
+
+        iconStyle.backgroundColor = 'red';
+        iconStyle.color = 'white';
+
       } else if (days === -1) {
-        dateMessage = 'Yesterday';
-        styles = { highlight: { border: '1px solid red', 'backgroundColor': 'pink' } };
-        color = 'red';
+        
+        dateMessage = 'Yesterday'; 
+        iconStyle.backgroundColor = 'red';
+        iconStyle.color = 'white';
+      
       } else if (days === 0) {
+      
+              iconStyle.backgroundColor = '';
         dateMessage = 'Today';
-        styles = { highlight: { border: '1px solid yellow', 'backgroundColor': 'lightyellow' } };
-        color = 'yellow';
+
       } else if (days === 1) {
         dateMessage = 'Tomorrow';
-        styles = { highlight: {} };
+
+        iconStyle.backgroundColor = '';
       } else {
         dateMessage = days + ' days';
-        styles = { highlight: {} };
+        iconStyle.backgroundColor = '';
       }
     }
 
 
-    var iconNameArray = ['build', 'phone', 'loop', 'email', 'send', 'stars'];
-    var actionType = ['like', 'learn', 'connections', 'apply', 'follow up', 'interview',
-      'schedule', 'email', 'phone', 'offer', 'meetup', 'resume', 'phoneInterview', 'webInterview', 'personalInterview',
-      'sentEmail', 'receivedEmail'
-    ];
+    var position = activityTypes.actionType.indexOf(this.props.task.type);
 
-    var iconNames = ['thumb_up', 'computer', 'loop', 'send', 'loop', 'stars', 'loop', 'email', 'phone', 'stars', 'loop',
-      'reorder', 'stars', 'stars', 'stars', 'email', 'email'
-    ];
+    var iconName = activityTypes.iconNames[position];
 
-    var position = actionType.indexOf(this.props.task.type);
+  
 
-    var iconName = iconNames[position];
+    var isComplete = this.props.task.completedTime !== '';
 
-    // console.log('task type:', iconName);
-
-    var iconStyle = {
-      padding: '5px',
-      fontSize: '30px',
-      backgroundColor: 'red',
-      borderRadius: '10px'
-    };
 
     return (
       <tr>
           <td>
             {dateMessage}
           </td>
-          <td>
-            <MuiThemeProvider>
-              <FontIcon className="material-icons" color={color} style={iconStyle}>{iconName}
-              </FontIcon>
-            </MuiThemeProvider>
-          </td>
-          <td>{this.props.task.description}</td>
-          <td>
-            <i className="material-icons" style={vis.hide} onClick={this.handleDoneClick.bind(this)}>{completeIcon}</i>
-          </td>
-          <td>
-            <i className="material-icons" style={vis.hide} onClick={this.handleEditClick.bind(this)}>{editIcon}</i></td>
-        </tr>
+        <td>
+          <MuiThemeProvider>
+            <FontIcon className="material-icons" color={color} style={iconStyle}>{iconName}
+            </FontIcon>
+          </MuiThemeProvider>
+        </td>
+
+          {
+            this.props.isActionsView && 
+            <td> 
+              <Link to={'/companies/' + this.props.task.JobId} >
+
+                {this.props.task.company}
+              </Link>
+
+            </td>
+          }
+
+        <td>
+
+        {this.props.task.description}
+
+        </td>
+
+
+        <td>
+
+          { isComplete &&
+            <MuiThemeProvider >
+              <IconButton>
+                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleDoneClick.bind(this)}>
+                  {completeIcon}
+                </FontIcon>
+              </IconButton>
+            </MuiThemeProvider>    }          
+
+        </td>
+
+        <td>
+     
+            <MuiThemeProvider >
+              <IconButton>
+                <FontIcon className="material-icons" style={iconStyle} onClick={this.handleEditClick.bind(this)} >{editIcon}</FontIcon>
+              </IconButton>
+            </MuiThemeProvider>    
+
+        </td>
+      </tr>
     );
   }
 }

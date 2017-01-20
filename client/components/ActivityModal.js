@@ -1,28 +1,18 @@
 // ActivityModal.js
 import React                   from 'react';
 import axios                   from 'axios';
+import moment                  from 'moment';
 import { observer }            from 'mobx-react';
 
-import ActivityBox              from './ActivityBox';
 import Store                    from './Store';
-import TextField                from 'material-ui/TextField';
+import ActivityBox              from './ActivityBox';
+import activityTypes            from './ActivityTypes';
 import DayPicker, { DateUtils } from 'react-day-picker';
-import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 import Snackbar                 from 'material-ui/Snackbar';
-import moment from 'moment';
+import TextField                from 'material-ui/TextField';
+import MuiThemeProvider         from 'material-ui/styles/MuiThemeProvider';
 
 import 'react-day-picker/lib/style.css';
-
-// these come out of the database
-var typeArray     = ['connections', 'follow up', 'phone', 'meetup', 'sentEmail', 'receivedEmail', 'apply',
-                      'phoneInterview', 'webInterview', 'personalInterview'];
-// var diaplay names
-var diaplayNames = ['Connection', 'Follow Up', 'Phone Call', 'Meet Up', 'Sent Email', 'Received Email', 'Apply',
-                      'Phone Interview', 'Web Interview', 'Personal Interview'];
-// display names on the activity modal
-var activityArray = ['Reach Out', 'Call', 'Meet Up', 'E-Mail', 'Apply', 'Interview'];
-// maps to icons on the activity modal
-var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
 
 @observer class ActivityModal extends React.Component {
@@ -46,20 +36,21 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
     if (this.props.action !== undefined) {
 
+      console.log('activity modal action ', this.props.action);
       if (this.props.action.completedTime !== null) {
-        this.setState({completed:true});
+        this.setState({ completed: true });
       }
 
       Store.addActivity.scheduledTime = this.props.action.scheduledTime;
       var tempDate = moment(Store.addActivity.scheduledTime).toDate();
-      // console.log('tempdate', tempDate);
+
       this.setState({selectedDay: tempDate});
       Store.addActivity.description = this.props.action.description;
       Store.addActivity.company = this.props.action.company;
       Store.addActivity.notes = this.props.action.notes;
       Store.addActivity.type = this.props.action.type;
 
-      // console.log('modal action type ', this.props.action.type);
+ 
       if (this.props.action.type === 'connections') {
         Store.selectedActivityBox = 0;
         this.setState({displayName: 'Connection'});
@@ -116,8 +107,11 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
   }
 
   saveDate (e, date) {
+
     e.preventDefault();
+    
     if (!this.state.completed) {
+    
       var formattedDate = moment(date).toISOString();
 
       this.setState({selectedDay: date});
@@ -127,6 +121,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
   }
 
   isDaySelected(day) {
+
     return DateUtils.isSameDay(day, this.state.selectedDay);
   }
 
@@ -134,12 +129,14 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
 
     e.preventDefault();
 
-    // make sure its editable
+
     if (!this.state.completed) {
-      // do some error checking to make sure an action has been selected  also check for a description
+
       if (Store.selectedActivityBox !== -1 &&
           Store.addActivity.scheduledTime !== '' &&
           Store.addActivity.description !== '') {
+
+        //console.log('undefined');
 
         var type = Store.addActivity.type;
         Store.addActivity.company = this.props.job.company;
@@ -197,26 +194,41 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
           });
         } // end if/else for Post / Put
 
+        Store.selectedActivityBox = -1;
+        Store.addActivity.description = '';
+        Store.addActivity.scheduledTime = '';
+        Store.addActivity.notes = '';
+
+        this.props.onClick();
+
       } else {
         // will have to message that no task type selected.
+
+        console.log('undefined');
+        
         var errorMessage = 'Please include a task, date and description';
         this.setState({
           errorMessage: errorMessage,
           snack: true
         });
       }
+    } else {
+       this.props.onClick();
     }
-        Store.selectedActivityBox = -1;
-        Store.addActivity.description = '';
-        Store.addActivity.scheduledTime = '';
-        Store.addActivity.notes = '';
+        // Store.selectedActivityBox = -1;
+        // Store.addActivity.description = '';
+        // Store.addActivity.scheduledTime = '';
+        // Store.addActivity.notes = '';
 
-    this.props.onClick();
   }
 
 
   change(e) {
+
+    e.preventDefault();
+    
     Store.addActivity[e.target.name] = e.target.value;
+  
   }
 
 
@@ -228,9 +240,9 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
       closeCommand = 'Close';
     }
 
-    var position = typeArray.indexOf(Store.addActivity.type);
+    var position = activityTypes.typeArray.indexOf(Store.addActivity.type);
 
-    var activityName = diaplayNames[position];
+    var activityName = activityTypes.displayNames[position];
 
     return (
       <div>
@@ -240,8 +252,8 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
               <p>Activity Type: <span className="medium">{activityName}</span></p>
             </div>
             <div className="activityModalIcons">
-              {activityArray.map((activity, index) => {
-                return (<ActivityBox type={activity} icon={iconNameArray[index]} key={index}
+              { activityTypes.activityArray.map((activity, index) => {
+                return (<ActivityBox type={activity} icon={ activityTypes.iconNameArray[index]} key={index}
                                       id={index} disabled={this.state.completed}/>);
               })}
             </div>
@@ -270,7 +282,7 @@ var iconNameArray = ['build', 'phone', 'loop', 'email', 'send',  'stars'];
         </form>
         <div className="activityClose" onClick={this.handleClick.bind(this)}>{closeCommand}</div>
         <MuiThemeProvider>
-          <Snackbar open={this.state.snack}  message={`${this.state.errorMessage}`} autoHideDuration={2000}
+          <Snackbar open={this.state.snack}  message={`${this.state.errorMessage}`} autoHideDuration={1000}
                     onRequestClose={this.handleRequestClose}/>
         </MuiThemeProvider>
 
